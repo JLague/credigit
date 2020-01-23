@@ -1,4 +1,4 @@
-# banque-jec
+# credigit
 
 ## Useful links
 
