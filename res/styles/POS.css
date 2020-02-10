@@ -9,5 +9,5 @@
 
 .view1 {
 	-fx-background-color: linear-gradient(to right, #323F7C, #182046);
+	-fx-text-fill:white;
 }
-

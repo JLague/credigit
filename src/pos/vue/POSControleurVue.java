@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class POSControleurVue implements IPOSControleurVue {
@@ -15,7 +16,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	public POSControleurVue() throws IOException {
 		//System.out.println(getClass().getResource("POS.fxml"));
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("POS.fxml"));
-			root = loader.load();
+		root = loader.load();
 		loader.setController(this);
 		scene = new Scene(root);
 		
