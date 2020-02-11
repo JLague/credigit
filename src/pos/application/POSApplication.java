@@ -15,6 +15,7 @@ public class POSApplication extends Application{
 		POSControleur ctrl = new POSControleur();
 		stage.setScene(ctrl.getScene());
 		stage.setTitle("Connexion");
+		//stage.setFullScreen(true);
 		stage.sizeToScene();
 		stage.show();
 		
