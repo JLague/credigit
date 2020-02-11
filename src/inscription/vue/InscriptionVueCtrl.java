@@ -23,11 +23,11 @@ public class InscriptionVueCtrl {
 
 		try {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/InscriptionVue.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("InscriptionVue.fxml"));
 
 			loader.setController(this);
 
-			loader.load();
+			root = loader.load();
 
 			scene = new Scene(root);
 
