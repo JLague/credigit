@@ -28,27 +28,26 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private ImageView logoPOS;
-	
+
 	/**
 	 * Champ de texte pour le nom d'utilisateur
 	 */
 	@FXML
 	private TextField userField;
-	
+
 	/**
 	 * Champ de texte pour le mot de passe
 	 */
 	@FXML
 	private PasswordField passField;
-	
+
 	/**
 	 * Bouton servant à se connecter
 	 */
 	@FXML
 	private Button connectBtn;
-	
-	
-	//TODO Enlever?
+
+	// TODO Enlever?
 	/**
 	 * Boutons servant à se créer un compte
 	 */
@@ -67,8 +66,8 @@ public class POSControleurVue implements IPOSControleurVue {
 		loader.setController(this);
 		root = loader.load();
 		scene = new Scene(root);
-		
-		appliquerCSS();
+
+		appliquerCSSVue1();
 		setBestSizes();
 	}
 
@@ -76,23 +75,41 @@ public class POSControleurVue implements IPOSControleurVue {
 		// User field
 		userField.setMaxWidth(400);
 		userField.setMinHeight(30);
-		
+
 		// Password field
 		passField.setMaxWidth(400);
 		passField.setMinHeight(30);
-		
+
 		// Buttons
 		connectBtn.setMinSize(300, 50);
 		createAccountBtn.setMinSize(300, 50);
 	}
 
 	/**
-	 * Méthode interne servant à appliquer les différents styles à partir de la
-	 * feuille de style
+	 * Méthode interne servant à appliquer les différents styles pour la première
+	 * vue à partir de la feuille de style
 	 */
-	private void appliquerCSS() {
+	private void appliquerCSSVue1() {
 		scene.getStylesheets().add("styles/POS.css");
-		root.getStyleClass().add("view1");
+		root.getStyleClass().add("root-1");
+
+		connectBtn.getStyleClass().add("buttons-1");
+		createAccountBtn.getStyleClass().add("buttons-1");
+
+		userField.getStyleClass().add("fields-1");
+		passField.getStyleClass().add("fields-1");
+	}
+
+	/**
+	 * Méthode interne servant à enlever les styles de la première vue afin
+	 * d'ajouter ceux de la deuxième
+	 */
+	private void enleverCSS() {
+		root.getStyleClass().clear();
+		connectBtn.getStyleClass().clear();
+		createAccountBtn.getStyleClass().clear();
+		userField.getStyleClass().clear();
+		passField.getStyleClass().clear();
 	}
 
 	@Override
