@@ -10,9 +10,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import pos.ctrl.POSControleur;
 
-public class POSControleurVue implements IPOSControleurVue {
+public class LoginPOSControleurVue implements IPOSControleurVue {
 
+	/**
+	 * Contrôleur de l'application
+	 */
+	private POSControleur ctrl;
+	
 	/**
 	 * VBox utilisé comme root de la vue
 	 */
@@ -55,12 +61,14 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button createAccountBtn;
 
 	/**
-	 * Constructeur par défaut qui instantie la vue
+	 * Constructeur prenant un contrôleur
 	 * 
 	 * @throws IOException
 	 */
-	public POSControleurVue() throws IOException {
+	public LoginPOSControleurVue(POSControleur ctrl) throws IOException {
 
+		this.ctrl = ctrl;
+		
 		// Load first view
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("POS.fxml"));
 		loader.setController(this);
@@ -83,6 +91,8 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Buttons
 		connectBtn.setMinSize(300, 50);
 		createAccountBtn.setMinSize(300, 50);
+		
+		connectBtn.setOnMouseClicked((me) -> ctrl.launchMainView());
 	}
 
 	/**

@@ -3,19 +3,31 @@ package pos.ctrl;
 import java.io.IOException;
 
 import javafx.scene.Scene;
-import pos.vue.POSControleurVue;
+import javafx.stage.Stage;
+import pos.application.MainPOSApplication;
+import pos.vue.LoginPOSControleurVue;
 
 public class POSControleur implements IPOSControleur {
 
-	private POSControleurVue vue;
+	private LoginPOSControleurVue vue;
 	
 	public POSControleur() throws IOException {
-		vue = new POSControleurVue();
+		vue = new LoginPOSControleurVue(this);
 	}
 	
 	@Override
 	public Scene getScene() {
 		return vue.getScene();
+	}
+	
+	public void launchMainView()
+	{
+		try {
+			new MainPOSApplication().start(new Stage());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
