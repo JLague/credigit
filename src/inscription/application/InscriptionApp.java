@@ -15,6 +15,7 @@ public class InscriptionApp extends Application {
 		stage.setTitle("Credigit/Inscription");
 		stage.setScene(ctrl.getScene());
 		stage.setResizable(false);
+		stage.setFullScreen(true);
 		stage.show();
 	}
 
