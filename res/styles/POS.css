@@ -1,23 +1,40 @@
 .buttons-1 {
 	-fx-background-color: transparent;
-	-fx-text-fill: white;
 	-fx-border-width: 2px;
 	-fx-border-radius: 15px;
 	-fx-border-color: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bolder;
 }
 
 .fields-1 {
 	-fx-background-color: rgba(255, 255, 255, 0.3); /* Blanc presque transparent */
-	-fx-text-fill: white;
 	-fx-prompt-text-fill: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bolder;
 }
 
 .root-1 {
 	-fx-background-color: linear-gradient(to right, #374587, #0D1837);
+}
+
+.transparent-btn {
+	-fx-background-color: transparent;
+}
+
+.search-bar {
+	-fx-background-color: transparent;
+	-fx-prompt-text-fill: white;
+	-fx-border-width: 2px;
+	-fx-border-radius: 15px;
+	-fx-border-color: white;
+	
+}
+
+.big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1 {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bolder;
+}
+
+.big-text {
+	-fx-font-size: 20px;
 }
 
 /* latin */

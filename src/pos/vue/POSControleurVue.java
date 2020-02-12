@@ -65,7 +65,25 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private Button createAccountBtn;
-
+	
+	/**
+	 * Bouton servant à afficher les produits
+	 */
+	@FXML
+	private Button produitBtn;
+	
+	/**
+	 * Bouton servant à afficher le clavier
+	 */
+	@FXML
+	private Button clavierBtn;
+	
+	/**
+	 * Barre de recherche
+	 */
+	@FXML
+	private TextField searchBar;
+	
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
 	 * 
@@ -87,7 +105,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		scene = new Scene(rootVBox);
 
-		appliquerCSSVue1();
 		setBestSizes();
 	}
 
@@ -126,32 +143,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		scene = new Scene(rootBP);
 	}
 
-	/**
-	 * Méthode interne servant à appliquer les différents styles pour la première
-	 * vue à partir de la feuille de style
-	 */
-	private void appliquerCSSVue1() {
-		scene.getStylesheets().add("styles/POS.css");
-		rootVBox.getStyleClass().add("root-1");
 
-		connectBtn.getStyleClass().add("buttons-1");
-		createAccountBtn.getStyleClass().add("buttons-1");
-
-		userField.getStyleClass().add("fields-1");
-		passField.getStyleClass().add("fields-1");
-	}
-
-	/**
-	 * Méthode interne servant à enlever les styles de la première vue afin
-	 * d'ajouter ceux de la deuxième
-	 */
-	private void enleverCSS() {
-		rootVBox.getStyleClass().clear();
-		connectBtn.getStyleClass().clear();
-		createAccountBtn.getStyleClass().clear();
-		userField.getStyleClass().clear();
-		passField.getStyleClass().clear();
-	}
 
 	@Override
 	public Scene getScene() {

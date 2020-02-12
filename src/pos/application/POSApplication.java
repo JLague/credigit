@@ -4,11 +4,11 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
 
-public class POSApplication extends Application{
-	
+public class POSApplication extends Application {
+
 	private POSControleur ctrl;
 	private Stage stage;
-	
+
 	public static void main(String[] args) {
 		Application.launch(args);
 	}
@@ -20,20 +20,20 @@ public class POSApplication extends Application{
 		stage.setScene(ctrl.getScene());
 		stage.setTitle("Connexion");
 		stage.setFullScreen(true);
-		//stage.sizeToScene();
+		// stage.sizeToScene();
 		stage.show();
 	}
-	
+
 	/**
-	 * Permet de changer la scène liée à l'application
+	 * Permet de changer la scène liée à l'application. Assume que la scène a été
+	 * changé
 	 * 
 	 * @param scene la nouvelle scène
 	 * @param title le nouveau titre de l'application
 	 */
-	public void chargerVuePOS()
-	{
+	public void chargerVuePOS() {
 		stage.setScene(ctrl.getScene());
 		stage.setTitle("POS");
-		stage.setFullScreen(true);
+		//stage.setFullScreen(true);
 	}
 }
