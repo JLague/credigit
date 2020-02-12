@@ -1,33 +1,40 @@
 package pos.ctrl;
 
-import java.io.IOException;
-
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import pos.application.MainPOSApplication;
-import pos.vue.LoginPOSControleurVue;
+import pos.application.POSApplication;
+import pos.vue.POSControleurVue;
 
 public class POSControleur implements IPOSControleur {
 
-	private LoginPOSControleurVue vue;
-	
-	public POSControleur() throws IOException {
-		vue = new LoginPOSControleurVue(this);
+	/**
+	 * Objet de l'application. On s'en sert pour changer la scène
+	 */
+	private POSApplication app;
+
+	/**
+	 * Le contrôleur de la vue du POS
+	 */
+	private POSControleurVue vue;
+
+	/**
+	 * Constructeur servant à instantier un contrôleur du POS
+	 * 
+	 * @param app l'application du POS
+	 */
+	public POSControleur(POSApplication app) {
+		this.app = app;
+		this.vue = new POSControleurVue(this);
 	}
-	
+
+	/**
+	 * Load la vue principale du POS à l'aide de l'application
+	 */
+	public void chargerVuePOS() {
+		app.chargerVuePOS();
+	}
+
 	@Override
 	public Scene getScene() {
 		return vue.getScene();
 	}
-	
-	public void launchMainView()
-	{
-		try {
-			new MainPOSApplication().start(new Stage());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }

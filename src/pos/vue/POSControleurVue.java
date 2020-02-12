@@ -9,20 +9,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
 
-public class LoginPOSControleurVue implements IPOSControleurVue {
+public class POSControleurVue implements IPOSControleurVue {
 
 	/**
 	 * Contrôleur de l'application
 	 */
 	private POSControleur ctrl;
-	
+
 	/**
-	 * VBox utilisé comme root de la vue
+	 * VBox utilisé comme root de la première vue
 	 */
-	private VBox root;
+	private VBox rootVBox;
+
+	/**
+	 * BorderPane utilisé comme root de la deuxième vue
+	 */
+	private BorderPane rootBP;
 
 	/**
 	 * Scène de l'application du POS
@@ -61,19 +67,25 @@ public class LoginPOSControleurVue implements IPOSControleurVue {
 	private Button createAccountBtn;
 
 	/**
-	 * Constructeur prenant un contrôleur
+	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
 	 * 
-	 * @throws IOException
+	 * @param ctrl le contrôleur de l'application
 	 */
-	public LoginPOSControleurVue(POSControleur ctrl) throws IOException {
+	public POSControleurVue(POSControleur ctrl) {
 
 		this.ctrl = ctrl;
-		
+
 		// Load first view
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("POS.fxml"));
 		loader.setController(this);
-		root = loader.load();
-		scene = new Scene(root);
+
+		try {
+			rootVBox = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		scene = new Scene(rootVBox);
 
 		appliquerCSSVue1();
 		setBestSizes();
@@ -91,8 +103,27 @@ public class LoginPOSControleurVue implements IPOSControleurVue {
 		// Buttons
 		connectBtn.setMinSize(300, 50);
 		createAccountBtn.setMinSize(300, 50);
-		
-		connectBtn.setOnMouseClicked((me) -> ctrl.launchMainView());
+
+		connectBtn.setOnMouseClicked((me) -> {
+			//TODO ajouter connexion et faire dans une méthode séparée
+			changerScene();
+			ctrl.chargerVuePOS();
+		});
+	}
+
+	/**
+	 * Méthode qui permet de charger le deuxième fichier FXML
+	 */
+	private void changerScene() {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPOS.fxml"));
+		loader.setController(this);
+		try {
+			rootBP = loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		scene = new Scene(rootBP);
 	}
 
 	/**
@@ -101,7 +132,7 @@ public class LoginPOSControleurVue implements IPOSControleurVue {
 	 */
 	private void appliquerCSSVue1() {
 		scene.getStylesheets().add("styles/POS.css");
-		root.getStyleClass().add("root-1");
+		rootVBox.getStyleClass().add("root-1");
 
 		connectBtn.getStyleClass().add("buttons-1");
 		createAccountBtn.getStyleClass().add("buttons-1");
@@ -115,7 +146,7 @@ public class LoginPOSControleurVue implements IPOSControleurVue {
 	 * d'ajouter ceux de la deuxième
 	 */
 	private void enleverCSS() {
-		root.getStyleClass().clear();
+		rootVBox.getStyleClass().clear();
 		connectBtn.getStyleClass().clear();
 		createAccountBtn.getStyleClass().clear();
 		userField.getStyleClass().clear();
