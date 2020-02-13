@@ -102,9 +102,11 @@ public class InscriptionVueCtrl {
 			FXMLLoader step1Loader = new FXMLLoader(getClass().getResource("step1Vue.fxml"));
 			FXMLLoader step2Loader = new FXMLLoader(getClass().getResource("step2Vue.fxml"));
 
-			mainLoader.setController(this);
+			
 			step1Loader.setController(this);
 			step2Loader.setController(this);
+			mainLoader.setController(this);
+			
 
 			root = mainLoader.load();
 

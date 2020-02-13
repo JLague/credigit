@@ -40,6 +40,7 @@
                         <Image url="@../../../res/images/down.png" />
                      </image>
                   </ImageView>
+                  <Button layoutX="1012.0" layoutY="30.0" mnemonicParsing="false" opacity="0.0" prefHeight="25.0" prefWidth="164.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="anchorMid" prefHeight="2160.0" prefWidth="1920.0">
