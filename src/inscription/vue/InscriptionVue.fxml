@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane fx:id="root" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/Inscription.css" vbarPolicy="NEVER" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <VBox prefHeight="3240.0" prefWidth="1920.0">
          <children>
             <AnchorPane fx:id="anchorTop" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="anchorPub" stylesheets="@../../../res/styles/Inscription.css">
                <children>
-                  <ImageView fx:id="ivTopLogo" fitHeight="116.0" fitWidth="272.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="30.0">
+                  <ImageView fitHeight="116.0" fitWidth="272.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="30.0">
                      <image>
                         <Image url="@../../../res/images/logo_credigit.png" />
                      </image></ImageView>
-                  <Label fx:id="titrePubliciteLbl" layoutX="931.0" layoutY="220.0" text="VOTRE ARGENT AU&#10;BOUT DES DOIGTS" textFill="WHITE" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="411.0">
+                  <Label layoutX="931.0" layoutY="220.0" text="VOTRE ARGENT AU&#10;BOUT DES DOIGTS" textFill="WHITE" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="411.0">
                      <font>
                         <Font name="Montserrat Bold" size="90.0" />
                      </font>
                   </Label>
-                  <Label fx:id="descPubliciteLbl" layoutX="35.0" layoutY="368.0" text="Découvrez une toute nouvelle façon d'effectuer vos transactions de tous&#10;les jours. Credigit vous offre une sécurité accrue et une simplicité de&#10;paiement comme nul autre en utilisant votre empreinte digitale comme&#10;véhicule." textFill="WHITE" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="639.0">
+                  <Label layoutX="35.0" layoutY="368.0" text="Découvrez une toute nouvelle façon d'effectuer vos transactions de tous&#10;les jours. Credigit vous offre une sécurité accrue et une simplicité de&#10;paiement comme nul autre en utilisant votre empreinte digitale comme&#10;véhicule." textFill="WHITE" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="639.0">
                      <font>
                         <Font name="Montserrat Medium" size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="decouvrirPubliciteLbl" text="Découvrir" textFill="WHITE" AnchorPane.leftAnchor="452.0" AnchorPane.topAnchor="873.0">
+                  <Label text="Découvrir" textFill="WHITE" AnchorPane.leftAnchor="452.0" AnchorPane.topAnchor="873.0">
                      <font>
                         <Font name="Montserrat Medium" size="24.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="ivDecouvrirPublicite" fitHeight="91.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="466.0" AnchorPane.topAnchor="926.0">
+                  <ImageView fx:id="ivDecouvrirPublicite" fitHeight="91.0" fitWidth="91.0" onMouseClicked="#decouvrirHandler" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="466.0" AnchorPane.topAnchor="926.0">
                      <image>
                         <Image url="@../../../res/images/down.png" />
                      </image>
                   </ImageView>
+                  <Button layoutX="1012.0" layoutY="30.0" mnemonicParsing="false" opacity="0.0" prefHeight="25.0" prefWidth="164.0" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="anchorMid" prefHeight="2160.0" prefWidth="1920.0">
                <children>
-                  <ImageView fitHeight="1793.0" fitWidth="1447.0" pickOnBounds="true" preserveRatio="true" rotate="-15.0" AnchorPane.leftAnchor="-586.0" AnchorPane.topAnchor="283.0">
+                  <ImageView fitHeight="1793.0" fitWidth="1447.0" pickOnBounds="true" preserveRatio="true" rotate="-15.0" AnchorPane.leftAnchor="-500.0" AnchorPane.topAnchor="520.0">
                      <image>
                         <Image url="@../../../res/images/ic_empreinte.png" />
                      </image>
@@ -91,11 +94,45 @@
                         <Font name="Montserrat Bold" size="48.0" />
                      </font>
                   </Label>
-                  <Label text="Créer un compte" textFill="#707070" AnchorPane.leftAnchor="1286.0" AnchorPane.topAnchor="1310.0">
-                     <font>
-                        <Font name="Montserrat Bold" size="48.0" />
-                     </font>
-                  </Label>
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="59.0" spacing="24.0" AnchorPane.leftAnchor="1075.0" AnchorPane.topAnchor="1466.0">
+                     <children>
+                        <ImageView fx:id="ivStep1" fitHeight="59.0" fitWidth="59.0" onMouseClicked="#ivStep1Handler" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../res/images/step1_bleu.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ivStep2" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#ivStep2Handler" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../res/images/step2.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ivStep3" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="93.0" onMouseClicked="#ivStep3Handler" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../res/images/step3.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="ivStep4" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="176.0" onMouseClicked="#ivStep4Handler" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../res/images/step4.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="680.0" spacing="24.0" AnchorPane.leftAnchor="1158.0" AnchorPane.topAnchor="1310.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="423.0" text="Créer un compte" textAlignment="CENTER" textFill="#707070">
+                           <font>
+                              <Font name="Montserrat Bold" size="48.0" />
+                           </font>
+                        </Label>
+                        <Pane fx:id="stepPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="680.0" />
+                        <Button fx:id="continuerBtn" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#continuerBtnHandler" prefHeight="91.0" prefWidth="423.0" styleClass="buttonContinuer" text="Continuer" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="32.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </children>
