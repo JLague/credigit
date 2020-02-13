@@ -43,7 +43,7 @@ public class DataTransition {
 	/**
 	 * Les questions de sécurité du client
 	 */
-	private ArrayList<String> questions;
+	private ArrayList<Questions> questions;
 	
 	/**
 	 * Les réponses des questions de sécurité du client
@@ -161,7 +161,7 @@ public class DataTransition {
 	 * Retourne la liste de questions du clients
 	 * @return La liste de questions du clients
 	 */
-	public ArrayList<String> getQuestions() {
+	public ArrayList<Questions> getQuestions() {
 		return questions;
 	}
 
@@ -169,7 +169,7 @@ public class DataTransition {
 	 * Modifie la liste de questions du clients
 	 * @param questions - La liste de questions du clients à modifier
 	 */
-	public void setQuestions(ArrayList<String> questions) {
+	public void setQuestions(ArrayList<Questions> questions) {
 		this.questions = questions;
 	}
 
