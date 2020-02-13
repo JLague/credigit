@@ -1,3 +1,4 @@
+package pos.modele;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,7 +46,7 @@ public class Transaction {
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
-		super(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long)System.currentTimeMillis()));
+		this(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long)System.currentTimeMillis()));
 	}
 
 	/**
