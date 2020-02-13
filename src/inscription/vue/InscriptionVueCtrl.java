@@ -192,7 +192,7 @@ public class InscriptionVueCtrl {
 	@FXML
 	void emailTextFieldHandler(KeyEvent event) {
 		
-		if(!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9]"))
+		if(!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9\u002D]"))
 		{
 			event.consume();
 		}
