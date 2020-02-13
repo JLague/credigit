@@ -48,7 +48,7 @@ public class LocalAdresse {
 	 * @param etat - L'état
 	 * @param pays - Le pays
 	 */
-	public LocalAdresse(String adresse, int appartement, String codePostal, String ville, String etat, String pays)
+	public LocalAdresse(String adresse, int appartement, String codePostal, String ville, String etat, String pays) throws ExceptionCreationCompte
 	{
 		
 		setAdresse(adresse);
@@ -68,7 +68,7 @@ public class LocalAdresse {
 	 * @param etat - L'état
 	 * @param pays - Le pays
 	 */
-	public LocalAdresse(String adresse, String codePostal, String ville, String etat, String pays)
+	public LocalAdresse(String adresse, String codePostal, String ville, String etat, String pays) throws ExceptionCreationCompte
 	{
 		
 		setAdresse(adresse);
@@ -92,11 +92,15 @@ public class LocalAdresse {
 	 * Modifie l'adresse du client
 	 * @param adresse - La nouvelle adresse du client
 	 */
-	private void setAdresse(String adresse) 
+	private void setAdresse(String adresse) throws ExceptionCreationCompte
 	{
 		if(validerAdresse(adresse))
 		{
 			this.adresse = adresse;
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre adresse n'est pas valide.");
 		}
 		
 	}
@@ -114,11 +118,15 @@ public class LocalAdresse {
 	 * Modifie le numéro d'appartement du client
 	 * @param appartement - Le nouveau numéro d'appartement du client
 	 */
-	private void setAppartement(int appartement) 
+	private void setAppartement(int appartement) throws ExceptionCreationCompte
 	{
 		if(validerAppartement(appartement))
 		{
 			this.appartement = appartement;
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre numéro d'appartement n'est pas valide.");
 		}
 		
 	}
@@ -136,12 +144,15 @@ public class LocalAdresse {
 	 * Modifie le code postal du client
 	 * @param codePostal - Le nouveau code postal du client
 	 */
-	private void setCodePostal(String codePostal) 
+	private void setCodePostal(String codePostal) throws ExceptionCreationCompte
 	{
 		if(validerCodePostal(codePostal))
 		{
-			
 			this.codePostal = arrangerString(codePostal);
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre code postal n'est pas valide.");
 		}
 		
 	}
@@ -159,11 +170,15 @@ public class LocalAdresse {
 	 * Modifie la ville du client
 	 * @param ville - la nouvelle ville du client
 	 */
-	private void setVille(String ville) 
+	private void setVille(String ville) throws ExceptionCreationCompte
 	{
 		if(validerString(ville))
 		{
 			this.ville = arrangerString(ville);
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre ville n'est pas valide.");
 		}
 	}
 
@@ -180,11 +195,15 @@ public class LocalAdresse {
 	 * Modifie l'état du client
 	 * @param etat - Le nouvel état du client
 	 */
-	private void setEtat(String etat) 
+	private void setEtat(String etat) throws ExceptionCreationCompte 
 	{
 		if(validerString(etat))
 		{
 			this.etat = arrangerString(etat);
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre état n'est pas valide.");
 		}
 	}
 
@@ -201,11 +220,15 @@ public class LocalAdresse {
 	 * Modifie le pays du client
 	 * @param pays - Le nouvel état du client
 	 */
-	private void setPays(String pays) 
+	private void setPays(String pays) throws ExceptionCreationCompte
 	{
 		if(validerString(pays))
 		{
 			this.pays = arrangerString(pays);
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre pays n'est pas valide.");
 		}
 	}
 	
@@ -233,7 +256,7 @@ public class LocalAdresse {
 	{
 		boolean valide = false;
 		
-		if(appartement > 0)
+		if(appartement > 0 && appartement < 10000)
 			valide = true;
 		
 		return valide;
