@@ -1,9 +1,9 @@
 package pos.modele;
 
-public class DataVue {
+public class Produit {
 	
 	/**
-	 * Le SKU du produit
+	 * Le sku du produit
 	 */
 	private long sku;
 	
@@ -32,6 +32,16 @@ public class DataVue {
 	 */
 	private String description;
 
+	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, String description)
+	{
+		this.sku = sku;
+		this.nom = nom;
+		this.prix = prix;
+		this.coutant = coutant;
+		this.fournisseur = fournisseur;
+		this.description = description;
+	}
+	
 	/**
 	 * @return the sku
 	 */
@@ -116,5 +126,10 @@ public class DataVue {
 		this.description = description;
 	}
 	
+	@Override
+	public String toString()
+	{
+		return this.nom;
+	}
 	
 }
