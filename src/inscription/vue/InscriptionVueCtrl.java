@@ -137,7 +137,6 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void decouvrirHandler(MouseEvent event) {
-		System.out.println("Click");
 		Timeline scroll = new Timeline();
 		scroll.setCycleCount(1);
 		scroll.setAutoReverse(false);
