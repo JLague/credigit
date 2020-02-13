@@ -151,22 +151,22 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
-		int nouvelleEtape = 0;
-		switch (etapeActuelle) {
-		case 1:
-			stepPane.getChildren().clear();
-			stepPane.getChildren().add(etapes.get(1));
-			ivStep1.setImage(new Image(getClass().getResource("step1.png").getPath()));
-			nouvelleEtape = 2;
-			break;
-
-		case 2:
-			stepPane.getChildren().clear();
-			stepPane.getChildren().add(etapes.get(1));
-			nouvelleEtape = 2;
-			break;
-
-		}
+//		int nouvelleEtape = 0;
+//		switch (etapeActuelle) {
+//		case 1:
+//			stepPane.getChildren().clear();
+//			stepPane.getChildren().add(etapes.get(1));
+//			ivStep1.setImage(new Image(getClass().getResource("step1.png").getPath()));
+//			nouvelleEtape = 2;
+//			break;
+//
+//		case 2:
+//			stepPane.getChildren().clear();
+//			stepPane.getChildren().add(etapes.get(1));
+//			nouvelleEtape = 2;
+//			break;
+//
+//		}
 	}
 
 	@FXML
@@ -191,26 +191,50 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void emailTextFieldHandler(KeyEvent event) {
+		
+		if(!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9]"))
+		{
+			event.consume();
+		}
 
 	}
 
 	@FXML
 	void nasTextFieldHandler(KeyEvent event) {
+		
+		if(!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(" "))
+		{
+			event.consume();
+		}
 
 	}
 
 	@FXML
 	void nomTextFieldHandler(KeyEvent event) {
-
+		
+		if(!event.getCharacter().matches("[A-z\u0080-\u00ff]"))
+		{
+			event.consume();
+		}
 	}
 
 	@FXML
 	void prenomTextFieldHandler(KeyEvent event) {
+		
+		if(!event.getCharacter().matches("[A-z\u0080-\u00ff]"))
+		{
+			event.consume();
+		}
 
 	}
 
 	@FXML
 	void telephoneTextFieldHandler(KeyEvent event) {
+		
+		if(!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("-"))
+		{
+			event.consume();
+		}
 
 	}
 

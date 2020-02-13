@@ -28,7 +28,7 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" promptText="Date de naissance (AAAA/MM/JJ)*" styleClass="datePickerInscription" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0" />
+      <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" promptText="Date de naissance (AAAA-MM-JJ)*" styleClass="datePickerInscription" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0" />
       <TextField fx:id="nasTextField" layoutX="10.0" layoutY="259.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#nasTextFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="NAS*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="332.0">
          <font>
             <Font size="24.0" />
