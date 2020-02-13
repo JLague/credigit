@@ -1,6 +1,10 @@
 package inscription.vue;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import inscription.controleur.InscriptionCtrl;
 import javafx.animation.Interpolator;
@@ -69,8 +73,25 @@ public class InscriptionVueCtrl {
 	@FXML
 	private TextField nasTextField;
 
+	@FXML
+	private TextField villeTextField;
+
+	@FXML
+	private TextField provinceTextField;
+
+	@FXML
+	private TextField adresseTextField;
+
+	@FXML
+	private TextField appartementTextField;
+
+	@FXML
+	private TextField codePostalTextField1;
+
 	private InscriptionCtrl ctrl;
 	private Scene scene;
+	private int etapeActuelle = 1;
+	private List<Pane> etapes;
 
 	public InscriptionVueCtrl(InscriptionCtrl ctrl) {
 		this.ctrl = ctrl;
@@ -79,13 +100,20 @@ public class InscriptionVueCtrl {
 
 			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("InscriptionVue.fxml"));
 			FXMLLoader step1Loader = new FXMLLoader(getClass().getResource("step1Vue.fxml"));
+			FXMLLoader step2Loader = new FXMLLoader(getClass().getResource("step2Vue.fxml"));
 
 			mainLoader.setController(this);
 			step1Loader.setController(this);
+			step2Loader.setController(this);
 
 			root = mainLoader.load();
 
 			Pane step1Pane = step1Loader.load();
+			Pane step2Pane = step2Loader.load();
+			etapes = new ArrayList<Pane>();
+			etapes.add(step1Pane);
+			etapes.add(step2Pane);
+
 			stepPane.getChildren().add(step1Pane);
 
 			scene = new Scene(root);
@@ -122,7 +150,22 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
+		int nouvelleEtape = 0;
+		switch (etapeActuelle) {
+		case 1:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(1));
+			ivStep1.setImage(new Image(getClass().getResource("step1.png").getPath()));
+			nouvelleEtape = 2;
+			break;
 
+		case 2:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(1));
+			nouvelleEtape = 2;
+			break;
+
+		}
 	}
 
 	@FXML
@@ -167,6 +210,31 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void telephoneTextFieldHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	void adresseTextFieldHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	void appartementTextFieldHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	void codePostalFieldHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	void provinceTextFieldHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	void villeTextFieldHandler(KeyEvent event) {
 
 	}
 
