@@ -1,5 +1,6 @@
 package pos.modele;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Etablissement {
@@ -23,68 +24,78 @@ public class Etablissement {
 	/**
 	 * Balance de la compagnie
 	 */
-	private float balance;
-	
+	private float balance = 0;
+
 	public Etablissement(String nom, String adresse) {
-		// TODO Auto-generated constructor stub
+		super(nom, adresse, new ArrayList<Produit>(), new ArrayList<Transaction>(), 0f );
 	}
-	
-	
-	
+
+	public Etablissement(String nom, String adresse, List<Produit> inventaire, List<Transaction> transactions, float balance) {
+	}
+
 	/**
 	 * @return le nom
 	 */
 	public String getNom() {
 		return nom;
 	}
+
 	/**
 	 * @param nom le nom à modifier
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
 	/**
 	 * @return le adresse
 	 */
 	public String getAdresse() {
 		return adresse;
 	}
+
 	/**
 	 * @param adresse le adresse à modifier
 	 */
 	public void setAdresse(String adresse) {
 		this.adresse = adresse;
 	}
+
 	/**
 	 * @return le inventaire
 	 */
 	public List<Produit> getInventaire() {
 		return inventaire;
 	}
+
 	/**
 	 * @param inventaire le inventaire à modifier
 	 */
 	public void setInventaire(List<Produit> inventaire) {
 		this.inventaire = inventaire;
 	}
+
 	/**
 	 * @return le utilisateurs
 	 */
 	public List<Utiliseur> getUtilisateurs() {
 		return utilisateurs;
 	}
+
 	/**
 	 * @param utilisateurs le utilisateurs à modifier
 	 */
 	public void setUtilisateurs(List<Utiliseur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
+
 	/**
 	 * @return le balance
 	 */
 	public float getBalance() {
 		return balance;
 	}
+
 	/**
 	 * @param balance le balance à modifier
 	 */
