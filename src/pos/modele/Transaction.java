@@ -1,5 +1,7 @@
 package pos.modele;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +37,16 @@ public class Transaction {
 	 * Numéro de la transaction
 	 */
 	private long numero;
+	/**
+	 * Établissement qui délivre la facture
+	 */
+	private Etablissement etablissement;
 
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
+		Transaction(this.etablissement, this.getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), System.currentTimeMillis() );
 	}
 
 	/**
@@ -51,19 +58,28 @@ public class Transaction {
 	 * @param produits         - liste des produits qui seront chargés au client
 	 *                         (panier)
 	 */
-	public Transaction(Etablissement etablissement, String heure, float pourcentageTaxes, ArrayList<Produit> produits) {
+	public Transaction(Etablissement etablissement, String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
+	}
+
+	public String getHeureCourrante() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+		return dtf.format(now);
 	}
 
 	/**
 	 * @return l'objet qui représente l'établissement
 	 */
 	public Etablissement getEtablissement() {
+		return etablissement;
 	}
 
 	/**
 	 * Change l'établissement de la présente facture
 	 */
-	public void setEtablissement() {
+	public void setEtablissement(Etablissement etablissement) {
+		this.etablissement = etablissement;
+		
 	}
 
 	/**
@@ -89,9 +105,11 @@ public class Transaction {
 
 	/**
 	 * set la liste de produits (le panier)
+	 * 
 	 * @param produits
 	 */
 	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
 	}
 
 	/**
@@ -103,6 +121,7 @@ public class Transaction {
 
 	/**
 	 * modifie le numéro de la facture
+	 * 
 	 * @param numero
 	 */
 	public void setNumero(long numero) {
@@ -111,16 +130,20 @@ public class Transaction {
 
 	/**
 	 * Ajouter un produit au pos
+	 * 
 	 * @param produit à ajouter
 	 */
 	public void addproduit(Produit produit) {
+		// TODO
 	}
 
 	/**
 	 * Ajouter des produits au panier de l'utilisatuer
+	 * 
 	 * @param produits à ajouter
 	 */
 	public void addproduits(List<Produit> produits) {
+		// TODO
 	}
 
 	/**
@@ -132,6 +155,7 @@ public class Transaction {
 
 	/**
 	 * set le pourcentage de taxe
+	 * 
 	 * @param pourcentageTaxes - le nouveau pourcentage de taxe
 	 */
 	public void setPourcentageTaxes(float pourcentageTaxes) {
@@ -139,7 +163,7 @@ public class Transaction {
 	}
 
 	/**
-	 * @return 
+	 * @return
 	 */
 	public float getSousTotal() {
 		return sousTotal;
@@ -173,7 +197,7 @@ public class Transaction {
 	public float getMontantTotal() {
 		return montantTotal;
 	}
-	
+
 	public String toString() {
 		return "numero";
 	}
