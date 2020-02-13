@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -97,7 +98,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * Pane au centre de la vue
 	 */
 	@FXML
-	private Pane middlePane;
+	private VBox middlePane;
 
 	private GridPane clavierGrid;
 
@@ -134,6 +135,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		// TODO mettre la vue des produits lors du chargement
 		middlePane.getChildren().add(clavierBox);
+		middlePane.setAlignment(Pos.TOP_CENTER);
 	}
 
 	/**
@@ -141,30 +143,38 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * vue
 	 */
 	private void chargerClavier() {
-		clavierBox = new VBox(20);
+		clavierBox = new VBox();
+		clavierBox.setAlignment(Pos.CENTER);
+
 
 		clavierText = new TextField();
+		clavierText.setMinHeight(50);
+		clavierText.setMaxWidth(500);
 		clavierText.setEditable(false);
 		clavierText.getStyleClass().add("clavier-text");
 		clavierText.setAlignment(Pos.CENTER_RIGHT);
 
 		clavierGrid = new GridPane();
+		clavierGrid.setAlignment(Pos.CENTER);
+		
 		clavierButtons = new Button[4][4];
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				if (!(i == 2 && j == 3)) {
 					GridPane.setConstraints(clavierButtons[i][j] = new Button(CLAVIER[i][j]), j, i);
 					clavierGrid.getChildren().add(clavierButtons[i][j]);
-					clavierButtons[i][j].setMinSize(100, 100);
+					clavierButtons[i][j].setMinSize(150, 150);
 					clavierButtons[i][j].getStyleClass().add("clavier-buttons");
 				}
 			}
 		}
+		
+		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
 	}
 
 	/**
-	 * Méthode qui permet de charger le deuxième fichier FXML
+	 * Méthode qui permet de charger un fichier FXML
 	 */
 	private void creerScene(String url, Pane root) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(url));

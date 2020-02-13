@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
@@ -28,7 +27,7 @@
                   <Image url="@../../../res/images/logo_credigit.png" />
                </image>
             </ImageView>
-            <TextField fx:id="searchBar" prefHeight="39.0" prefWidth="1000.0" promptText="🔍 Rechercher" styleClass="search-bar">
+            <TextField fx:id="searchBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="1000.0" promptText="🔍 Rechercher" styleClass="search-bar">
                <font>
                   <Font size="18.0" />
                </font>
@@ -100,26 +99,32 @@
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label layoutX="217.0" layoutY="2.0" styleClass="big-text" text="Label" />
+                        <Label layoutX="208.0" layoutY="1.0" styleClass="big-text" text="Label" />
                      </children>
                   </AnchorPane>
                </children>
             </GridPane>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="280.0" styleClass="buttons-1" text="Argent">
+            <Button maxHeight="60.0" maxWidth="300.0" minHeight="60.0" minWidth="300.0" mnemonicParsing="false" styleClass="buttons-2" text="Argent">
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets bottom="20.0" top="20.0" />
                </VBox.margin>
                <font>
                   <Font size="24.0" />
                </font>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="280.0" styleClass="buttons-1" text="Empreinte">
+            <Button maxHeight="60.0" maxWidth="300.0" minHeight="60.0" minWidth="300.0" mnemonicParsing="false" styleClass="buttons-2" text="Empreinte">
                <VBox.margin>
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="24.0" />
                </font>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </Button>
          </children>
          <padding>
@@ -128,26 +133,32 @@
       </VBox>
    </right>
    <left>
-      <VBox alignment="TOP_CENTER" prefHeight="941.0" prefWidth="297.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="941.0" prefWidth="297.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="produitBtn" alignment="TOP_LEFT" mnemonicParsing="false" styleClass="transparent-btn" text="📦 Produits">
+            <Button fx:id="produitBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="180.0" minHeight="50.0" minWidth="180.0" mnemonicParsing="false" styleClass="transparent-btn" text="📦 Produits">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="clavierBtn" alignment="TOP_LEFT" mnemonicParsing="false" styleClass="transparent-btn" text="🖮 Clavier">
+            <Button fx:id="clavierBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="160.0" minHeight="50.0" minWidth="160.0" mnemonicParsing="false" styleClass="transparent-btn" text="🖮 Clavier">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
       </VBox>
    </left>
    <center>
-      <Pane fx:id="middlePane" BorderPane.alignment="CENTER">
+      <VBox fx:id="middlePane" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="40.0" left="20.0" right="40.0" />
          </BorderPane.margin>
-      </Pane>
+      </VBox>
    </center>
 </BorderPane>

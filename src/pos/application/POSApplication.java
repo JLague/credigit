@@ -35,7 +35,7 @@ public class POSApplication extends Application {
 	public void chargerScene(Scene scene, String title) {
 		stage.setScene(scene);
 		stage.setTitle(title);
-		stage.sizeToScene();
-		//stage.setFullScreen(true);
+		//stage.sizeToScene();
+		stage.setFullScreen(true);
 	}
 }

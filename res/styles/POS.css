@@ -1,11 +1,12 @@
-.buttons-1 {
+.buttons-1, .buttons-2 {
+	-fx-background-insets: 0;
 	-fx-background-color: transparent;
 	-fx-border-width: 2px;
 	-fx-border-radius: 15px;
 	-fx-border-color: white;
 }
 
-.buttons-1:hover {
+.buttons-1:hover, .buttons-2:hover {
 	-fx-background-color: white;
 	-fx-background-radius: 15px;
 	-fx-text-fill: #0D1837;
@@ -44,11 +45,11 @@
 	-fx-background-color: #1281E4;
 	-fx-background-insets: 10;
 	-fx-border-radius: 0;
-	-fx-font-size: 35;
+	-fx-font-size: 45;
 }
 
 /* Text */
-.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .clavier-buttons, .clavier-text {
+.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
 	-fx-font-weight: bold;
@@ -62,6 +63,7 @@
 	-fx-background-color:transparent;
 }
 
-.big-text {
-	-fx-font-size: 20px;
+/* Big text */
+.big-text, .buttons-2, .transparent-btn {
+	-fx-font-size: 25px;
 }
