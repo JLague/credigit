@@ -5,6 +5,19 @@
 	-fx-border-color: white;
 }
 
+.buttons-1:hover {
+	-fx-background-color: white;
+	-fx-background-radius: 15px;
+	-fx-text-fill: #0D1837;
+}
+
+.clavier-text {
+	-fx-background-color: transparent;
+	-fx-border-width: 2px;
+	-fx-border-radius: 15px;
+	-fx-border-color: white;
+}
+
 .fields-1 {
 	-fx-background-color: rgba(255, 255, 255, 0.3); /* Blanc presque transparent */
 	-fx-prompt-text-fill: white;
@@ -27,21 +40,28 @@
 	
 }
 
-.big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1 {
+.clavier-buttons {
+	-fx-background-color: #1281E4;
+	-fx-background-insets: 10;
+	-fx-border-radius: 0;
+	-fx-font-size: 35;
+}
+
+/* Text */
+.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .clavier-buttons, .clavier-text {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bolder;
+	-fx-font-weight: bold;
+}
+
+.title {
+	-fx-font-size: 35px;
+}
+
+.table-view {
+	-fx-background-color:transparent;
 }
 
 .big-text {
 	-fx-font-size: 20px;
-}
-
-/* latin */
-@font-face {
-  font-family: 'Montserrat';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Montserrat Regular'), local('Montserrat-Regular'), url(https://fonts.gstatic.com/s/montserrat/v14/JTUSjIg1_i6t8kCHKm459Wlhyw.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

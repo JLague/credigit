@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,21 +13,22 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox fx:id="topBox" alignment="CENTER" prefHeight="139.0" prefWidth="1920.0" spacing="200.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="topBox" alignment="CENTER" prefHeight="139.0" prefWidth="1920.0" spacing="180.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" scaleX="2.0" scaleY="1.3" translateX="70.0">
                <image>
                   <Image url="@../../../res/images/logo_credigit.png" />
                </image>
             </ImageView>
-            <TextField fx:id="searchBar" prefHeight="39.0" prefWidth="1007.0" promptText="🔍 Rechercher" styleClass="search-bar">
+            <TextField fx:id="searchBar" prefHeight="39.0" prefWidth="1000.0" promptText="🔍 Rechercher" styleClass="search-bar">
                <font>
                   <Font size="18.0" />
                </font>
@@ -48,7 +48,10 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
                <children>
-                  <Label styleClass="big-text" text="Facture" />
+                  <Label layoutY="57.0" styleClass="title" text="Facture" textFill="WHITE">
+                     <font>
+                        <Font name="Noto Serif Tibetan Regular" size="13.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <Line endX="344.0857849121094" startX="-170.0" stroke="WHITE" strokeType="OUTSIDE">
@@ -56,7 +59,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Line>
-            <TableView prefHeight="200.0" prefWidth="505.0" style="-fx-background-color: transparent;">
+            <TableView prefHeight="200.0" prefWidth="505.0">
               <columns>
                 <TableColumn prefWidth="75.0" text="Produit(s)" />
                 <TableColumn prefWidth="75.0" text="Quantité" />
@@ -87,17 +90,17 @@
                   <Label styleClass="big-text" text="Total" GridPane.rowIndex="2" />
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Label alignment="BOTTOM_LEFT" layoutX="231.0" layoutY="7.0" styleClass="text" text="Label" />
+                        <Label alignment="CENTER_RIGHT" layoutX="236.0" layoutY="7.0" styleClass="text" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label layoutX="231.0" layoutY="8.0" styleClass="text" text="Label" AnchorPane.rightAnchor="0.0" />
+                        <Label alignment="CENTER_RIGHT" layoutX="236.0" layoutY="6.0" styleClass="text" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label layoutX="210.0" layoutY="2.0" styleClass="big-text" text="Label" />
+                        <Label layoutX="217.0" layoutY="2.0" styleClass="big-text" text="Label" />
                      </children>
                   </AnchorPane>
                </children>
@@ -127,12 +130,12 @@
    <left>
       <VBox alignment="TOP_CENTER" prefHeight="941.0" prefWidth="297.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="produitBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="51.0" prefWidth="250.0" styleClass="transparent-btn" text="📦 Produits">
+            <Button fx:id="produitBtn" alignment="TOP_LEFT" mnemonicParsing="false" styleClass="transparent-btn" text="📦 Produits">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="clavierBtn" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="51.0" prefWidth="250.0" styleClass="transparent-btn" text="🖮 Clavier">
+            <Button fx:id="clavierBtn" alignment="TOP_LEFT" mnemonicParsing="false" styleClass="transparent-btn" text="🖮 Clavier">
                <font>
                   <Font size="24.0" />
                </font>
@@ -141,13 +144,10 @@
       </VBox>
    </left>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
+      <Pane fx:id="middlePane" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="40.0" left="20.0" right="40.0" />
          </BorderPane.margin>
-      </ScrollPane>
+      </Pane>
    </center>
 </BorderPane>

@@ -29,8 +29,8 @@ public class POSControleur implements IPOSControleur {
 	/**
 	 * Load la vue principale du POS à l'aide de l'application
 	 */
-	public void chargerVuePOS() {
-		app.chargerVuePOS();
+	public void chargerScene(Scene scene, String title) {
+		app.chargerScene(scene, title);
 	}
 
 	@Override
