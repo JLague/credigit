@@ -1,14 +1,20 @@
 package inscription.modele;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import pos.modele.Transaction;
 
 /**
  * Cette classe permet de créer des clients.
  * @author Bank-era Corp.
  *
  */
-public class DataClient {
+public class Client {
 
+	public static final int MAJORITE = 18;
+	
 	/**
 	 * Le nom du client
 	 */
@@ -55,19 +61,14 @@ public class DataClient {
 	private byte[] empreinte;
 	
 	/**
-	 * La banque du client
-	 */
-	private Banque banque;
-	
-	/**
 	 * Les questions de sécurité du client
 	 */
-	private String[] questions;
+	private ArrayList<String> questions;
 	
 	/**
 	 * Les réponses des questions de sécurité du client
 	 */
-	private String[] reponses;
+	private ArrayList<String> reponses;
 	
 	/**
 	 * Le numéro de téléphone du client
@@ -77,26 +78,35 @@ public class DataClient {
 	/**
 	 * Les transactions du client
 	 */
-	private Transaction[] transaction;
+	private ArrayList<Transaction> transaction;
 	
 	
 
-	public DataClient(DataTransition data) {
-		super();
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.date = date;
-		this.adresse = adresse;
-		this.nas = nas;
-		this.solde = solde;
-		this.limiteCredit = limiteCredit;
-		this.empreinte = empreinte;
-		this.banque = banque;
-		this.questions = questions;
-		this.reponses = reponses;
-		this.numero = numero;
-		this.transaction = transaction;
+	public Client(DataTransition data) {
+		
+		setNom(data.getNom());
+		setPrenom(data.getPrenom());
+		setEmail(data.getEmail());
+		setDate(data.getDate());
+		setAdresse(data.getAdresse());
+		setNas(data.getNas());
+		setQuestions(data.getQuestions());
+		setReponses(data.getReponses());
+		setNumero(data.getNumero());
+		setEmpreinte(data.getEmpreinte());
+		
+		ajouterInfoCompte();
+		
+	}
+	
+	/**
+	 * Ajoute les informations du compte tels que la liste de transaction, le solde et la limite de credit
+	 */
+	private void ajouterInfoCompte()
+	{
+		transaction = new ArrayList<Transaction>();
+		setSolde(0);
+		setLimiteCredit(500);
 	}
 
 	/**
@@ -112,7 +122,8 @@ public class DataClient {
 	 * @param nom - Le nom du client à modifier
 	 */
 	private void setNom(String nom) {
-
+		
+		if(validerNom(nom))
 			this.nom = nom;
 	}
 
@@ -129,7 +140,9 @@ public class DataClient {
 	 * @param prenom - Le prénom du client à modifier
 	 */
 	private void setPrenom(String prenom) {
-		this.prenom = prenom;
+		
+		if(validerNom(prenom))
+			this.prenom = prenom;
 	}
 
 	/**
@@ -145,7 +158,9 @@ public class DataClient {
 	 * @param email - Le email du client à modfier
 	 */
 	private void setEmail(String email) {
-		this.email = email;
+		
+		if(email != null && email.length() != 0)
+			this.email = email;
 	}
 
 	/**
@@ -161,7 +176,9 @@ public class DataClient {
 	 * @param date - La date de naissance du client à modifier
 	 */
 	private void setDate(LocalDate date) {
-		this.date = date;
+		
+		if(date != null && date.getYear() > 1910 && validerMajeur(date))
+			this.date = date;
 	}
 
 	/**
@@ -177,7 +194,9 @@ public class DataClient {
 	 * @param adresse - L'adresse du client à modifier
 	 */
 	private void setAdresse(LocalAdresse adresse) {
-		this.adresse = adresse;
+		
+		if(adresse != null)
+			this.adresse = adresse;
 	}
 
 	/**
@@ -193,7 +212,9 @@ public class DataClient {
 	 * @param nas - Le NAS du client à modifier
 	 */
 	private void setNas(String nas) {
-		this.nas = nas;
+		
+		if(validerNas(nas))
+			this.nas = nas;
 	}
 	
 	/**
@@ -241,30 +262,17 @@ public class DataClient {
 	 * @param empreinte - L'empreinte du client à modifier
 	 */
 	private void setEmpreinte(byte[] empreinte) {
-		this.empreinte = empreinte;
+		
+		if(empreinte != null && empreinte.length != 0)
+			this.empreinte = empreinte;
 	}
 
-	/**
-	 * Retourne la banque du client
-	 * @return La banque du client
-	 */
-	public Banque getBanque() {
-		return banque;
-	}
-
-	/**
-	 * Modifie la banque du client
-	 * @param banque - La banque du client à modifier
-	 */
-	private void setBanque(Banque banque) {
-		this.banque = banque;
-	}
 
 	/**
 	 * Retourne la liste de questions du clients
 	 * @return La liste de questions du clients
 	 */
-	public String[] getQuestions() {
+	public ArrayList<String> getQuestions() {
 		return questions;
 	}
 
@@ -272,15 +280,17 @@ public class DataClient {
 	 * Modifie la liste de questions du clients
 	 * @param questions - La liste de questions du clients à modifier
 	 */
-	private void setQuestions(String[] questions) {
-		this.questions = questions;
+	private void setQuestions(ArrayList<String> questions) {
+		
+		if(questions != null && questions.size() == 2)
+			this.questions = questions;
 	}
 
 	/**
 	 * Retourne la liste de réponses du client
 	 * @return La liste de réponses du client
 	 */
-	public String[] getReponses() {
+	public ArrayList<String> getReponses() {
 		return reponses;
 	}
 
@@ -288,8 +298,10 @@ public class DataClient {
 	 * Modifie la liste de réponses du client
 	 * @param reponses - La liste de réponses du client à modifier
 	 */
-	private void setReponses(String[] reponses) {
-		this.reponses = reponses;
+	private void setReponses(ArrayList<String> reponses) {
+		
+		if(reponses != null && reponses.size() == 2)
+			this.reponses = reponses;
 	}
 
 	/**
@@ -305,6 +317,8 @@ public class DataClient {
 	 * @param numero - Le numéro de téléphone du client à modifier
 	 */
 	private void setNumero(String numero) {
+		
+		//À faire
 		this.numero = numero;
 	}
 
@@ -312,10 +326,84 @@ public class DataClient {
 	 * Retourne les transactions du client
 	 * @return Les transactions du client
 	 */
-	public Transaction[] getTransaction() {
+	public ArrayList<Transaction> getTransaction() {
 		return transaction;
 	}
 
+	/**
+	 * Valider que le nom n'est pas nulle ou vide
+	 * @param nom - Le nom à valider
+	 * @return Vrai si valide sinon faux
+	 */
+	private boolean validerNom(String nom)
+	{
+		boolean valide = false;
+		
+		nom = arrangerString(nom);
+
+		if(nom != null && nom.length() != 0)
+			valide = true;
+		
+		return valide;
+	}
 	
+	/**
+	 * Enlève les espaces de la string et mets les lettres en majuscule
+	 * @param code - La string à formatter
+	 */
+	private String arrangerString(String code)
+	{
+		code = code.trim();
+		code = code.toUpperCase();
+
+		return code;
+	}
 	
+	/**
+	 * Valide que la personne est majeure
+	 * 
+	 * @param date - La date de naissance de la personne
+	 * @return Vrai si majeur, sinon faux
+	 */
+	private boolean validerMajeur(LocalDate date)
+	{
+		boolean majeur = false;
+		
+		if(LocalDateTime.now().toLocalDate().getYear() - date.getYear() > MAJORITE)
+		{
+			majeur = true;
+		}
+		else if(LocalDateTime.now().toLocalDate().getYear() - date.getYear() > MAJORITE -1)
+		{
+			if(LocalDateTime.now().toLocalDate().getMonthValue() - date.getMonthValue() > 0)
+			{
+				majeur = true;
+			}
+			else if(LocalDateTime.now().toLocalDate().getMonthValue() - date.getMonthValue() == 0)
+			{
+				if(LocalDateTime.now().toLocalDate().getDayOfMonth() - date.getDayOfMonth() > 0)
+				{
+					majeur = true;
+				}
+			}
+		}
+		
+		return majeur;
+	}
+	
+	private boolean validerNas(String Nas)
+	{
+		//Valider que c'est 9 chiffres?
+		
+		boolean valide = false;
+		
+		Nas = Nas.replaceAll(" ", "");
+		
+		if(Nas.length() == 9)
+		{
+			valide = true;
+		}
+		
+		return valide;
+	}
 }

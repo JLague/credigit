@@ -274,14 +274,14 @@ public class LocalAdresse {
 	}
 	
 	/**
-	 * Enlève les espaces du code postal et mets les lettres en majuscule
-	 * @param code
+	 * Enlève les espaces de la string et mets les lettres en majuscule
+	 * @param code - La string à formatter
 	 */
 	private String arrangerString(String code)
 	{
-		code.trim();
-		code.toUpperCase();
-		code.replaceAll(" ", "");
+		code = code.trim();
+		code = code.toUpperCase();
+		code = code.replaceAll(" ", "");
 		
 		return code;
 	}
