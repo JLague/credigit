@@ -1,4 +1,3 @@
-package pos.modele;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +23,7 @@ public class Transaction {
 	/**
 	 * Pourcentage de taxe a appliqué
 	 */
-	private float pourcentageTaxes = 0.15f;
+	private static float pourcentageTaxes = 0.15f;
 	/**
 	 * Montant de taxe que nous devons rajouter à la facture
 	 */
@@ -46,7 +45,7 @@ public class Transaction {
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
-		Transaction(this.etablissement, this.getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), System.currentTimeMillis() );
+		super(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long)System.currentTimeMillis()));
 	}
 
 	/**
@@ -58,13 +57,13 @@ public class Transaction {
 	 * @param produits         - liste des produits qui seront chargés au client
 	 *                         (panier)
 	 */
-	public Transaction(Etablissement etablissement, String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
+	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
 	}
 
-	public String getHeureCourrante() {
+	public static String getHeureCourrante() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
-		return dtf.format(now);
+		return ("" + dtf.format(now));
 	}
 
 	/**
