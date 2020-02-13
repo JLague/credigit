@@ -1,4 +1,4 @@
-package inscription.modele;
+package pos.modele;
 
 public class Transaction {
 
