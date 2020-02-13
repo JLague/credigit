@@ -2,6 +2,7 @@ package pos.ctrl;
 
 import javafx.scene.Scene;
 import pos.application.POSApplication;
+import pos.modele.DataVue;
 import pos.vue.POSControleurVue;
 
 public class POSControleur implements IPOSControleur {
@@ -36,5 +37,47 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public Scene getScene() {
 		return vue.getScene();
+	}
+
+	@Override
+	public void annulerItem() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void annulerCommande() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void produitSelectionne(int ligne, int colonne) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void inputEntree(String input) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void creerProduit(DataVue data) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean connexion(String username, String password) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void paiementEmpreinte() {
+		// TODO Auto-generated method stub
+		
 	}
 }

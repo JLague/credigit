@@ -2,6 +2,7 @@ package pos.vue;
 
 import java.io.IOException;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -9,12 +10,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
+import pos.modele.LigneFacture;
+import pos.modele.Produit;
 
 public class POSControleurVue implements IPOSControleurVue {
 
@@ -99,6 +105,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private VBox middlePane;
+	
+	@FXML
+	private TableView<LigneFacture> factureTable;
 
 	private GridPane clavierGrid;
 
@@ -107,6 +116,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	private VBox clavierBox;
 
 	private TextField clavierText;
+	
+	private ObservableList<LigneFacture> facture;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -132,10 +143,35 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		// Chargement de la vue
 		chargerClavier();
+		chargerTableView();
 
 		// TODO mettre la vue des produits lors du chargement
 		middlePane.getChildren().add(clavierBox);
 		middlePane.setAlignment(Pos.TOP_CENTER);
+	}
+
+	private void chargerTableView() {
+		factureTable.getStyleClass().add("table-view");
+		factureTable.setEditable(false);
+		
+		TableColumn<LigneFacture, String> column1 = new TableColumn<>("Produit(s)");
+		column1.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		column1.getStyleClass().add("align-left");
+		
+		
+		TableColumn<LigneFacture, Float> column2 = new TableColumn<>("Quantité");
+		column2.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+		column2.getStyleClass().add("align-center");
+		
+		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
+		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
+		column3.getStyleClass().add("align-right");
+		
+		factureTable.getColumns().addAll(column1, column2, column3);
+		
+		Produit test = new Produit(1, "test", 10.0f, 0, "SiFang", "De la dompe");
+		factureTable.getItems().add(new LigneFacture(test, 10));
+		
 	}
 
 	/**

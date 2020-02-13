@@ -49,7 +49,7 @@
 }
 
 /* Text */
-.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text {
+.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text, .table-view {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
 	-fx-font-weight: bold;
@@ -60,8 +60,61 @@
 }
 
 .table-view {
-	-fx-background-color:transparent;
+	-fx-alignment: center;
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+	-fx-background-color: transparent;
 }
+
+.table-view .column-header-background {
+	-fx-background-color: transparent;
+}
+
+.table-view .column-header {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+	-fx-background-color: transparent;
+}
+
+.cell {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+	-fx-background-color: transparent;
+}
+
+.table-column {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+	-fx-background-color: transparent;
+}
+
+.table-view .column-header .label {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+}
+
+.table-row-cell{
+-fx-table-cell-border-color:transparent;
+}
+
+.align-left {
+	-fx-alignment: CENTER_LEFT;
+}
+
+.align-center {
+	-fx-alignment: CENTER;
+}
+
+.align-right {
+	-fx-alignment: CENTER_RIGHT;
+}
+
+
 
 /* Big text */
 .big-text, .buttons-2, .transparent-btn {

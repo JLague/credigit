@@ -32,6 +32,11 @@ public class Produit {
 	 */
 	private String description;
 
+	/**
+	 * La quantité de ce produit
+	 */
+	private int quantite;
+	
 	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, String description)
 	{
 		this.sku = sku;
@@ -126,6 +131,20 @@ public class Produit {
 		this.description = description;
 	}
 	
+	/**
+	 * @return the quantite
+	 */
+	public int getQuantite() {
+		return quantite;
+	}
+
+	/**
+	 * @param quantite the quantite to set
+	 */
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+
 	@Override
 	public String toString()
 	{
