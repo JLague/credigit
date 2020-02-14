@@ -1,3 +1,26 @@
+/* Normal text font */
+.title, .big-text, .text-1, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text, .table-view {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+}
+
+/* Normal text size */
+.text-1 {
+	-fx-font-size:15px;
+}
+
+/* Big text */
+.big-text, .buttons-2, .transparent-btn {
+	-fx-font-size: 25px;
+}
+
+/* Title text size */
+.title {
+	-fx-font-size: 35px;
+}
+
+/* Buttons for view 1 and 2 */
 .buttons-1, .buttons-2 {
 	-fx-background-insets: 0;
 	-fx-background-color: transparent;
@@ -6,12 +29,14 @@
 	-fx-border-color: white;
 }
 
+/* Same buttons on mouse over */
 .buttons-1:hover, .buttons-2:hover {
 	-fx-background-color: white;
 	-fx-background-radius: 15px;
 	-fx-text-fill: #0D1837;
 }
 
+/* NumPad text field */
 .clavier-text {
 	-fx-background-color: transparent;
 	-fx-border-width: 2px;
@@ -19,19 +44,23 @@
 	-fx-border-color: white;
 }
 
+/* View 1 fields */
 .fields-1 {
 	-fx-background-color: rgba(255, 255, 255, 0.3); /* Blanc presque transparent */
 	-fx-prompt-text-fill: white;
 }
 
+/* Gradient background */
 .root-1 {
 	-fx-background-color: linear-gradient(to right, #374587, #0D1837);
 }
 
+/* Transparent buttons on left of View 2 */
 .transparent-btn {
 	-fx-background-color: transparent;
 }
 
+/* View 2 search bar */
 .search-bar {
 	-fx-background-color: transparent;
 	-fx-prompt-text-fill: white;
@@ -41,6 +70,7 @@
 	
 }
 
+/* NumPad buttons */
 .clavier-buttons {
 	-fx-background-color: #1281E4;
 	-fx-background-insets: 10;
@@ -48,36 +78,25 @@
 	-fx-font-size: 45;
 }
 
-/* Text */
-.title, .big-text, .text, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text, .table-view {
-	-fx-text-fill: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bold;
-}
-
-.title {
-	-fx-font-size: 35px;
-}
-
+/* TableView font size and transparency */
 .table-view {
-	-fx-alignment: center;
-	-fx-text-fill: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bold;
+	-fx-font-size: 15px;
 	-fx-background-color: transparent;
 }
 
+/* Header background transparency */
 .table-view .column-header-background {
 	-fx-background-color: transparent;
 }
 
+/* Header border */
 .table-view .column-header {
-	-fx-text-fill: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bold;
-	-fx-background-color: transparent;
+	-fx-border-radius: 15px;
+	-fx-border-width: 2px;
+	-fx-border-color: white;
 }
 
+/* TableView font and transparency */
 .cell {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
@@ -85,38 +104,38 @@
 	-fx-background-color: transparent;
 }
 
+/* Header cell transparency */
 .table-column {
-	-fx-text-fill: white;
-	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bold;
 	-fx-background-color: transparent;
 }
 
+/* Header text */
 .table-view .column-header .label {
+	
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
 	-fx-font-weight: bold;
 }
 
+/* TableView inner borders transparency */
 .table-row-cell{
 -fx-table-cell-border-color:transparent;
 }
 
-.align-left {
+/* TableView left column */
+.align-left, .align-left .label {
+	-fx-border-insets: 0 30 0 0;
 	-fx-alignment: CENTER_LEFT;
 }
 
-.align-center {
+/* TableView center column */
+.align-center, .align-center .label {
+	-fx-border-insets: 0 30 0 30;
 	-fx-alignment: CENTER;
 }
 
-.align-right {
+/* TableView right column */
+.align-right, .align-right .label {
+	-fx-border-insets: 0 0 0 30;
 	-fx-alignment: CENTER_RIGHT;
-}
-
-
-
-/* Big text */
-.big-text, .buttons-2, .transparent-btn {
-	-fx-font-size: 25px;
 }
