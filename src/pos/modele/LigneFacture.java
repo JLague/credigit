@@ -5,12 +5,14 @@ public class LigneFacture {
 	private float prix;
 	private int quantite;
 	private String nom;
+	private Produit produit;
 	
 	public LigneFacture(Produit produit, int quantite)
 	{
 		this.prixUnitaire = produit.getPrix();
 		this.nom = produit.getNom();
 		this.quantite = quantite;
+		this.produit = produit;
 		calculerPrix();
 	}
 	
@@ -49,6 +51,14 @@ public class LigneFacture {
 	private void calculerPrix()
 	{
 		this.prix = this.prixUnitaire * this.quantite;
+	}
+	
+	/**
+	 * @return le produit
+	 */
+	public Produit getProduit()
+	{
+		return this.produit;
 	}
 	
 	
