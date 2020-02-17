@@ -20,3 +20,9 @@
     -fx-font-family: "System Bold";
     -fx-font-size: 24.0px;
 }
+
+.choiceboxInscription{
+	-fx-background-color: rgba(13.0, 24.0, 55.0, 0.12);
+	-fx-background-radius: 10.0;
+	-fx-prompt-text-fill: #0D1837; 
+}

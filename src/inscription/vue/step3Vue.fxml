@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="680.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="reponse1TextField" layoutX="10.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" promptText="Réponse*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="83.0">
+         <font>
+            <Font name="Montserrat Medium" size="24.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="reponse2TextField" layoutX="10.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" promptText="Réponse*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </TextField>
+      <ChoiceBox fx:id="question1Choice" layoutX="30.0" layoutY="113.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" styleClass="choiceboxInscription" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ChoiceBox fx:id="question2Choice" layoutX="10.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" styleClass="choiceboxInscription" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="166.0" />
+   </children>
+   <padding>
+      <Insets top="83.0" />
+   </padding>
+</AnchorPane>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="680.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" layoutX="283.0" layoutY="104.0" text="Placez votre doigt sur le scanneur" textAlignment="CENTER" textFill="#374587" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="Montserrat Bold" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="225.0" fitWidth="122.0" layoutX="279.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="279.0" AnchorPane.rightAnchor="279.0">
+         <image>
+            <Image url="@../../../res/images/ic_capteur_empreinte.png" />
+         </image>
+      </ImageView>
+   </children>
+   <padding>
+      <Insets top="83.0" />
+   </padding>
+</AnchorPane>

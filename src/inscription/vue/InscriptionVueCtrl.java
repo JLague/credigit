@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -88,9 +89,21 @@ public class InscriptionVueCtrl {
 	@FXML
 	private TextField codePostalTextField1;
 
+	@FXML
+	private TextField reponse1TextField;
+
+	@FXML
+	private TextField reponse2TextField;
+
+	@FXML
+	private ChoiceBox<?> question1Choice;
+
+	@FXML
+	private ChoiceBox<?> question2Choice;
+
 	private InscriptionCtrl ctrl;
 	private Scene scene;
-	private int etapeActuelle = 1;
+	private EtapesVues etapeActuelle = EtapesVues.ETAPE1;
 	private List<Pane> etapes;
 
 	public InscriptionVueCtrl(InscriptionCtrl ctrl) {
@@ -98,23 +111,32 @@ public class InscriptionVueCtrl {
 
 		try {
 
+			// Load toutes les vues des différentes étapes
 			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("InscriptionVue.fxml"));
 			FXMLLoader step1Loader = new FXMLLoader(getClass().getResource("step1Vue.fxml"));
 			FXMLLoader step2Loader = new FXMLLoader(getClass().getResource("step2Vue.fxml"));
+			FXMLLoader step3Loader = new FXMLLoader(getClass().getResource("step3Vue.fxml"));
+			FXMLLoader step4Loader = new FXMLLoader(getClass().getResource("step4Vue.fxml"));
 
-			
+			mainLoader.setController(this);
 			step1Loader.setController(this);
 			step2Loader.setController(this);
-			mainLoader.setController(this);
-			
+			step3Loader.setController(this);
+			step4Loader.setController(this);
 
 			root = mainLoader.load();
 
 			Pane step1Pane = step1Loader.load();
 			Pane step2Pane = step2Loader.load();
+			Pane step3Pane = step3Loader.load();
+			Pane step4Pane = step4Loader.load();
+
+			// Stocke toutes les vues pour avoir accès à l'information en tout temps
 			etapes = new ArrayList<Pane>();
 			etapes.add(step1Pane);
 			etapes.add(step2Pane);
+			etapes.add(step3Pane);
+			etapes.add(step4Pane);
 
 			stepPane.getChildren().add(step1Pane);
 
@@ -151,22 +173,45 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
-//		int nouvelleEtape = 0;
-//		switch (etapeActuelle) {
-//		case 1:
-//			stepPane.getChildren().clear();
-//			stepPane.getChildren().add(etapes.get(1));
-//			ivStep1.setImage(new Image(getClass().getResource("step1.png").getPath()));
-//			nouvelleEtape = 2;
-//			break;
-//
-//		case 2:
-//			stepPane.getChildren().clear();
-//			stepPane.getChildren().add(etapes.get(1));
-//			nouvelleEtape = 2;
-//			break;
-//
-//		}
+		EtapesVues nouvelleEtape = null;
+		switch (etapeActuelle) {
+		case ETAPE1:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(1));
+			ivStep1.setImage(new Image(getClass().getResource("/images/step1.png").toExternalForm()));
+			ivStep2.setImage(new Image(getClass().getResource("/images/step2_bleu.png").toExternalForm()));
+			nouvelleEtape = EtapesVues.ETAPE2;
+			break;
+
+		case ETAPE2:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(2));
+			ivStep2.setImage(new Image(getClass().getResource("/images/step2.png").toExternalForm()));
+			ivStep3.setImage(new Image(getClass().getResource("/images/step3_bleu.png").toExternalForm()));
+			nouvelleEtape = EtapesVues.ETAPE3;
+			break;
+
+		case ETAPE3:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(3));
+			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			continuerBtn.setText("Terminer");
+			nouvelleEtape = EtapesVues.ETAPE4;
+			break;
+
+		case ETAPE4:
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(3));
+			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			//continuerBtn.setDisable(true);
+			nouvelleEtape = EtapesVues.ETAPE4;
+			break;
+
+		}
+
+		etapeActuelle = nouvelleEtape;
 	}
 
 	@FXML
@@ -191,9 +236,8 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void emailTextFieldHandler(KeyEvent event) {
-		
-		if(!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9\u002D]"))
-		{
+
+		if (!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9\u002D]")) {
 			event.consume();
 		}
 
@@ -201,9 +245,8 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void nasTextFieldHandler(KeyEvent event) {
-		
-		if(!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(" "))
-		{
+
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(" ")) {
 			event.consume();
 		}
 
@@ -211,18 +254,16 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void nomTextFieldHandler(KeyEvent event) {
-		
-		if(!event.getCharacter().matches("[A-z\u0080-\u00ff]"))
-		{
+
+		if (!event.getCharacter().matches("[A-z\u0080-\u00ff]")) {
 			event.consume();
 		}
 	}
 
 	@FXML
 	void prenomTextFieldHandler(KeyEvent event) {
-		
-		if(!event.getCharacter().matches("[A-z\u0080-\u00ff]"))
-		{
+
+		if (!event.getCharacter().matches("[A-z\u0080-\u00ff]")) {
 			event.consume();
 		}
 
@@ -230,9 +271,8 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void telephoneTextFieldHandler(KeyEvent event) {
-		
-		if(!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("-"))
-		{
+
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("-")) {
 			event.consume();
 		}
 
