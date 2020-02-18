@@ -73,17 +73,17 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label styleClass="text" text="Sous-total" />
-                  <Label styleClass="text" text="Taxes (15 %)" GridPane.rowIndex="1" />
+                  <Label styleClass="text-1" text="Sous-total" />
+                  <Label styleClass="text-1" text="Taxes (15 %)" GridPane.rowIndex="1" />
                   <Label styleClass="big-text" text="Total" GridPane.rowIndex="2" />
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="236.0" layoutY="7.0" styleClass="text" text="Label" />
+                        <Label alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="236.0" layoutY="6.0" styleClass="text" text="Label" />
+                        <Label alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">

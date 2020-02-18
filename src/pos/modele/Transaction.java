@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.ObservableList;
+
 /**
  * Cette classe métier s'occupe des transactions
  */
@@ -42,11 +44,13 @@ public class Transaction {
 	 */
 	private Etablissement etablissement;
 
+	private ObservableList<LigneFacture> lignesFacture;
+
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
-		this(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long)System.currentTimeMillis()));
+		this(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long) System.currentTimeMillis()));
 	}
 
 	/**
@@ -59,6 +63,55 @@ public class Transaction {
 	 *                         (panier)
 	 */
 	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
+		this.heure = heure;
+		Transaction.pourcentageTaxes = pourcentageTaxes;
+		this.produits = produits;
+		this.numero = numero;
+
+		populateLignesFacture(produits);
+
+	}
+
+	/**
+	 * 
+	 * @param produit le produit à chercher
+	 * @return true si le produit est déjà présent dans les lignes de la facture
+	 */
+	private boolean estDansFacture(Produit produit) {
+		for (LigneFacture ligne : lignesFacture) {
+			if (ligne.getProduit().equals(produit))
+				return true;
+		}
+		return false;	
+	}
+
+	/**
+	 * 
+	 * @param produits la liste des produits
+	 * @param produit le produit à vérifier la quantité
+	 * @return le nombre de produits dans la liste de produits
+	 */
+	private static int getQuantite(List<Produit> produits, Produit produit) {
+		int cpt = 0;
+
+		for (Produit produitDansListe : produits) {
+			if (produitDansListe.equals(produit))
+				cpt++;
+		}
+		
+		return cpt;
+	}
+
+	private void populateLignesFacture(List<Produit> produits) {
+		
+
+		for (Produit produit : produits) {
+			int quantite = getQuantite(produits, produit);
+			
+			if (estDansFacture(produit)) {
+				lignesFacture.add(new LigneFacture(produit, quantite));
+			}
+		}
 	}
 
 	public static String getHeureCourrante() {
@@ -79,7 +132,7 @@ public class Transaction {
 	 */
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
-		
+
 	}
 
 	/**
@@ -159,7 +212,7 @@ public class Transaction {
 	 * @param pourcentageTaxes - le nouveau pourcentage de taxe
 	 */
 	public void setPourcentageTaxes(float pourcentageTaxes) {
-		this.pourcentageTaxes = pourcentageTaxes;
+		Transaction.pourcentageTaxes = pourcentageTaxes;
 	}
 
 	/**

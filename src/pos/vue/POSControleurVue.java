@@ -23,103 +23,46 @@ import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
+import pos.modele.Transaction;
 
 public class POSControleurVue implements IPOSControleurVue {
 
 	private static final String[][] CLAVIER = { { "7", "8", "9", "DEL" }, { "4", "5", "6", "ENTER" }, { "1", "2", "3" },
 			{ "C", "0", ".", "00" } };
-
-	/**
-	 * Nom du fichier pour le login
-	 */
 	private static final String LOGIN = "POS.fxml";
-
-	/**
-	 * Nom du fichier pour la vue principale
-	 */
 	private static final String MAIN_VIEW = "MainPOS.fxml";
 
-	/**
-	 * Contrôleur de l'application
-	 */
 	private POSControleur ctrl;
-
-	/**
-	 * VBox utilisé comme root de la première vue
-	 */
 	private VBox rootVBox;
-
-	/**
-	 * BorderPane utilisé comme root de la deuxième vue
-	 */
 	private BorderPane rootBP;
-
-	/**
-	 * Scène de l'application du POS
-	 */
 	private Scene scene;
 
-	/**
-	 * Champ de texte pour le nom d'utilisateur
-	 */
 	@FXML
 	private TextField userField;
-
-	/**
-	 * Champ de texte pour le mot de passe
-	 */
 	@FXML
 	private PasswordField passField;
-
-	/**
-	 * Bouton servant à se connecter
-	 */
 	@FXML
 	private Button connectBtn;
-
-	// TODO Enlever?
-	/**
-	 * Boutons servant à se créer un compte
-	 */
 	@FXML
 	private Button createAccountBtn;
-
-	/**
-	 * Bouton servant à afficher les produits
-	 */
 	@FXML
 	private Button produitBtn;
-
-	/**
-	 * Bouton servant à afficher le clavier
-	 */
 	@FXML
 	private Button clavierBtn;
-
-	/**
-	 * Barre de recherche
-	 */
 	@FXML
 	private TextField searchBar;
-
-	/**
-	 * Pane au centre de la vue
-	 */
 	@FXML
 	private VBox middlePane;
-
 	@FXML
 	private TableView<LigneFacture> factureTable;
 
 	private GridPane clavierGrid;
-
 	private Button[][] clavierButtons;
-
 	private VBox clavierBox;
-
 	private TextField clavierText;
 
-	private ObservableList<LigneFacture> facture;
+	private Transaction transaction;
+	private ObservableList<LigneFacture> lignesFacture;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -154,7 +97,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@SuppressWarnings("unchecked")
 	private void chargerTableView() {
-		facture = FXCollections.observableArrayList();
+		lignesFacture = FXCollections.observableArrayList();
 
 		factureTable.getStyleClass().add("table-view");
 		factureTable.setEditable(false);
@@ -173,7 +116,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
-		factureTable.setItems(facture);
+		factureTable.setItems(lignesFacture);
 
 		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
 		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", "Une autre description");
@@ -182,17 +125,17 @@ public class POSControleurVue implements IPOSControleurVue {
 		ajouterProduitAFacture(test2, 5);
 		ajouterProduitAFacture(test1, 5);
 	}
-	
+
 	/**
 	 * Méthode permettant d'ajouter une certaine quantité d'un certain produit à la
 	 * facture
 	 * 
-	 * @param produit le produit à ajouter
+	 * @param produit  le produit à ajouter
 	 * @param quantite la quantité à ajouter
 	 */
 	private void ajouterProduitAFacture(Produit produit, int quantite) {
 		boolean estDansFacture = false;
-		for (LigneFacture item : facture) {
+		for (LigneFacture item : lignesFacture) {
 			if (item.getProduit().equals(produit)) {
 				estDansFacture = true;
 				item.setQuantite(item.getQuantite() + quantite);
@@ -200,7 +143,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 
 		if (!estDansFacture) {
-			facture.add(new LigneFacture(produit, quantite));
+			lignesFacture.add(new LigneFacture(produit, quantite));
 		}
 	}
 
