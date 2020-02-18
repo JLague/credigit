@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="680.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -29,10 +29,10 @@
          </font>
       </TextField>
       <DatePicker maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="680.0" promptText="Date de naissance (AAAA-MM-JJ)*" styleClass="datePickerInscription" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0" />
-      <TextField fx:id="nasTextField" layoutX="10.0" layoutY="259.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#nasTextFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="NAS*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="332.0">
+      <PasswordField fx:id="nasPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#nasPasswordFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="NAS*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="332.0">
          <font>
             <Font size="24.0" />
          </font>
-      </TextField>
+      </PasswordField>
    </children>
 </AnchorPane>

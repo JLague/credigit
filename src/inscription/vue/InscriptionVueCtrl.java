@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -72,7 +73,7 @@ public class InscriptionVueCtrl {
 	private TextField telephoneTextField;
 
 	@FXML
-	private TextField nasTextField;
+	private PasswordField nasPasswordField;
 
 	@FXML
 	private TextField villeTextField;
@@ -205,7 +206,7 @@ public class InscriptionVueCtrl {
 			stepPane.getChildren().add(etapes.get(3));
 			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
 			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
-			//continuerBtn.setDisable(true);
+			// continuerBtn.setDisable(true);
 			nouvelleEtape = EtapesVues.ETAPE4;
 			break;
 
@@ -244,8 +245,7 @@ public class InscriptionVueCtrl {
 	}
 
 	@FXML
-	void nasTextFieldHandler(KeyEvent event) {
-
+	void nasPasswordFieldHandler(KeyEvent event) {
 		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(" ")) {
 			event.consume();
 		}
@@ -305,7 +305,7 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	void provinceTextFieldHandler(KeyEvent event) {
-		
+
 		if (!event.getCharacter().matches("[A-z\u00E9\u0020\u0027\u002D]")) {
 			event.consume();
 		}

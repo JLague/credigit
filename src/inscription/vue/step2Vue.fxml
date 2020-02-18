@@ -22,7 +22,7 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="appartementTextField" layoutX="10.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#appartementTextFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="Numéro d'appartement*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="83.0">
+      <TextField fx:id="appartementTextField" layoutX="10.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#appartementTextFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="Numéro d'appartement" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="83.0">
          <font>
             <Font size="24.0" />
          </font>
