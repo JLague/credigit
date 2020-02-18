@@ -96,7 +96,7 @@ public class LocalAdresse {
 	{
 		if(validerAdresse(adresse))
 		{
-			this.adresse = adresse;
+			this.adresse = adresse.trim();
 		}
 		else
 		{
@@ -172,7 +172,7 @@ public class LocalAdresse {
 	 */
 	private void setVille(String ville) throws ExceptionCreationCompte
 	{
-		if(validerString(ville))
+		if(ville != null && validerString(ville))
 		{
 			this.ville = arrangerString(ville);
 		}
@@ -197,7 +197,7 @@ public class LocalAdresse {
 	 */
 	private void setEtat(String etat) throws ExceptionCreationCompte 
 	{
-		if(validerString(etat))
+		if(etat != null && validerString(etat))
 		{
 			this.etat = arrangerString(etat);
 		}
@@ -222,7 +222,7 @@ public class LocalAdresse {
 	 */
 	private void setPays(String pays) throws ExceptionCreationCompte
 	{
-		if(validerString(pays))
+		if(pays != null && validerString(pays))
 		{
 			this.pays = arrangerString(pays);
 		}

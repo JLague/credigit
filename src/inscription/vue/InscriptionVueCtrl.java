@@ -281,26 +281,43 @@ public class InscriptionVueCtrl {
 	@FXML
 	void adresseTextFieldHandler(KeyEvent event) {
 
+		if (!event.getCharacter().matches("[A-z0-9\u0020\u0027\u002D]")) {
+			event.consume();
+		}
+
 	}
 
 	@FXML
 	void appartementTextFieldHandler(KeyEvent event) {
 
+		if (!event.getCharacter().matches("[0-9]")) {
+			event.consume();
+		}
 	}
 
 	@FXML
 	void codePostalFieldHandler(KeyEvent event) {
 
+		if (!event.getCharacter().matches("[0-9A-z\\u0020]")) {
+			event.consume();
+		}
 	}
 
 	@FXML
 	void provinceTextFieldHandler(KeyEvent event) {
+		
+		if (!event.getCharacter().matches("[A-z\u00E9\u0020\u0027\u002D]")) {
+			event.consume();
+		}
 
 	}
 
 	@FXML
 	void villeTextFieldHandler(KeyEvent event) {
 
+		if (!event.getCharacter().matches("[A-z\u00E9\u0020\u0027\u002D]")) {
+			event.consume();
+		}
 	}
 
 }
