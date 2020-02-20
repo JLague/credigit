@@ -1,22 +1,30 @@
 package inscription.vue;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import javax.imageio.ImageIO;
 
 import inscription.controleur.InscriptionCtrl;
+import inscription.modele.DataTransition;
+import inscription.modele.ExceptionCreationCompte;
+import inscription.modele.LocalAdresse;
+import inscription.modele.Questions;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -26,12 +34,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 public class InscriptionVueCtrl {
 
 	@FXML
-	private ScrollPane root;
+	private StackPane root;
+
+	@FXML
+	private ScrollPane scrollPane;
 
 	@FXML
 	private AnchorPane anchorTop;
@@ -76,6 +88,9 @@ public class InscriptionVueCtrl {
 	private PasswordField nasPasswordField;
 
 	@FXML
+	private DatePicker datePicker;
+
+	@FXML
 	private TextField villeTextField;
 
 	@FXML
@@ -88,7 +103,10 @@ public class InscriptionVueCtrl {
 	private TextField appartementTextField;
 
 	@FXML
-	private TextField codePostalTextField1;
+	private TextField codePostalTextField;
+
+	@FXML
+	private TextField paysTextField;
 
 	@FXML
 	private TextField reponse1TextField;
@@ -97,10 +115,10 @@ public class InscriptionVueCtrl {
 	private TextField reponse2TextField;
 
 	@FXML
-	private ChoiceBox<?> question1Choice;
+	private ChoiceBox<Questions> question1Choice;
 
 	@FXML
-	private ChoiceBox<?> question2Choice;
+	private ChoiceBox<Questions> question2Choice;
 
 	private InscriptionCtrl ctrl;
 	private Scene scene;
@@ -151,7 +169,9 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void initialize() {
-
+		// Setup les listes de questions
+		question1Choice.getItems().setAll(Questions.values());
+		question2Choice.getItems().setAll(Questions.values());
 	}
 
 	public Scene getScene() {
@@ -165,10 +185,27 @@ public class InscriptionVueCtrl {
 		scroll.setAutoReverse(false);
 
 		KeyFrame frame = new KeyFrame(Duration.seconds(2),
-				new KeyValue(root.vvalueProperty(), root.getVmax() / 2, Interpolator.EASE_IN));
+				new KeyValue(scrollPane.vvalueProperty(), scrollPane.getVmax() / 2, Interpolator.EASE_IN));
 
 		scroll.getKeyFrames().addAll(frame);
 		scroll.play();
+
+	}
+
+	@FXML
+	public void inscrireBtnHandler(ActionEvent event) {
+
+		if (scrollPane.getVvalue() < scrollPane.getVmax()) {
+			Timeline scroll = new Timeline();
+			scroll.setCycleCount(1);
+			scroll.setAutoReverse(false);
+
+			KeyFrame frame = new KeyFrame(Duration.seconds(2),
+					new KeyValue(scrollPane.vvalueProperty(), scrollPane.getVmax(), Interpolator.EASE_IN));
+
+			scroll.getKeyFrames().addAll(frame);
+			scroll.play();
+		}
 
 	}
 
@@ -202,12 +239,49 @@ public class InscriptionVueCtrl {
 			break;
 
 		case ETAPE4:
-			ctrl.envoyerDataClient(null);
+			ctrl.envoyerDataClient(creerDataTransition());
 			break;
 
 		}
 
 		etapeActuelle = nouvelleEtape;
+	}
+
+	private DataTransition creerDataTransition() {
+		DataTransition data = new DataTransition();
+
+		try {
+
+			data.setNom(nomTextField.getText());
+			data.setPrenom(prenomTextField.getText());
+			data.setEmail(emailTextField.getText());
+			data.setNumero(telephoneTextField.getText());
+			data.setNas(nasPasswordField.getText());
+			LocalAdresse adresse = new LocalAdresse(adresseTextField.getText(), codePostalTextField.getText(),
+					villeTextField.getText(), provinceTextField.getText(), paysTextField.getText());
+			data.setAdresse(adresse);
+			data.setDate(datePicker.getValue());
+
+			ArrayList<Questions> questions = new ArrayList<Questions>();
+			questions.add(question1Choice.getSelectionModel().getSelectedItem());
+			questions.add(question2Choice.getSelectionModel().getSelectedItem());
+			data.setQuestions(questions);
+
+			ArrayList<String> reponses = new ArrayList<String>();
+			reponses.add(reponse1TextField.getText());
+			reponses.add(reponse2TextField.getText());
+			data.setReponses(reponses);
+
+			byte[] empreinte = new byte[2];
+			empreinte[0] = 1;
+			empreinte[1] = 1;
+			data.setEmpreinte(empreinte);
+
+		} catch (ExceptionCreationCompte e) {
+			System.out.println("Erreur sur la création de l'adresse.");
+		}
+
+		return data;
 	}
 
 	@FXML
@@ -291,9 +365,16 @@ public class InscriptionVueCtrl {
 	}
 
 	@FXML
-	void codePostalFieldHandler(KeyEvent event) {
+	void codePostalTextFieldHandler(KeyEvent event) {
 
 		if (!event.getCharacter().matches("[0-9A-z\\u0020]")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	void paysTextFieldHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[A-z\u00E9\u0020\u0027\u002D]")) {
 			event.consume();
 		}
 	}

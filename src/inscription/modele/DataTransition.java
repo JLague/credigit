@@ -61,6 +61,10 @@ public class DataTransition {
 	 */
 	private byte[] empreinte;
 
+	public DataTransition() {
+
+	}
+
 	public DataTransition(String nom, String prenom, String email, LocalDate date, LocalAdresse adresse, String nas,
 			ArrayList<Questions> questions, ArrayList<String> reponses, String numero, byte[] empreinte) {
 		this.nom = nom;
