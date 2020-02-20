@@ -39,4 +39,9 @@ public enum Questions {
 		return texte;
 	}
 
+	@Override
+	public String toString() {
+		return getTexte();
+	}
+
 }

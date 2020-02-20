@@ -115,10 +115,10 @@ public class InscriptionVueCtrl {
 	private TextField reponse2TextField;
 
 	@FXML
-	private ChoiceBox<Questions> question1Choice;
+	private ChoiceBox<String> question1Choice;
 
 	@FXML
-	private ChoiceBox<Questions> question2Choice;
+	private ChoiceBox<String> question2Choice;
 
 	private InscriptionCtrl ctrl;
 	private Scene scene;
@@ -161,17 +161,13 @@ public class InscriptionVueCtrl {
 
 			scene = new Scene(root);
 
+			question1Choice.getItems().setAll(Questions.values().toString());
+			question2Choice.getItems().setAll(Questions.values().toString());
+
 		} catch (IOException e) {
 			System.err.println("Erreur de chargement du fxml!");
 			e.printStackTrace();
 		}
-	}
-
-	@FXML
-	public void initialize() {
-		// Setup les listes de questions
-		question1Choice.getItems().setAll(Questions.values());
-		question2Choice.getItems().setAll(Questions.values());
 	}
 
 	public Scene getScene() {
@@ -263,8 +259,8 @@ public class InscriptionVueCtrl {
 			data.setDate(datePicker.getValue());
 
 			ArrayList<Questions> questions = new ArrayList<Questions>();
-			questions.add(question1Choice.getSelectionModel().getSelectedItem());
-			questions.add(question2Choice.getSelectionModel().getSelectedItem());
+			//questions.add(question1Choice.getSelectionModel().getSelectedItem());
+			//questions.add(question2Choice.getSelectionModel().getSelectedItem());
 			data.setQuestions(questions);
 
 			ArrayList<String> reponses = new ArrayList<String>();
