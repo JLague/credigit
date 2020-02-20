@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -55,6 +56,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	private VBox middlePane;
 	@FXML
 	private TableView<LigneFacture> factureTable;
+	
+	private BorderPane gridProduit;
 
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
@@ -89,9 +92,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Chargement de la vue
 		chargerClavier();
 		chargerTableView();
+		chargerGridProduit();
 
 		// TODO mettre la vue des produits lors du chargement
-		middlePane.getChildren().add(clavierBox);
+		middlePane.getChildren().add(gridProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
 	}
 
@@ -124,6 +128,18 @@ public class POSControleurVue implements IPOSControleurVue {
 		ajouterProduitAFacture(test1, 10);
 		ajouterProduitAFacture(test2, 5);
 		ajouterProduitAFacture(test1, 5);
+	}
+
+	private void chargerGridProduit() {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GridProduits.fxml"));
+		loader.setController(this);
+
+		try {
+			gridProduit = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -176,7 +192,7 @@ public class POSControleurVue implements IPOSControleurVue {
 				}
 			}
 		}
-		
+
 		clavierButtons[1][3].setMinWidth(200);
 		clavierButtons[0][3].setMinWidth(200);
 		clavierButtons[3][3].setMinWidth(200);
@@ -184,6 +200,19 @@ public class POSControleurVue implements IPOSControleurVue {
 		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
 	}
+	
+	@FXML
+	private void produitHandler(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(gridProduit);
+	}
+
+	@FXML
+	private void clavierHandler(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(clavierBox);
+	}
+
 
 	/**
 	 * Méthode qui permet de charger un fichier FXML
