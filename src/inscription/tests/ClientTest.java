@@ -40,7 +40,7 @@ public class ClientTest {
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "    111 111 111", questions,
-					reponses, "1-555-555-5555", empreinte));
+					reponses, "555-555-5555", empreinte));
 
 		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait jamais arriver ici");
