@@ -55,6 +55,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	private VBox middlePane;
 	@FXML
 	private TableView<LigneFacture> factureTable;
+	@FXML
+	private Label sousTotalLbl;
+	@FXML
+	private Label taxesLbl;
+	@FXML
+	private Label totalLbl; 
 
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
@@ -120,32 +126,17 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
 		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", "Une autre description");
-
-		ajouterProduitAFacture(test1, 10);
-		ajouterProduitAFacture(test2, 5);
-		ajouterProduitAFacture(test1, 5);
+		
+		transaction = new Transaction();
+		transaction.addProduit(test1);
+		transaction.addProduit(test2);
+	}
+	
+	private void updatePrix()
+	{
+		
 	}
 
-	/**
-	 * Méthode permettant d'ajouter une certaine quantité d'un certain produit à la
-	 * facture
-	 * 
-	 * @param produit  le produit à ajouter
-	 * @param quantite la quantité à ajouter
-	 */
-	private void ajouterProduitAFacture(Produit produit, int quantite) {
-		boolean estDansFacture = false;
-		for (LigneFacture item : lignesFacture) {
-			if (item.getProduit().equals(produit)) {
-				estDansFacture = true;
-				item.setQuantite(item.getQuantite() + quantite);
-			}
-		}
-
-		if (!estDansFacture) {
-			lignesFacture.add(new LigneFacture(produit, quantite));
-		}
-	}
 
 	/**
 	 * Méthode permettant de charger le clavier dans clavierBox à l'ouverture de la

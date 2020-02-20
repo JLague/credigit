@@ -200,7 +200,11 @@ public class Transaction {
 			montantTaxes = sousTotal * pourcentageTaxes;
 			montantTotal = sousTotal + montantTaxes;
 		}
-		
+	}
+	
+	public ObservableList<LigneFacture> getLignesFacture()
+	{
+		return this.lignesFacture;
 	}
 
 	/**

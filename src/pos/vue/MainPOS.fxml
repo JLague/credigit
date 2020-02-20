@@ -78,17 +78,17 @@
                   <Label styleClass="big-text" text="Total" GridPane.rowIndex="2" />
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
+                        <Label fx:id="sousTotalLbl" alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
+                        <Label fx:id="taxesLbl" alignment="CENTER_RIGHT" layoutX="233.0" layoutY="6.0" styleClass="text-1" text="Label" />
                      </children>
                   </AnchorPane>
                   <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label layoutX="208.0" layoutY="1.0" styleClass="big-text" text="Label" />
+                        <Label fx:id="totalLbl" layoutX="208.0" layoutY="1.0" styleClass="big-text" text="Label" />
                      </children>
                   </AnchorPane>
                </children>
