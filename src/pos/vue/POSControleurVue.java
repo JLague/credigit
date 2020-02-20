@@ -176,6 +176,10 @@ public class POSControleurVue implements IPOSControleurVue {
 				}
 			}
 		}
+		
+		clavierButtons[1][3].setMinWidth(200);
+		clavierButtons[0][3].setMinWidth(200);
+		clavierButtons[3][3].setMinWidth(200);
 
 		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
