@@ -19,6 +19,8 @@ public class Connexion {
 
 	private MongoDatabase database;
 
+	private MongoClient mongoClient;
+
 	public Connexion() {
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
@@ -29,9 +31,10 @@ public class Connexion {
 		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.codecRegistry(codecRegistry).build();
 
-		try (MongoClient mongoClient = MongoClients.create(clientSettings)) {
-			database = mongoClient.getDatabase(DB);
-		}
+		mongoClient = MongoClients.create(clientSettings);
+
+		database = mongoClient.getDatabase(DB);
+
 	}
 
 	public void ajouterCompte(Client client) {
