@@ -40,6 +40,8 @@ public class Connexion {
 	public void ajouterCompte(Client client) {
 		MongoCollection<Client> collection = database.getCollection(COMPTES_COLLECTION, Client.class);
 		collection.insertOne(client);
+		CourrielConfirmation.envoyerCourriel(client.getEmail(), client.getPrenom());
+		
 	}
 
-}
+} 
