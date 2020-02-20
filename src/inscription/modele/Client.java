@@ -265,11 +265,11 @@ public class Client {
 	 */
 	private void setNas(String nas) throws ExceptionCreationCompte {
 
-		if (validerNas(nas)) {
-			this.nas = formatterNumero(nas);
-		} else {
-			throw new ExceptionCreationCompte("Votre numéro d'assurace sociale n'est pas valide.");
-		}
+		//if (validerNas(nas)) {
+			this.nas = nas; //formatterNumero(nas);
+		//} else {
+		//	throw new ExceptionCreationCompte("Votre numéro d'assurace sociale n'est pas valide.");
+		//}
 	}
 
 	/**
@@ -324,11 +324,11 @@ public class Client {
 	 */
 	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
 
-		if (empreinte != null && empreinte.length != 0) {
+		//if (empreinte != null && empreinte.length != 0) {
 			this.empreinte = empreinte;
-		} else {
-			throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
-		}
+		//} else {
+		//	throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
+		//}
 	}
 
 	/**
@@ -398,11 +398,11 @@ public class Client {
 	 */
 	private void setNumero(String numero) throws ExceptionCreationCompte {
 
-		if (validerNumero(numero)) {
-			this.numero = formatterNumero(numero);
-		} else {
-			throw new ExceptionCreationCompte("Votre numéro de téléphone n'est pas valide.");
-		}
+		//if (validerNumero(numero)) {
+			this.numero = numero; //formatterNumero(numero);
+		//} else {
+			//throw new ExceptionCreationCompte("Votre numéro de téléphone n'est pas valide.");
+		//}
 	}
 
 	/**
