@@ -39,8 +39,8 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "    111 111 111", questions,
-					reponses, "555-555-5555", empreinte));
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "    111 111 111",
+					questions, reponses, "555-555-5555", empreinte));
 
 		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait jamais arriver ici");
@@ -59,10 +59,9 @@ public class ClientTest {
 			empreinte[1] = 0;
 			client2 = new Client(new DataTransition("LeRond d'Alembert", "Jean", "mathislife@math.com", localDate,
 
-					new LocalAdresse("Pi/2 rue du sinus", "G5C 4F7", "Cosinus", "Trigo", "Fonction"), "123 456 789", questions,
-					reponses, "1-555-555-5598", empreinte));
-		}
-		catch (ExceptionCreationCompte e) {
+					new LocalAdresse("Pi/2 rue du sinus", "G5C 4F7", "Cosinus", "Trigo", "Fonction"), "123 456 789",
+					questions, reponses, "1-555-555-5598", empreinte));
+		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait jamais arriver ici");
 		}
 	}
@@ -82,7 +81,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition(null, "Christophe", "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Nom null");
@@ -102,7 +101,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("", "Christophe", "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Nom vide");
@@ -122,7 +121,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", null, "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Prénom null");
@@ -142,7 +141,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "", "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Pénom vide");
@@ -162,7 +161,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", null, localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Email null");
@@ -182,7 +181,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Email vide");
@@ -202,7 +201,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", null,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Date null");
@@ -222,7 +221,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Année trop ancienne");
@@ -242,7 +241,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Pas Majeur pour l'année");
@@ -262,7 +261,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Pas Majeur pour le mois");
@@ -282,7 +281,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Pas Majeur pour le jour");
@@ -321,7 +320,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), null, questions,
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), null, questions,
 					reponses, "555-555-5555", empreinte));
 
 			fail("NAS null");
@@ -341,7 +340,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "9111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "9111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("NAS trop long");
@@ -361,7 +360,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "11111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "11111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("NAS trop court");
@@ -381,7 +380,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111", null,
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111", null,
 					reponses, "555-555-5555", empreinte));
 
 			fail("Question null");
@@ -401,7 +400,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Questions identiques");
@@ -420,7 +419,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("1 seule question");
@@ -440,7 +439,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, null, "555-555-5555", empreinte));
 
 			fail("Réponses null");
@@ -459,7 +458,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("1 seule réponse");
@@ -479,7 +478,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("La première réponse est vide");
@@ -499,7 +498,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("La seconde réponse est vide");
@@ -519,7 +518,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, null, empreinte));
 
 			fail("Numéro de téléphone null");
@@ -539,7 +538,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-555512", empreinte));
 
 			fail("Numéro de téléphone trop long");
@@ -559,7 +558,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "55-555-5555", empreinte));
 
 			fail("Numéro de téléphone trop court");
@@ -579,7 +578,7 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", null));
 
 			fail("Empreinte null");
@@ -597,7 +596,7 @@ public class ClientTest {
 			reponses.add("St-Pierre");
 			byte[] empreinte = new byte[0];
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
+					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
 			fail("Empreinte vide");

@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -61,6 +62,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Label taxesLbl;
 	@FXML
 	private Label totalLbl; 
+	
+	private BorderPane gridProduit;
 
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
@@ -95,9 +98,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Chargement de la vue
 		chargerClavier();
 		chargerTableView();
+		chargerGridProduit();
 
 		// TODO mettre la vue des produits lors du chargement
-		middlePane.getChildren().add(clavierBox);
+		middlePane.getChildren().add(gridProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
 	}
 
@@ -137,6 +141,38 @@ public class POSControleurVue implements IPOSControleurVue {
 		
 	}
 
+	private void chargerGridProduit() {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GridProduits.fxml"));
+		loader.setController(this);
+
+		try {
+			gridProduit = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Méthode permettant d'ajouter une certaine quantité d'un certain produit à la
+	 * facture
+	 * 
+	 * @param produit  le produit à ajouter
+	 * @param quantite la quantité à ajouter
+	 */
+	private void ajouterProduitAFacture(Produit produit, int quantite) {
+		boolean estDansFacture = false;
+		for (LigneFacture item : lignesFacture) {
+			if (item.getProduit().equals(produit)) {
+				estDansFacture = true;
+				item.setQuantite(item.getQuantite() + quantite);
+			}
+		}
+
+		if (!estDansFacture) {
+			lignesFacture.add(new LigneFacture(produit, quantite));
+		}
+	}
 
 	/**
 	 * Méthode permettant de charger le clavier dans clavierBox à l'ouverture de la
@@ -167,7 +203,7 @@ public class POSControleurVue implements IPOSControleurVue {
 				}
 			}
 		}
-		
+
 		clavierButtons[1][3].setMinWidth(200);
 		clavierButtons[0][3].setMinWidth(200);
 		clavierButtons[3][3].setMinWidth(200);
@@ -175,6 +211,19 @@ public class POSControleurVue implements IPOSControleurVue {
 		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
 	}
+	
+	@FXML
+	private void produitHandler(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(gridProduit);
+	}
+
+	@FXML
+	private void clavierHandler(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(clavierBox);
+	}
+
 
 	/**
 	 * Méthode qui permet de charger un fichier FXML

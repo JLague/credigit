@@ -124,12 +124,12 @@
    <left>
       <VBox prefHeight="941.0" prefWidth="297.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="produitBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="180.0" minHeight="50.0" minWidth="180.0" mnemonicParsing="false" styleClass="transparent-btn" text="📦 Produits">
+            <Button fx:id="produitBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="180.0" minHeight="50.0" minWidth="180.0" mnemonicParsing="false" onAction="#produitHandler" styleClass="transparent-btn" text="📦 Produits">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="clavierBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="160.0" minHeight="50.0" minWidth="160.0" mnemonicParsing="false" styleClass="transparent-btn" text="🖮 Clavier">
+            <Button fx:id="clavierBtn" alignment="TOP_LEFT" maxHeight="50.0" maxWidth="160.0" minHeight="50.0" minWidth="160.0" mnemonicParsing="false" onAction="#clavierHandler" styleClass="transparent-btn" text="🖮 Clavier">
                <font>
                   <Font size="24.0" />
                </font>

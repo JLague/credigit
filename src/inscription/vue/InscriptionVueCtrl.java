@@ -259,8 +259,8 @@ public class InscriptionVueCtrl {
 			data.setDate(datePicker.getValue());
 
 			ArrayList<Questions> questions = new ArrayList<Questions>();
-			//questions.add(question1Choice.getSelectionModel().getSelectedItem());
-			//questions.add(question2Choice.getSelectionModel().getSelectedItem());
+			// questions.add(question1Choice.getSelectionModel().getSelectedItem());
+			// questions.add(question2Choice.getSelectionModel().getSelectedItem());
 			data.setQuestions(questions);
 
 			ArrayList<String> reponses = new ArrayList<String>();

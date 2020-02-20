@@ -1,12 +1,12 @@
 /* Normal text font */
-.title, .big-text, .text-1, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text, .table-view {
+.title, .big-text, .text-1, .search-bar, .transparent-btn, .fields-1, .buttons-1, .buttons-2, .clavier-buttons, .clavier-text, .table-view, .label {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
 	-fx-font-weight: bold;
 }
 
 /* Normal text size */
-.text-1 {
+.text-1, .label {
 	-fx-font-size:15px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 /* Transparent buttons on left of View 2 */
-.transparent-btn {
+.transparent-btn, .scroll-pane > .viewport, .scroll-pane {
 	-fx-background-color: transparent;
 }
 

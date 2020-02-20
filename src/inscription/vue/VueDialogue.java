@@ -43,7 +43,7 @@ public class VueDialogue {
 	public static void erreurCreationDialogue(String message) {
 
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Erreur lors de la cration d'un compte ");
+		alert.setTitle("Erreur lors de la création d'un compte ");
 		alert.setHeaderText(message);
 		alert.showAndWait();
 
