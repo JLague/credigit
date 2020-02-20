@@ -82,13 +82,13 @@ public class Transaction {
 			if (ligne.getProduit().equals(produit))
 				return true;
 		}
-		return false;	
+		return false;
 	}
 
 	/**
 	 * 
 	 * @param produits la liste des produits
-	 * @param produit le produit à vérifier la quantité
+	 * @param produit  le produit à vérifier la quantité
 	 * @return le nombre de produits dans la liste de produits
 	 */
 	private static int getQuantite(List<Produit> produits, Produit produit) {
@@ -98,17 +98,15 @@ public class Transaction {
 			if (produitDansListe.equals(produit))
 				cpt++;
 		}
-		
+
 		return cpt;
 	}
 
 	private void populateLignesFacture(List<Produit> produits) {
-		
-
 		for (Produit produit : produits) {
 			int quantite = getQuantite(produits, produit);
-			
-			if (estDansFacture(produit)) {
+
+			if (!estDansFacture(produit)) {
 				lignesFacture.add(new LigneFacture(produit, quantite));
 			}
 		}
@@ -182,12 +180,16 @@ public class Transaction {
 	}
 
 	/**
-	 * Ajouter un produit au pos
+	 * Ajouter un produit au panier de l'utilisateur
 	 * 
 	 * @param produit à ajouter
 	 */
-	public void addproduit(Produit produit) {
-		// TODO
+	public void addProduit(Produit produit) {
+		for (LigneFacture ligne : lignesFacture) {
+			if (ligne.getProduit().equals(produit)) {
+				ligne.setQuantite(ligne.getQuantite() + 1);
+			}
+		}
 	}
 
 	/**
@@ -196,7 +198,10 @@ public class Transaction {
 	 * @param produits à ajouter
 	 */
 	public void addproduits(List<Produit> produits) {
-		// TODO
+		for(Produit produit : produits)
+		{
+			addProduit(produit);
+		}
 	}
 
 	/**
