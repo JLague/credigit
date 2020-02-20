@@ -27,12 +27,7 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <TextField fx:id="codePostalTextField" layoutX="10.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#codePostalTextFieldHandler" prefHeight="59.0" prefWidth="328.0" promptText="Code postal*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="paysTextField" layoutX="10.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#paysTextFieldHandler" prefHeight="59.0" prefWidth="328.0" promptText="Pays*" styleClass="inscriptionfields" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="249.0">
+      <TextField fx:id="codePostalTextField1" layoutX="10.0" layoutY="342.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#codePostalFieldHandler" prefHeight="59.0" prefWidth="680.0" promptText="Code postal*" styleClass="inscriptionfields" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="249.0">
          <font>
             <Font size="24.0" />
          </font>

@@ -70,7 +70,7 @@ public class Transaction {
 		this.numero = numero;
 
 		lignesFacture = FXCollections.observableArrayList();
-
+		
 		addProduits(produits);
 
 	}
@@ -149,18 +149,19 @@ public class Transaction {
 	 */
 	public void addProduit(Produit produit) {
 		boolean flag = false;
-
+		
 		for (LigneFacture ligne : lignesFacture) {
 			if (ligne.getProduit().equals(produit)) {
 				ligne.setQuantite(ligne.getQuantite() + 1);
 				flag = true;
 			}
 		}
-
-		if (!flag) {
+		
+		if(!flag)
+		{
 			lignesFacture.add(new LigneFacture(produit, 1));
 		}
-
+		
 		calculerPrix();
 	}
 
@@ -170,7 +171,8 @@ public class Transaction {
 	 * @param produits à ajouter
 	 */
 	public void addProduits(List<Produit> produits) {
-		for (Produit produit : produits) {
+		for(Produit produit : produits)
+		{
 			addProduit(produit);
 		}
 	}
@@ -187,17 +189,18 @@ public class Transaction {
 			}
 		}	
 	}
-
 	/**
 	 * Calcul le sous-total
 	 */
-	private void calculerPrix() {
-		for (LigneFacture ligne : lignesFacture) {
+	private void calculerPrix()
+	{
+		for(LigneFacture ligne : lignesFacture)
+		{
 			sousTotal += ligne.getPrix() * ligne.getQuantite();
 			montantTaxes = sousTotal * pourcentageTaxes;
 			montantTotal = sousTotal + montantTaxes;
 		}
-
+		
 	}
 
 	/**
