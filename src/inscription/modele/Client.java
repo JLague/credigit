@@ -3,9 +3,6 @@ package inscription.modele;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import com.mongodb.BasicDBObject;
-
 import pos.modele.Transaction;
 
 /**
@@ -84,13 +81,6 @@ public class Client {
 	private ArrayList<Transaction> transaction;
 
 	/**
-	 * Le numéro d'inscription du client
-	 */
-	private static int numeroInscription = 0;
-
-	private int numeroInscriptionDuClient;
-
-	/**
 	 * Crée un client
 	 * 
 	 * @param data - Un objet transitoire contenant les informations sur le client
@@ -110,10 +100,6 @@ public class Client {
 		setEmpreinte(data.getEmpreinte());
 
 		ajouterInfoCompte();
-
-		numeroInscription += 1;
-
-		numeroInscriptionDuClient = numeroInscription;
 
 	}
 
@@ -243,10 +229,14 @@ public class Client {
 	 * 
 	 * @param adresse - L'adresse du client à modifier
 	 */
-	private void setAdresse(LocalAdresse adresse) {
+	private void setAdresse(LocalAdresse adresse) throws ExceptionCreationCompte{
 
 		if (adresse != null)
 			this.adresse = adresse;
+		else {
+			throw new ExceptionCreationCompte("Votre adresse est vide");
+		}
+		
 	}
 
 	/**
@@ -266,7 +256,7 @@ public class Client {
 	private void setNas(String nas) throws ExceptionCreationCompte {
 
 		if (validerNas(nas)) {
-			this.nas =  formatterNumero(nas);
+			this.nas = formatterNumero(nas);
 		} else {
 			throw new ExceptionCreationCompte("Votre numéro d'assurace sociale n'est pas valide.");
 		}
@@ -415,15 +405,6 @@ public class Client {
 	}
 
 	/**
-	 * Retourne le numéro d'inscriuption du client
-	 * 
-	 * @return Le numéro d'inscription du client
-	 */
-	public int getNumeroInscriptionDuClient() {
-		return numeroInscriptionDuClient;
-	}
-
-	/**
 	 * Valider que le nom n'est pas nulle ou vide
 	 * 
 	 * @param nom - Le nom à valider
@@ -432,9 +413,8 @@ public class Client {
 	private boolean validerNom(String nom) {
 		boolean valide = false;
 
-		nom = nom.trim();
-
 		if (nom != null && nom.length() != 0)
+
 			valide = true;
 
 		return valide;
@@ -473,10 +453,13 @@ public class Client {
 	private boolean validerNas(String Nas) {
 		boolean valide = false;
 
-		Nas = formatterNumero(Nas);
+		if (Nas != null) {
+			Nas = formatterNumero(Nas);
 
-		if (Nas.length() == 9) {
-			valide = true;
+			if (Nas.length() == 9) {
+				valide = true;
+			}
+
 		}
 
 		return valide;
@@ -491,10 +474,12 @@ public class Client {
 	private boolean validerNumero(String numero) {
 		boolean valide = false;
 
-		numero = formatterNumero(numero);
+		if (numero != null) {
+			numero = formatterNumero(numero);
 
-		if (numero.length() >= 10 && numero.length() <= 11)
-			valide = true;
+			if (numero.length() >= 10 && numero.length() <= 11)
+				valide = true;
+		}
 
 		return valide;
 	}
@@ -528,14 +513,4 @@ public class Client {
 		return temp;
 	}
 
-	/**
-	 * Ajoute une transaction dans la liste de transaction du client
-	 * 
-	 * @param tran - La transaction du client
-	 */
-	public void ajouterTransaction(Transaction tran) {
-		if (tran != null) {
-			transaction.add(tran);
-		}
-	}
 }
