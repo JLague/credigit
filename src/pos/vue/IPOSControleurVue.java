@@ -5,5 +5,5 @@ import javafx.scene.Scene;
 public interface IPOSControleurVue {
 
 	public Scene getScene();
-	
+
 }

@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -68,50 +69,10 @@ public class Transaction {
 		this.produits = produits;
 		this.numero = numero;
 
-		populateLignesFacture(produits);
-
-	}
-
-	/**
-	 * 
-	 * @param produit le produit à chercher
-	 * @return true si le produit est déjà présent dans les lignes de la facture
-	 */
-	private boolean estDansFacture(Produit produit) {
-		for (LigneFacture ligne : lignesFacture) {
-			if (ligne.getProduit().equals(produit))
-				return true;
-		}
-		return false;	
-	}
-
-	/**
-	 * 
-	 * @param produits la liste des produits
-	 * @param produit le produit à vérifier la quantité
-	 * @return le nombre de produits dans la liste de produits
-	 */
-	private static int getQuantite(List<Produit> produits, Produit produit) {
-		int cpt = 0;
-
-		for (Produit produitDansListe : produits) {
-			if (produitDansListe.equals(produit))
-				cpt++;
-		}
+		lignesFacture = FXCollections.observableArrayList();
 		
-		return cpt;
-	}
+		addProduits(produits);
 
-	private void populateLignesFacture(List<Produit> produits) {
-		
-
-		for (Produit produit : produits) {
-			int quantite = getQuantite(produits, produit);
-			
-			if (estDansFacture(produit)) {
-				lignesFacture.add(new LigneFacture(produit, quantite));
-			}
-		}
 	}
 
 	public static String getHeureCourrante() {
@@ -182,12 +143,26 @@ public class Transaction {
 	}
 
 	/**
-	 * Ajouter un produit au pos
+	 * Ajouter un produit au panier de l'utilisateur
 	 * 
 	 * @param produit à ajouter
 	 */
-	public void addproduit(Produit produit) {
-		// TODO
+	public void addProduit(Produit produit) {
+		boolean flag = false;
+		
+		for (LigneFacture ligne : lignesFacture) {
+			if (ligne.getProduit().equals(produit)) {
+				ligne.setQuantite(ligne.getQuantite() + 1);
+				flag = true;
+			}
+		}
+		
+		if(!flag)
+		{
+			lignesFacture.add(new LigneFacture(produit, 1));
+		}
+		
+		calculerPrix();
 	}
 
 	/**
@@ -195,8 +170,25 @@ public class Transaction {
 	 * 
 	 * @param produits à ajouter
 	 */
-	public void addproduits(List<Produit> produits) {
-		// TODO
+	public void addProduits(List<Produit> produits) {
+		for(Produit produit : produits)
+		{
+			addProduit(produit);
+		}
+	}
+	
+	/**
+	 * Calcul le sous-total
+	 */
+	private void calculerPrix()
+	{
+		for(LigneFacture ligne : lignesFacture)
+		{
+			sousTotal += ligne.getPrix() * ligne.getQuantite();
+			montantTaxes = sousTotal * pourcentageTaxes;
+			montantTotal = sousTotal + montantTaxes;
+		}
+		
 	}
 
 	/**
@@ -252,7 +244,7 @@ public class Transaction {
 	}
 
 	public String toString() {
-		return "numero";
+		return Long.toString(numero);
 	}
 
 }

@@ -1,6 +1,5 @@
 package algo;
 
-public class AES
-{
+public class AES {
 
 }

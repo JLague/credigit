@@ -1,32 +1,32 @@
 package pos.modele;
 
 public class DataVue {
-	
+
 	/**
 	 * Le SKU du produit
 	 */
 	private long sku;
-	
+
 	/**
 	 * Le nom du produit
 	 */
 	private String nom;
-	
+
 	/**
 	 * Le prix du produit
 	 */
 	private float prix;
-	
+
 	/**
 	 * Le coûtant du produit
 	 */
 	private float coutant;
-	
+
 	/**
 	 * Le fournisseur du produit
 	 */
 	private String fournisseur;
-	
+
 	/**
 	 * Une brève description du produit
 	 */
@@ -115,6 +115,5 @@ public class DataVue {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
+
 }

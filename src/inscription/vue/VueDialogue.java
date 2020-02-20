@@ -1,7 +1,5 @@
 package inscription.vue;
 
-
-
 import java.util.Optional;
 
 import javafx.application.Platform;
@@ -16,7 +14,7 @@ import javafx.scene.control.ButtonType;
  * @author Bank-era Corp.
  */
 public class VueDialogue {
-	
+
 	/**
 	 * Méthode statique permettant d'afficher un message de confirmation avant de
 	 * quitter
@@ -36,9 +34,10 @@ public class VueDialogue {
 		}
 	}
 
-	
 	/**
-	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une erreur lors de la création d'un client
+	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une
+	 * erreur lors de la création d'un client
+	 * 
 	 * @param meaasage - Le message d'erreur
 	 */
 	public static void erreurCreationDialogue(String message) {
@@ -47,7 +46,7 @@ public class VueDialogue {
 		alert.setTitle("Erreur lors de la cration d'un compte ");
 		alert.setHeaderText(message);
 		alert.showAndWait();
-	
+
 	}
 
 }
