@@ -16,7 +16,7 @@ public class LocalAdresse {
 	/**
 	 * Le numéro de l'appartement du client
 	 */
-	private int appartement;
+	private String appartement;
 
 	/**
 	 * Le code postal du client
@@ -48,7 +48,7 @@ public class LocalAdresse {
 	 * @param etat        - L'état
 	 * @param pays        - Le pays
 	 */
-	public LocalAdresse(String adresse, int appartement, String codePostal, String ville, String etat, String pays)
+	public LocalAdresse(String adresse, String appartement, String codePostal, String ville, String etat, String pays)
 			throws ExceptionCreationCompte {
 
 		setAdresse(adresse);
@@ -72,7 +72,7 @@ public class LocalAdresse {
 			throws ExceptionCreationCompte {
 
 		setAdresse(adresse);
-		appartement = -1;
+		appartement = "";
 		setCodePostal(codePostal);
 		setVille(ville);
 		setEtat(etat);
@@ -107,7 +107,7 @@ public class LocalAdresse {
 	 * 
 	 * @return Le numéro d'appartement du client
 	 */
-	public int getAppartement() {
+	public String getAppartement() {
 		return appartement;
 	}
 
@@ -116,7 +116,7 @@ public class LocalAdresse {
 	 * 
 	 * @param appartement - Le nouveau numéro d'appartement du client
 	 */
-	private void setAppartement(int appartement) throws ExceptionCreationCompte {
+	private void setAppartement(String appartement) throws ExceptionCreationCompte {
 		if (validerAppartement(appartement)) {
 			this.appartement = appartement;
 		} else {
@@ -235,10 +235,10 @@ public class LocalAdresse {
 	 * @param appartement - Le numéro d'appartement à valider
 	 * @return Vrai si valide sinon faux
 	 */
-	private boolean validerAppartement(int appartement) {
+	private boolean validerAppartement(String appartement) {
 		boolean valide = false;
 
-		if (appartement > 0 && appartement < 10000)
+		if (appartement != null)
 			valide = true;
 
 		return valide;

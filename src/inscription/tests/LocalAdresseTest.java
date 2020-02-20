@@ -21,7 +21,7 @@ public class LocalAdresseTest {
 	@Before
 	public void testLocalAdresseStringIntStringStringStringString() {
 		try {
-			a1 = new LocalAdresse("123 Abeille", 10, "G2H 6K9", "Québec", "Québec", "Canada");
+			a1 = new LocalAdresse("123 Abeille", "10", "G2H 6K9", "Québec", "Québec", "Canada");
 		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait pas se rendre là");
 		}
@@ -70,15 +70,8 @@ public class LocalAdresseTest {
 		}
 
 		try {
-			a = new LocalAdresse("1245 Hibou", 0, "g1q 1u8", "   Washington", "Washington DC", "United States");
-			fail("Le numéro d'appartment est trop petit");
-		} catch (ExceptionCreationCompte e) {
-
-		}
-
-		try {
-			a = new LocalAdresse("1245 Hibou", 10000000, "g1q 1u8", "   Washington", "Washington DC", "United States");
-			fail("Le numéro d'appartment est trop grand");
+			a = new LocalAdresse("1245 Hibou", null, "g1q 1u8", "   Washington", "Washington DC", "United States");
+			fail("Le numéro d'appartment est null");
 		} catch (ExceptionCreationCompte e) {
 
 		}
@@ -151,10 +144,10 @@ public class LocalAdresseTest {
 
 	@Test
 	public void testGetAppartement() {
-		assertTrue(a1.getAppartement() == 10);
-		assertTrue(a2.getAppartement() == -1);
-		assertTrue(a3.getAppartement() == -1);
-		assertTrue(a4.getAppartement() == -1);
+		assertTrue(a1.getAppartement().equals("10"));
+		assertTrue(a2.getAppartement().equals(""));
+		assertTrue(a3.getAppartement().equals(""));
+		assertTrue(a4.getAppartement().equals(""));
 	}
 
 	@Test
