@@ -20,10 +20,10 @@ public class POSControleur implements IPOSControleur {
 	/**
 	 * Constructeur servant à instantier un contrôleur du POS
 	 * 
-	 * @param app l'application du POS
+	 * @param posApplication l'application du POS
 	 */
-	public POSControleur(POSApplication app) {
-		this.app = app;
+	public POSControleur(POSApplication posApplication) {
+		this.app = posApplication;
 		this.vue = new POSControleurVue(this);
 	}
 
@@ -42,31 +42,31 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public void annulerItem() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void annulerCommande() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void produitSelectionne(int ligne, int colonne) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void inputEntree(String input) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void creerProduit(DataVue data) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -78,6 +78,6 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public void paiementEmpreinte() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

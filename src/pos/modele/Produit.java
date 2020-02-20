@@ -1,32 +1,32 @@
 package pos.modele;
 
 public class Produit {
-	
+
 	/**
 	 * Le sku du produit
 	 */
 	private long sku;
-	
+
 	/**
 	 * Le nom du produit
 	 */
 	private String nom;
-	
+
 	/**
 	 * Le prix du produit
 	 */
 	private float prix;
-	
+
 	/**
 	 * Le coûtant du produit
 	 */
 	private float coutant;
-	
+
 	/**
 	 * Le fournisseur du produit
 	 */
 	private String fournisseur;
-	
+
 	/**
 	 * Une brève description du produit
 	 */
@@ -36,9 +36,8 @@ public class Produit {
 	 * La quantité de ce produit
 	 */
 	private int quantite;
-	
-	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, String description)
-	{
+
+	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, String description) {
 		this.sku = sku;
 		this.nom = nom;
 		this.prix = prix;
@@ -46,7 +45,7 @@ public class Produit {
 		this.fournisseur = fournisseur;
 		this.description = description;
 	}
-	
+
 	/**
 	 * @return the sku
 	 */
@@ -130,7 +129,7 @@ public class Produit {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	/**
 	 * @return the quantite
 	 */
@@ -146,9 +145,8 @@ public class Produit {
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return this.nom;
 	}
-	
+
 }

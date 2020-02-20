@@ -6,16 +6,15 @@ public class LigneFacture {
 	private int quantite;
 	private String nom;
 	private Produit produit;
-	
-	public LigneFacture(Produit produit, int quantite)
-	{
+
+	public LigneFacture(Produit produit, int quantite) {
 		this.prixUnitaire = produit.getPrix();
 		this.nom = produit.getNom();
 		this.quantite = quantite;
 		this.produit = produit;
 		calculerPrix();
 	}
-	
+
 	/**
 	 * @return le prix
 	 */
@@ -29,7 +28,7 @@ public class LigneFacture {
 	public int getQuantite() {
 		return quantite;
 	}
-	
+
 	/**
 	 * @param quantite le quantite à modifier
 	 */
@@ -37,29 +36,26 @@ public class LigneFacture {
 		this.quantite = quantite;
 		calculerPrix();
 	}
-	
+
 	/**
 	 * @return le nom
 	 */
 	public String getNom() {
 		return nom;
 	}
-	
+
 	/**
 	 * Calculer le prix de la ligne
 	 */
-	private void calculerPrix()
-	{
+	private void calculerPrix() {
 		this.prix = this.prixUnitaire * this.quantite;
 	}
-	
+
 	/**
 	 * @return le produit
 	 */
-	public Produit getProduit()
-	{
+	public Produit getProduit() {
 		return this.produit;
 	}
-	
-	
+
 }

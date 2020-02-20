@@ -21,13 +21,12 @@ import inscription.modele.Questions;
  *
  */
 public class ClientTest {
-	
+
 	Client client1, client2;
-	
-	
+
 	@Before
 	public void testClient() {
-		
+
 		try {
 			LocalDate localDate = LocalDate.of(2001, 4, 24);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
@@ -40,12 +39,12 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client1 = new Client(new DataTransition("Duchesne", "Christophe", "youremail@here.com", localDate,
-					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111", questions,
-					reponses, "555-555-5555", empreinte));
+					new LocalAdresse("555 rue Yolo", 12, "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
+					questions, reponses, "555-555-5555", empreinte));
 		} catch (ExceptionCreationCompte e) {
-			 fail("Ne devrait jamais arriver ici");
+			fail("Ne devrait jamais arriver ici");
 		}
-		
+
 		try {
 			LocalDate localDate = LocalDate.of(1987, 6, 30);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
@@ -58,10 +57,10 @@ public class ClientTest {
 			empreinte[0] = 1;
 			empreinte[1] = 1;
 			client2 = new Client(new DataTransition("LeRond d'Alembert", "Jean", "mathislife@math.com", localDate,
-					new LocalAdresse("Pi/2 rue du sinus", "G5C 4F7", "Cosinus", "Trigo", "Fonction"), "123 456 789", questions,
-					reponses, "555-555-5598", empreinte));
+					new LocalAdresse("Pi/2 rue du sinus", "G5C 4F7", "Cosinus", "Trigo", "Fonction"), "123 456 789",
+					questions, reponses, "555-555-5598", empreinte));
 		} catch (ExceptionCreationCompte e) {
-			 fail("Ne devrait jamais arriver ici");
+			fail("Ne devrait jamais arriver ici");
 		}
 	}
 

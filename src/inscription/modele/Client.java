@@ -266,7 +266,7 @@ public class Client {
 	private void setNas(String nas) throws ExceptionCreationCompte {
 
 		if (validerNas(nas)) {
-			this.nas =  formatterNumero(nas);
+			this.nas = formatterNumero(nas);
 		} else {
 			throw new ExceptionCreationCompte("Votre numéro d'assurace sociale n'est pas valide.");
 		}

@@ -10,165 +10,135 @@ import inscription.modele.LocalAdresse;
 
 /**
  * Tests des méthodes de la classe LocalAdresse
+ * 
  * @author Bank-era Corp.
  *
  */
 public class LocalAdresseTest {
 
 	private LocalAdresse a1, a2, a3, a4;
-	
+
 	@Before
 	public void testLocalAdresseStringIntStringStringStringString() {
 		try {
 			a1 = new LocalAdresse("123 Abeille", 10, "G2H 6K9", "Québec", "Québec", "Canada");
-		}
-		catch(ExceptionCreationCompte e)
-		{
+		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait pas se rendre là");
 		}
-		
+
 	}
 
 	@Before
 	public void testLocalAdresseStringStringStringStringString() {
 		try {
 			a2 = new LocalAdresse("    148 OISEAU ", "  G1K  1K9", "Toro  nto", "Ontario", "Canada");
-		}
-		catch(ExceptionCreationCompte e)
-		{
+		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait pas se rendre là");
 		}
-		
+
 		try {
 			a3 = new LocalAdresse("911 Police ", "G2K 3K8  ", "Vancouver  ", "British-Colombia", "Canada");
-		}
-		catch(ExceptionCreationCompte e)
-		{
+		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait pas se rendre là");
 		}
-		
+
 		try {
-			a4 = new LocalAdresse("1600 Pennsylvania Ave NW     ", "g1q 1u8", "   Washington", "Washington DC", "United States");
-		}
-		catch(ExceptionCreationCompte e)
-		{
+			a4 = new LocalAdresse("1600 Pennsylvania Ave NW     ", "g1q 1u8", "   Washington", "Washington DC",
+					"United States");
+		} catch (ExceptionCreationCompte e) {
 			fail("Ne devrait pas se rendre là");
 		}
 	}
-	
+
 	@Test
 	public void testInvalide() {
-		
+
 		LocalAdresse a;
-		
+
 		try {
 			a = new LocalAdresse("", "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("L'adresse est vide");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse(null, "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("L'adresse est nulle");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-	
-		}
-		
+
 		try {
-			a = new LocalAdresse("1245 Hibou", 0,"g1q 1u8", "   Washington", "Washington DC", "United States");
+			a = new LocalAdresse("1245 Hibou", 0, "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("Le numéro d'appartment est trop petit");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-	
-		}
-		
+
 		try {
-			a = new LocalAdresse("1245 Hibou", 10000000,"g1q 1u8", "   Washington", "Washington DC", "United States");
+			a = new LocalAdresse("1245 Hibou", 10000000, "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("Le numéro d'appartment est trop grand");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-	
-		}
-		
+
 		try {
 			a = new LocalAdresse("1 Crocodile", "g1q91u8", "   Washington", "Washington DC", "United States");
 			fail("Le code postal est trop long");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-	
-		}
-		
+
 		try {
 			a = new LocalAdresse("1 Crocodile", "g1qu8", "   Washington", "Washington DC", "United States");
 			fail("Le code postal est trop court");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-	
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", "", "Washington DC", "United States");
 			fail("La ville est vide");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "", "United States");
 			fail("L'état est vide");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", "");
 			fail("Le pays est vide");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", null, "Washington DC", "United States");
 			fail("La ville est nulle");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", null, "United States");
 			fail("L'état est nul");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 		try {
 			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", null);
 			fail("Le pays est nul");
+		} catch (ExceptionCreationCompte e) {
+
 		}
-		catch(ExceptionCreationCompte e)
-		{
-			
-		}
-		
+
 	}
 
 	@Test

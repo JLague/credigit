@@ -25,15 +25,14 @@ public class Etablissement {
 	 * Balance de la compagnie
 	 */
 	private float balance = 0;
-	
-	public Etablissement(String nom, String adresse, List<Produit> inventaire, List<Transaction> transactions, float balance) {
+
+	public Etablissement(String nom, String adresse, List<Produit> inventaire, List<Transaction> transactions,
+			float balance) {
 	}
 
 	public Etablissement(String nom, String adresse) {
-		this(nom, adresse, new ArrayList<Produit>(), new ArrayList<Transaction>(), 0f );
+		this(nom, adresse, new ArrayList<Produit>(), new ArrayList<Transaction>(), 0f);
 	}
-
-	
 
 	/**
 	 * @return le nom
