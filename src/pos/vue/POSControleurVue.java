@@ -176,7 +176,7 @@ public class POSControleurVue implements IPOSControleurVue {
 				}
 			}
 		}
-		
+
 		clavierButtons[1][3].setMinWidth(200);
 		clavierButtons[0][3].setMinWidth(200);
 		clavierButtons[3][3].setMinWidth(200);
@@ -204,6 +204,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	@Override
 	public Scene getScene() {
 		return this.scene;
+	}
+
+	public void retirerItem() {
+		LigneFacture ligne = factureTable.getSelectionModel().getSelectedItem();
+		transaction.removeProduits(ligne);
 	}
 
 }
