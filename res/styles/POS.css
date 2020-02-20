@@ -91,9 +91,7 @@
 
 /* Header border */
 .table-view .column-header {
-	-fx-border-radius: 15px;
-	-fx-border-width: 2px;
-	-fx-border-color: white;
+	
 }
 
 /* TableView font and transparency */

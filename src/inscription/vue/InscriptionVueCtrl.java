@@ -202,12 +202,7 @@ public class InscriptionVueCtrl {
 			break;
 
 		case ETAPE4:
-			stepPane.getChildren().clear();
-			stepPane.getChildren().add(etapes.get(3));
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
-			// continuerBtn.setDisable(true);
-			nouvelleEtape = EtapesVues.ETAPE4;
+			ctrl.envoyerDataClient(null);
 			break;
 
 		}

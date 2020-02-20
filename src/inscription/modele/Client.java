@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import com.mongodb.BasicDBObject;
+
 import pos.modele.Transaction;
 
 /**
@@ -80,21 +82,21 @@ public class Client {
 	 * Les transactions du client
 	 */
 	private ArrayList<Transaction> transaction;
-	
+
 	/**
 	 * Le numéro d'inscription du client
 	 */
 	private static int numeroInscription = 0;
-	
+
 	private int numeroInscriptionDuClient;
 
 	/**
 	 * Crée un client
+	 * 
 	 * @param data - Un objet transitoire contenant les informations sur le client
 	 * @throws ExceptionCreationCompte
 	 */
-	public Client(DataTransition data) throws ExceptionCreationCompte 
-	{
+	public Client(DataTransition data) throws ExceptionCreationCompte {
 
 		setNom(data.getNom());
 		setPrenom(data.getPrenom());
@@ -108,9 +110,9 @@ public class Client {
 		setEmpreinte(data.getEmpreinte());
 
 		ajouterInfoCompte();
-		
+
 		numeroInscription += 1;
-		
+
 		numeroInscriptionDuClient = numeroInscription;
 
 	}
@@ -139,18 +141,14 @@ public class Client {
 	 * 
 	 * @param nom - Le nom du client à modifier
 	 */
-	private void setNom(String nom) throws ExceptionCreationCompte 
-	{
+	private void setNom(String nom) throws ExceptionCreationCompte {
 
-		if (validerNom(nom)) 
-		{
+		if (validerNom(nom)) {
 			this.nom = nom.trim();
-		}		
-		else
-		{
+		} else {
 			throw new ExceptionCreationCompte("Votre nom n'est pas valide.");
 		}
-	
+
 	}
 
 	/**
@@ -167,15 +165,11 @@ public class Client {
 	 * 
 	 * @param prenom - Le prénom du client à modifier
 	 */
-	private void setPrenom(String prenom) throws ExceptionCreationCompte 
-	{
+	private void setPrenom(String prenom) throws ExceptionCreationCompte {
 
-		if (validerNom(prenom))
-		{
+		if (validerNom(prenom)) {
 			this.prenom = prenom.trim();
-		}
-		else
-		{
+		} else {
 			throw new ExceptionCreationCompte("Votre prénom n'est pas valide.");
 		}
 
@@ -195,15 +189,11 @@ public class Client {
 	 * 
 	 * @param email - Le email du client à modfier
 	 */
-	private void setEmail(String email) throws ExceptionCreationCompte 
-	{
+	private void setEmail(String email) throws ExceptionCreationCompte {
 
-		if (email != null && email.length() != 0)
-		{
+		if (email != null && email.length() != 0) {
 			this.email = email;
-		}
-		else
-		{
+		} else {
 			throw new ExceptionCreationCompte("Votre email n'est pas valide.");
 		}
 	}
@@ -222,27 +212,21 @@ public class Client {
 	 * 
 	 * @param date - La date de naissance du client à modifier
 	 */
-	private void setDate(LocalDate date)throws ExceptionCreationCompte 
-	{
+	private void setDate(LocalDate date) throws ExceptionCreationCompte {
 
-		if (date != null && date.getYear() > 1910)
-		{
-			if(validerMajeur(date))
-			{
+		if (date != null && date.getYear() > 1910) {
+			if (validerMajeur(date)) {
 				this.date = date;
+			} else {
+				throw new ExceptionCreationCompte(
+						"Vous n'êtes pas majeur. Selon les lois, vous ne pouvez pas appliquer pour une carte "
+								+ "de crédit.");
 			}
-			else
-			{
-				throw new ExceptionCreationCompte("Vous n'êtes pas majeur. Selon les lois, vous ne pouvez pas appliquer pour une carte "
-						+ "de crédit.");
-			}
-			
-		}
-		else
-		{
+
+		} else {
 			throw new ExceptionCreationCompte("Votre date de naissance n'est pas valide.");
 		}
-			
+
 	}
 
 	/**
@@ -279,15 +263,11 @@ public class Client {
 	 * 
 	 * @param nas - Le NAS du client à modifier
 	 */
-	private void setNas(String nas) throws ExceptionCreationCompte
-	{
+	private void setNas(String nas) throws ExceptionCreationCompte {
 
-		if (validerNas(nas))
-		{
+		if (validerNas(nas)) {
 			this.nas = formatterNumero(nas);
-		}
-		else
-		{
+		} else {
 			throw new ExceptionCreationCompte("Votre numéro d'assurace sociale n'est pas valide.");
 		}
 	}
@@ -342,15 +322,11 @@ public class Client {
 	 * 
 	 * @param empreinte - L'empreinte du client à modifier
 	 */
-	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte
-	{
+	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
 
-		if (empreinte != null && empreinte.length != 0)
-		{
+		if (empreinte != null && empreinte.length != 0) {
 			this.empreinte = empreinte;
-		}
-		else
-		{
+		} else {
 			throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
 		}
 	}
@@ -369,16 +345,13 @@ public class Client {
 	 * 
 	 * @param questions - La liste de questions du clients à modifier
 	 */
-	private void setQuestions(ArrayList<Questions> questions) throws ExceptionCreationCompte
-	{
-		if (questions != null && questions.size() == 2 && !questions.get(0).equals(questions.get(1)))
-		{
+	private void setQuestions(ArrayList<Questions> questions) throws ExceptionCreationCompte {
+		if (questions != null && questions.size() == 2 && !questions.get(0).equals(questions.get(1))) {
 			this.questions = questions;
-		}
-		else	
-		{
-			throw new ExceptionCreationCompte("Vos questions de sécurité ne sont pas valides. Assurez-vous d'avoir deux questions "
-					+ "de sécurité différentes.");
+		} else {
+			throw new ExceptionCreationCompte(
+					"Vos questions de sécurité ne sont pas valides. Assurez-vous d'avoir deux questions "
+							+ "de sécurité différentes.");
 		}
 	}
 
@@ -396,19 +369,17 @@ public class Client {
 	 * 
 	 * @param reponses - La liste de réponses du client à modifier
 	 */
-	private void setReponses(ArrayList<String> reponses) throws ExceptionCreationCompte
-	{
+	private void setReponses(ArrayList<String> reponses) throws ExceptionCreationCompte {
 
-		if (reponses != null && reponses.size() == 2 && reponses.get(0).length() != 0 && reponses.get(1).length() != 0)
-		{
+		if (reponses != null && reponses.size() == 2 && reponses.get(0).length() != 0
+				&& reponses.get(1).length() != 0) {
 			this.reponses = reponses;
+		} else {
+			throw new ExceptionCreationCompte(
+					"Vous réponses ne sont pas valides. Assurez-vous d'avoir bien remplir les champs des"
+							+ " réponses.");
 		}
-		else
-		{
-			throw new ExceptionCreationCompte("Vous réponses ne sont pas valides. Assurez-vous d'avoir bien remplir les champs des"
-					+ " réponses.");
-		}
-			
+
 	}
 
 	/**
@@ -425,15 +396,11 @@ public class Client {
 	 * 
 	 * @param numero - Le numéro de téléphone du client à modifier
 	 */
-	private void setNumero(String numero) throws ExceptionCreationCompte
-	{
+	private void setNumero(String numero) throws ExceptionCreationCompte {
 
-		if(validerNumero(numero))
-		{
-				this.numero = formatterNumero(numero);
-		}
-		else
-		{
+		if (validerNumero(numero)) {
+			this.numero = formatterNumero(numero);
+		} else {
 			throw new ExceptionCreationCompte("Votre numéro de téléphone n'est pas valide.");
 		}
 	}
@@ -446,15 +413,13 @@ public class Client {
 	public ArrayList<Transaction> getTransaction() {
 		return transaction;
 	}
-	
 
 	/**
 	 * Retourne le numéro d'inscriuption du client
 	 * 
 	 * @return Le numéro d'inscription du client
 	 */
-	public int getNumeroInscriptionDuClient()
-	{
+	public int getNumeroInscriptionDuClient() {
 		return numeroInscriptionDuClient;
 	}
 
@@ -519,27 +484,28 @@ public class Client {
 
 	/**
 	 * Valide que le numéro de téléphone est entre 10 et 11 chiffre
+	 * 
 	 * @param numero
 	 * @return
 	 */
 	private boolean validerNumero(String numero) {
 		boolean valide = false;
-		
+
 		numero = formatterNumero(numero);
 
-		if(numero.length() >= 10 && numero.length() <= 11)
+		if (numero.length() >= 10 && numero.length() <= 11)
 			valide = true;
-		
+
 		return valide;
 	}
-	
+
 	/**
 	 * Formatte la String reçue en paramètre
+	 * 
 	 * @param numero - La String à formatter
 	 * @return La String formattée
 	 */
-	private String formatterNumero(String numero)
-	{
+	private String formatterNumero(String numero) {
 		ArrayList<Character> caracter = new ArrayList<>();
 
 		for (int i = 0; i < numero.length(); i++) {
@@ -552,24 +518,23 @@ public class Client {
 				i--;
 			}
 		}
-		
+
 		String temp = "";
-		
+
 		for (int i = 0; i < caracter.size(); i++) {
 			numero += caracter.get(i);
 		}
-		
+
 		return temp;
 	}
-	
+
 	/**
 	 * Ajoute une transaction dans la liste de transaction du client
+	 * 
 	 * @param tran - La transaction du client
 	 */
-	public void ajouterTransaction(Transaction tran)
-	{
-		if(tran != null)
-		{
+	public void ajouterTransaction(Transaction tran) {
+		if (tran != null) {
 			transaction.add(tran);
 		}
 	}
