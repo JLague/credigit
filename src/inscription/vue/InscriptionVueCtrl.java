@@ -167,13 +167,6 @@ public class InscriptionVueCtrl {
 		}
 	}
 
-	@FXML
-	public void initialize() {
-		// Setup les listes de questions
-		question1Choice.getItems().setAll(Questions.values());
-		question2Choice.getItems().setAll(Questions.values());
-	}
-
 	public Scene getScene() {
 		return scene;
 	}
