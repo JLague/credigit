@@ -178,9 +178,14 @@ public class Transaction {
 	/**
 	 * Retire un produit
 	 */
-	public void removeProduits(LigneFacture ligne) {
-		lignesFacture.remove(ligne);
-		
+	public void removeProduits(Produit produit) {
+		for(LigneFacture ligne : lignesFacture)
+		{
+			if(ligne.getProduit().equals(produit))
+			{
+				lignesFacture.remove(ligne);
+			}
+		}	
 	}
 
 	/**
