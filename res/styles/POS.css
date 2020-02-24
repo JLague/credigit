@@ -84,6 +84,18 @@
 	-fx-background-color: transparent;
 }
 
+/* TableView selection colors */
+.table-row-cell:selected {
+   -fx-background-color: white; 
+}
+.table-row-cell:selected .text {
+       -fx-fill: #0D1837;
+}
+
+.table-row-cell .text {
+	-fx-fill: white;
+}
+
 /* Header background transparency */
 .table-view .column-header-background {
 	-fx-background-color: transparent;

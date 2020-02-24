@@ -59,8 +59,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Label taxesLbl;
 	@FXML
-	private Label totalLbl; 
-	
+	private Label totalLbl;
+
 	private BorderPane gridProduit;
 
 	private GridPane clavierGrid;
@@ -84,12 +84,6 @@ public class POSControleurVue implements IPOSControleurVue {
 		connectBtn.setOnMouseClicked((me) -> ouvrirVuePrincipale());
 	}
 
-	private void setPrixProperties() {
-		sousTotalLbl.textProperty().bind(transaction.sousTotalProperty());
-		taxesLbl.textProperty().bind(transaction.taxesProperty());
-		totalLbl.textProperty().bind(transaction.totalProperty());
-	}
-
 	/**
 	 * Méthode servant à ouvrir la vue principale
 	 */
@@ -97,19 +91,19 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Création et chargement de la scène du POS
 		creerScene(MAIN_VIEW, rootBP);
 		ctrl.chargerScene(this.scene, "POS");
-		
+
 		// Chargement de la vue
 		chargerClavier();
 		chargerTableView();
 		chargerGridProduit();
-		
-		setPrixProperties();
 
-		// TODO mettre la vue des produits lors du chargement
 		middlePane.getChildren().add(gridProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
 	}
 
+	/**
+	 * Méthode permettant de charger le TableView contenant la facture
+	 */
 	@SuppressWarnings("unchecked")
 	private void chargerTableView() {
 		factureTable.getStyleClass().add("table-view");
@@ -124,23 +118,22 @@ public class POSControleurVue implements IPOSControleurVue {
 		column2.getStyleClass().add("align-center");
 
 		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
-		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
+		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
 		column3.getStyleClass().add("align-right");
 
-		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
-		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", "Une autre description");
-		
-		transaction = new Transaction();
-		transaction.addProduit(test1);
-		transaction.addProduit(test2);
-		
+		createNewTransaction();
+
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
-		factureTable.setItems(transaction.getLignesFacture());	
+		factureTable.setItems(transaction.getLignesFacture());
 	}
 
+	/**
+	 * Méthode permettant de charger la grid de Produits qui est affichée lorsqu'on
+	 * pèse sur le boutons Produit
+	 */
 	private void chargerGridProduit() {
-		
+
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("GridProduits.fxml"));
 		loader.setController(this);
 
@@ -188,7 +181,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
 	}
-	
+
 	@FXML
 	private void produitHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
@@ -200,7 +193,6 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(clavierBox);
 	}
-
 
 	/**
 	 * Méthode qui permet de charger un fichier FXML
@@ -221,6 +213,38 @@ public class POSControleurVue implements IPOSControleurVue {
 	@Override
 	public Scene getScene() {
 		return this.scene;
+	}
+
+	@FXML
+	private void enleverSelection(ActionEvent event) {
+		LigneFacture temp = this.factureTable.getSelectionModel().getSelectedItem();
+		
+		if(temp != null)
+		{
+			transaction.removeProduits(temp.getProduit());
+		}
+		
+	}
+
+	@FXML
+	private void annuler(ActionEvent event) {
+		this.createNewTransaction();
+	}
+
+	/**
+	 * Méthode interne permettant de créer une nouvelle transaction et d'associer
+	 * les Labels de prix à celle-ci.
+	 */
+	private void createNewTransaction() {
+		this.transaction = new Transaction();
+		factureTable.setItems(transaction.getLignesFacture());
+
+		sousTotalLbl.textProperty().bind(transaction.sousTotalProperty());
+		taxesLbl.textProperty().bind(transaction.taxesProperty());
+		totalLbl.textProperty().bind(transaction.totalProperty());
+
+		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
+		transaction.addProduit(test1);
 	}
 
 }

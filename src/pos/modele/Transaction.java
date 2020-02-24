@@ -48,14 +48,14 @@ public class Transaction {
 	 * Établissement qui délivre la facture
 	 */
 	private Etablissement etablissement;
-	
+
 	private StringProperty sousTotalProperty;
-	
+
 	private StringProperty taxesProperty;
-	
+
 	private StringProperty totalProperty;
-	
-	NumberFormat cf;
+
+	private NumberFormat cf;
 
 	private ObservableList<LigneFacture> lignesFacture;
 
@@ -71,29 +71,34 @@ public class Transaction {
 	 * 
 	 * @param heure            - L'heure à laquelle la transaction est effecuté
 	 * @param pourcentageTaxes - pourcentage de taxe à appliquer selon la région
-	 * @param etablissement    - Établissement où a lieu la transaction
 	 * @param produits         - liste des produits qui seront chargés au client
 	 *                         (panier)
+	 * @param numero           - le numéro de la transaction
 	 */
+
 	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
 		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
-		
+
 		this.heure = heure;
 		Transaction.pourcentageTaxes = pourcentageTaxes;
 		this.produits = produits;
 		this.numero = numero;
-		
+
 		this.sousTotalProperty = new SimpleStringProperty();
 		this.taxesProperty = new SimpleStringProperty();
 		this.totalProperty = new SimpleStringProperty();
 
 		lignesFacture = FXCollections.observableArrayList();
-		
+
 		addProduits(produits);
 
 	}
 
-	public static String getHeureCourrante() {
+	/**
+	 * 
+	 * @return
+	 */
+	private static String getHeureCourrante() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		return ("" + dtf.format(now));
@@ -167,19 +172,18 @@ public class Transaction {
 	 */
 	public void addProduit(Produit produit) {
 		boolean flag = false;
-		
+
 		for (LigneFacture ligne : lignesFacture) {
 			if (ligne.getProduit().equals(produit)) {
 				ligne.setQuantite(ligne.getQuantite() + 1);
 				flag = true;
 			}
 		}
-		
-		if(!flag)
-		{
+
+		if (!flag) {
 			lignesFacture.add(new LigneFacture(produit, 1));
 		}
-		
+
 		calculerPrix();
 	}
 
@@ -189,8 +193,7 @@ public class Transaction {
 	 * @param produits à ajouter
 	 */
 	public void addProduits(List<Produit> produits) {
-		for(Produit produit : produits)
-		{
+		for (Produit produit : produits) {
 			addProduit(produit);
 		}
 	}
@@ -199,33 +202,56 @@ public class Transaction {
 	 * Retire un produit
 	 */
 	public void removeProduits(Produit produit) {
-		for(LigneFacture ligne : lignesFacture)
-		{
-			if(ligne.getProduit().equals(produit))
-			{
-				lignesFacture.remove(ligne);
+		LigneFacture tmp = null;
+
+		for (LigneFacture ligne : lignesFacture) {
+			if (ligne.getProduit().equals(produit)) {
+				tmp = ligne;
 			}
-		}	
+		}
+
+		if (tmp != null) {
+			lignesFacture.remove(tmp);
+		}
+
+		calculerPrix();
 	}
+
 	/**
 	 * Calcul le sous-total
 	 */
-	private void calculerPrix()
-	{
-		for(LigneFacture ligne : lignesFacture)
-		{
+	private void calculerPrix() {
+		// Rénitialisation des prix
+		sousTotal = 0;
+		montantTaxes = 0;
+		montantTotal = 0;
+
+		// Calcul des prix
+		for (LigneFacture ligne : lignesFacture) {
 			sousTotal += ligne.getPrix() * ligne.getQuantite();
 			montantTaxes = sousTotal * pourcentageTaxes;
 			montantTotal = sousTotal + montantTaxes;
 		}
-		
+
+		// Association du nouveau prix au propriétés
 		sousTotalProperty.set(cf.format(sousTotal));
 		taxesProperty.set(cf.format(montantTaxes));
 		totalProperty.set(cf.format(montantTotal));
 	}
-	
-	public ObservableList<LigneFacture> getLignesFacture()
-	{
+
+	/**
+	 * @param lf la ligne de la facture à effacer
+	 */
+	public void removeLigneFacture(LigneFacture lf) {
+		this.lignesFacture.remove(lf);
+		this.calculerPrix();
+	}
+
+	/**
+	 * 
+	 * @return la liste observable des lignes de la facture
+	 */
+	public ObservableList<LigneFacture> getLignesFacture() {
 		return this.lignesFacture;
 	}
 
@@ -243,13 +269,6 @@ public class Transaction {
 	 */
 	public void setPourcentageTaxes(float pourcentageTaxes) {
 		Transaction.pourcentageTaxes = pourcentageTaxes;
-	}
-
-	/**
-	 * @return
-	 */
-	public float getSousTotal() {
-		return sousTotal;
 	}
 
 	/**
@@ -273,30 +292,50 @@ public class Transaction {
 		this.montantTotal = montantTotal;
 	}
 
+	/**
+	 * @return le sous-total
+	 */
+	public float getSousTotal() {
+		return sousTotal;
+	}
+
+	/**
+	 * @return le montant des taxes
+	 */
 	public float getMontantTaxes() {
 		return montantTaxes;
 	}
 
+	/**
+	 * @return le montant total
+	 */
 	public float getMontantTotal() {
 		return montantTotal;
 	}
 
+	@Override
 	public String toString() {
 		return Long.toString(numero);
 	}
-	
-	public StringProperty sousTotalProperty()
-	{
+
+	/**
+	 * @return la propriété correspondant au sous-total
+	 */
+	public StringProperty sousTotalProperty() {
 		return sousTotalProperty;
 	}
-	
-	public StringProperty taxesProperty()
-	{
+
+	/**
+	 * @return la propriété correspondant au taxes
+	 */
+	public StringProperty taxesProperty() {
 		return taxesProperty;
 	}
-	
-	public StringProperty totalProperty()
-	{
+
+	/**
+	 * @return la propriété correspondant au total
+	 */
+	public StringProperty totalProperty() {
 		return totalProperty;
 	}
 

@@ -1,13 +1,27 @@
 package pos.modele;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class LigneFacture {
 	private float prixUnitaire;
 	private float prix;
+	private String prixString;
 	private int quantite;
 	private String nom;
 	private Produit produit;
+	
+	private NumberFormat cf;
+	
 
+	/**
+	 * 
+	 * @param produit le produit associé à la ligne
+	 * @param quantite la quantité du produit
+	 */
 	public LigneFacture(Produit produit, int quantite) {
+		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+		
 		this.prixUnitaire = produit.getPrix();
 		this.nom = produit.getNom();
 		this.quantite = quantite;
@@ -49,6 +63,7 @@ public class LigneFacture {
 	 */
 	private void calculerPrix() {
 		this.prix = this.prixUnitaire * this.quantite;
+		prixString = cf.format(this.prix);
 	}
 
 	/**
@@ -57,5 +72,11 @@ public class LigneFacture {
 	public Produit getProduit() {
 		return this.produit;
 	}
-
+	
+	/**
+	 * @return le prix en String
+	 */
+	public String getPrixString() {
+	    return prixString;
+	}
 }
