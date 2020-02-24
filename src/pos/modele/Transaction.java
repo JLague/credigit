@@ -201,7 +201,7 @@ public class Transaction {
 	/**
 	 * Retire un produit
 	 */
-	public void removeProduits(Produit produit) {
+	public void removeProduit(Produit produit) {
 		LigneFacture tmp = null;
 
 		for (LigneFacture ligne : lignesFacture) {
@@ -237,14 +237,6 @@ public class Transaction {
 		sousTotalProperty.set(cf.format(sousTotal));
 		taxesProperty.set(cf.format(montantTaxes));
 		totalProperty.set(cf.format(montantTotal));
-	}
-
-	/**
-	 * @param lf la ligne de la facture à effacer
-	 */
-	public void removeLigneFacture(LigneFacture lf) {
-		this.lignesFacture.remove(lf);
-		this.calculerPrix();
 	}
 
 	/**

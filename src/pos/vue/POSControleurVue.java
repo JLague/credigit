@@ -1,7 +1,9 @@
 package pos.vue;
 
 import java.io.IOException;
+import java.util.List;
 
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +24,6 @@ import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
-import pos.modele.Transaction;
 
 public class POSControleurVue implements IPOSControleurVue {
 
@@ -67,8 +68,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
-
-	private Transaction transaction;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -125,7 +124,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
-		factureTable.setItems(transaction.getLignesFacture());
 	}
 
 	/**
@@ -221,7 +219,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		
 		if(temp != null)
 		{
-			transaction.removeProduits(temp.getProduit());
+			ctrl.enleverProduit(temp.getProduit());
 		}
 		
 	}
@@ -236,15 +234,16 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * les Labels de prix à celle-ci.
 	 */
 	private void createNewTransaction() {
-		this.transaction = new Transaction();
-		factureTable.setItems(transaction.getLignesFacture());
+		factureTable.setItems(ctrl.getLignesFacture());
 
-		sousTotalLbl.textProperty().bind(transaction.sousTotalProperty());
-		taxesLbl.textProperty().bind(transaction.taxesProperty());
-		totalLbl.textProperty().bind(transaction.totalProperty());
+		List<StringProperty> properties = ctrl.getPrixProperties();
+		
+		sousTotalLbl.textProperty().bind(properties.get(0));
+		taxesLbl.textProperty().bind(properties.get(1));
+		totalLbl.textProperty().bind(properties.get(2));
 
 		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
-		transaction.addProduit(test1);
+		ctrl.ajouterProduitATransaction(test1);
 	}
 
 }

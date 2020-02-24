@@ -1,8 +1,15 @@
 package pos.ctrl;
 
+import java.util.List;
+
+import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
 import pos.modele.DataVue;
+import pos.modele.LigneFacture;
+import pos.modele.Produit;
+import pos.modele.TableauDeBord;
 import pos.vue.POSControleurVue;
 
 public class POSControleur implements IPOSControleur {
@@ -11,6 +18,8 @@ public class POSControleur implements IPOSControleur {
 	 * Objet de l'application. On s'en sert pour changer la scène
 	 */
 	private POSApplication app;
+	
+	private TableauDeBord tb;
 
 	/**
 	 * Le contrôleur de la vue du POS
@@ -24,6 +33,7 @@ public class POSControleur implements IPOSControleur {
 	 */
 	public POSControleur(POSApplication posApplication) {
 		this.app = posApplication;
+		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
 	}
 
@@ -40,14 +50,8 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public void annulerItem() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void annulerCommande() {
-		// TODO Auto-generated method stub
+	public void enleverProduit(Produit produit) {
+		tb.enleverProduit(produit);
 
 	}
 
@@ -79,5 +83,32 @@ public class POSControleur implements IPOSControleur {
 	public void paiementEmpreinte() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<StringProperty> getPrixProperties() {
+		return tb.getProperties();
+	}
+
+	@Override
+	public ObservableList<LigneFacture> getLignesFacture() {
+		return tb.getLignesFacture();
+	}
+
+	@Override
+	public void creerNouvelleTransaction() {
+		tb.creerNouvelleTransaction();
+		
+	}
+
+	@Override
+	public void ajouterProduitATransaction(Produit produit) {
+		tb.addProduitATransaction(produit);
+	}
+
+	@Override
+	public void ajouterProduitsATransaction(List<Produit> produits) {
+		tb.addProduitsATransaction(produits);
+		
 	}
 }
