@@ -2,8 +2,6 @@ package pos.vue;
 
 import java.io.IOException;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -71,7 +69,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	private TextField clavierText;
 
 	private Transaction transaction;
-	private ObservableList<LigneFacture> lignesFacture;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -87,6 +84,12 @@ public class POSControleurVue implements IPOSControleurVue {
 		connectBtn.setOnMouseClicked((me) -> ouvrirVuePrincipale());
 	}
 
+	private void setPrixProperties() {
+		sousTotalLbl.textProperty().bind(transaction.sousTotalProperty());
+		taxesLbl.textProperty().bind(transaction.taxesProperty());
+		totalLbl.textProperty().bind(transaction.totalProperty());
+	}
+
 	/**
 	 * Méthode servant à ouvrir la vue principale
 	 */
@@ -94,11 +97,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Création et chargement de la scène du POS
 		creerScene(MAIN_VIEW, rootBP);
 		ctrl.chargerScene(this.scene, "POS");
-
+		
 		// Chargement de la vue
 		chargerClavier();
 		chargerTableView();
 		chargerGridProduit();
+		
+		setPrixProperties();
 
 		// TODO mettre la vue des produits lors du chargement
 		middlePane.getChildren().add(gridProduit);
@@ -107,8 +112,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@SuppressWarnings("unchecked")
 	private void chargerTableView() {
-		lignesFacture = FXCollections.observableArrayList();
-
 		factureTable.getStyleClass().add("table-view");
 		factureTable.setEditable(false);
 
@@ -124,21 +127,16 @@ public class POSControleurVue implements IPOSControleurVue {
 		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
 		column3.getStyleClass().add("align-right");
 
-		factureTable.getColumns().addAll(column1, column2, column3);
-		factureTable.setPlaceholder(new Label(""));
-		factureTable.setItems(lignesFacture);
-
 		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
 		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", "Une autre description");
 		
 		transaction = new Transaction();
 		transaction.addProduit(test1);
 		transaction.addProduit(test2);
-	}
-	
-	private void updatePrix()
-	{
 		
+		factureTable.getColumns().addAll(column1, column2, column3);
+		factureTable.setPlaceholder(new Label(""));
+		factureTable.setItems(transaction.getLignesFacture());	
 	}
 
 	private void chargerGridProduit() {
@@ -150,27 +148,6 @@ public class POSControleurVue implements IPOSControleurVue {
 			gridProduit = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Méthode permettant d'ajouter une certaine quantité d'un certain produit à la
-	 * facture
-	 * 
-	 * @param produit  le produit à ajouter
-	 * @param quantite la quantité à ajouter
-	 */
-	private void ajouterProduitAFacture(Produit produit, int quantite) {
-		boolean estDansFacture = false;
-		for (LigneFacture item : lignesFacture) {
-			if (item.getProduit().equals(produit)) {
-				estDansFacture = true;
-				item.setQuantite(item.getQuantite() + quantite);
-			}
-		}
-
-		if (!estDansFacture) {
-			lignesFacture.add(new LigneFacture(produit, quantite));
 		}
 	}
 

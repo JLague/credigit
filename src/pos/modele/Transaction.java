@@ -1,10 +1,14 @@
 package pos.modele;
 
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -44,6 +48,14 @@ public class Transaction {
 	 * Établissement qui délivre la facture
 	 */
 	private Etablissement etablissement;
+	
+	private StringProperty sousTotalProperty;
+	
+	private StringProperty taxesProperty;
+	
+	private StringProperty totalProperty;
+	
+	NumberFormat cf;
 
 	private ObservableList<LigneFacture> lignesFacture;
 
@@ -64,10 +76,16 @@ public class Transaction {
 	 *                         (panier)
 	 */
 	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
+		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+		
 		this.heure = heure;
 		Transaction.pourcentageTaxes = pourcentageTaxes;
 		this.produits = produits;
 		this.numero = numero;
+		
+		this.sousTotalProperty = new SimpleStringProperty();
+		this.taxesProperty = new SimpleStringProperty();
+		this.totalProperty = new SimpleStringProperty();
 
 		lignesFacture = FXCollections.observableArrayList();
 		
@@ -200,6 +218,10 @@ public class Transaction {
 			montantTaxes = sousTotal * pourcentageTaxes;
 			montantTotal = sousTotal + montantTaxes;
 		}
+		
+		sousTotalProperty.set(cf.format(sousTotal));
+		taxesProperty.set(cf.format(montantTaxes));
+		totalProperty.set(cf.format(montantTotal));
 	}
 	
 	public ObservableList<LigneFacture> getLignesFacture()
@@ -261,6 +283,21 @@ public class Transaction {
 
 	public String toString() {
 		return Long.toString(numero);
+	}
+	
+	public StringProperty sousTotalProperty()
+	{
+		return sousTotalProperty;
+	}
+	
+	public StringProperty taxesProperty()
+	{
+		return taxesProperty;
+	}
+	
+	public StringProperty totalProperty()
+	{
+		return totalProperty;
 	}
 
 }
