@@ -20,7 +20,7 @@ public class Etablissement {
 	/**
 	 * Listes des utilisateurs
 	 */
-	private List<Utiliseur> utilisateurs;
+	private List<Utilisateur> utilisateurs;
 	/**
 	 * Balance de la compagnie
 	 */
@@ -79,14 +79,14 @@ public class Etablissement {
 	/**
 	 * @return le utilisateurs
 	 */
-	public List<Utiliseur> getUtilisateurs() {
+	public List<Utilisateur> getUtilisateurs() {
 		return utilisateurs;
 	}
 
 	/**
 	 * @param utilisateurs le utilisateurs à modifier
 	 */
-	public void setUtilisateurs(List<Utiliseur> utilisateurs) {
+	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
 		this.utilisateurs = utilisateurs;
 	}
 
