@@ -199,6 +199,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		Label l = (Label) source.getChildren().get(0);
 		String nomProduit = l.getText();
 		ctrl.ajouterProduitATransaction(ctrl.getProduitFromString(nomProduit));
+		factureTable.refresh();
 	}
 
 	/**
@@ -292,6 +293,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * les Labels de prix à celle-ci.
 	 */
 	private void createNewTransaction() {
+		ctrl.creerNouvelleTransaction();
 		factureTable.setItems(ctrl.getLignesFacture());
 
 		List<StringProperty> properties = ctrl.getPrixProperties();

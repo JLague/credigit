@@ -171,16 +171,17 @@ public class Transaction {
 	 * @param produit à ajouter
 	 */
 	public void addProduit(Produit produit) {
-		boolean flag = false;
+		LigneFacture temp = null;
 
 		for (LigneFacture ligne : lignesFacture) {
 			if (ligne.getProduit().equals(produit)) {
-				ligne.setQuantite(ligne.getQuantite() + 1);
-				flag = true;
+				temp = ligne;
 			}
 		}
 
-		if (!flag) {
+		if (temp != null) {
+			temp.setQuantite(temp.getQuantite() + 1);
+		} else {
 			lignesFacture.add(new LigneFacture(produit, 1));
 		}
 
@@ -228,7 +229,7 @@ public class Transaction {
 
 		// Calcul des prix
 		for (LigneFacture ligne : lignesFacture) {
-			sousTotal += ligne.getPrix() * ligne.getQuantite();
+			sousTotal += ligne.getPrix();
 			montantTaxes = sousTotal * pourcentageTaxes;
 			montantTotal = sousTotal + montantTaxes;
 		}
