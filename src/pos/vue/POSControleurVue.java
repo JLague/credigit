@@ -13,12 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
@@ -61,8 +64,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Label taxesLbl;
 	@FXML
 	private Label totalLbl;
+	@FXML
+	private GridPane gridProduits;
+	@FXML
+	private ScrollPane produitsScroll;
 
-	private BorderPane gridProduit;
+	private BorderPane borderPaneProduit;
 
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
@@ -96,7 +103,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		chargerTableView();
 		chargerGridProduit();
 
-		middlePane.getChildren().add(gridProduit);
+		middlePane.getChildren().add(borderPaneProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
 	}
 
@@ -136,10 +143,62 @@ public class POSControleurVue implements IPOSControleurVue {
 		loader.setController(this);
 
 		try {
-			gridProduit = loader.load();
+			borderPaneProduit = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		produitsScroll.setFitToWidth(true);
+		produitsScroll.setFitToHeight(true);
+		gridProduits.setHgap(300);
+		gridProduits.setVgap(150);
+
+		populerGridProduit();
+	}
+
+	/**
+	 * Popule le grid de produits à l'aide de la liste des produits
+	 */
+	private void populerGridProduit() {
+		List<Produit> listeProduits = ctrl.getListeProduits();
+		int cpt = 0;
+
+		for (Produit p : listeProduits) {
+			HBox hbox = creerProduitWrapper(p, cpt % 3, cpt / 3);
+			gridProduits.getChildren().add(hbox);
+			cpt++;
+		}
+	}
+
+	/**
+	 * Crée un wrapper autour du produit pour l'ajouter au GridPane
+	 * 
+	 * @param p le produit
+	 * @param x la position en x dans le GridPane
+	 * @param y la position en y dans le GridPane
+	 * @return le HBox wrapper
+	 */
+	private HBox creerProduitWrapper(Produit p, int x, int y) {
+		//TODO ajouter les images des produits
+		HBox hbox = new HBox();
+		hbox.getChildren().add(new Label(p.getNom()));
+		hbox.setOnMouseClicked((me) -> addProduit(me));
+
+		GridPane.setConstraints(hbox, x, y);
+		return hbox;
+	}
+
+	/**
+	 * Méthode appelée par les wrappers des produits dans le grid. Elle retrouve le
+	 * produit à l'aide de son nom et en ajoute un à la transaction
+	 * 
+	 * @param me le mouse event
+	 */
+	private void addProduit(MouseEvent me) {
+		HBox source = (HBox) me.getSource();
+		Label l = (Label) source.getChildren().get(0);
+		String nomProduit = l.getText();
+		ctrl.ajouterProduitATransaction(ctrl.getProduitFromString(nomProduit));
 	}
 
 	/**
@@ -183,7 +242,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void produitHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
-		middlePane.getChildren().add(gridProduit);
+		middlePane.getChildren().add(borderPaneProduit);
 	}
 
 	@FXML
@@ -216,12 +275,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void enleverSelection(ActionEvent event) {
 		LigneFacture temp = this.factureTable.getSelectionModel().getSelectedItem();
-		
-		if(temp != null)
-		{
+
+		if (temp != null) {
 			ctrl.enleverProduit(temp.getProduit());
 		}
-		
+
 	}
 
 	@FXML
@@ -237,13 +295,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		factureTable.setItems(ctrl.getLignesFacture());
 
 		List<StringProperty> properties = ctrl.getPrixProperties();
-		
+
 		sousTotalLbl.textProperty().bind(properties.get(0));
 		taxesLbl.textProperty().bind(properties.get(1));
 		totalLbl.textProperty().bind(properties.get(2));
-
-		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
-		ctrl.ajouterProduitATransaction(test1);
 	}
 
 }

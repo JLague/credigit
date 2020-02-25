@@ -55,9 +55,9 @@
       </HBox>
    </bottom>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="718.0" prefWidth="1144.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+      <ScrollPane fx:id="produitsScroll" hbarPolicy="NEVER" prefHeight="718.0" prefWidth="1144.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
          <content>
-            <GridPane prefHeight="264.0" prefWidth="599.0">
+            <GridPane fx:id="gridProduits" prefHeight="429.0" prefWidth="689.0">
             </GridPane>
          </content>
       </ScrollPane>

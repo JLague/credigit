@@ -111,4 +111,14 @@ public class POSControleur implements IPOSControleur {
 		tb.addProduitsATransaction(produits);
 		
 	}
+
+	@Override
+	public List<Produit> getListeProduits() {
+		return tb.getListeProduits();
+	}
+
+	@Override
+	public Produit getProduitFromString(String nom) {
+		return tb.getProduitFromString(nom);
+	}
 }

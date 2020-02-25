@@ -10,17 +10,35 @@ public class TableauDeBord {
 	private Transaction transactionCourante;
 	private Etablissement etablissement;
 	private Utilisateur utilisateur;
+	private List<Produit> inventaire;
 
 	public TableauDeBord()
 	{
 		this.transactionCourante = new Transaction();
+		this.inventaire = new ArrayList<Produit>();
+		
+		populerInventaire();
 		//TODO enlever lorsque Etablissement et Utilisateur sont finis
 	}
 	
+	private void populerInventaire() {
+		//TODO Utiliser l'inventaire de l'établissement
+		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", "Une description");
+		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", "Une description");
+		Produit test3 = new Produit(3, "test3", 10, 10, "SiFang", "Une description");
+		Produit test4 = new Produit(4, "test4", 10, 10, "SiFang", "Une description");
+		
+		inventaire.add(test1);
+		inventaire.add(test2);
+		inventaire.add(test3);
+		inventaire.add(test4);
+		
+	}
+
 	public TableauDeBord(Etablissement etablissement, Utilisateur utilisateur) {
+		this();
 		this.etablissement = etablissement;
 		this.utilisateur = utilisateur;
-		this.transactionCourante = new Transaction();
 	}
 
 	/**
@@ -74,5 +92,29 @@ public class TableauDeBord {
 	public void enleverProduit(Produit produit)
 	{
 		this.transactionCourante.removeProduit(produit);
+	}
+
+	/**
+	 * 
+	 * @return l'inventaire du magasin
+	 */
+	public List<Produit> getListeProduits() {
+		return this.inventaire;
+	}
+
+	/**
+	 * @param nom le nom du produit à chercher
+	 * @return le produit
+	 */
+	public Produit getProduitFromString(String nom) {
+		for(Produit p : inventaire)
+		{
+			if(p.getNom().equals(nom))
+			{
+				return p;
+			}
+		}
+		
+		return null;
 	}
 }

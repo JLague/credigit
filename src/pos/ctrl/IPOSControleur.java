@@ -12,7 +12,7 @@ import pos.modele.Produit;
 public interface IPOSControleur {
 
 	/**
-	 * Permet d'annuler
+	 * Permet d'enlever un produit
 	 */
 	public void enleverProduit(Produit produit);
 	
@@ -40,6 +40,16 @@ public interface IPOSControleur {
 	 * Permet de créer une nouvelle transaction;
 	 */
 	public void creerNouvelleTransaction();
+	
+	/**
+	 * @return la liste de tous les produits
+	 */
+	public List<Produit> getListeProduits();
+	
+	/**
+	 * @return le produit correspondant au nom
+	 */
+	public Produit getProduitFromString(String nom);
 
 	public void produitSelectionne(int ligne, int colonne);
 
