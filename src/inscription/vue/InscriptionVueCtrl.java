@@ -161,8 +161,11 @@ public class InscriptionVueCtrl {
 
 			scene = new Scene(root);
 
-			question1Choice.getItems().setAll(Questions.values().toString());
-			question2Choice.getItems().setAll(Questions.values().toString());
+			// Setup des listes de questions
+			for (Questions question : Questions.values()) {
+				question1Choice.getItems().add(question.getTexte());
+				question2Choice.getItems().add(question.getTexte());
+			}
 
 		} catch (IOException e) {
 			System.err.println("Erreur de chargement du fxml!");
@@ -212,30 +215,31 @@ public class InscriptionVueCtrl {
 		case ETAPE1:
 			stepPane.getChildren().clear();
 			stepPane.getChildren().add(etapes.get(1));
-			ivStep1.setImage(new Image(getClass().getResource("/images/step1.png").toExternalForm()));
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2_bleu.png").toExternalForm()));
 			nouvelleEtape = EtapesVues.ETAPE2;
+			setupCompteur(etapeActuelle, nouvelleEtape);
 			break;
 
 		case ETAPE2:
 			stepPane.getChildren().clear();
 			stepPane.getChildren().add(etapes.get(2));
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2.png").toExternalForm()));
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3_bleu.png").toExternalForm()));
 			nouvelleEtape = EtapesVues.ETAPE3;
+			setupCompteur(etapeActuelle, nouvelleEtape);
 			break;
 
 		case ETAPE3:
 			stepPane.getChildren().clear();
 			stepPane.getChildren().add(etapes.get(3));
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
 			continuerBtn.setText("Terminer");
 			nouvelleEtape = EtapesVues.ETAPE4;
+			setupCompteur(etapeActuelle, nouvelleEtape);
 			break;
 
 		case ETAPE4:
-			ctrl.envoyerDataClient(creerDataTransition());
+			try {
+				ctrl.envoyerDataClient(creerDataTransition());
+			} catch (ExceptionCreationCompte e) {
+				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			}
 			break;
 
 		}
@@ -253,14 +257,24 @@ public class InscriptionVueCtrl {
 			data.setEmail(emailTextField.getText());
 			data.setNumero(telephoneTextField.getText());
 			data.setNas(nasPasswordField.getText());
-			LocalAdresse adresse = new LocalAdresse(adresseTextField.getText(), codePostalTextField.getText(),
-					villeTextField.getText(), provinceTextField.getText(), paysTextField.getText());
+			LocalAdresse adresse = new LocalAdresse(adresseTextField.getText(), appartementTextField.getText(),
+					codePostalTextField.getText(), villeTextField.getText(), provinceTextField.getText(),
+					paysTextField.getText());
 			data.setAdresse(adresse);
 			data.setDate(datePicker.getValue());
 
 			ArrayList<Questions> questions = new ArrayList<Questions>();
-			// questions.add(question1Choice.getSelectionModel().getSelectedItem());
-			// questions.add(question2Choice.getSelectionModel().getSelectedItem());
+			for (Questions question : Questions.values()) {
+				if (question1Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
+					questions.add(question);
+				}
+			}
+
+			for (Questions question : Questions.values()) {
+				if (question2Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
+					questions.add(question);
+				}
+			}
 			data.setQuestions(questions);
 
 			ArrayList<String> reponses = new ArrayList<String>();
@@ -274,7 +288,7 @@ public class InscriptionVueCtrl {
 			data.setEmpreinte(empreinte);
 
 		} catch (ExceptionCreationCompte e) {
-			System.out.println("Erreur sur la création de l'adresse.");
+			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 		}
 
 		return data;
@@ -282,22 +296,86 @@ public class InscriptionVueCtrl {
 
 	@FXML
 	public void ivStep1Handler(MouseEvent event) {
-
+		if (!etapeActuelle.equals(EtapesVues.ETAPE1)) {
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(0));
+			continuerBtn.setText("Continuer");
+			setupCompteur(etapeActuelle, EtapesVues.ETAPE1);
+			etapeActuelle = EtapesVues.ETAPE1;
+		}
 	}
 
 	@FXML
 	void ivStep2Handler(MouseEvent event) {
-
+		if (!etapeActuelle.equals(EtapesVues.ETAPE2)) {
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(1));
+			continuerBtn.setText("Continuer");
+			setupCompteur(etapeActuelle, EtapesVues.ETAPE2);
+			etapeActuelle = EtapesVues.ETAPE2;
+		}
 	}
 
 	@FXML
 	void ivStep3Handler(MouseEvent event) {
-
+		if (!etapeActuelle.equals(EtapesVues.ETAPE3)) {
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(2));
+			continuerBtn.setText("Continuer");
+			setupCompteur(etapeActuelle, EtapesVues.ETAPE3);
+			etapeActuelle = EtapesVues.ETAPE3;
+		}
 	}
 
 	@FXML
 	void ivStep4Handler(MouseEvent event) {
+		if (!etapeActuelle.equals(EtapesVues.ETAPE4)) {
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(3));
+			continuerBtn.setText("Terminer");
+			setupCompteur(etapeActuelle, EtapesVues.ETAPE4);
+			etapeActuelle = EtapesVues.ETAPE4;
+		}
+	}
 
+	private void setupCompteur(EtapesVues etapeActuelle, EtapesVues nouvelleEtape) {
+		switch (etapeActuelle) {
+		case ETAPE1:
+			ivStep1.setImage(new Image(getClass().getResource("/images/step1.png").toExternalForm()));
+			break;
+
+		case ETAPE2:
+			ivStep2.setImage(new Image(getClass().getResource("/images/step2.png").toExternalForm()));
+			break;
+
+		case ETAPE3:
+			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
+			break;
+
+		case ETAPE4:
+			ivStep4.setImage(new Image(getClass().getResource("/images/step4.png").toExternalForm()));
+			break;
+
+		}
+
+		switch (nouvelleEtape) {
+		case ETAPE1:
+			ivStep1.setImage(new Image(getClass().getResource("/images/step1_bleu.png").toExternalForm()));
+			break;
+
+		case ETAPE2:
+			ivStep2.setImage(new Image(getClass().getResource("/images/step2_bleu.png").toExternalForm()));
+			break;
+
+		case ETAPE3:
+			ivStep3.setImage(new Image(getClass().getResource("/images/step3_bleu.png").toExternalForm()));
+			break;
+
+		case ETAPE4:
+			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			break;
+
+		}
 	}
 
 	@FXML

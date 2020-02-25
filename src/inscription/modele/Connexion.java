@@ -21,7 +21,13 @@ public class Connexion {
 
 	private MongoClient mongoClient;
 
-	public Connexion() {
+	private CourrielConfirmation courriel;
+
+	public Connexion(CourrielConfirmation courriel) {
+		// Va chercher la connexion déjà établie
+		this.courriel = courriel;
+
+		// Connection à la base de donnée
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 		CodecRegistry pojoCodecRegistry = CodecRegistries
@@ -40,8 +46,8 @@ public class Connexion {
 	public void ajouterCompte(Client client) {
 		MongoCollection<Client> collection = database.getCollection(COMPTES_COLLECTION, Client.class);
 		collection.insertOne(client);
-		CourrielConfirmation.envoyerCourriel(client.getEmail(), client.getPrenom());
-		
+		courriel.envoyerCourriel(client.getEmail(), client.getPrenom());
+
 	}
 
-} 
+}

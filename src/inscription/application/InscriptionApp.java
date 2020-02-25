@@ -4,8 +4,17 @@ import inscription.controleur.InscriptionCtrl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Application de départ de l'inscription
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class InscriptionApp extends Application {
 
+	/**
+	 * Contrôleur principal de l'inscription
+	 */
 	private InscriptionCtrl ctrl;
 
 	@Override

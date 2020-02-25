@@ -20,6 +20,7 @@ public class CourrielConfirmation {
 			@Override
 			protected Void call() throws Exception {
 				Platform.runLater(() -> {
+					System.out.println("Création de la connection...");
 					Properties properties = System.getProperties();
 					properties.put("mail.smtp.host", "smtp.gmail.com");
 					properties.put("mail.smtp.port", "587");
