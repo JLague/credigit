@@ -7,13 +7,31 @@ import javax.mail.internet.*;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
+/**
+ * Classe permettant d'envoyer des courriels
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class CourrielConfirmation {
 
+	/**
+	 * String représentant le compte d'envoi
+	 */
 	private static final String USER = "credigit.bankera@gmail.com";
+	/**
+	 * String représentant le mot de passe de connection du compte d'envoi
+	 */
 	private static final String PASSWORD = "78f6ENKUgp2HHtr33Da4q";
 
+	/**
+	 * Session de communication avec le serveur
+	 */
 	private Session session;
 
+	/**
+	 * Constructeur de la connection du serveur d'envoi de courriels
+	 */
 	public CourrielConfirmation() {
 		Task<Void> connexion = new Task<Void>() {
 
@@ -42,6 +60,13 @@ public class CourrielConfirmation {
 		new Thread(connexion).start();
 	}
 
+	/**
+	 * Méthode permettant d'envoyer un courriel de bienvenue
+	 * 
+	 * @param adresse - L'adresse du correspondant
+	 * @param Prenom  - Le prénom du correspondant
+	 * @return Vrai si le courriel est envoyé avec succès, faux sinon
+	 */
 	public boolean envoyerCourriel(String adresse, String Prenom) {
 
 		boolean envoye = true;

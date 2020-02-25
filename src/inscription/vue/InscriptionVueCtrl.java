@@ -1,12 +1,8 @@
 package inscription.vue;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-
-import javax.imageio.ImageIO;
 
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataTransition;
@@ -17,7 +13,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +32,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-public class InscriptionVueCtrl {
+/**
+ * Contrôleur de la vue de l'inscription
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 	@FXML
 	private StackPane root;
@@ -120,11 +121,31 @@ public class InscriptionVueCtrl {
 	@FXML
 	private ChoiceBox<String> question2Choice;
 
+	/**
+	 * Le contrôleur principal de l'application
+	 */
 	private InscriptionCtrl ctrl;
+
+	/**
+	 * La scène de la vue
+	 */
 	private Scene scene;
+
+	/**
+	 * L'étape d'inscription actuelle
+	 */
 	private EtapesVues etapeActuelle = EtapesVues.ETAPE1;
+
+	/**
+	 * Liste des vues des différentes étapes
+	 */
 	private List<Pane> etapes;
 
+	/**
+	 * Constructeur du contrôleur de la vue
+	 * 
+	 * @param ctrl - Le contrôleur principal de l'application
+	 */
 	public InscriptionVueCtrl(InscriptionCtrl ctrl) {
 		this.ctrl = ctrl;
 
@@ -137,6 +158,7 @@ public class InscriptionVueCtrl {
 			FXMLLoader step3Loader = new FXMLLoader(getClass().getResource("step3Vue.fxml"));
 			FXMLLoader step4Loader = new FXMLLoader(getClass().getResource("step4Vue.fxml"));
 
+			// Set le contrôleur de vue actuel pour toutes les vues
 			mainLoader.setController(this);
 			step1Loader.setController(this);
 			step2Loader.setController(this);
@@ -157,6 +179,7 @@ public class InscriptionVueCtrl {
 			etapes.add(step3Pane);
 			etapes.add(step4Pane);
 
+			// Affiche l'étape 1
 			stepPane.getChildren().add(step1Pane);
 
 			scene = new Scene(root);
@@ -173,10 +196,16 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	@Override
 	public Scene getScene() {
 		return scene;
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton découvrir est appuyé
+	 * 
+	 * @param event - Le MouseEvent reçu
+	 */
 	@FXML
 	public void decouvrirHandler(MouseEvent event) {
 		Timeline scroll = new Timeline();
@@ -191,6 +220,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton S'inscrire est appuyé
+	 * 
+	 * @param event - Le ActionEvent reçu
+	 */
 	@FXML
 	public void inscrireBtnHandler(ActionEvent event) {
 
@@ -208,6 +242,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton Continuer est appuyé
+	 * 
+	 * @param event - Le ActionEvent reçu
+	 */
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
 		EtapesVues nouvelleEtape = null;
@@ -236,7 +275,9 @@ public class InscriptionVueCtrl {
 
 		case ETAPE4:
 			try {
-				ctrl.envoyerDataClient(creerDataTransition());
+				if (ctrl.envoyerDataClient(creerDataTransition())) {
+					VueDialogue.compteCree();
+				}
 			} catch (ExceptionCreationCompte e) {
 				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
@@ -247,6 +288,12 @@ public class InscriptionVueCtrl {
 		etapeActuelle = nouvelleEtape;
 	}
 
+	/**
+	 * Méthode permettant de créer un objet DataTransition avec les informations
+	 * entrées
+	 * 
+	 * @return L'objet DataTransition
+	 */
 	private DataTransition creerDataTransition() {
 		DataTransition data = new DataTransition();
 
@@ -294,6 +341,12 @@ public class InscriptionVueCtrl {
 		return data;
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton indiquant l'étape 1 est
+	 * appuyé
+	 * 
+	 * @param event - Le MouseEvent reçu
+	 */
 	@FXML
 	public void ivStep1Handler(MouseEvent event) {
 		if (!etapeActuelle.equals(EtapesVues.ETAPE1)) {
@@ -305,6 +358,12 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton indiquant l'étape 2 est
+	 * appuyé
+	 * 
+	 * @param event - Le MouseEvent reçu
+	 */
 	@FXML
 	void ivStep2Handler(MouseEvent event) {
 		if (!etapeActuelle.equals(EtapesVues.ETAPE2)) {
@@ -316,6 +375,12 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton indiquant l'étape 3 est
+	 * appuyé
+	 * 
+	 * @param event - Le MouseEvent reçu
+	 */
 	@FXML
 	void ivStep3Handler(MouseEvent event) {
 		if (!etapeActuelle.equals(EtapesVues.ETAPE3)) {
@@ -327,6 +392,12 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant le code à lancer lorsque le bouton indiquant l'étape 4 est
+	 * appuyé
+	 * 
+	 * @param event - Le MouseEvent reçu
+	 */
 	@FXML
 	void ivStep4Handler(MouseEvent event) {
 		if (!etapeActuelle.equals(EtapesVues.ETAPE4)) {
@@ -338,6 +409,13 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode qui modifie la couleur des images de l'indicateur de l'étape actuelle
+	 * selon l'étape active
+	 * 
+	 * @param etapeActuelle - L'étape actuelle
+	 * @param nouvelleEtape - L'étape où l'on veut se rendre
+	 */
 	private void setupCompteur(EtapesVues etapeActuelle, EtapesVues nouvelleEtape) {
 		switch (etapeActuelle) {
 		case ETAPE1:
@@ -378,6 +456,11 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField de l'email
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void emailTextFieldHandler(KeyEvent event) {
 
@@ -387,6 +470,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du NAS
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void nasPasswordFieldHandler(KeyEvent event) {
 		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(" ")) {
@@ -395,6 +483,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du nom
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void nomTextFieldHandler(KeyEvent event) {
 
@@ -403,6 +496,11 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du prenom
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void prenomTextFieldHandler(KeyEvent event) {
 
@@ -412,6 +510,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du téléphone
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void telephoneTextFieldHandler(KeyEvent event) {
 
@@ -421,6 +524,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField de l'adresse
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void adresseTextFieldHandler(KeyEvent event) {
 
@@ -430,6 +538,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField de l'appartement
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void appartementTextFieldHandler(KeyEvent event) {
 
@@ -438,6 +551,11 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du code postal
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void codePostalTextFieldHandler(KeyEvent event) {
 
@@ -446,6 +564,11 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField du pays
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void paysTextFieldHandler(KeyEvent event) {
 		if (!event.getCharacter().matches("[A-z\u00E9\u0020\u0027\u002D]")) {
@@ -453,6 +576,11 @@ public class InscriptionVueCtrl {
 		}
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField de la province
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void provinceTextFieldHandler(KeyEvent event) {
 
@@ -462,6 +590,11 @@ public class InscriptionVueCtrl {
 
 	}
 
+	/**
+	 * Méthode gérant ce qui peut être entré dans le TextField de la ville
+	 * 
+	 * @param event - Le KeyEvent reçu
+	 */
 	@FXML
 	void villeTextFieldHandler(KeyEvent event) {
 

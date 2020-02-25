@@ -49,4 +49,17 @@ public class VueDialogue {
 
 	}
 
+	/**
+	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
+	 * est bel et bien créé
+	 */
+	public static void compteCree() {
+		Alert alert = new Alert(AlertType.NONE);
+		alert.setHeaderText("Votre compte a été créé avec succées!");
+		alert.setContentText(
+				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votreadhésion de façon officielle.");
+
+		alert.showAndWait();
+	}
+
 }
