@@ -270,7 +270,7 @@ public class ClientTest {
 		}
 
 		try {
-			LocalDate localDate = LocalDate.of(2002, 2, 24);
+			LocalDate localDate = LocalDate.of(2002, 2, 28);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
 			ArrayList<String> reponses = new ArrayList<String>();
 			questions.add(Questions.ANIMAL);
