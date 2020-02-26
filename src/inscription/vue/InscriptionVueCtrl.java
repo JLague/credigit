@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -68,10 +69,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	private ImageView ivStep4;
 
 	@FXML
+	private Label sectionTitreLabel;
+
+	@FXML
 	private Pane stepPane;
 
 	@FXML
 	private Button continuerBtn;
+
+	@FXML
+	private ImageView desactiverBtn;
+
+	@FXML
+	private Button InscrireBtn;
 
 	@FXML
 	private TextField nomTextField;
@@ -121,6 +131,21 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	@FXML
 	private ChoiceBox<String> question2Choice;
 
+	@FXML
+	private TextField desacNomTextField;
+
+	@FXML
+	private TextField desacPrenomTextField;
+
+	@FXML
+	private TextField desacEmailTextField;
+
+	@FXML
+	private PasswordField desacNasPasswordField;
+
+	@FXML
+	private TextField quitterTextField;
+
 	/**
 	 * Le contrôleur principal de l'application
 	 */
@@ -157,6 +182,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			FXMLLoader step2Loader = new FXMLLoader(getClass().getResource("step2Vue.fxml"));
 			FXMLLoader step3Loader = new FXMLLoader(getClass().getResource("step3Vue.fxml"));
 			FXMLLoader step4Loader = new FXMLLoader(getClass().getResource("step4Vue.fxml"));
+			FXMLLoader stepDesactiverLoader = new FXMLLoader(getClass().getResource("stepDesactiverVue.fxml"));
 
 			// Set le contrôleur de vue actuel pour toutes les vues
 			mainLoader.setController(this);
@@ -164,6 +190,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			step2Loader.setController(this);
 			step3Loader.setController(this);
 			step4Loader.setController(this);
+			stepDesactiverLoader.setController(this);
 
 			root = mainLoader.load();
 
@@ -171,6 +198,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			Pane step2Pane = step2Loader.load();
 			Pane step3Pane = step3Loader.load();
 			Pane step4Pane = step4Loader.load();
+			Pane stepDesactiver = stepDesactiverLoader.load();
 
 			// Stocke toutes les vues pour avoir accès à l'information en tout temps
 			etapes = new ArrayList<Pane>();
@@ -178,6 +206,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			etapes.add(step2Pane);
 			etapes.add(step3Pane);
 			etapes.add(step4Pane);
+			etapes.add(stepDesactiver);
 
 			// Affiche l'étape 1
 			stepPane.getChildren().add(step1Pane);
@@ -228,6 +257,21 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	@FXML
 	public void inscrireBtnHandler(ActionEvent event) {
 
+		if (etapeActuelle == EtapesVues.ETAPEDESACTIVER) {
+			stepPane.getChildren().clear();
+			stepPane.getChildren().add(etapes.get(0));
+			setupCompteur(etapeActuelle, EtapesVues.ETAPE1);
+			etapeActuelle = EtapesVues.ETAPE1;
+
+			ivStep1.setVisible(true);
+			ivStep2.setVisible(true);
+			ivStep3.setVisible(true);
+			ivStep4.setVisible(true);
+
+			continuerBtn.setText("Continuer");
+			sectionTitreLabel.setText("Créer un compte");
+		}
+
 		if (scrollPane.getVvalue() < scrollPane.getVmax()) {
 			Timeline scroll = new Timeline();
 			scroll.setCycleCount(1);
@@ -240,6 +284,29 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			scroll.play();
 		}
 
+	}
+
+	@FXML
+	void desactiverBtnHandler(MouseEvent event) {
+		// Set la nouvelle vue
+		stepPane.getChildren().clear();
+		stepPane.getChildren().add(etapes.get(4));
+		setupCompteur(etapeActuelle, EtapesVues.ETAPEDESACTIVER);
+		etapeActuelle = EtapesVues.ETAPEDESACTIVER;
+		continuerBtn.setText("Désactiver");
+		sectionTitreLabel.setText("Désactivation");
+
+		if (scrollPane.getVvalue() < scrollPane.getVmax()) {
+			Timeline scroll = new Timeline();
+			scroll.setCycleCount(1);
+			scroll.setAutoReverse(false);
+
+			KeyFrame frame = new KeyFrame(Duration.seconds(2),
+					new KeyValue(scrollPane.vvalueProperty(), scrollPane.getVmax(), Interpolator.EASE_IN));
+
+			scroll.getKeyFrames().addAll(frame);
+			scroll.play();
+		}
 	}
 
 	/**
@@ -281,6 +348,27 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			} catch (ExceptionCreationCompte e) {
 				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
+			break;
+
+		case ETAPEDESACTIVER:
+			if (quitterTextField.getText().equals("QUITTER")) {
+				if (desacNomTextField.getText().equals("") || desacPrenomTextField.getText().equals("")
+						|| desacEmailTextField.getText().equals("") || desacNasPasswordField.getText().equals("")) {
+					VueDialogue.erreurCreationDialogue("Vous devez remplir tous les champs pour continuer!");
+				} else {
+
+					if (ctrl.supprimerCompte(desacNomTextField.getText(), desacPrenomTextField.getText(),
+							desacEmailTextField.getText(), desacNasPasswordField.getText())) {
+						VueDialogue.compteSupprime();
+					} else {
+						VueDialogue.erreurCreationDialogue("Votre compte est inexistant ou n'a pas pu être supprimé.");
+					}
+				}
+
+			} else {
+				VueDialogue.erreurCreationDialogue("Vous devez entrer QUITTER pour continuer!");
+			}
+
 			break;
 
 		}
@@ -434,6 +522,12 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			ivStep4.setImage(new Image(getClass().getResource("/images/step4.png").toExternalForm()));
 			break;
 
+		case ETAPEDESACTIVER:
+			ivStep1.setVisible(false);
+			ivStep2.setVisible(false);
+			ivStep3.setVisible(false);
+			ivStep4.setVisible(false);
+
 		}
 
 		switch (nouvelleEtape) {
@@ -452,6 +546,12 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		case ETAPE4:
 			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
 			break;
+
+		case ETAPEDESACTIVER:
+			ivStep1.setVisible(false);
+			ivStep2.setVisible(false);
+			ivStep3.setVisible(false);
+			ivStep4.setVisible(false);
 
 		}
 	}

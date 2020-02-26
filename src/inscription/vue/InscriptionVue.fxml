@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vbarPolicy="NEVER">
          <content>
@@ -126,7 +126,7 @@
                         </VBox>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="680.0" spacing="24.0" AnchorPane.leftAnchor="1158.0" AnchorPane.topAnchor="1310.0">
                            <children>
-                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="423.0" text="Créer un compte" textAlignment="CENTER" textFill="#707070">
+                              <Label fx:id="sectionTitreLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="423.0" text="Créer un compte" textAlignment="CENTER" textFill="#707070">
                                  <font>
                                     <Font name="Montserrat Bold" size="48.0" />
                                  </font>
@@ -145,6 +145,14 @@
             </VBox>
          </content>
       </ScrollPane>
+      <ImageView fx:id="desactiverBtn" fitHeight="24.0" fitWidth="24.0" onMouseClicked="#desactiverBtnHandler" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_RIGHT">
+         <StackPane.margin>
+            <Insets right="24.0" top="64.0" />
+         </StackPane.margin>
+         <image>
+            <Image url="@../../../res/images/ic_desactiver.png" />
+         </image>
+      </ImageView>
       <Button fx:id="InscrireBtn" mnemonicParsing="false" onAction="#inscrireBtnHandler" styleClass="buttonInscrire" text="S'inscrire" textFill="WHITE" StackPane.alignment="TOP_RIGHT">
          <StackPane.margin>
             <Insets right="64.0" top="48.0" />

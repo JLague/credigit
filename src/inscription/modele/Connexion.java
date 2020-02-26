@@ -1,16 +1,20 @@
 package inscription.modele;
 
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -89,6 +93,22 @@ public class Connexion {
 
 		return true;
 
+	}
+
+	public boolean supprimerCompte(String nom, String prenom, String email, String nas) {
+		try {
+			BasicDBObject object = new BasicDBObject();
+			object.put("nom", nom);
+			object.put("prenom", prenom);
+			object.put("email", email);
+			object.put("nas", nas);
+			Document result = database.getCollection(COMPTES_COLLECTION).findOneAndDelete(object);
+			System.out.println("Document supprimé: " + result.toString());
+		} catch (MongoException e) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

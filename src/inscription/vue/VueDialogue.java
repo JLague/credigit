@@ -54,10 +54,23 @@ public class VueDialogue {
 	 * est bel et bien créé
 	 */
 	public static void compteCree() {
-		Alert alert = new Alert(AlertType.NONE);
+		Alert alert = new Alert(AlertType.ERROR);
 		alert.setHeaderText("Votre compte a été créé avec succées!");
 		alert.setContentText(
 				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votreadhésion de façon officielle.");
+
+		alert.showAndWait();
+	}
+
+	/**
+	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
+	 * a bel et bien été supprimé
+	 */
+	public static void compteSupprime() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText("Votre compte a été supprimé avec succées!");
+		alert.setContentText(
+				"Nous sommes déçus de vous voir partir :( ... N'hésitez pas à revenir vous créer un compte dans le futur!");
 
 		alert.showAndWait();
 	}
