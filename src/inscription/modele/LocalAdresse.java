@@ -188,7 +188,7 @@ public class LocalAdresse {
 		if (etat != null && validerString(etat)) {
 			this.etat = arrangerString(etat);
 		} else {
-			throw new ExceptionCreationCompte("Votre état n'est pas valide.");
+			throw new ExceptionCreationCompte("Votre province n'est pas valide.");
 		}
 	}
 

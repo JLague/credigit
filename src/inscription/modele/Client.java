@@ -366,7 +366,7 @@ public class Client {
 			this.reponses = reponses;
 		} else {
 			throw new ExceptionCreationCompte(
-					"Vous réponses ne sont pas valides. Assurez-vous d'avoir bien remplir les champs des"
+					"Vos réponses ne sont pas valides. Assurez-vous d'avoir bien remplir les champs des"
 							+ " réponses.");
 		}
 

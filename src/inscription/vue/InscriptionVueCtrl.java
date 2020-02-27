@@ -342,7 +342,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			try {
-				if (ctrl.envoyerDataClient(creerDataTransition())) {
+				if (creerDataTransition() != null && ctrl.envoyerDataClient(creerDataTransition())) {
 					VueDialogue.compteCree();
 				}
 			} catch (ExceptionCreationCompte e) {
@@ -350,7 +350,6 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			}
 			nouvelleEtape = EtapesVues.ETAPE4;
 			break;
-			
 
 		case ETAPEDESACTIVER:
 			if (quitterTextField.getText().equals("QUITTER")) {
@@ -401,18 +400,21 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			data.setDate(datePicker.getValue());
 
 			ArrayList<Questions> questions = new ArrayList<Questions>();
-			for (Questions question : Questions.values()) {
-				if (question1Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
-					questions.add(question);
+			if (question1Choice.getSelectionModel().getSelectedItem() != null
+					&& question2Choice.getSelectionModel().getSelectedItem() != null) {
+				for (Questions question : Questions.values()) {
+					if (question1Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
+						questions.add(question);
+					}
 				}
-			}
 
-			for (Questions question : Questions.values()) {
-				if (question2Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
-					questions.add(question);
+				for (Questions question : Questions.values()) {
+					if (question2Choice.getSelectionModel().getSelectedItem().equals(question.getTexte())) {
+						questions.add(question);
+					}
 				}
+				data.setQuestions(questions);
 			}
-			data.setQuestions(questions);
 
 			ArrayList<String> reponses = new ArrayList<String>();
 			reponses.add(reponse1TextField.getText());
@@ -426,6 +428,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			data = null;
 		}
 
 		return data;
