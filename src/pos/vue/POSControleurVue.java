@@ -1,7 +1,9 @@
 package pos.vue;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -71,6 +73,23 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	private BorderPane borderPaneProduit;
 
+	@FXML
+	private Label skuLbl;
+
+	@FXML
+	private Label nomLbl;
+
+	@FXML
+	private Label descLbl;
+
+	@FXML
+	private Label prixLbl;
+
+	@FXML
+	private Label fournisseurLbl;
+
+	private Produit produitCourant;
+	
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
@@ -179,10 +198,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @return le HBox wrapper
 	 */
 	private HBox creerProduitWrapper(Produit p, int x, int y) {
-		//TODO ajouter les images des produits
+		// TODO ajouter les images des produits
 		HBox hbox = new HBox();
 		hbox.getChildren().add(new Label(p.getNom()));
-		hbox.setOnMouseClicked((me) -> addProduit(me));
+		hbox.setOnMouseClicked((me) -> loadProduit(me));
 
 		GridPane.setConstraints(hbox, x, y);
 		return hbox;
@@ -190,16 +209,39 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	/**
 	 * Méthode appelée par les wrappers des produits dans le grid. Elle retrouve le
-	 * produit à l'aide de son nom et en ajoute un à la transaction
+	 * produit à l'aide de son nom et la charge dans l'interface
 	 * 
 	 * @param me le mouse event
 	 */
-	private void addProduit(MouseEvent me) {
+	private void loadProduit(MouseEvent me) {
 		HBox source = (HBox) me.getSource();
 		Label l = (Label) source.getChildren().get(0);
-		String nomProduit = l.getText();
-		ctrl.ajouterProduitATransaction(ctrl.getProduitFromString(nomProduit));
+		produitCourant = ctrl.getProduitFromString(l.getText());
+		
+		// Change info
+		skuLbl.setText(Long.toString(produitCourant.getSku()));
+		nomLbl.setText(produitCourant.getNom());
+		descLbl.setText(produitCourant.getDescription());
+		
+		// Local currency
+		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+		prixLbl.setText(cf.format(produitCourant.getPrix()));
+		
+		fournisseurLbl.setText(produitCourant.getFournisseur());
+		
+		// ctrl.ajouterProduitATransaction(ctrl.getProduitFromString(nomProduit));
 		factureTable.refresh();
+	}
+	
+	/**
+	 * Ajoute le produit chargé à la facture
+	 * 
+	 * @param me le mouse event
+	 */
+	@FXML
+	private void addProduitATransaction(MouseEvent me)
+	{
+		ctrl.ajouterProduitATransaction(produitCourant);
 	}
 
 	/**
