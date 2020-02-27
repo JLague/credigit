@@ -112,7 +112,7 @@ public class Connexion {
 			object.put("nas", nas);
 			Document result = database.getCollection(COMPTES_COLLECTION).findOneAndDelete(object);
 			System.out.println("Document supprimé: " + result.toString());
-		} catch (MongoException e) {
+		} catch (NullPointerException e) {
 			return false;
 		}
 
