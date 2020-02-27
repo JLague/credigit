@@ -348,7 +348,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			} catch (ExceptionCreationCompte e) {
 				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
+			nouvelleEtape = EtapesVues.ETAPE4;
 			break;
+			
 
 		case ETAPEDESACTIVER:
 			if (quitterTextField.getText().equals("QUITTER")) {
