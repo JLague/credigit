@@ -190,7 +190,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	/**
-	 * Crée un wrapper autour du produit pour l'ajouter au GridPane
+	 * Crée un wrapper autour du produit avant de l'ajouter au GridPane
 	 * 
 	 * @param p le produit
 	 * @param x la position en x dans le GridPane
@@ -228,9 +228,6 @@ public class POSControleurVue implements IPOSControleurVue {
 		prixLbl.setText(cf.format(produitCourant.getPrix()));
 		
 		fournisseurLbl.setText(produitCourant.getFournisseur());
-		
-		// ctrl.ajouterProduitATransaction(ctrl.getProduitFromString(nomProduit));
-		factureTable.refresh();
 	}
 	
 	/**
@@ -239,9 +236,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param me le mouse event
 	 */
 	@FXML
-	private void addProduitATransaction(MouseEvent me)
+	private void addProduitATransaction(ActionEvent ae)
 	{
 		ctrl.ajouterProduitATransaction(produitCourant);
+		factureTable.refresh();
 	}
 
 	/**

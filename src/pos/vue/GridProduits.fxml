@@ -45,7 +45,7 @@
             </GridPane>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="118.0" spacing="20.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addProduit" styleClass="buttons-1" text="Ajouter" />
+                  <Button mnemonicParsing="false" onAction="#addProduitATransaction" styleClass="buttons-1" text="Ajouter" />
                </children>
             </VBox>
          </children>
