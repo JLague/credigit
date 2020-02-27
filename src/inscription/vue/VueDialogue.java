@@ -38,7 +38,7 @@ public class VueDialogue {
 	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une
 	 * erreur lors de la création d'un client
 	 * 
-	 * @param meaasage - Le message d'erreur
+	 * @param message - Le message d'erreur
 	 */
 	public static void erreurCreationDialogue(String message) {
 
@@ -57,7 +57,7 @@ public class VueDialogue {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setHeaderText("Votre compte a été créé avec succées!");
 		alert.setContentText(
-				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votreadhésion de façon officielle.");
+				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votre adhésion de façon officielle.");
 
 		alert.showAndWait();
 	}

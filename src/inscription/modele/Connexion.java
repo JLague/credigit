@@ -14,7 +14,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.result.DeleteResult;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -95,6 +94,15 @@ public class Connexion {
 
 	}
 
+	/**
+	 * Méthode permettant de supprimer un compte selon les informations reçues
+	 * 
+	 * @param nom    - Le nom du client
+	 * @param prenom - Le prénom du client
+	 * @param email  - L'email du client
+	 * @param nas    - Le NAS du client
+	 * @return Vrai si la suppression est effectuée, faux sinon
+	 */
 	public boolean supprimerCompte(String nom, String prenom, String email, String nas) {
 		try {
 			BasicDBObject object = new BasicDBObject();

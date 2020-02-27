@@ -65,6 +65,20 @@ public class DataTransition {
 
 	}
 
+	/**
+	 * Constructeur avec paramètres
+	 * 
+	 * @param nom       - Le texte du textField du nom
+	 * @param prenom    - Le texte du textField du prénom
+	 * @param email     - Le texte du textField de l'email
+	 * @param date      - La date du datePicker
+	 * @param adresse   - Le texte du textField de l'adresse
+	 * @param nas       - Le texte du textField du NAS
+	 * @param questions - Les questions choisies
+	 * @param reponses  - Les réponses aux questions
+	 * @param numero    - Le texte du textField du numéro
+	 * @param empreinte - Le byte array de l'empreinte
+	 */
 	public DataTransition(String nom, String prenom, String email, LocalDate date, LocalAdresse adresse, String nas,
 			ArrayList<Questions> questions, ArrayList<String> reponses, String numero, byte[] empreinte) {
 		this.nom = nom;

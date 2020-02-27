@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -250,7 +251,8 @@ public class ClientTest {
 		}
 
 		try {
-			LocalDate localDate = LocalDate.of(2002, 6, 24);
+			Calendar cal = Calendar.getInstance();
+			LocalDate localDate = LocalDate.of(2002, cal.get(Calendar.MONTH) + 2, 24);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
 			ArrayList<String> reponses = new ArrayList<String>();
 			questions.add(Questions.ANIMAL);
@@ -270,7 +272,8 @@ public class ClientTest {
 		}
 
 		try {
-			LocalDate localDate = LocalDate.of(2002, 2, 28);
+			Calendar cal = Calendar.getInstance();
+			LocalDate localDate = LocalDate.of(2002, cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH) + 1);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
 			ArrayList<String> reponses = new ArrayList<String>();
 			questions.add(Questions.ANIMAL);
