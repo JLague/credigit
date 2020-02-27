@@ -82,7 +82,7 @@ public class CourrielConfirmation {
 			BodyPart messageBodyPart1 = new MimeBodyPart();
 			messageBodyPart1.setText("Bonjour " + Prenom + ",\n\nLa grande famille de Credigit est heureuse de vous"
 					+ " compter comme un nouveau membre! Avec Credigit, vous rendez vos transactions bancaires plus sécuritaires.\n\n"
-					+ "Si vous rencontrez des difficultés, n'hésitez pas à contacter notre service à la clientèle au 418-803-5698.\n\n"
+					+ "Si vous rencontrez des difficultés, n'hésitez pas à contacter notre service à la clientèle au 418-XXX-XXXX.\n\n"
 					+ "Continuez à avoir l'argent au bout de votre doigt,\n\n" + "L'équipe de Crédigit\n"
 					+ "Une filiale de Bank-era Corp");
 
