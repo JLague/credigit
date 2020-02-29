@@ -89,7 +89,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Label fournisseurLbl;
 
 	private Produit produitCourant;
-	
+
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
@@ -217,27 +217,26 @@ public class POSControleurVue implements IPOSControleurVue {
 		HBox source = (HBox) me.getSource();
 		Label l = (Label) source.getChildren().get(0);
 		produitCourant = ctrl.getProduitFromString(l.getText());
-		
+
 		// Change info
 		skuLbl.setText(Long.toString(produitCourant.getSku()));
 		nomLbl.setText(produitCourant.getNom());
 		descLbl.setText(produitCourant.getDescription());
-		
+
 		// Local currency
 		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
 		prixLbl.setText(cf.format(produitCourant.getPrix()));
-		
+
 		fournisseurLbl.setText(produitCourant.getFournisseur());
 	}
-	
+
 	/**
 	 * Ajoute le produit chargé à la facture
 	 * 
 	 * @param me le mouse event
 	 */
 	@FXML
-	private void addProduitATransaction(ActionEvent ae)
-	{
+	private void addProduitATransaction(ActionEvent ae) {
 		ctrl.ajouterProduitATransaction(produitCourant);
 		factureTable.refresh();
 	}
@@ -268,6 +267,14 @@ public class POSControleurVue implements IPOSControleurVue {
 					clavierGrid.getChildren().add(clavierButtons[i][j]);
 					clavierButtons[i][j].setMinSize(150, 150);
 					clavierButtons[i][j].getStyleClass().add("clavier-buttons");
+					
+					clavierButtons[i][j].setOnMouseClicked( e -> {
+						 Button butonSource = (Button)e.getSource();
+						 if (Character.isDigit((butonSource.getText()).trim().charAt(0))) {
+							 clavierText.setText(clavierText.getText().trim() + butonSource.getText().trim());
+							 
+						 }
+					});
 				}
 			}
 		}
