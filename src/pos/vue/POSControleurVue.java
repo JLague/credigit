@@ -267,13 +267,20 @@ public class POSControleurVue implements IPOSControleurVue {
 					clavierGrid.getChildren().add(clavierButtons[i][j]);
 					clavierButtons[i][j].setMinSize(150, 150);
 					clavierButtons[i][j].getStyleClass().add("clavier-buttons");
-					
-					clavierButtons[i][j].setOnMouseClicked( e -> {
-						 Button butonSource = (Button)e.getSource();
-						 if (Character.isDigit((butonSource.getText()).trim().charAt(0))) {
-							 clavierText.setText(clavierText.getText().trim() + butonSource.getText().trim());
-							 
-						 }
+
+					clavierButtons[i][j].setOnMouseClicked(e -> {
+						Button butonSource = (Button) e.getSource();
+						String s = butonSource.getText().trim();
+
+						if (s == "00" | Character.isDigit(s.charAt(0)) | s == ".") {
+							clavierText.setText(clavierText.getText().trim() + s);
+						} else if (s == "DEL") {
+							clavierText.setText(clavierText.getText().substring(0, clavierText.getText().length()-1));
+						} else if (s == "C") {
+							clavierText.clear();
+						} else if (s == "ENTER") {
+							search();
+						}
 					});
 				}
 			}
@@ -297,6 +304,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void clavierHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(clavierBox);
+	}
+
+	private void search() {
 	}
 
 	/**
