@@ -2,10 +2,16 @@ package pos.vue;
 
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Locale;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -94,6 +100,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
+	TableView rechercheResultat = null;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -275,7 +282,7 @@ public class POSControleurVue implements IPOSControleurVue {
 						if (s == "00" | Character.isDigit(s.charAt(0)) | s == ".") {
 							clavierText.setText(clavierText.getText().trim() + s);
 						} else if (s == "DEL") {
-							clavierText.setText(clavierText.getText().substring(0, clavierText.getText().length()-1));
+							clavierText.setText(clavierText.getText().substring(0, clavierText.getText().length() - 1));
 						} else if (s == "C") {
 							clavierText.clear();
 						} else if (s == "ENTER") {
@@ -284,6 +291,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					});
 				}
 			}
+
 		}
 
 		clavierButtons[1][3].setMinWidth(200);
@@ -292,6 +300,40 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		VBox.setMargin(clavierText, new Insets(50, 0, 50, 0));
 		clavierBox.getChildren().addAll(clavierText, clavierGrid);
+
+		creerTableViewRecherche();
+
+		clavierBox.getChildren().add(rechercheResultat);
+
+		rechercheResultat.getStyleClass().add("table-view");
+		rechercheResultat.setEditable(false);
+	}
+
+	private void creerTableViewRecherche() {
+		rechercheResultat = new TableView();
+
+		    TableColumn<String, Produit> column1 = new TableColumn<>("Sku");
+		    column1.setCellValueFactory(new PropertyValueFactory<>("sku"));
+
+
+		    TableColumn<String, Produit> column2 = new TableColumn<>("Nom");
+		    column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		    
+		    TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
+		    column2.setCellValueFactory(new PropertyValueFactory<>("prix"));
+		    
+		    TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
+		    column2.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
+		    
+		    TableColumn<String, Produit> column5 = new TableColumn<>("Description");
+		    column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+
+		    rechercheResultat.getColumns().add(column1);
+		    rechercheResultat.getColumns().add(column2);
+		    rechercheResultat.getColumns().add(column3);
+		    rechercheResultat.getColumns().add(column4);
+		    rechercheResultat.getColumns().add(column5);
 	}
 
 	@FXML
@@ -306,9 +348,15 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().add(clavierBox);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void search() {
-	}
+		rechercheResultat.getItems().clear();
+		
+		rechercheResultat.getItems().add(new Produit(1800, "produitTest", 10, 20, "KE Inc", "Da best produit"));
 
+		rechercheResultat.refresh();
+	}
+	
 	/**
 	 * Méthode qui permet de charger un fichier FXML
 	 */
