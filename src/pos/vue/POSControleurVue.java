@@ -36,6 +36,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
+import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -216,7 +217,8 @@ public class POSControleurVue implements IPOSControleurVue {
 		image.setFitWidth(234);
 
 		Label nom = new Label(p.getNom());
-		Label prix = new Label("$" + p.getPrix());
+		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+		Label prix = new Label(cf.format(p.getPrix()));
 
 		VBox.setMargin(nom, new Insets(8, 0, 0, 8));
 		VBox.setMargin(prix, new Insets(2, 0, 0, 8));
@@ -372,8 +374,13 @@ public class POSControleurVue implements IPOSControleurVue {
 			e.printStackTrace();
 		}
 
-		rechercheResultat.getItems()
-				.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
+		try {
+			rechercheResultat.getItems()
+					.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		rechercheResultat.refresh();
 	}
