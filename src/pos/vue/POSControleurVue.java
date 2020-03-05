@@ -1,6 +1,7 @@
 package pos.vue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -35,6 +36,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
 import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
@@ -334,13 +336,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
 
 		TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
-		column2.setCellValueFactory(new PropertyValueFactory<>("prix"));
+		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
 
 		TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
-		column2.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
+		column4.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
 
 		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
-		column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+		column5.setCellValueFactory(new PropertyValueFactory<>("description"));
 
 		rechercheResultat.getColumns().add(column1);
 		rechercheResultat.getColumns().add(column2);
@@ -432,6 +434,17 @@ public class POSControleurVue implements IPOSControleurVue {
 		sousTotalLbl.textProperty().bind(properties.get(0));
 		taxesLbl.textProperty().bind(properties.get(1));
 		totalLbl.textProperty().bind(properties.get(2));
+	}
+	
+	/**
+	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
+	 */
+	private void choisirImage()
+	{
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Sélectionner une image pour votre produit");
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
+		File file = fc.showOpenDialog(scene.getWindow());
 	}
 
 }
