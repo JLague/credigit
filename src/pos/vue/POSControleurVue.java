@@ -589,10 +589,9 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void coutantProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[0-9]\u002C\u0020\002E\u0024")) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
 			event.consume();
 		}
-
 	}
 
 	@FXML
@@ -621,54 +620,61 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	@FXML
+	private void prixProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
+			event.consume();
+		}
+	}
+
+	@FXML
 	private void nomProduitHandler(KeyEvent event) {
 
 	}
 
 	@FXML
-	private void prixProduitHandler(KeyEvent event) {
-
-	}
-
-	@FXML
 	private void quantiteProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9]")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	    private void skuProduitHandler(KeyEvent event) {
+	    	
+	    	 if (!event.getCharacter().matches("[0-9]")) {
+					event.consume();
+				}
 
 	}
 
 	@FXML
-	private void skuProduitHandler(KeyEvent event) {
+	void nmMotPasse1Handler(ActionEvent event) {
 
 	}
-	
 
-    @FXML
-    void nmMotPasse1Handler(ActionEvent event) {
+	@FXML
+	void nmMotPasse2Handler(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void nmMotPasse2Handler(ActionEvent event) {
+	@FXML
+	void nvCourrielHandeler(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void nvCourrielHandeler(ActionEvent event) {
+	@FXML
+	void nvNomHandler(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void nvNomHandler(ActionEvent event) {
+	@FXML
+	void nvPrenomHandler(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void nvPrenomHandler(ActionEvent event) {
+	@FXML
+	void nvUtilisateurHandler(ActionEvent event) {
 
-    }
-
-    @FXML
-    void nvUtilisateurHandler(ActionEvent event) {
-
-    }
+	}
 
 }
