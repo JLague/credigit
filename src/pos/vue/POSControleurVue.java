@@ -58,6 +58,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			{ "C", "0", ".", "00" } };
 	private static final String LOGIN = "POS.fxml";
 	private static final String MAIN_VIEW = "MainPOS.fxml";
+	private static final String VIEW_INSCRIPTION_VENDEUR = "NouveauVendeur.fxml";
 
 	private POSControleur ctrl;
 	private VBox rootVBox;
@@ -109,42 +110,40 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private Label fournisseurLbl;
-	
-    @FXML
-    private Button ajoutProduitBouton;
-    
-    
-    private AnchorPane creationProduitPane;
 
-    @FXML
-    private TextField skuProduitTextField;
+	@FXML
+	private Button ajoutProduitBouton;
 
-    @FXML
-    private TextField nomProduitTextField;
+	private AnchorPane creationProduitPane;
 
-    @FXML
-    private TextField prixproduitTextField;
+	@FXML
+	private TextField skuProduitTextField;
 
-    @FXML
-    private TextField coutantproduitTextField;
+	@FXML
+	private TextField nomProduitTextField;
 
-    @FXML
-    private TextField quantiteProduitTextField;
+	@FXML
+	private TextField prixproduitTextField;
 
-    @FXML
-    private TextField fournisseurProduitTextField;
+	@FXML
+	private TextField coutantproduitTextField;
 
-    @FXML
-    private Button creerBouton;
+	@FXML
+	private TextField quantiteProduitTextField;
 
-    @FXML
-    private TextArea descriptionProduitTextArea;
+	@FXML
+	private TextField fournisseurProduitTextField;
 
-    @FXML
-    private ImageView imageProduitImageView;
-    
-    FileInputStream fileTemp;
+	@FXML
+	private Button creerBouton;
 
+	@FXML
+	private TextArea descriptionProduitTextArea;
+
+	@FXML
+	private ImageView imageProduitImageView;
+
+	FileInputStream fileTemp;
 
 	@FXML
 	private Button ajoutBtn;
@@ -169,6 +168,15 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(LOGIN, rootVBox);
 
 		connectBtn.setOnMouseClicked((me) -> ouvrirVuePrincipale());
+		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
+	}
+
+	/**
+	 * Méthode servant à ouvrir la vue utilisé pour ajouter des vendeurs.
+	 */
+	private void ouvrirVueInscriptionVendeur() {
+		creerScene(VIEW_INSCRIPTION_VENDEUR, rootVBox);
+		ctrl.chargerScene(this.scene, "Inscription vendeur");
 	}
 
 	/**
@@ -215,7 +223,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
 	}
-	
+
 	/**
 	 * Méthode permettant de charger la grid de Produits qui est affichée lorsqu'on
 	 * pèse sur le boutons Produit
@@ -445,13 +453,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		ajoutBtn.setDisable(false);
 		middlePane.getChildren().add(clavierBox);
 	}
-	
-    @FXML
-    private  void ajoutHandle(ActionEvent event) {
-    	middlePane.getChildren().clear();
-    	middlePane.getChildren().add(creationProduitPane);
 
-    }
+	@FXML
+	private void ajoutHandle(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(creationProduitPane);
+
+	}
 
 	@SuppressWarnings("unchecked")
 	/**
@@ -461,7 +469,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		rechercheResultat.getItems().clear();
 
 		ArrayList<Produit> listProd = ctrl.search(clavierText.getText());
-		
+
 		rechercheResultat.getItems().addAll(listProd);
 
 		rechercheResultat.refresh();
@@ -479,7 +487,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		if (temp != null) {
 			ctrl.ajouterProduitATransaction(temp);
 		}
-		
+
 		factureTable.refresh();
 	}
 
@@ -538,8 +546,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
 	 */
 
-	private FileInputStream choisirImage()
-	{
+	private FileInputStream choisirImage() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
@@ -549,54 +556,51 @@ public class POSControleurVue implements IPOSControleurVue {
 		try {
 			FileInputStream stream = new FileInputStream(file);
 			retour = stream;
-			
+
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 		}
-		
+
 		return retour;
 
 	}
+
 	
 	 @FXML
 	   private void coutantProduitHandler(KeyEvent event) {
 		 if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
 				event.consume();
 			}
+	 }
 
-	    }
+	@FXML
+	private void creerProduitHandler(KeyEvent event) {
 
-	    @FXML
-	    private void creerProduitHandler(KeyEvent event) {
+	}
 
-	    }
+	@FXML
+	private void descriptionProduitHandler(KeyEvent event) {
 
-	    @FXML
-	    private void descriptionProduitHandler(KeyEvent event) {
 
-	    }
+	}
 
-	    @FXML
-	   private void fournisseurProduitHandler(KeyEvent event) {
-	    	
 
-	    }
+	@FXML
+	private void fournisseurProduitHandler(KeyEvent event) {
 
-	    @FXML
-	   private void imageProduitHandler(MouseEvent event) {
+	}
 
-	    	 fileTemp = choisirImage();
-	    	
-				imageProduitImageView.setImage(new Image(fileTemp));
-				imageProduitImageView.setPreserveRatio(false);
+	@FXML
+	private void imageProduitHandler(MouseEvent event) {
 
-	    }
+		fileTemp = choisirImage();
 
-	    @FXML
-	    private void nomProduitHandler(KeyEvent event) {
+		imageProduitImageView.setImage(new Image(fileTemp));
+		imageProduitImageView.setPreserveRatio(false);
 
-	    }
+	}
+
 
 	    @FXML
 	    private void prixProduitHandler(KeyEvent event) {
@@ -605,13 +609,20 @@ public class POSControleurVue implements IPOSControleurVue {
 				}
 	    }
 
+	@FXML
+	private void nomProduitHandler(KeyEvent event) {
+
+	}
+
+
+
 	    @FXML
 	    private void quantiteProduitHandler(KeyEvent event) {
 	    	 if (!event.getCharacter().matches("[0-9]")) {
 					event.consume();
 				}
-
 	    }
+
 
 	    @FXML
 	    private void skuProduitHandler(KeyEvent event) {
@@ -620,6 +631,8 @@ public class POSControleurVue implements IPOSControleurVue {
 					event.consume();
 				}
 
-	    }
+
 
 }
+	    }
+	    
