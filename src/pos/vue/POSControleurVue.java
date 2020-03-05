@@ -199,6 +199,27 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	/**
+	 * Si les données sont valides les entre dans la base de données
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void inscriptionVendeurHandler(ActionEvent event) {
+
+	}
+
+	/**
+	 * Annule le processus de création d'un nouveau vendeur
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void annulerHandler(ActionEvent event) {
+		creerScene(LOGIN, rootVBox);
+		ctrl.chargerScene(this.scene, "Login");
+	}
+
+	/**
 	 * Méthode permettant de charger le TableView contenant la facture
 	 */
 	@SuppressWarnings("unchecked")
@@ -618,5 +639,36 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void skuProduitHandler(KeyEvent event) {
 
 	}
+	
+
+    @FXML
+    void nmMotPasse1Handler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nmMotPasse2Handler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nvCourrielHandeler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nvNomHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nvPrenomHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void nvUtilisateurHandler(ActionEvent event) {
+
+    }
 
 }
