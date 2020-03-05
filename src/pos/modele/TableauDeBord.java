@@ -31,7 +31,7 @@ public class TableauDeBord {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
+
 		try {
 			Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", 13, "Une description", stream);
 			Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", 12, "Une description", stream);
@@ -46,7 +46,6 @@ public class TableauDeBord {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 
 	}
 

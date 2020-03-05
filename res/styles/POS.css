@@ -12,7 +12,7 @@
 
 /* Big text */
 .big-text, .buttons-2, .transparent-btn {
-	-fx-font-size: 25.0px;
+	-fx-font-size: 24.0px;
 }
 
 /* Title text size */
@@ -30,8 +30,11 @@
 }
 
 .topbar{
-	-fx-background-color: #1281E4;
-	-fx-blend-mode: multiply;
+	-fx-background-color: linear-gradient(to right, #042379, #010c31);
+}
+
+.facture{
+	-fx-background-color: rgba(1, 12, 50, 0.45);
 }
 
 .vboxProduit{
