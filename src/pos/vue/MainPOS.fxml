@@ -18,7 +18,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
-      <HBox fx:id="topBox" alignment="CENTER" prefHeight="139.0" prefWidth="1920.0" spacing="1500.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="topBox" alignment="CENTER" prefHeight="139.0" prefWidth="1920.0" spacing="1500.0" styleClass="topbar" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="92.0" fitWidth="101.0" pickOnBounds="true" scaleX="2.0" scaleY="1.3" translateX="70.0">
                <image>

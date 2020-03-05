@@ -7,51 +7,56 @@
 
 /* Normal text size */
 .text-1, .label {
-	-fx-font-size:15px;
+	-fx-font-size:15.0px;
 }
 
 /* Big text */
 .big-text, .buttons-2, .transparent-btn {
-	-fx-font-size: 25px;
+	-fx-font-size: 25.0px;
 }
 
 /* Title text size */
 .title {
-	-fx-font-size: 35px;
+	-fx-font-size: 35.0px;
 }
 
 /* Buttons for view 1 and 2 */
 .buttons-1, .buttons-2 {
-	-fx-background-insets: 0;
+	-fx-background-insets: 0.0;
 	-fx-background-color: transparent;
-	-fx-border-width: 2px;
-	-fx-border-radius: 15px;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 15.0px;
 	-fx-border-color: white;
+}
+
+.topbar{
+	-fx-background-color: #1281E4;
+	-fx-blend-mode: multiply;
 }
 
 .vboxProduit{
 	-fx-background-color: #0D1837;
-	-fx-background-radius: 10px; 
+	-fx-background-radius: 10.0px; 
 }
 
 /* Same buttons on mouse over */
 .buttons-1:hover, .buttons-2:hover {
 	-fx-background-color: white;
-	-fx-background-radius: 15px;
+	-fx-background-radius: 15.0px;
 	-fx-text-fill: #0D1837;
 }
 
 /* NumPad text field */
 .clavier-text {
 	-fx-background-color: transparent;
-	-fx-border-width: 2px;
-	-fx-border-radius: 15px;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 15.0px;
 	-fx-border-color: white;
 }
 
 /* View 1 fields */
 .fields-1 {
-	-fx-background-color: rgba(255, 255, 255, 0.3); /* Blanc presque transparent */
+	-fx-background-color: rgba(255.0, 255.0, 255.0, 0.3); /* Blanc presque transparent */
 	-fx-prompt-text-fill: white;
 }
 
@@ -69,8 +74,8 @@
 .search-bar {
 	-fx-background-color: transparent;
 	-fx-prompt-text-fill: white;
-	-fx-border-width: 2px;
-	-fx-border-radius: 15px;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 15.0px;
 	-fx-border-color: white;
 	
 }
@@ -78,14 +83,14 @@
 /* NumPad buttons */
 .clavier-buttons {
 	-fx-background-color: #1281E4;
-	-fx-background-insets: 10;
-	-fx-border-radius: 0;
-	-fx-font-size: 45;
+	-fx-background-insets: 10.0;
+	-fx-border-radius: 0.0;
+	-fx-font-size: 45.0;
 }
 
 /* TableView font size and transparency */
 .table-view {
-	-fx-font-size: 15px;
+	-fx-font-size: 15.0px;
 	-fx-background-color: transparent;
 }
 
@@ -139,18 +144,18 @@
 
 /* TableView left column */
 .align-left, .align-left .label {
-	-fx-border-insets: 0 30 0 0;
+	-fx-border-insets: 0.0 30.0 0.0 0.0;
 	-fx-alignment: CENTER_LEFT;
 }
 
 /* TableView center column */
 .align-center, .align-center .label {
-	-fx-border-insets: 0 30 0 30;
+	-fx-border-insets: 0.0 30.0 0.0 30.0;
 	-fx-alignment: CENTER;
 }
 
 /* TableView right column */
 .align-right, .align-right .label {
-	-fx-border-insets: 0 0 0 30;
+	-fx-border-insets: 0.0 0.0 0.0 30.0;
 	-fx-alignment: CENTER_RIGHT;
 }

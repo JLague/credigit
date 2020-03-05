@@ -1,5 +1,6 @@
 package pos.vue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Collection;
@@ -363,7 +364,16 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void search() {
 		rechercheResultat.getItems().clear();
 
-		rechercheResultat.getItems().add(new Produit(1800, "produitTest", 10, 20, "KE Inc", "Da best produit"));
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		try {
+			stream.write(new byte[2]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		rechercheResultat.getItems()
+				.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
 
 		rechercheResultat.refresh();
 	}
