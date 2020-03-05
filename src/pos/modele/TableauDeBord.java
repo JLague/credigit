@@ -31,15 +31,22 @@ public class TableauDeBord {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", 13, "Une description", stream);
-		Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", 12, "Une description", stream);
-		Produit test3 = new Produit(3, "test3", 10, 10, "SiFang", 10, "Une description", stream);
-		Produit test4 = new Produit(4, "test4", 10, 10, "SiFang", 12, "Une description", stream);
+	
+		try {
+			Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", 13, "Une description", stream);
+			Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", 12, "Une description", stream);
+			Produit test3 = new Produit(3, "test3", 10, 10, "SiFang", 10, "Une description", stream);
+			Produit test4 = new Produit(4, "test4", 10, 10, "SiFang", 12, "Une description", stream);
 
-		inventaire.add(test1);
-		inventaire.add(test2);
-		inventaire.add(test3);
-		inventaire.add(test4);
+			inventaire.add(test1);
+			inventaire.add(test2);
+			inventaire.add(test3);
+			inventaire.add(test4);
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 	}
 

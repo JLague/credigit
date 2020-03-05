@@ -36,6 +36,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pos.ctrl.POSControleur;
+import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -372,8 +373,12 @@ public class POSControleurVue implements IPOSControleurVue {
 			e.printStackTrace();
 		}
 
-		rechercheResultat.getItems()
-				.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
+		try {
+			rechercheResultat.getItems()
+					.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
+		} catch (ExceptionProduitEtablissement e) {
+			e.printStackTrace();
+		}
 
 		rechercheResultat.refresh();
 	}
