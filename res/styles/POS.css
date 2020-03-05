@@ -97,7 +97,6 @@
 	-fx-background-color: transparent;
 }
 
-
 /* TableView selection colors */
 .table-row-cell:selected {
    -fx-background-color: white; 

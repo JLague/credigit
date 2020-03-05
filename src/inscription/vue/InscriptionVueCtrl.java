@@ -6,6 +6,7 @@ import java.util.List;
 
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataTransition;
+import inscription.modele.EmpreinteService;
 import inscription.modele.ExceptionCreationCompte;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
@@ -342,7 +343,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			try {
-				if (creerDataTransition() != null && ctrl.envoyerDataClient(creerDataTransition())) {
+				DataTransition data = creerDataTransition();
+				if (data != null && ctrl.envoyerDataClient(data)) {
 					VueDialogue.compteCree();
 				}
 			} catch (ExceptionCreationCompte e) {
@@ -420,11 +422,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			reponses.add(reponse1TextField.getText());
 			reponses.add(reponse2TextField.getText());
 			data.setReponses(reponses);
-
-			byte[] empreinte = new byte[2];
-			empreinte[0] = 1;
-			empreinte[1] = 1;
-			data.setEmpreinte(empreinte);
+			data.setEmpreinte(EmpreinteService.getEmpreinte());
 
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());

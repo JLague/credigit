@@ -90,9 +90,10 @@
                   </AnchorPane>
                </children>
             </GridPane>
-            <AnchorPane>
+            <AnchorPane prefHeight="19.0" prefWidth="616.0">
                <children>
                   <Button layoutY="1.0" mnemonicParsing="false" onAction="#enleverSelection" styleClass="buttons-1" text="Enlever sélection" />
+                  <Button fx:id="ajoutBtn" layoutX="258.0" layoutY="1.0" mnemonicParsing="false" onAction="#ajouterSelection" styleClass="buttons-1" text="Ajouter item" />
                   <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="470.0" mnemonicParsing="false" onAction="#annuler" styleClass="buttons-1" text="Annuler transaction" />
                </children>
                <VBox.margin>
