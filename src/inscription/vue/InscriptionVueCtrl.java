@@ -346,7 +346,6 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			break;
 
 		case ETAPE4:
-			empreinteService.start();
 			try {
 				if (creerDataTransition() != null && ctrl.envoyerDataClient(creerDataTransition())) {
 					VueDialogue.compteCree();
@@ -355,7 +354,6 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
 			nouvelleEtape = EtapesVues.ETAPE4;
-			empreinteService.cancel();
 			break;
 
 		case ETAPEDESACTIVER:
@@ -538,6 +536,11 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		}
 
+		if (empreinteService.isRunning()) {
+			empreinteService.cancel();
+			empreinteService.reset();
+		}
+
 		switch (nouvelleEtape) {
 		case ETAPE1:
 			ivStep1.setImage(new Image(getClass().getResource("/images/step1_bleu.png").toExternalForm()));
@@ -553,7 +556,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
-			
+			empreinteService.start();
 			break;
 
 		case ETAPEDESACTIVER:
