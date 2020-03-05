@@ -1,5 +1,6 @@
 package pos.ctrl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.StringProperty;
@@ -120,5 +121,9 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public Produit getProduitFromString(String nom) {
 		return tb.getProduitFromString(nom);
+	}
+
+	public ArrayList<Produit> search(String text) {
+		return tb.search(text);
 	}
 }

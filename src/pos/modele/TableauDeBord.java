@@ -33,10 +33,10 @@ public class TableauDeBord {
 		}
 
 		try {
-			Produit test1 = new Produit(1, "test1", 10, 10, "SiFang", 13, "Une description", stream);
-			Produit test2 = new Produit(2, "test2", 10, 10, "SiFang", 12, "Une description", stream);
-			Produit test3 = new Produit(3, "test3", 10, 10, "SiFang", 10, "Une description", stream);
-			Produit test4 = new Produit(4, "test4", 10, 10, "SiFang", 12, "Une description", stream);
+			Produit test1 = new Produit(11111, "test1", 05, 11, "SiFang", 13, "Une description", stream);
+			Produit test2 = new Produit(22222, "test2", 10, 12, "SiFang", 12, "Une description", stream);
+			Produit test3 = new Produit(33333, "test3", 27, 13, "SiFang", 10, "Une description", stream);
+			Produit test4 = new Produit(43434, "test4", 38.4f, 14, "SiFang", 12, "Une description", stream);
 
 			inventaire.add(test1);
 			inventaire.add(test2);
@@ -126,5 +126,24 @@ public class TableauDeBord {
 		}
 
 		return null;
+	}
+
+	public ArrayList<Produit> search(String text) {
+		ArrayList<Produit> listProd = new ArrayList<Produit>();
+		System.out.println(inventaire.size() + inventaire.toString() + inventaire.toArray().toString());
+		for (Produit produit : inventaire) {
+
+			if (text.length() != 0 && text.charAt(0) == '.') {
+				// Il s'agit d'un sku
+				if (String.valueOf(produit.getSku()).contains(text.subSequence(1, text.length()))) {
+					listProd.add(produit);
+				}
+			} else {
+				if (String.valueOf(produit.getPrix()).contains(text.subSequence(0, text.length()))) {
+					listProd.add(produit);
+				}
+			}
+		}
+		return listProd;
 	}
 }

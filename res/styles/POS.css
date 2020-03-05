@@ -96,6 +96,7 @@
 	-fx-font-size: 15.0px;
 	-fx-background-color: transparent;
 }
+}
 
 /* TableView selection colors */
 .table-row-cell:selected {
