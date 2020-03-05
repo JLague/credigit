@@ -2,6 +2,9 @@ package pos.vue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -27,11 +30,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -100,6 +106,42 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private Label fournisseurLbl;
+	
+    @FXML
+    private Button ajoutProduitBouton;
+    
+    
+    private AnchorPane creationProduitPane;
+
+    @FXML
+    private TextField skuProduitTextField;
+
+    @FXML
+    private TextField nomProduitTextField;
+
+    @FXML
+    private TextField prixproduitTextField;
+
+    @FXML
+    private TextField coutantproduitTextField;
+
+    @FXML
+    private TextField quantiteProduitTextField;
+
+    @FXML
+    private TextField fournisseurProduitTextField;
+
+    @FXML
+    private Button creerBouton;
+
+    @FXML
+    private TextArea descriptionProduitTextArea;
+
+    @FXML
+    private ImageView imageProduitImageView;
+    
+    FileInputStream fileTemp;
+
 
 	private Produit produitCourant;
 
@@ -135,6 +177,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		chargerClavier();
 		chargerTableView();
 		chargerGridProduit();
+		chargerAjoutProduit();
 
 		middlePane.getChildren().add(borderPaneProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
@@ -164,6 +207,23 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
+	}
+	
+	/**
+	 * Méthode permettant de charger la grid de Produits qui est affichée lorsqu'on
+	 * pèse sur le boutons Produit
+	 */
+	private void chargerAjoutProduit() {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreationProduitPos.fxml"));
+		loader.setController(this);
+
+		try {
+			creationProduitPane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -376,6 +436,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(clavierBox);
 	}
+	
+    @FXML
+    private  void ajoutHandle(ActionEvent event) {
+    	middlePane.getChildren().clear();
+    	middlePane.getChildren().add(creationProduitPane);
+
+    }
 
 	@SuppressWarnings("unchecked")
 	private void search() {
@@ -445,12 +512,78 @@ public class POSControleurVue implements IPOSControleurVue {
 	/**
 	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
 	 */
-	private void choisirImage()
+	private FileInputStream choisirImage()
 	{
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
 		File file = fc.showOpenDialog(scene.getWindow());
+
+		FileInputStream retour = null;
+		try {
+			FileInputStream stream = new FileInputStream(file);
+			retour = stream;
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return retour;
+
 	}
+	
+	 @FXML
+	   private void coutantProduitHandler(KeyEvent event) {
+		 if (!event.getCharacter().matches("[0-9]\u002C\u0020\002E\u0024")) {
+				event.consume();
+			}
+
+	    }
+
+	    @FXML
+	    private void creerProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	    private void descriptionProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	   private void fournisseurProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	   private void imageProduitHandler(MouseEvent event) {
+
+	    	 fileTemp = choisirImage();
+	    	
+				imageProduitImageView.setImage(new Image(fileTemp));
+				imageProduitImageView.setPreserveRatio(false);
+
+	    }
+
+	    @FXML
+	    private void nomProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	    private void prixProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	    private void quantiteProduitHandler(KeyEvent event) {
+
+	    }
+
+	    @FXML
+	    private void skuProduitHandler(KeyEvent event) {
+
+	    }
 
 }

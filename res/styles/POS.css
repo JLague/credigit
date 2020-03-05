@@ -96,7 +96,7 @@
 	-fx-font-size: 15.0px;
 	-fx-background-color: transparent;
 }
-}
+
 
 /* TableView selection colors */
 .table-row-cell:selected {
@@ -175,9 +175,13 @@
 {
 	-fx-prompt-text-fill: white;
 	-fx-text-fill: white;
-	-fx-control-inner-background : rgba(255,255,255,0.2);
-	-fx-background-radius: 10.0px;
+	-fx-region-background : rgba(255,255,255,0.25);
 }
+
+.text-area .content {  
+   -fx-background-color: rgba(255,255,255,0.25);  
+   	-fx-background-radius: 10.0px;
+} 
 
 .creerProduitImage {
 	-fx-background-color: rgba(255,255,255,0.2);
@@ -188,4 +192,9 @@
 	-fx-background-color: rgba(255,255,255,0.2);
 	-fx-background-radius: 30.0px;
 	-fx-text-fill: white;
+}
+
+.creerProduitImageView
+{
+	-fx-background-radius: 30.0px;
 }
