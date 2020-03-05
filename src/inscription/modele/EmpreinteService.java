@@ -20,8 +20,7 @@ public class EmpreinteService extends Service<Void> {
 				sensor.connect();
 				sensor.setSecurityLevel(1);
 
-				while (!sensor.hasFingerprint())
-					;
+				while (!sensor.hasFingerprint());
 				while (sensor.hasFingerprint()) {
 					Thread.sleep(50);
 				}
