@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
+import java.util.Observable;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.property.StringProperty;
@@ -26,6 +27,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -101,6 +104,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Label fournisseurLbl;
 
+	@FXML
+	private Button ajoutBtn;
+
 	private Produit produitCourant;
 
 	private GridPane clavierGrid;
@@ -132,6 +138,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		ctrl.chargerScene(this.scene, "POS");
 
 		// Chargement de la vue
+		ajoutBtn.setDisable(true);
 		chargerClavier();
 		chargerTableView();
 		chargerGridProduit();
@@ -345,19 +352,19 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
 		column5.setCellValueFactory(new PropertyValueFactory<>("description"));
-		
+
 		rechercheResultat.getColumns().add(column1);
 		rechercheResultat.getColumns().add(column2);
 		rechercheResultat.getColumns().add(column3);
 		rechercheResultat.getColumns().add(column4);
 		rechercheResultat.getColumns().add(column5);
-		
+
 		column1.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.1));
 		column2.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.2));
 		column3.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.1));
 		column4.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.2));
 		column5.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.4));
-		
+
 		column1.setResizable(false);
 		column2.setResizable(false);
 		column3.setResizable(false);
@@ -368,27 +375,45 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void produitHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
+		ajoutBtn.setDisable(true);
 		middlePane.getChildren().add(borderPaneProduit);
 	}
 
 	@FXML
 	private void clavierHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
+		ajoutBtn.setDisable(false);
 		middlePane.getChildren().add(clavierBox);
 	}
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * Rechercher un produit
+	 */
 	private void search() {
 		rechercheResultat.getItems().clear();
-		
-		ArrayList<Produit> listProd = new ArrayList<Produit>();
 
-		rechercheResultat.getItems().addAll(ctrl.search(clavierText.getText()));
+		ArrayList<Produit> listProd = ctrl.search(clavierText.getText());
 		
-		for (Object  row : rechercheResultat.getItems()) {
-		}
+		rechercheResultat.getItems().addAll(listProd);
 
 		rechercheResultat.refresh();
+	}
+
+	/**
+	 * Ajoute le resultat de la recherche à la facture
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void ajouterSelection(ActionEvent event) {
+		Produit temp = (Produit) this.rechercheResultat.getSelectionModel().getSelectedItem();
+
+		if (temp != null) {
+			ctrl.ajouterProduitATransaction(temp);
+		}
+		
+		factureTable.refresh();
 	}
 
 	/**
@@ -441,12 +466,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		taxesLbl.textProperty().bind(properties.get(1));
 		totalLbl.textProperty().bind(properties.get(2));
 	}
-	
+
 	/**
 	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
 	 */
-	private void choisirImage()
-	{
+	private void choisirImage() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
