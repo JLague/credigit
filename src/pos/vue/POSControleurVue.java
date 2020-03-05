@@ -208,7 +208,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		// TODO ajouter les images des produits
 		HBox hbox = new HBox();
 		hbox.getChildren().add(new Label(p.getNom()));
-		hbox.setOnMouseClicked((me) -> loadProduit(me));
+		hbox.setOnMouseClicked((me) -> addProduitATransaction(me));
 
 		GridPane.setConstraints(hbox, x, y);
 		return hbox;
@@ -221,9 +221,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param me le mouse event
 	 */
 	private void loadProduit(MouseEvent me) {
-		HBox source = (HBox) me.getSource();
-		Label l = (Label) source.getChildren().get(0);
-		produitCourant = ctrl.getProduitFromString(l.getText());
 
 		// Change info
 		skuLbl.setText(Long.toString(produitCourant.getSku()));
@@ -243,7 +240,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param me le mouse event
 	 */
 	@FXML
-	private void addProduitATransaction(ActionEvent ae) {
+	private void addProduitATransaction(MouseEvent me) {
+		HBox source = (HBox) me.getSource();
+		Label l = (Label) source.getChildren().get(0);
+		produitCourant = ctrl.getProduitFromString(l.getText());
+
 		ctrl.ajouterProduitATransaction(produitCourant);
 		factureTable.refresh();
 	}
@@ -312,28 +313,26 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void creerTableViewRecherche() {
 		rechercheResultat = new TableView();
 
-		    TableColumn<String, Produit> column1 = new TableColumn<>("Sku");
-		    column1.setCellValueFactory(new PropertyValueFactory<>("sku"));
+		TableColumn<String, Produit> column1 = new TableColumn<>("Sku");
+		column1.setCellValueFactory(new PropertyValueFactory<>("sku"));
 
+		TableColumn<String, Produit> column2 = new TableColumn<>("Nom");
+		column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
 
-		    TableColumn<String, Produit> column2 = new TableColumn<>("Nom");
-		    column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
-		    
-		    TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
-		    column2.setCellValueFactory(new PropertyValueFactory<>("prix"));
-		    
-		    TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
-		    column2.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
-		    
-		    TableColumn<String, Produit> column5 = new TableColumn<>("Description");
-		    column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+		TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
+		column2.setCellValueFactory(new PropertyValueFactory<>("prix"));
 
+		TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
+		column2.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
 
-		    rechercheResultat.getColumns().add(column1);
-		    rechercheResultat.getColumns().add(column2);
-		    rechercheResultat.getColumns().add(column3);
-		    rechercheResultat.getColumns().add(column4);
-		    rechercheResultat.getColumns().add(column5);
+		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
+		column2.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+		rechercheResultat.getColumns().add(column1);
+		rechercheResultat.getColumns().add(column2);
+		rechercheResultat.getColumns().add(column3);
+		rechercheResultat.getColumns().add(column4);
+		rechercheResultat.getColumns().add(column5);
 	}
 
 	@FXML
@@ -351,12 +350,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	@SuppressWarnings("unchecked")
 	private void search() {
 		rechercheResultat.getItems().clear();
-		
+
 		rechercheResultat.getItems().add(new Produit(1800, "produitTest", 10, 20, "KE Inc", "Da best produit"));
 
 		rechercheResultat.refresh();
 	}
-	
+
 	/**
 	 * Méthode qui permet de charger un fichier FXML
 	 */
