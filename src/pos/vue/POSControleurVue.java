@@ -378,7 +378,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			rechercheResultat.getItems()
 					.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
 		} catch (ExceptionProduitEtablissement e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
