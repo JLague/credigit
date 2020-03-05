@@ -26,6 +26,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -176,8 +178,8 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		produitsScroll.setFitToWidth(true);
 		produitsScroll.setFitToHeight(true);
-		gridProduits.setHgap(300);
-		gridProduits.setVgap(150);
+		gridProduits.setHgap(110);
+		gridProduits.setVgap(38);
 
 		populerGridProduit();
 	}
@@ -190,8 +192,9 @@ public class POSControleurVue implements IPOSControleurVue {
 		int cpt = 0;
 
 		for (Produit p : listeProduits) {
-			HBox hbox = creerProduitWrapper(p, cpt % 3, cpt / 3);
-			gridProduits.getChildren().add(hbox);
+			VBox vbox = creerProduitWrapper(p, cpt % 3, cpt / 3);
+			vbox.getStyleClass().add("vboxProduit");
+			gridProduits.getChildren().add(vbox);
 			cpt++;
 		}
 	}
@@ -204,14 +207,23 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param y la position en y dans le GridPane
 	 * @return le HBox wrapper
 	 */
-	private HBox creerProduitWrapper(Produit p, int x, int y) {
+	private VBox creerProduitWrapper(Produit p, int x, int y) {
 		// TODO ajouter les images des produits
-		HBox hbox = new HBox();
-		hbox.getChildren().add(new Label(p.getNom()));
-		hbox.setOnMouseClicked((me) -> addProduitATransaction(me));
+		VBox vbox = new VBox();
+		ImageView image = new ImageView(new Image(getClass().getResource("/images/produit_img.png").toExternalForm()));
+		image.setFitHeight(234);
+		image.setFitWidth(234);
 
-		GridPane.setConstraints(hbox, x, y);
-		return hbox;
+		Label nom = new Label(p.getNom());
+		Label prix = new Label("$" + p.getPrix());
+
+		VBox.setMargin(nom, new Insets(8, 0, 0, 8));
+		VBox.setMargin(prix, new Insets(2, 0, 0, 8));
+		vbox.getChildren().addAll(image, nom, prix);
+		vbox.setOnMouseClicked((me) -> addProduitATransaction(me));
+
+		GridPane.setConstraints(vbox, x, y);
+		return vbox;
 	}
 
 	/**
@@ -241,8 +253,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void addProduitATransaction(MouseEvent me) {
-		HBox source = (HBox) me.getSource();
-		Label l = (Label) source.getChildren().get(0);
+		VBox source = (VBox) me.getSource();
+		Label l = (Label) source.getChildren().get(1);
 		produitCourant = ctrl.getProduitFromString(l.getText());
 
 		ctrl.ajouterProduitATransaction(produitCourant);

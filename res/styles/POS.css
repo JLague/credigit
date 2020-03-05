@@ -29,6 +29,11 @@
 	-fx-border-color: white;
 }
 
+.vboxProduit{
+	-fx-background-color: #0D1837;
+	-fx-background-radius: 10px; 
+}
+
 /* Same buttons on mouse over */
 .buttons-1:hover, .buttons-2:hover {
 	-fx-background-color: white;
