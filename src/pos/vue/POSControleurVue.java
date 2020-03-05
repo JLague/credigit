@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -344,12 +345,24 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
 		column5.setCellValueFactory(new PropertyValueFactory<>("description"));
-
+		
 		rechercheResultat.getColumns().add(column1);
 		rechercheResultat.getColumns().add(column2);
 		rechercheResultat.getColumns().add(column3);
 		rechercheResultat.getColumns().add(column4);
 		rechercheResultat.getColumns().add(column5);
+		
+		column1.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.1));
+		column2.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.2));
+		column3.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.1));
+		column4.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.2));
+		column5.prefWidthProperty().bind(rechercheResultat.widthProperty().multiply(0.4));
+		
+		column1.setResizable(false);
+		column2.setResizable(false);
+		column3.setResizable(false);
+		column4.setResizable(false);
+		column5.setResizable(false);
 	}
 
 	@FXML
@@ -367,22 +380,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	@SuppressWarnings("unchecked")
 	private void search() {
 		rechercheResultat.getItems().clear();
+		
+		ArrayList<Produit> listProd = new ArrayList<Produit>();
 
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		try {
-			stream.write(new byte[2]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			rechercheResultat.getItems()
-					.add(new Produit(1800, "produitTest", 10, 20, "KE Inc", 0, "Da best produit", stream));
-		} catch (ExceptionProduitEtablissement e) {
-
-			e.printStackTrace();
-		}
+		rechercheResultat.getItems().addAll(ctrl.search(clavierText.getText()));
 
 		rechercheResultat.refresh();
 	}
