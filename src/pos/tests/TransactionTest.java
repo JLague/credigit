@@ -2,6 +2,8 @@ package pos.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javafx.collections.ObservableList;
+import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.Transaction;
@@ -20,12 +23,22 @@ public class TransactionTest {
 	List<Produit> produitsAjouter = null;
 
 	@Before
-	public void setup() {
+	public void setup() throws ExceptionProduitEtablissement {
 		tr1 = new Transaction();
 		
-		p1 = new Produit(000001, "produitTest", 20.00f, 18.00f, "Disque", "Un produit");
-		p2 = new Produit(000002, "produitTest2", 10.50f, 3.00f, "Table", "Un produit2");
-		p3 = new Produit(000003, "produitTest3", 2000.00f, 34.70f, "Chaise", "Un produit3");
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		
+		try {
+			stream.write(new byte[2]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+		p1 = new Produit(000001, "produitTest", 20.00f, 18.00f, "Disque", 1, "Un produit", stream);
+		p2 = new Produit(000002, "produitTest2", 10.50f, 3.00f, "Table", 1, "Un produit2", stream);
+		p3 = new Produit(000003, "produitTest3", 2000.00f, 34.70f, "Chaise", 1, "Un produit3", stream);
 	}
 
 	@Test
