@@ -300,7 +300,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 						if (s == "00" | Character.isDigit(s.charAt(0)) | s == ".") {
 							clavierText.setText(clavierText.getText().trim() + s);
-						} else if (s == "DEL") {
+						} else if (s == "DEL" && s.length() != 0) {
 							clavierText.setText(clavierText.getText().substring(0, clavierText.getText().length() - 1));
 						} else if (s == "C") {
 							clavierText.clear();
@@ -384,6 +384,9 @@ public class POSControleurVue implements IPOSControleurVue {
 		ArrayList<Produit> listProd = new ArrayList<Produit>();
 
 		rechercheResultat.getItems().addAll(ctrl.search(clavierText.getText()));
+		
+		for (Object  row : rechercheResultat.getItems()) {
+		}
 
 		rechercheResultat.refresh();
 	}
