@@ -13,34 +13,44 @@ public class EmpreinteService extends Service<Void> {
 
 	@Override
 	protected Task<Void> createTask() {
-		Platform.runLater(() -> {
-			FingerprintSensor sensor = new AdafruitSensor("COM5");
 
-			try {
-				sensor.connect();
-				sensor.setSecurityLevel(1);
+		return new Task<Void>() {
 
-				while (!sensor.hasFingerprint());
-				while (sensor.hasFingerprint()) {
-					Thread.sleep(50);
-				}
+			@Override
+			protected Void call() throws Exception {
+				Platform.runLater(() -> {
+					FingerprintSensor sensor = new AdafruitSensor("COM5");
 
-				while ((empreinte = sensor.createModel()) == null) {
-					Thread.sleep(50);
-				}
+					try {
+						sensor.connect();
+						sensor.setSecurityLevel(1);
 
-				System.out.println(empreinte);
+						while (!sensor.hasFingerprint())
+							;
+						while (sensor.hasFingerprint()) {
+							Thread.sleep(50);
+						}
 
-			} catch (Exception e) {
-			} finally {
-				try {
-					sensor.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+						while ((empreinte = sensor.createModel()) == null) {
+							Thread.sleep(50);
+						}
+
+						System.out.println(empreinte);
+
+					} catch (Exception e) {
+					} finally {
+						try {
+							sensor.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				return null;
 			}
-		});
-		return null;
+
+		};
+
 	}
 
 	public byte[] getEmpreinte() {
