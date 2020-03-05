@@ -130,7 +130,6 @@ public class TableauDeBord {
 
 	public ArrayList<Produit> search(String text) {
 		ArrayList<Produit> listProd = new ArrayList<Produit>();
-		System.out.println(inventaire.size() + inventaire.toString() + inventaire.toArray().toString());
 		for (Produit produit : inventaire) {
 
 			if (text.length() != 0 && text.charAt(0) == '.') {
