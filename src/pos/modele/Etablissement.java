@@ -40,8 +40,9 @@ public class Etablissement {
 	 * @param nom - Nom de l'établissement
 	 * @param adresse - Adresse de l'établissement
 	 * @param balance - Balance de l'établissement
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	public Etablissement(String nom, String adresse, float balance) {
+	public Etablissement(String nom, String adresse, float balance) throws ExceptionProduitEtablissement {
 		
 		setNom(nom);
 		setAdresse(adresse);
@@ -63,12 +64,17 @@ public class Etablissement {
 	/**
 	 * Modifie le nom de l'établissement
 	 * @param nom - Le nom de l'établissement à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setNom(String nom) {
+	protected void setNom(String nom) throws ExceptionProduitEtablissement {
 		
 		if(nom != null && nom.length() != 0)
 		{
 			this.nom = nom;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le nom de l'établissement n'est pas valide.");
 		}
 		
 	}
@@ -84,12 +90,17 @@ public class Etablissement {
 	/**
 	 * Modifie l'adresse de l'établissement
 	 * @param adresse - L'adresse de l'établissement à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setAdresse(String adresse) {
+	protected void setAdresse(String adresse) throws ExceptionProduitEtablissement {
 		
 		if(adresse != null && adresse.length() != 0)
 		{
 			this.adresse = adresse;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("L'adresse de l'établissement n'est pas valide.");
 		}
 		
 	}
@@ -105,13 +116,18 @@ public class Etablissement {
 	/**
 	 * Ajoute un produit à l'inventaire de l'établissement
 	 * @param produit - Le produit à ajouter
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void ajouterProduitInventaire(Produit produit) {
+	protected void ajouterProduitInventaire(Produit produit) throws ExceptionProduitEtablissement {
 		
 		if(produit != null)
 		{
 			inventaire.add(produit);
 		}	
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le produit à ajouter n'est pas valide.");
+		}
 	}
 
 	/**
@@ -125,12 +141,17 @@ public class Etablissement {
 	/**
 	 * Ajoute un utilisateur à l'établissement
 	 * @param utilisateur - L'utilisateur à ajouter
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void ajouterUtilisateur(Utilisateur utilisateur) {
+	protected void ajouterUtilisateur(Utilisateur utilisateur) throws ExceptionProduitEtablissement {
 		
 		if(utilisateur != null)
 		{
 			utilisateurs.add(utilisateur);
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("L'utilisateur à ajouter n'est pas valide.");
 		}
 		
 	}
@@ -172,12 +193,17 @@ public class Etablissement {
 	/**
 	 * Ajoute une transactions à la liste de transactions de l'établissement
 	 * @param transaction - La transaction à ajouter
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	public void ajouterTransaction(Transaction transaction) {
+	public void ajouterTransaction(Transaction transaction) throws ExceptionProduitEtablissement {
 		
 		if(transaction != null)
 		{
 			transactions.add(transaction);
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("La transaction à ajouter n'est pas valide.");
 		}
 		
 	}

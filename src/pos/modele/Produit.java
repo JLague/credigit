@@ -62,8 +62,9 @@ public class Produit {
 	 * @param quantite - La quantité du produit
 	 * @param description - La description du produit
 	 * @param image - L'image du produit
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, int quantite, String description, ByteArrayOutputStream image) {
+	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, int quantite, String description, ByteArrayOutputStream image) throws ExceptionProduitEtablissement {
 		setSku(sku);
 		setNom(nom);
 		setPrix(prix);
@@ -87,11 +88,16 @@ public class Produit {
 	 * Modifie le sku du produit
 	 * 
 	 * @param sku - Le sku à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setSku(long sku) {
+	protected void setSku(long sku) throws ExceptionProduitEtablissement {
 		if(sku > 0)
 		{
 			this.sku = sku;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le SKU n'est pas valide.");
 		}
 		
 	}
@@ -109,11 +115,16 @@ public class Produit {
 	 * Modifie le nom du produit
 	 * 
 	 * @param nom - Le nom à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setNom(String nom) {
+	protected void setNom(String nom) throws ExceptionProduitEtablissement {
 		if(nom != null && nom.length() != 0)
 		{
 			this.nom = nom;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le nom du produit n'est pas valide.");
 		}
 		
 	}
@@ -131,11 +142,16 @@ public class Produit {
 	 * Modifie le prix du produit
 	 * 
 	 * @param prix - Le prix du produit à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setPrix(float prix) {
+	protected void setPrix(float prix) throws ExceptionProduitEtablissement {
 		if(prix >= 0)
 		{
 			this.prix = prix;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le prix n'est pas valide.");
 		}
 		
 	}
@@ -153,12 +169,17 @@ public class Produit {
 	 * Modifie le prix coutant du produit
 	 * 
 	 * @param coutant - Le prix coutant du produit à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setCoutant(float coutant) {
+	protected void setCoutant(float coutant) throws ExceptionProduitEtablissement {
 		
 		if(coutant >= 0)
 		{
 			this.coutant = coutant;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le prix coutant n'est pas valide.");
 		}
 	}
 
@@ -175,12 +196,17 @@ public class Produit {
 	 * Modifie  le fournisseur du produit
 	 * 
 	 * @param fournisseur - Le fournisseur du produit
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setFournisseur(String fournisseur) {
+	protected void setFournisseur(String fournisseur) throws ExceptionProduitEtablissement {
 		
 		if(fournisseur != null && fournisseur.length() != 0)
 		{
 			this.fournisseur = fournisseur;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le fournisseur n'est pas valide.");
 		}
 		
 	}
@@ -197,9 +223,19 @@ public class Produit {
 	/**
 	 * Modifie la description du produit
 	 * @param description - La description du produit à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setDescription(String description) {
-		this.description = description;
+	protected void setDescription(String description) throws ExceptionProduitEtablissement {
+		
+		if(description != null && description.length() != 0)
+		{
+			this.description = description;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("La description n'est pas valide.");
+		}
+		
 	}
 
 	/**
@@ -213,12 +249,17 @@ public class Produit {
 	/**
 	 * Modifie la quantite du produit
 	 * @param quantite - La quantite du produit à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setQuantite(int quantite) {
+	protected void setQuantite(int quantite) throws ExceptionProduitEtablissement {
 		if(quantite >= 0)
 		{
 			this.quantite = quantite;
-		}	
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("La quantite n'est pas valide.");
+		}
 	}
 	
 	/**
@@ -233,11 +274,16 @@ public class Produit {
 	/**
 	 * Modifie l'objet contenant l'image
 	 * @param image - L'objet contenant l'image à modifier
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void setImage(ByteArrayOutputStream image) {
+	protected void setImage(ByteArrayOutputStream image) throws ExceptionProduitEtablissement {
 		if(image != null && image.size() != 0)
 		{
 			this.image = image;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("L'image n'est pas valide.");
 		}
 	}
 
