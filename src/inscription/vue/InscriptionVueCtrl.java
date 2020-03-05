@@ -6,6 +6,7 @@ import java.util.List;
 
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataTransition;
+import inscription.modele.EmpreinteService;
 import inscription.modele.ExceptionCreationCompte;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
@@ -166,6 +167,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	private List<Pane> etapes;
 
+	private EmpreinteService empreinteService;
+
 	/**
 	 * Constructeur du contrôleur de la vue
 	 * 
@@ -223,6 +226,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			System.err.println("Erreur de chargement du fxml!");
 			e.printStackTrace();
 		}
+
+		empreinteService = new EmpreinteService();
 	}
 
 	@Override
@@ -420,11 +425,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			reponses.add(reponse1TextField.getText());
 			reponses.add(reponse2TextField.getText());
 			data.setReponses(reponses);
-
-			byte[] empreinte = new byte[2];
-			empreinte[0] = 1;
-			empreinte[1] = 1;
-			data.setEmpreinte(empreinte);
+			data.setEmpreinte(empreinteService.getEmpreinte());
 
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
@@ -535,6 +536,11 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		}
 
+		if (empreinteService.isRunning()) {
+			empreinteService.cancel();
+			empreinteService.reset();
+		}
+
 		switch (nouvelleEtape) {
 		case ETAPE1:
 			ivStep1.setImage(new Image(getClass().getResource("/images/step1_bleu.png").toExternalForm()));
@@ -550,6 +556,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			empreinteService.start();
 			break;
 
 		case ETAPEDESACTIVER:
