@@ -1,24 +1,15 @@
 package pos.vue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Observable;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,8 +21,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -43,12 +32,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
-import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -154,7 +141,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
-	TableView rechercheResultat = null;
+	TableView<Produit> rechercheResultat = null;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -251,7 +238,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	private void chargerAjoutProduit() {
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreationProduitPos.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreationProduitPOS.fxml"));
 		loader.setController(this);
 
 		try {
@@ -334,6 +321,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * 
 	 * @param me le mouse event
 	 */
+	@FXML
 	private void loadProduit(MouseEvent me) {
 
 		// Change info
@@ -425,21 +413,21 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	private void creerTableViewRecherche() {
-		rechercheResultat = new TableView();
+		rechercheResultat = new TableView<Produit>();
 
-		TableColumn<String, Produit> column1 = new TableColumn<>("Sku");
+		TableColumn<Produit, String> column1 = new TableColumn<>("Sku");
 		column1.setCellValueFactory(new PropertyValueFactory<>("sku"));
 
-		TableColumn<String, Produit> column2 = new TableColumn<>("Nom");
+		TableColumn<Produit, String> column2 = new TableColumn<>("Nom");
 		column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
 
-		TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
+		TableColumn<Produit, String> column3 = new TableColumn<>("Prix");
 		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
 
-		TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
+		TableColumn<Produit, String> column4 = new TableColumn<>("Fournisseur");
 		column4.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
 
-		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
+		TableColumn<Produit, String> column5 = new TableColumn<>("Description");
 		column5.setCellValueFactory(new PropertyValueFactory<>("description"));
 
 		rechercheResultat.getColumns().add(column1);
@@ -482,7 +470,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	/**
 	 * Rechercher un produit
 	 */
@@ -503,7 +490,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	void ajouterSelection(ActionEvent event) {
-		Produit temp = (Produit) this.rechercheResultat.getSelectionModel().getSelectedItem();
+		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
 
 		if (temp != null) {
 			ctrl.ajouterProduitATransaction(temp);
@@ -577,9 +564,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		try {
 			FileInputStream stream = new FileInputStream(file);
 			retour = stream;
-
+			stream.close();
 		} catch (FileNotFoundException e) {
-
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -639,11 +627,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	@FXML
-	    private void skuProduitHandler(KeyEvent event) {
-	    	
-	    	 if (!event.getCharacter().matches("[0-9]")) {
-					event.consume();
-				}
+	private void skuProduitHandler(KeyEvent event) {
+
+		if (!event.getCharacter().matches("[0-9]")) {
+			event.consume();
+		}
 
 	}
 
