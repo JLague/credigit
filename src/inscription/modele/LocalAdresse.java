@@ -1,5 +1,7 @@
 package inscription.modele;
 
+import exception.ExceptionCreationCompte;
+
 /**
  * Classe permettant de créer un objet représantant une adresse
  * 

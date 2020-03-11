@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import inscription.modele.ExceptionCreationCompte;
+import exception.ExceptionCreationCompte;
+import exception.ExceptionProduitEtablissement;
 import inscription.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -39,7 +40,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
 import pos.modele.DataVendeur;
-import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -61,11 +61,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private PasswordField passField;
 	@FXML
-	private Button connectBtn;
-	@FXML
 	private Button createAccountBtn;
 	@FXML
 	private Button produitBtn;
+	@FXML
+	private Label messageBonjour;
 	@FXML
 	private Button clavierBtn;
 	@FXML
@@ -173,10 +173,14 @@ public class POSControleurVue implements IPOSControleurVue {
 	public POSControleurVue(POSControleur ctrl) {
 
 		this.ctrl = ctrl;
+		ouvrirLoginVendeur();
+	}
 
+	/**
+	 * Méthode servant à ouvrir la vue où les vendeurs peuvent se connecter
+	 */
+	private void ouvrirLoginVendeur() {
 		creerScene(LOGIN, rootVBox);
-
-		connectBtn.setOnMouseClicked((me) -> ouvrirVuePrincipale());
 		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 	}
 
@@ -185,7 +189,17 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	private void ouvrirVueInscriptionVendeur() {
 		creerScene(VIEW_INSCRIPTION_VENDEUR, rootVBox);
-		ctrl.chargerScene(this.scene, "Inscription vendeur");
+		ctrl.chargerScene(this.scene, "Inscription vendeur", false);
+	}
+	
+	@FXML
+	private void connect(ActionEvent ae)
+	{
+		if(ctrl.connexion(userField.getText(), passField.getText()))
+			ouvrirVuePrincipale();
+		else
+			VueDialogue.erreurCreationDialogue("Le nom d'utilisateur ou le mot de passe est invalide.");
+		
 	}
 
 	/**
@@ -194,8 +208,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ouvrirVuePrincipale() {
 		// Création et chargement de la scène du POS
 		creerScene(MAIN_VIEW, rootBP);
-		ctrl.chargerScene(this.scene, "POS");
+		ctrl.chargerScene(this.scene, "POS", true);
 
+		messageBonjour.setText("Bonjour, " + ctrl.getNomVendeur());
+		
 		// Chargement de la vue
 		ajoutBtn.setDisable(true);
 		chargerClavier();
@@ -219,13 +235,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		data.setNom(nomVendeurTextField.getText());
 		data.setUsername(usernameVendeurTextField.getText());
 		data.setCourriel(courrielVendeurTextField.getText());
-		
+
 		try {
 			if (vendeurPasswordField1.getText().equals(vendeurPasswordField2.getText())) {
 				data.setPassword(vendeurPasswordField1.getText());
 			} else
 				throw new ExceptionCreationCompte("Les deux mots de passes entrés sont différents");
-			
+
 			ctrl.creerVendeur(data);
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
@@ -234,9 +250,8 @@ public class POSControleurVue implements IPOSControleurVue {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			data = null;
 		}
-		
-		if(data != null)
-		{
+
+		if (data != null) {
 			// TODO ajouter une méthode pour la création d'un compte de vendeur
 			VueDialogue.compteCree();
 			annulerHandler(event);
@@ -250,8 +265,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	void annulerHandler(ActionEvent event) {
-		creerScene(LOGIN, rootVBox);
-		ctrl.chargerScene(this.scene, "Login");
+		ouvrirLoginVendeur();
+		ctrl.chargerScene(this.scene, "Login", false);
 	}
 
 	/**
@@ -692,7 +707,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void nvNomHandler(KeyEvent event) {
-		System.out.println("Test");
 		if (!event.getCharacter().matches("[A-z\u0080-\u00ff]")) {
 			event.consume();
 		}

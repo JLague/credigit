@@ -1,7 +1,7 @@
 package inscription.controleur;
 
+import exception.ExceptionCreationCompte;
 import inscription.modele.DataTransition;
-import inscription.modele.ExceptionCreationCompte;
 import javafx.scene.Scene;
 
 /**

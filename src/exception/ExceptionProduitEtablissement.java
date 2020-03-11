@@ -1,20 +1,20 @@
-package inscription.modele;
+package exception;
 
 /**
- * Classe permettant de lancer des Exceptions lorsqu'un client ne peut pas être
+ * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment ne peut pas être
  * crée
  * 
  * @author Bank-era Corp.
  *
  */
-public class ExceptionCreationCompte extends Exception {
+public class ExceptionProduitEtablissement extends Exception {
 
 	private String messageAffichage = null;
 
 	/**
 	 * Constructeur par défaut.
 	 */
-	public ExceptionCreationCompte() {
+	public ExceptionProduitEtablissement() {
 		super();
 		setMessageAffichage("Erreur!");
 	}
@@ -24,7 +24,7 @@ public class ExceptionCreationCompte extends Exception {
 	 * 
 	 * @param message
 	 */
-	public ExceptionCreationCompte(String message) {
+	public ExceptionProduitEtablissement(String message) {
 		super(message);
 		setMessageAffichage(message);
 	}

@@ -1,4 +1,4 @@
-package algo;
+package encryption;
 
 public class AES {
 

@@ -1,10 +1,6 @@
 package pos.modele;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import inscription.modele.ExceptionCreationCompte;
+import exception.ExceptionCreationCompte;
 
 public class Vendeur {
 
@@ -33,6 +29,24 @@ public class Vendeur {
 	 */
 	private String courriel;
 
+	/**
+	 * Constructeur appelé lorsqu'on reprend un vendeur déjà dans la base de donnée
+	 * 
+	 * @param data les informations du vendeur
+	 * @param encryptedPassword le mot de passe encrypté du vendeur
+	 * @throws ExceptionCreationCompte
+	 */
+	public Vendeur(DataVendeur data, String encryptedPassword) throws ExceptionCreationCompte {
+		this(data);
+		this.password = encryptedPassword;
+	}
+
+	/**
+	 * Constructeur utilisé lors de la création du compte d'un vendeur
+	 * 
+	 * @param data les informations du vendeur
+	 * @throws ExceptionCreationCompte
+	 */
 	public Vendeur(DataVendeur data) throws ExceptionCreationCompte {
 		setPrenom(data.getPrenom());
 		setNom(data.getNom());
@@ -101,7 +115,7 @@ public class Vendeur {
 	 */
 	public void setPassword(String password) throws ExceptionCreationCompte {
 		if (validerPassword(password)) {
-			this.password = hashPassword(password);
+			this.password = encryption.SHAUtility.hashPassword(password);
 		} else {
 			throw new ExceptionCreationCompte("Le mot de passe doit contenir au moins 8 caractères.");
 		}
@@ -136,30 +150,5 @@ public class Vendeur {
 
 	private boolean validerCourriel(String courriel) {
 		return courriel != null && courriel.length() > 0;
-	}
-
-	private static String hashPassword(String originalPassword) {
-		MessageDigest digest = null;
-
-		try {
-			digest = MessageDigest.getInstance("SHA-256");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-
-		byte[] encodedHash = digest.digest(originalPassword.getBytes(StandardCharsets.UTF_8));
-
-		return bytesToHex(encodedHash);
-	}
-
-	private static String bytesToHex(byte[] hash) {
-		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < hash.length; i++) {
-			String hex = Integer.toHexString(0xff & hash[i]);
-			if (hex.length() == 1)
-				hexString.append('0');
-			hexString.append(hex);
-		}
-		return hexString.toString();
 	}
 }

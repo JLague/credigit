@@ -9,9 +9,9 @@ import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.ExceptionCreationCompte;
 import inscription.modele.Client;
 import inscription.modele.DataTransition;
-import inscription.modele.ExceptionCreationCompte;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
 

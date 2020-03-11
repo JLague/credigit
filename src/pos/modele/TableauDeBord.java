@@ -5,8 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import inscription.modele.Connexion;
-import inscription.modele.ExceptionCreationCompte;
+import connexion.Connexion;
+import exception.ExceptionCreationCompte;
+import exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -159,8 +160,41 @@ public class TableauDeBord {
 		if (dbConnection.validerNomUtilisateur(nouveauVendeur.getUsername())) {
 			dbConnection.ajouterCompteVendeur(nouveauVendeur);
 			// TODO ajouter le vendeur à l'établissement
-			//etablissement.ajouterVendeur(nouveauVendeur);
+			// etablissement.ajouterVendeur(nouveauVendeur);
 		} else
 			throw new ExceptionCreationCompte("Le nom d'utilisateur choisi est déjà utilisé.");
+	}
+
+	/**
+	 * @return le nom du vendeur ou null si personne n'est connecté
+	 */
+	public String getNomVendeur() {
+		if (vendeur != null)
+			return vendeur.getPrenom();
+		return null;
+	}
+
+	/**
+	 * Méthode permettant à un utilisateur de se connecter si les informations sont
+	 * valides
+	 * 
+	 * @param username le nom d'utilisateur du vendeur
+	 * @param password le mot de passe du vendeur
+	 * @return true si la connection est réussi
+	 */
+	public boolean connecter(String username, String password) {
+		password = encryption.SHAUtility.hashPassword(password);
+		DataVendeur data = dbConnection.connecter(username, password);
+
+		if (data != null) {
+			try {
+				vendeur = new Vendeur(data, data.getPassword());
+			} catch (ExceptionCreationCompte e) {
+				e.printStackTrace();
+			}
+			return true;
+		}
+
+		return false;
 	}
 }

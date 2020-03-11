@@ -3,6 +3,8 @@ package inscription.modele;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import exception.ExceptionCreationCompte;
 import pos.modele.Transaction;
 
 /**

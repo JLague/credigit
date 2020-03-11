@@ -1,20 +1,24 @@
-package pos.modele;
+package exception;
 
 /**
- * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment ne peut pas être
+ * Classe permettant de lancer des Exceptions lorsqu'un client ne peut pas être
  * crée
  * 
  * @author Bank-era Corp.
  *
  */
-public class ExceptionProduitEtablissement extends Exception {
+public class ExceptionCreationCompte extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3680537470376091983L;
 	private String messageAffichage = null;
 
 	/**
 	 * Constructeur par défaut.
 	 */
-	public ExceptionProduitEtablissement() {
+	public ExceptionCreationCompte() {
 		super();
 		setMessageAffichage("Erreur!");
 	}
@@ -24,7 +28,7 @@ public class ExceptionProduitEtablissement extends Exception {
 	 * 
 	 * @param message
 	 */
-	public ExceptionProduitEtablissement(String message) {
+	public ExceptionCreationCompte(String message) {
 		super(message);
 		setMessageAffichage(message);
 	}

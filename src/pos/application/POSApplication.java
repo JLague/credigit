@@ -32,10 +32,10 @@ public class POSApplication extends Application {
 	 * @param scene la nouvelle scène
 	 * @param title le nouveau titre de l'application
 	 */
-	public void chargerScene(Scene scene, String title) {
+	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);
 		// stage.sizeToScene();
-		stage.setFullScreen(true);
+		stage.setFullScreen(fullscreen);
 	}
 }

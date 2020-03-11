@@ -3,6 +3,8 @@ package pos.modele;
 
 import java.io.ByteArrayOutputStream;
 
+import exception.ExceptionProduitEtablissement;
+
 /**
  * Classe créant un produit
  * 

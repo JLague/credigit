@@ -3,14 +3,14 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
-import inscription.modele.ExceptionCreationCompte;
+import exception.ExceptionCreationCompte;
+import exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
 import pos.modele.DataVendeur;
 import pos.modele.DataVue;
-import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.TableauDeBord;
@@ -22,7 +22,7 @@ public class POSControleur implements IPOSControleur {
 	 * Objet de l'application. On s'en sert pour changer la scène
 	 */
 	private POSApplication app;
-	
+
 	private TableauDeBord tb;
 
 	/**
@@ -44,8 +44,8 @@ public class POSControleur implements IPOSControleur {
 	/**
 	 * Load la vue principale du POS à l'aide de l'application
 	 */
-	public void chargerScene(Scene scene, String title) {
-		app.chargerScene(scene, title);
+	public void chargerScene(Scene scene, String title, boolean fullscreen) {
+		app.chargerScene(scene, title, fullscreen);
 	}
 
 	@Override
@@ -79,8 +79,7 @@ public class POSControleur implements IPOSControleur {
 
 	@Override
 	public boolean connexion(String username, String password) {
-		// TODO Auto-generated method stub
-		return false;
+		return tb.connecter(username, password);
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public void creerNouvelleTransaction() {
 		tb.creerNouvelleTransaction();
-		
+
 	}
 
 	@Override
@@ -113,7 +112,7 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public void ajouterProduitsATransaction(List<Produit> produits) {
 		tb.addProduitsATransaction(produits);
-		
+
 	}
 
 	@Override
@@ -129,9 +128,15 @@ public class POSControleur implements IPOSControleur {
 	public ArrayList<Produit> search(String text) {
 		return tb.search(text);
 	}
-	
-	public void creerVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement
-	{
+
+	public void creerVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement {
 		tb.creerNouveauVendeur(data);
+	}
+
+	/**
+	 * @return le nom du vendeur ou null si personne n'est connecté
+	 */
+	public String getNomVendeur() {
+		return tb.getNomVendeur();
 	}
 }

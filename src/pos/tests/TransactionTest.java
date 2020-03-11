@@ -10,8 +10,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import exception.ExceptionProduitEtablissement;
 import javafx.collections.ObservableList;
-import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.Transaction;

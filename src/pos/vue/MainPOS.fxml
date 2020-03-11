@@ -28,7 +28,7 @@
                   <Insets />
                </HBox.margin>
             </ImageView>
-            <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="151.0" text="Bonjour, Utilisateur ">
+            <Label fx:id="messageBonjour" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="151.0" text="Bonjour, Utilisateur ">
                <HBox.margin>
                   <Insets right="24.0" />
                </HBox.margin></Label>

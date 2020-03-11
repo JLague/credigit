@@ -8,12 +8,12 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="362.0" prefWidth="600.0" spacing="20.0" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="prenomVendeurTextField" maxWidth="550.0" onAction="#nvNomHandler" promptText="Prénom " styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
-      <TextField fx:id="nomVendeurTextField" maxWidth="550.0" onAction="#nvNomHandler" promptText="Nom" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
-      <TextField fx:id="usernameVendeurTextField" maxWidth="550.0" onAction="#nvUtilisateurHandler" promptText="Nom d'utilisateur" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
+      <TextField fx:id="prenomVendeurTextField" maxWidth="550.0" onKeyTyped="#nvNomHandler" promptText="Prénom " styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
+      <TextField fx:id="nomVendeurTextField" maxWidth="550.0" onKeyTyped="#nvNomHandler" promptText="Nom" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
+      <TextField fx:id="usernameVendeurTextField" maxWidth="550.0" onKeyTyped="#nvUtilisateurHandler" promptText="Nom d'utilisateur" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
       <PasswordField fx:id="vendeurPasswordField1" maxWidth="550.0" promptText="Mot de passe" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
       <PasswordField fx:id="vendeurPasswordField2" maxWidth="550.0" promptText="Mot de passe (Vérification)" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
-      <TextField fx:id="courrielVendeurTextField" maxWidth="550.0" onAction="#nvCourrielHandler" promptText="Courriel" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
+      <TextField fx:id="courrielVendeurTextField" maxWidth="550.0" onKeyTyped="#nvCourrielHandler" promptText="Courriel" styleClass="fields-1" stylesheets="@../../../res/styles/POS.css" />
       <HBox alignment="CENTER" spacing="75.0">
          <children>
             <Button mnemonicParsing="false" onAction="#inscriptionVendeurHandler" prefHeight="29.0" prefWidth="238.0" styleClass="buttons-1" stylesheets="@../../../res/styles/POS.css" text="S'inscrire" />

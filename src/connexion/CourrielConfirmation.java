@@ -1,4 +1,4 @@
-package inscription.modele;
+package connexion;
 
 import java.util.*;
 import javax.mail.*;

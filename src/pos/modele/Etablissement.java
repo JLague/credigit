@@ -3,6 +3,8 @@ package pos.modele;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ExceptionProduitEtablissement;
+
 /**
  * Classe créant un établissement
  * @author Bank-era Corp.

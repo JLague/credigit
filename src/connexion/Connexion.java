@@ -1,4 +1,4 @@
-package inscription.modele;
+package connexion;
 
 import java.util.Iterator;
 
@@ -17,6 +17,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import inscription.modele.Client;
+import pos.modele.DataVendeur;
 import pos.modele.Vendeur;
 
 /**
@@ -151,9 +153,36 @@ public class Connexion {
 	public boolean validerNomUtilisateur(String nomUtilisateur) {
 		BasicDBObject object = new BasicDBObject();
 		object.put("username", nomUtilisateur);
-		FindIterable<Document> result = database.getCollection(COMPTES_CLIENTS).find(object);
+		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
 		Iterator<Document> it = result.iterator();
 		return !it.hasNext();
+	}
+
+	public DataVendeur connecter(String username, String password) {
+		BasicDBObject object = new BasicDBObject();
+		object.put("username", username);
+		object.put("password", password);
+		
+		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
+		Iterator<Document> it = result.iterator();
+		
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(it.hasNext());
+		
+		if(it.hasNext()) {
+			Document doc = it.next();
+			DataVendeur data = new DataVendeur();
+			data.setPrenom(doc.getString("prenom"));
+			data.setNom(doc.getString("nom"));
+			data.setPassword(doc.getString("password"));
+			data.setUsername(doc.getString("username"));
+			data.setCourriel(doc.getString("courriel"));
+			
+			return data;
+		}
+		
+		return null;
 	}
 
 }
