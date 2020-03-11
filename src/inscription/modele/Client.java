@@ -422,13 +422,7 @@ public class Client {
 	 * @return Vrai si valide sinon faux
 	 */
 	private boolean validerNom(String nom) {
-		boolean valide = false;
-
-		if (nom != null && nom.length() != 0)
-
-			valide = true;
-
-		return valide;
+		return nom != null && nom.length() != 0;
 	}
 
 	/**
@@ -462,18 +456,7 @@ public class Client {
 	 * @return Vrai si valide sinon faux
 	 */
 	private boolean validerNas(String Nas) {
-		boolean valide = false;
-
-		if (Nas != null) {
-			Nas = formatterNumero(Nas);
-
-			if (Nas.length() == 9) {
-				valide = true;
-			}
-
-		}
-
-		return valide;
+		return Nas != null && formatterNumero(Nas).length() == 9;
 	}
 
 	/**

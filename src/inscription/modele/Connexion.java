@@ -1,5 +1,7 @@
 package inscription.modele;
 
+import java.util.Iterator;
+
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -8,12 +10,14 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoException;
 import com.mongodb.MongoWriteException;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import pos.modele.Vendeur;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -32,7 +36,13 @@ public class Connexion {
 	 * String représentant le nom de la collection contenant les comptes dans la
 	 * base de données
 	 */
-	private final static String COMPTES_COLLECTION = "comptes";
+	private final static String COMPTES_CLIENTS = "comptes";
+
+	/**
+	 * String représentant le nom de la collection contenant les comptes des
+	 * vendeurs dans la base de données
+	 */
+	private final static String COMPTES_VENDEURS = "comptes_vendeurs";
 
 	/**
 	 * Objet base de données
@@ -50,14 +60,10 @@ public class Connexion {
 	private CourrielConfirmation courriel;
 
 	/**
-	 * Constructeur de la connexion
-	 * 
-	 * @param courriel - La connexion au serveru d'envoi de courriels
+	 * Constructeur par défaut utilisé lorsqu'on a pas besoin d'envoyer un courriel
+	 * de confirmation. De cette manière, l'attribut courriel reste à null.
 	 */
-	public Connexion(CourrielConfirmation courriel) {
-		// Va chercher la connexion déjà établie
-		this.courriel = courriel;
-
+	public Connexion() {
 		// Connection à la base de donnée
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
@@ -71,6 +77,18 @@ public class Connexion {
 		mongoClient = MongoClients.create(clientSettings);
 
 		database = mongoClient.getDatabase(DB);
+	}
+
+	/**
+	 * Constructeur de la connexion
+	 * 
+	 * @param courriel - La connexion au serveru d'envoi de courriels
+	 */
+	public Connexion(CourrielConfirmation courriel) {
+		this();
+
+		// Va chercher la connexion déjà établie
+		this.courriel = courriel;
 
 	}
 
@@ -80,10 +98,10 @@ public class Connexion {
 	 * @param client - Le client à ajouter
 	 * @return Vrai si le client est ajouté avec succès, faux sinon
 	 */
-	public boolean ajouterCompte(Client client) {
+	public boolean ajouterCompteClient(Client client) {
 
 		try {
-			MongoCollection<Client> collection = database.getCollection(COMPTES_COLLECTION, Client.class);
+			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENTS, Client.class);
 			collection.insertOne(client);
 			courriel.envoyerCourriel(client.getEmail(), client.getPrenom());
 		} catch (MongoWriteException e) {
@@ -103,20 +121,39 @@ public class Connexion {
 	 * @param nas    - Le NAS du client
 	 * @return Vrai si la suppression est effectuée, faux sinon
 	 */
-	public boolean supprimerCompte(String nom, String prenom, String email, String nas) {
+	public boolean supprimerCompteClient(String nom, String prenom, String email, String nas) {
 		try {
 			BasicDBObject object = new BasicDBObject();
 			object.put("nom", nom);
 			object.put("prenom", prenom);
 			object.put("email", email);
 			object.put("nas", nas);
-			Document result = database.getCollection(COMPTES_COLLECTION).findOneAndDelete(object);
+			Document result = database.getCollection(COMPTES_CLIENTS).findOneAndDelete(object);
 			System.out.println("Document supprimé: " + result.toString());
 		} catch (NullPointerException e) {
 			return false;
 		}
 
 		return true;
+	}
+
+	public boolean ajouterCompteVendeur(Vendeur vendeur) {
+		try {
+			MongoCollection<Vendeur> collection = database.getCollection(COMPTES_VENDEURS, Vendeur.class);
+			collection.insertOne(vendeur);
+		} catch (MongoWriteException e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean validerNomUtilisateur(String nomUtilisateur) {
+		BasicDBObject object = new BasicDBObject();
+		object.put("username", nomUtilisateur);
+		FindIterable<Document> result = database.getCollection(COMPTES_CLIENTS).find(object);
+		Iterator<Document> it = result.iterator();
+		return !it.hasNext();
 	}
 
 }

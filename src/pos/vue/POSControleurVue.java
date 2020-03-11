@@ -1,21 +1,17 @@
 package pos.vue;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
-import java.util.Observable;
 
-import javafx.beans.InvalidationListener;
+import inscription.modele.ExceptionCreationCompte;
+import inscription.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,21 +23,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
+import pos.modele.DataVendeur;
 import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
@@ -52,6 +49,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			{ "C", "0", ".", "00" } };
 	private static final String LOGIN = "POS.fxml";
 	private static final String MAIN_VIEW = "MainPOS.fxml";
+	private static final String VIEW_INSCRIPTION_VENDEUR = "NouveauVendeur.fxml";
 
 	private POSControleur ctrl;
 	private VBox rootVBox;
@@ -105,6 +103,58 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Label fournisseurLbl;
 
 	@FXML
+	private Button ajoutProduitBouton;
+
+	private AnchorPane creationProduitPane;
+
+	@FXML
+	private TextField skuProduitTextField;
+
+	@FXML
+	private TextField nomProduitTextField;
+
+	@FXML
+	private TextField prixproduitTextField;
+
+	@FXML
+	private TextField coutantproduitTextField;
+
+	@FXML
+	private TextField quantiteProduitTextField;
+
+	@FXML
+	private TextField fournisseurProduitTextField;
+
+	@FXML
+	private Button creerBouton;
+
+	@FXML
+	private TextArea descriptionProduitTextArea;
+
+	@FXML
+	private ImageView imageProduitImageView;
+
+	@FXML
+	private TextField prenomVendeurTextField;
+
+	@FXML
+	private TextField nomVendeurTextField;
+
+	@FXML
+	private TextField usernameVendeurTextField;
+
+	@FXML
+	private PasswordField vendeurPasswordField1;
+
+	@FXML
+	private PasswordField vendeurPasswordField2;
+
+	@FXML
+	private TextField courrielVendeurTextField;
+
+	FileInputStream fileTemp;
+
+	@FXML
 	private Button ajoutBtn;
 
 	private Produit produitCourant;
@@ -113,7 +163,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
-	TableView rechercheResultat = null;
+	TableView<Produit> rechercheResultat = null;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -127,6 +177,15 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(LOGIN, rootVBox);
 
 		connectBtn.setOnMouseClicked((me) -> ouvrirVuePrincipale());
+		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
+	}
+
+	/**
+	 * Méthode servant à ouvrir la vue utilisé pour ajouter des vendeurs.
+	 */
+	private void ouvrirVueInscriptionVendeur() {
+		creerScene(VIEW_INSCRIPTION_VENDEUR, rootVBox);
+		ctrl.chargerScene(this.scene, "Inscription vendeur");
 	}
 
 	/**
@@ -142,9 +201,57 @@ public class POSControleurVue implements IPOSControleurVue {
 		chargerClavier();
 		chargerTableView();
 		chargerGridProduit();
+		chargerAjoutProduit();
 
 		middlePane.getChildren().add(borderPaneProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
+	}
+
+	/**
+	 * Si les données sont valides les entre dans la base de données
+	 * 
+	 * @param event
+	 */
+	@FXML
+	private void inscriptionVendeurHandler(ActionEvent event) {
+		DataVendeur data = new DataVendeur();
+		data.setPrenom(prenomVendeurTextField.getText());
+		data.setNom(nomVendeurTextField.getText());
+		data.setUsername(usernameVendeurTextField.getText());
+		data.setCourriel(courrielVendeurTextField.getText());
+		
+		try {
+			if (vendeurPasswordField1.getText().equals(vendeurPasswordField2.getText())) {
+				data.setPassword(vendeurPasswordField1.getText());
+			} else
+				throw new ExceptionCreationCompte("Les deux mots de passes entrés sont différents");
+			
+			ctrl.creerVendeur(data);
+		} catch (ExceptionCreationCompte e) {
+			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			data = null;
+		} catch (ExceptionProduitEtablissement e) {
+			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			data = null;
+		}
+		
+		if(data != null)
+		{
+			// TODO ajouter une méthode pour la création d'un compte de vendeur
+			VueDialogue.compteCree();
+			annulerHandler(event);
+		}
+	}
+
+	/**
+	 * Annule le processus de création d'un nouveau vendeur
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void annulerHandler(ActionEvent event) {
+		creerScene(LOGIN, rootVBox);
+		ctrl.chargerScene(this.scene, "Login");
 	}
 
 	/**
@@ -171,6 +278,23 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label(""));
+	}
+
+	/**
+	 * Méthode permettant de charger la grid de Produits qui est affichée lorsqu'on
+	 * pèse sur le boutons Produit
+	 */
+	private void chargerAjoutProduit() {
+
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreationProduitPOS.fxml"));
+		loader.setController(this);
+
+		try {
+			creationProduitPane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
@@ -245,6 +369,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * 
 	 * @param me le mouse event
 	 */
+	@FXML
 	private void loadProduit(MouseEvent me) {
 
 		// Change info
@@ -336,21 +461,21 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	private void creerTableViewRecherche() {
-		rechercheResultat = new TableView();
+		rechercheResultat = new TableView<Produit>();
 
-		TableColumn<String, Produit> column1 = new TableColumn<>("Sku");
+		TableColumn<Produit, String> column1 = new TableColumn<>("Sku");
 		column1.setCellValueFactory(new PropertyValueFactory<>("sku"));
 
-		TableColumn<String, Produit> column2 = new TableColumn<>("Nom");
+		TableColumn<Produit, String> column2 = new TableColumn<>("Nom");
 		column2.setCellValueFactory(new PropertyValueFactory<>("nom"));
 
-		TableColumn<String, Produit> column3 = new TableColumn<>("Prix");
+		TableColumn<Produit, String> column3 = new TableColumn<>("Prix");
 		column3.setCellValueFactory(new PropertyValueFactory<>("prix"));
 
-		TableColumn<String, Produit> column4 = new TableColumn<>("Fournisseur");
+		TableColumn<Produit, String> column4 = new TableColumn<>("Fournisseur");
 		column4.setCellValueFactory(new PropertyValueFactory<>("fournisseur"));
 
-		TableColumn<String, Produit> column5 = new TableColumn<>("Description");
+		TableColumn<Produit, String> column5 = new TableColumn<>("Description");
 		column5.setCellValueFactory(new PropertyValueFactory<>("description"));
 
 		rechercheResultat.getColumns().add(column1);
@@ -386,7 +511,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().add(clavierBox);
 	}
 
-	@SuppressWarnings("unchecked")
+	@FXML
+	private void ajoutHandle(ActionEvent event) {
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(creationProduitPane);
+
+	}
+
 	/**
 	 * Rechercher un produit
 	 */
@@ -394,7 +525,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		rechercheResultat.getItems().clear();
 
 		ArrayList<Produit> listProd = ctrl.search(clavierText.getText());
-		
+
 		rechercheResultat.getItems().addAll(listProd);
 
 		rechercheResultat.refresh();
@@ -407,12 +538,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	void ajouterSelection(ActionEvent event) {
-		Produit temp = (Produit) this.rechercheResultat.getSelectionModel().getSelectedItem();
+		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
 
 		if (temp != null) {
 			ctrl.ajouterProduitATransaction(temp);
 		}
-		
+
 		factureTable.refresh();
 	}
 
@@ -470,11 +601,108 @@ public class POSControleurVue implements IPOSControleurVue {
 	/**
 	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
 	 */
-	private void choisirImage() {
+
+	private FileInputStream choisirImage() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
 		File file = fc.showOpenDialog(scene.getWindow());
+
+		FileInputStream retour = null;
+		try {
+			FileInputStream stream = new FileInputStream(file);
+			retour = stream;
+			stream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return retour;
+
+	}
+
+	@FXML
+	private void coutantProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	private void creerProduitHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	private void descriptionProduitHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	private void fournisseurProduitHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	private void imageProduitHandler(MouseEvent event) {
+
+		fileTemp = choisirImage();
+
+		imageProduitImageView.setImage(new Image(fileTemp));
+		imageProduitImageView.setPreserveRatio(false);
+
+	}
+
+	@FXML
+	private void prixProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	private void nomProduitHandler(KeyEvent event) {
+
+	}
+
+	@FXML
+	private void quantiteProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9]")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	private void skuProduitHandler(KeyEvent event) {
+
+		if (!event.getCharacter().matches("[0-9]")) {
+			event.consume();
+		}
+
+	}
+
+	@FXML
+	private void nvCourrielHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9\u002D]")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	private void nvNomHandler(KeyEvent event) {
+		System.out.println("Test");
+		if (!event.getCharacter().matches("[A-z\u0080-\u00ff]")) {
+			event.consume();
+		}
+	}
+
+	@FXML
+	private void nvUtilisateurHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9A-z\u0080-\u00ff]")) {
+			event.consume();
+		}
 	}
 
 }

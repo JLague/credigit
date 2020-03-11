@@ -25,7 +25,7 @@ public class Etablissement {
 	/**
 	 * Listes des utilisateurs
 	 */
-	private List<Utilisateur> utilisateurs;
+	private List<Vendeur> vendeurs;
 	/**
 	 * Balance de la compagnie
 	 */
@@ -50,7 +50,7 @@ public class Etablissement {
 		
 		inventaire = new ArrayList<Produit>();
 		transactions = new ArrayList<Transaction>();
-		utilisateurs = new ArrayList<Utilisateur>();
+		vendeurs = new ArrayList<Vendeur>();
 	}
 
 	/**
@@ -134,24 +134,24 @@ public class Etablissement {
 	 * Retourne les utilisateurs de l'établissement
 	 * @return Les utilisateurs de de l'établissement
 	 */
-	public List<Utilisateur> getUtilisateurs() {
-		return utilisateurs;
+	public List<Vendeur> getUtilisateurs() {
+		return vendeurs;
 	}
 
 	/**
-	 * Ajoute un utilisateur à l'établissement
-	 * @param utilisateur - L'utilisateur à ajouter
+	 * Ajoute un vendeur à l'établissement
+	 * @param vendeur - Le vendeur à ajouter
 	 * @throws ExceptionProduitEtablissement 
 	 */
-	protected void ajouterUtilisateur(Utilisateur utilisateur) throws ExceptionProduitEtablissement {
+	protected void ajouterVendeur(Vendeur vendeur) throws ExceptionProduitEtablissement {
 		
-		if(utilisateur != null)
+		if(vendeur != null)
 		{
-			utilisateurs.add(utilisateur);
+			vendeurs.add(vendeur);
 		}
 		else
 		{
-			throw new ExceptionProduitEtablissement("L'utilisateur à ajouter n'est pas valide.");
+			throw new ExceptionProduitEtablissement("Le vendeur à ajouter n'est pas valide.");
 		}
 		
 	}

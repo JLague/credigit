@@ -144,6 +144,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
+            <Button fx:id="ajoutProduitBouton" mnemonicParsing="false" onAction="#ajoutHandle" styleClass="transparent-btn" text="🖉 Ajout d'un produit" />
          </children>
          <BorderPane.margin>
             <Insets />

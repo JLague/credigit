@@ -12,7 +12,7 @@ public class EmpreinteService {
 
 	public static byte[] getEmpreinte() {
 		byte[] empreinte = null;
-		FingerprintSensor sensor = new AdafruitSensor("COM5");
+		FingerprintSensor sensor = new AdafruitSensor("COM7");
 
 		try {
 			sensor.connect();

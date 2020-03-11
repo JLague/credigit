@@ -61,10 +61,6 @@ public class DataTransition {
 	 */
 	private byte[] empreinte;
 
-	public DataTransition() {
-
-	}
-
 	/**
 	 * Constructeur avec paramètres
 	 * 
@@ -91,6 +87,9 @@ public class DataTransition {
 		this.reponses = reponses;
 		this.numero = numero;
 		this.empreinte = empreinte;
+	}
+
+	public DataTransition() {
 	}
 
 	/**

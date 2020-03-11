@@ -162,3 +162,38 @@
 	-fx-border-insets: 0.0 0.0 0.0 30.0;
 	-fx-alignment: CENTER_RIGHT;
 }
+
+.creerProduitTextField {
+	-fx-prompt-text-fill: white;
+	-fx-text-fill: white;
+	-fx-background-color: rgba(255,255,255,0.2);
+	-fx-background-radius: 10.0px;
+}
+
+.creerProduittextArea
+{
+	-fx-prompt-text-fill: white;
+	-fx-text-fill: white;
+	-fx-region-background : rgba(255,255,255,0.25);
+}
+
+.text-area .content {  
+   -fx-background-color: rgba(255,255,255,0.25);  
+   	-fx-background-radius: 10.0px;
+} 
+
+.creerProduitImage {
+	-fx-background-color: rgba(255,255,255,0.2);
+	-fx-background-radius: 30.0px;
+}
+
+.creerProduitBouton {
+	-fx-background-color: rgba(255,255,255,0.2);
+	-fx-background-radius: 30.0px;
+	-fx-text-fill: white;
+}
+
+.creerProduitImageView
+{
+	-fx-background-radius: 30.0px;
+}

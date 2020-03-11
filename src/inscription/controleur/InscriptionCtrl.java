@@ -47,12 +47,12 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 
 	@Override
 	public boolean envoyerDataClient(DataTransition data) throws ExceptionCreationCompte {
-		return connexion.ajouterCompte(new Client(data));
+		return connexion.ajouterCompteClient(new Client(data));
 	}
 
 	@Override
 	public boolean supprimerCompte(String nom, String prenom, String email, String nas) {
-		return connexion.supprimerCompte(nom, prenom, email, nas);
+		return connexion.supprimerCompteClient(nom, prenom, email, nas);
 	}
 
 }
