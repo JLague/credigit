@@ -3,11 +3,14 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
+import inscription.modele.ExceptionCreationCompte;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
+import pos.modele.DataVendeur;
 import pos.modele.DataVue;
+import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.TableauDeBord;
@@ -125,5 +128,10 @@ public class POSControleur implements IPOSControleur {
 
 	public ArrayList<Produit> search(String text) {
 		return tb.search(text);
+	}
+	
+	public void creerVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement
+	{
+		tb.creerNouveauVendeur(data);
 	}
 }

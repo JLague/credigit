@@ -5,18 +5,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import inscription.modele.Connexion;
+import inscription.modele.ExceptionCreationCompte;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 public class TableauDeBord {
 	private Transaction transactionCourante;
 	private Etablissement etablissement;
-	private Utilisateur utilisateur;
+	private Vendeur vendeur;
 	private List<Produit> inventaire;
+	private Connexion dbConnection;
 
 	public TableauDeBord() {
 		this.transactionCourante = new Transaction();
 		this.inventaire = new ArrayList<Produit>();
+
+		dbConnection = new Connexion();
 
 		populerInventaire();
 		// TODO enlever lorsque Etablissement et Utilisateur sont finis
@@ -49,10 +54,10 @@ public class TableauDeBord {
 
 	}
 
-	public TableauDeBord(Etablissement etablissement, Utilisateur utilisateur) {
+	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
 		this();
 		this.etablissement = etablissement;
-		this.utilisateur = utilisateur;
+		this.vendeur = vendeur;
 	}
 
 	/**
@@ -144,5 +149,18 @@ public class TableauDeBord {
 			}
 		}
 		return listProd;
+	}
+
+	public void creerNouveauVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement {
+		Vendeur nouveauVendeur = new Vendeur(data);
+
+		// La validation se fait ici parce qu'on a besoin de communiquer avec la base de
+		// donnée
+		if (dbConnection.validerNomUtilisateur(nouveauVendeur.getUsername())) {
+			dbConnection.ajouterCompteVendeur(nouveauVendeur);
+			// TODO ajouter le vendeur à l'établissement
+			//etablissement.ajouterVendeur(nouveauVendeur);
+		} else
+			throw new ExceptionCreationCompte("Le nom d'utilisateur choisi est déjà utilisé.");
 	}
 }

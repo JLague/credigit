@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import inscription.modele.ExceptionCreationCompte;
+import inscription.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +38,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
+import pos.modele.DataVendeur;
+import pos.modele.ExceptionProduitEtablissement;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -130,6 +134,24 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private ImageView imageProduitImageView;
 
+	@FXML
+	private TextField prenomVendeurTextField;
+
+	@FXML
+	private TextField nomVendeurTextField;
+
+	@FXML
+	private TextField usernameVendeurTextField;
+
+	@FXML
+	private PasswordField vendeurPasswordField1;
+
+	@FXML
+	private PasswordField vendeurPasswordField2;
+
+	@FXML
+	private TextField courrielVendeurTextField;
+
 	FileInputStream fileTemp;
 
 	@FXML
@@ -191,8 +213,34 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param event
 	 */
 	@FXML
-	void inscriptionVendeurHandler(ActionEvent event) {
-
+	private void inscriptionVendeurHandler(ActionEvent event) {
+		DataVendeur data = new DataVendeur();
+		data.setPrenom(prenomVendeurTextField.getText());
+		data.setNom(nomVendeurTextField.getText());
+		data.setUsername(usernameVendeurTextField.getText());
+		data.setCourriel(courrielVendeurTextField.getText());
+		
+		try {
+			if (vendeurPasswordField1.getText().equals(vendeurPasswordField2.getText())) {
+				data.setPassword(vendeurPasswordField1.getText());
+			} else
+				throw new ExceptionCreationCompte("Les deux mots de passes entrés sont différents");
+			
+			ctrl.creerVendeur(data);
+		} catch (ExceptionCreationCompte e) {
+			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			data = null;
+		} catch (ExceptionProduitEtablissement e) {
+			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			data = null;
+		}
+		
+		if(data != null)
+		{
+			// TODO ajouter une méthode pour la création d'un compte de vendeur
+			VueDialogue.compteCree();
+			annulerHandler(event);
+		}
 	}
 
 	/**
@@ -636,33 +684,25 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	@FXML
-	void nmMotPasse1Handler(ActionEvent event) {
-
+	private void nvCourrielHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[A-z\u0040\u002E\u005F0-9\u002D]")) {
+			event.consume();
+		}
 	}
 
 	@FXML
-	void nmMotPasse2Handler(ActionEvent event) {
-
+	private void nvNomHandler(KeyEvent event) {
+		System.out.println("Test");
+		if (!event.getCharacter().matches("[A-z\u0080-\u00ff]")) {
+			event.consume();
+		}
 	}
 
 	@FXML
-	void nvCourrielHandeler(ActionEvent event) {
-
-	}
-
-	@FXML
-	void nvNomHandler(ActionEvent event) {
-
-	}
-
-	@FXML
-	void nvPrenomHandler(ActionEvent event) {
-
-	}
-
-	@FXML
-	void nvUtilisateurHandler(ActionEvent event) {
-
+	private void nvUtilisateurHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[0-9A-z\u0080-\u00ff]")) {
+			event.consume();
+		}
 	}
 
 }
