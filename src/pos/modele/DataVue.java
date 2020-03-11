@@ -1,5 +1,7 @@
 package pos.modele;
 
+import java.io.ByteArrayOutputStream;
+
 public class DataVue {
 
 	/**
@@ -23,6 +25,11 @@ public class DataVue {
 	private float coutant;
 
 	/**
+	 * La quantité de ce produit
+	 */
+	private int quantite;
+
+	/**
 	 * Le fournisseur du produit
 	 */
 	private String fournisseur;
@@ -31,6 +38,23 @@ public class DataVue {
 	 * Une brève description du produit
 	 */
 	private String description;
+
+	/**
+	 * L'image du produit
+	 */
+	private byte[] image;
+
+	public DataVue(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
+			String description, byte[] image) {
+		setSku(sku);
+		setNom(nom);
+		setPrix(prix);
+		setCoutant(coutant);
+		setFournisseur(fournisseur);
+		setQuantite(quantite);
+		setDescription(description);
+		setImage(image);
+	}
 
 	/**
 	 * @return the sku
@@ -114,6 +138,22 @@ public class DataVue {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
 
 }

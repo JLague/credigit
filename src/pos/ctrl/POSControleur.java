@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
+import pos.modele.Connexion;
 import pos.modele.DataVendeur;
 import pos.modele.DataVue;
 import pos.modele.ExceptionProduitEtablissement;
@@ -29,6 +30,8 @@ public class POSControleur implements IPOSControleur {
 	 * Le contrôleur de la vue du POS
 	 */
 	private POSControleurVue vue;
+	
+	private Connexion connexion;
 
 	/**
 	 * Constructeur servant à instantier un contrôleur du POS
@@ -39,6 +42,7 @@ public class POSControleur implements IPOSControleur {
 		this.app = posApplication;
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
+		this.connexion = new Connexion();
 	}
 
 	/**
@@ -72,8 +76,8 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public void creerProduit(DataVue data) {
-		// TODO Auto-generated method stub
+	public boolean creerProduit(DataVue data) throws ExceptionProduitEtablissement {
+		return connexion.ajouterProduit(new Produit(data));
 
 	}
 

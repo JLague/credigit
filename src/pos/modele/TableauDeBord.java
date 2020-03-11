@@ -29,13 +29,7 @@ public class TableauDeBord {
 
 	private void populerInventaire() {
 		// TODO Utiliser l'inventaire de l'établissement
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		try {
-			stream.write(new byte[2]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		byte[] stream = { 1 };
 
 		try {
 			Produit test1 = new Produit(11111, "test1", 05, 11, "SiFang", 13, "Une description", stream);
@@ -159,7 +153,7 @@ public class TableauDeBord {
 		if (dbConnection.validerNomUtilisateur(nouveauVendeur.getUsername())) {
 			dbConnection.ajouterCompteVendeur(nouveauVendeur);
 			// TODO ajouter le vendeur à l'établissement
-			//etablissement.ajouterVendeur(nouveauVendeur);
+			// etablissement.ajouterVendeur(nouveauVendeur);
 		} else
 			throw new ExceptionCreationCompte("Le nom d'utilisateur choisi est déjà utilisé.");
 	}
