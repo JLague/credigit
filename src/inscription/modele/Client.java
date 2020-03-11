@@ -3,6 +3,9 @@ package inscription.modele;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
+
+import org.bson.types.Binary;
 
 import exception.ExceptionCreationCompte;
 import pos.modele.Transaction;
@@ -60,7 +63,7 @@ public class Client {
 	/**
 	 * L'empreinte du client
 	 */
-	private byte[] empreinte;
+	private String empreinte;
 
 	/**
 	 * Les questions de sécurité du client
@@ -231,14 +234,14 @@ public class Client {
 	 * 
 	 * @param adresse - L'adresse du client à modifier
 	 */
-	private void setAdresse(LocalAdresse adresse) throws ExceptionCreationCompte{
+	private void setAdresse(LocalAdresse adresse) throws ExceptionCreationCompte {
 
 		if (adresse != null)
 			this.adresse = adresse;
 		else {
 			throw new ExceptionCreationCompte("Votre adresse est vide");
 		}
-		
+
 	}
 
 	/**
@@ -305,7 +308,7 @@ public class Client {
 	 * 
 	 * @return L'empreinte du client
 	 */
-	public byte[] getEmpreinte() {
+	public String getEmpreinte() {
 		return empreinte;
 	}
 
@@ -317,7 +320,14 @@ public class Client {
 	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
 
 		if (empreinte != null && empreinte.length != 0) {
-			this.empreinte = empreinte;
+			this.empreinte = Base64.getEncoder().encodeToString(empreinte);
+			System.out.println("Longueur" + empreinte.length);
+			for(byte b : empreinte)
+			{
+				System.out.print(b);
+			}
+			System.out.println();
+			System.out.println("Empreinte: " + this.empreinte);
 		} else {
 			throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
 		}

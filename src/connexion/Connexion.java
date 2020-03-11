@@ -139,6 +139,12 @@ public class Connexion {
 		return true;
 	}
 
+	/**
+	 * Ajoute un vendeur à la base de donnée
+	 * 
+	 * @param vendeur le vendeur à ajouter
+	 * @return true si le compte a été créé
+	 */
 	public boolean ajouterCompteVendeur(Vendeur vendeur) {
 		try {
 			MongoCollection<Vendeur> collection = database.getCollection(COMPTES_VENDEURS, Vendeur.class);
@@ -150,6 +156,12 @@ public class Connexion {
 		return true;
 	}
 
+	/**
+	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
+	 * 
+	 * @param nomUtilisateur le nom d'utilisateur à valider
+	 * @return true si le nom d'utilisateur n'est pas déjà utilisé
+	 */
 	public boolean validerNomUtilisateur(String nomUtilisateur) {
 		BasicDBObject object = new BasicDBObject();
 		object.put("username", nomUtilisateur);
@@ -158,19 +170,23 @@ public class Connexion {
 		return !it.hasNext();
 	}
 
+	/**
+	 * Permet d'aller chercher les informations du vendeur si les informations
+	 * passées en paramètre sont valides
+	 * 
+	 * @param username le nom d'utilisateur
+	 * @param password le mot de passe
+	 * @return les informations du vendeur
+	 */
 	public DataVendeur connecter(String username, String password) {
 		BasicDBObject object = new BasicDBObject();
 		object.put("username", username);
 		object.put("password", password);
-		
+
 		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
 		Iterator<Document> it = result.iterator();
-		
-		System.out.println(username);
-		System.out.println(password);
-		System.out.println(it.hasNext());
-		
-		if(it.hasNext()) {
+
+		if (it.hasNext()) {
 			Document doc = it.next();
 			DataVendeur data = new DataVendeur();
 			data.setPrenom(doc.getString("prenom"));
@@ -178,10 +194,10 @@ public class Connexion {
 			data.setPassword(doc.getString("password"));
 			data.setUsername(doc.getString("username"));
 			data.setCourriel(doc.getString("courriel"));
-			
+
 			return data;
 		}
-		
+
 		return null;
 	}
 

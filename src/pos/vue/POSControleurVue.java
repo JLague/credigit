@@ -1,9 +1,12 @@
 package pos.vue;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
 import pos.modele.DataVendeur;
+import pos.modele.DataVue;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -640,14 +644,41 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void coutantProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(".")) {
 			event.consume();
 		}
 	}
 
 	@FXML
 	private void creerProduitHandler(KeyEvent event) {
+		DataVue data = null;
+		try {
+			data = new DataVue(Long.parseLong(skuProduitTextField.getText()), nomProduitTextField.getText(),
+					Float.parseFloat(prixproduitTextField.getText()),
+					Float.parseFloat(coutantproduitTextField.getText()), fournisseurProduitTextField.getText(),
+					Integer.parseInt(quantiteProduitTextField.getText()), descriptionProduitTextArea.getText(),
+					convertToBytes(imageProduitImageView.getImage()));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
+		try {
+			ctrl.creerProduit(data);
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private byte[] convertToBytes(Object object) throws IOException {
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
+			out.writeObject(object);
+			return bos.toByteArray();
+		}
 	}
 
 	@FXML
@@ -672,7 +703,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void prixProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches("\u002C")) {
+		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(".")) {
 			event.consume();
 		}
 	}
