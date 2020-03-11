@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="934.0" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TextField fx:id="skuProduitTextField" layoutX="295.0" layoutY="81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyTyped="#skuProduitHandler" prefHeight="59.0" prefWidth="639.0" promptText="SKU" styleClass="creerProduitTextField" stylesheets="@../../../res/styles/POS.css">
@@ -41,7 +40,7 @@
             <Font size="24.0" />
          </font>
       </TextField>
-      <Button fx:id="creerBouton" layoutX="180.0" layoutY="781.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onKeyTyped="#creerProduitHandler" prefHeight="109.0" prefWidth="575.0" styleClass="creerProduitBouton" stylesheets="@../../../res/styles/POS.css" text="Créer ce produit">
+      <Button layoutX="180.0" layoutY="781.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#creerProduitHandler" onKeyTyped="#creerProduitHandler" prefHeight="109.0" prefWidth="575.0" styleClass="creerProduitBouton" stylesheets="@../../../res/styles/POS.css" text="Créer ce produit">
          <font>
             <Font size="24.0" />
          </font>

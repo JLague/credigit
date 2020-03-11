@@ -1,9 +1,9 @@
 package inscription.controleur;
 
-import connexion.Connexion;
-import connexion.CourrielConfirmation;
 import exception.ExceptionCreationCompte;
 import inscription.modele.Client;
+import inscription.modele.Connexion;
+import inscription.modele.CourrielConfirmation;
 import inscription.modele.DataTransition;
 import inscription.vue.InscriptionVueCtrl;
 import javafx.scene.Scene;

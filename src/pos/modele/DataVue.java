@@ -1,7 +1,5 @@
 package pos.modele;
 
-import java.io.ByteArrayOutputStream;
-
 public class DataVue {
 
 	/**

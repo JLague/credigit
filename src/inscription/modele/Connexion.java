@@ -1,6 +1,4 @@
-package connexion;
-
-import java.util.Iterator;
+package inscription.modele;
 
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -11,15 +9,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoWriteException;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-
-import inscription.modele.Client;
-import pos.modele.DataVendeur;
-import pos.modele.Vendeur;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -41,12 +34,6 @@ public class Connexion {
 	private final static String COMPTES_CLIENTS = "comptes";
 
 	/**
-	 * String représentant le nom de la collection contenant les comptes des
-	 * vendeurs dans la base de données
-	 */
-	private final static String COMPTES_VENDEURS = "comptes_vendeurs";
-
-	/**
 	 * Objet base de données
 	 */
 	private MongoDatabase database;
@@ -65,7 +52,10 @@ public class Connexion {
 	 * Constructeur par défaut utilisé lorsqu'on a pas besoin d'envoyer un courriel
 	 * de confirmation. De cette manière, l'attribut courriel reste à null.
 	 */
-	public Connexion() {
+	public Connexion(CourrielConfirmation courriel) {
+		// Utilise la connexion existente
+		this.courriel = courriel;
+		
 		// Connection à la base de donnée
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
@@ -79,19 +69,6 @@ public class Connexion {
 		mongoClient = MongoClients.create(clientSettings);
 
 		database = mongoClient.getDatabase(DB);
-	}
-
-	/**
-	 * Constructeur de la connexion
-	 * 
-	 * @param courriel - La connexion au serveru d'envoi de courriels
-	 */
-	public Connexion(CourrielConfirmation courriel) {
-		this();
-
-		// Va chercher la connexion déjà établie
-		this.courriel = courriel;
-
 	}
 
 	/**
@@ -138,67 +115,5 @@ public class Connexion {
 
 		return true;
 	}
-
-	/**
-	 * Ajoute un vendeur à la base de donnée
-	 * 
-	 * @param vendeur le vendeur à ajouter
-	 * @return true si le compte a été créé
-	 */
-	public boolean ajouterCompteVendeur(Vendeur vendeur) {
-		try {
-			MongoCollection<Vendeur> collection = database.getCollection(COMPTES_VENDEURS, Vendeur.class);
-			collection.insertOne(vendeur);
-		} catch (MongoWriteException e) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
-	 * 
-	 * @param nomUtilisateur le nom d'utilisateur à valider
-	 * @return true si le nom d'utilisateur n'est pas déjà utilisé
-	 */
-	public boolean validerNomUtilisateur(String nomUtilisateur) {
-		BasicDBObject object = new BasicDBObject();
-		object.put("username", nomUtilisateur);
-		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
-		Iterator<Document> it = result.iterator();
-		return !it.hasNext();
-	}
-
-	/**
-	 * Permet d'aller chercher les informations du vendeur si les informations
-	 * passées en paramètre sont valides
-	 * 
-	 * @param username le nom d'utilisateur
-	 * @param password le mot de passe
-	 * @return les informations du vendeur
-	 */
-	public DataVendeur connecter(String username, String password) {
-		BasicDBObject object = new BasicDBObject();
-		object.put("username", username);
-		object.put("password", password);
-
-		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
-		Iterator<Document> it = result.iterator();
-
-		if (it.hasNext()) {
-			Document doc = it.next();
-			DataVendeur data = new DataVendeur();
-			data.setPrenom(doc.getString("prenom"));
-			data.setNom(doc.getString("nom"));
-			data.setPassword(doc.getString("password"));
-			data.setUsername(doc.getString("username"));
-			data.setCourriel(doc.getString("courriel"));
-
-			return data;
-		}
-
-		return null;
-	}
-
 }
+

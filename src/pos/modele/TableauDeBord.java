@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import connexion.Connexion;
 import exception.ExceptionCreationCompte;
 import exception.ExceptionProduitEtablissement;
+import pos.modele.Connexion;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -190,5 +190,9 @@ public class TableauDeBord {
 		}
 
 		return false;
+	}
+
+	public boolean ajouterProduit(Produit produit) {
+		return dbConnection.ajouterProduit(produit);
 	}
 }

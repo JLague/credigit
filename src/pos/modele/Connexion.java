@@ -84,6 +84,51 @@ public class Connexion {
 
 		return true;
 	}
+	
+	/**
+	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
+	 * 
+	 * @param nomUtilisateur le nom d'utilisateur à valider
+	 * @return true si le nom d'utilisateur n'est pas déjà utilisé
+	 */
+	public boolean validerNomUtilisateur(String nomUtilisateur) {
+		BasicDBObject object = new BasicDBObject();
+		object.put("username", nomUtilisateur);
+		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
+		Iterator<Document> it = result.iterator();
+		return !it.hasNext();
+	}
+
+	/**
+	 * Permet d'aller chercher les informations du vendeur si les informations
+	 * passées en paramètre sont valides
+	 * 
+	 * @param username le nom d'utilisateur
+	 * @param password le mot de passe
+	 * @return les informations du vendeur
+	 */
+	public DataVendeur connecter(String username, String password) {
+		BasicDBObject object = new BasicDBObject();
+		object.put("username", username);
+		object.put("password", password);
+
+		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
+		Iterator<Document> it = result.iterator();
+
+		if (it.hasNext()) {
+			Document doc = it.next();
+			DataVendeur data = new DataVendeur();
+			data.setPrenom(doc.getString("prenom"));
+			data.setNom(doc.getString("nom"));
+			data.setPassword(doc.getString("password"));
+			data.setUsername(doc.getString("username"));
+			data.setCourriel(doc.getString("courriel"));
+
+			return data;
+		}
+
+		return null;
+	}
 
 	public boolean ajouterProduit(Produit produit) {
 		try {

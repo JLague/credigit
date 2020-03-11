@@ -1,21 +1,23 @@
 package pos.vue;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.imageio.ImageIO;
+
 import exception.ExceptionCreationCompte;
 import exception.ExceptionProduitEtablissement;
 import inscription.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -195,15 +197,14 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(VIEW_INSCRIPTION_VENDEUR, rootVBox);
 		ctrl.chargerScene(this.scene, "Inscription vendeur", false);
 	}
-	
+
 	@FXML
-	private void connect(ActionEvent ae)
-	{
-		if(ctrl.connexion(userField.getText(), passField.getText()))
+	private void connect(ActionEvent ae) {
+		if (ctrl.connexion(userField.getText(), passField.getText()))
 			ouvrirVuePrincipale();
 		else
 			VueDialogue.erreurCreationDialogue("Le nom d'utilisateur ou le mot de passe est invalide.");
-		
+
 	}
 
 	/**
@@ -215,7 +216,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		ctrl.chargerScene(this.scene, "POS", true);
 
 		messageBonjour.setText("Bonjour, " + ctrl.getNomVendeur());
-		
+
 		// Chargement de la vue
 		ajoutBtn.setDisable(true);
 		chargerClavier();
@@ -624,8 +625,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	private FileInputStream choisirImage() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
-		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png*", "*.jpg*"));
+		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
 		File file = fc.showOpenDialog(scene.getWindow());
+		System.out.println(file);
 
 		FileInputStream retour = null;
 		try {
@@ -650,14 +652,14 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	@FXML
-	private void creerProduitHandler(KeyEvent event) {
+	private void creerProduitHandler(ActionEvent event) {
 		DataVue data = null;
 		try {
 			data = new DataVue(Long.parseLong(skuProduitTextField.getText()), nomProduitTextField.getText(),
 					Float.parseFloat(prixproduitTextField.getText()),
 					Float.parseFloat(coutantproduitTextField.getText()), fournisseurProduitTextField.getText(),
 					Integer.parseInt(quantiteProduitTextField.getText()), descriptionProduitTextArea.getText(),
-					convertToBytes(imageProduitImageView.getImage()));
+					convertToBytes(imageProduitImageView));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -669,16 +671,35 @@ public class POSControleurVue implements IPOSControleurVue {
 		try {
 			ctrl.creerProduit(data);
 		} catch (ExceptionProduitEtablissement e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			VueDialogue.erreurCreationDialogue(e.getMessage());
+			data = null;
+		}
+		
+		if (data != null) {
+			// TODO faire un dialogue pour la création de produit
+			VueDialogue.compteCree();
+			skuProduitTextField.clear();
+			prixproduitTextField.clear();
+			coutantproduitTextField.clear();
+			descriptionProduitTextArea.clear();
+			fournisseurProduitTextField.clear();
+			quantiteProduitTextField.clear();
 		}
 	}
 
-	private byte[] convertToBytes(Object object) throws IOException {
-		try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
-			out.writeObject(object);
-			return bos.toByteArray();
-		}
+	private byte[] convertToBytes(ImageView imageView) throws IOException {
+//		try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
+//			out.writeObject(object);
+//			return bos.toByteArray();
+//		}
+
+		BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+		ByteArrayOutputStream s = new ByteArrayOutputStream();
+		ImageIO.write(bImage, "png", s);
+		byte[] res = s.toByteArray();
+		s.close();
+
+		return res;
 	}
 
 	@FXML
@@ -693,7 +714,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void imageProduitHandler(MouseEvent event) {
-
 		fileTemp = choisirImage();
 
 		imageProduitImageView.setImage(new Image(fileTemp));
@@ -749,5 +769,4 @@ public class POSControleurVue implements IPOSControleurVue {
 			event.consume();
 		}
 	}
-
 }
