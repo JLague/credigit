@@ -1,7 +1,5 @@
 package pos.modele;
 
-import java.io.ByteArrayOutputStream;
-
 import exception.ExceptionProduitEtablissement;
 
 /**
@@ -51,6 +49,12 @@ public class Produit {
 	 * L'image du produit
 	 */
 	private byte[] image;
+
+	/**
+	 * Constructeur utilisé par POJO
+	 */
+	public Produit() {
+	}
 
 	/**
 	 * Crée un nouveau produit
@@ -103,7 +107,7 @@ public class Produit {
 	 * @param sku - Le sku à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setSku(long sku) throws ExceptionProduitEtablissement {
+	public void setSku(long sku) throws ExceptionProduitEtablissement {
 		if (sku > 0) {
 			this.sku = sku;
 		} else {
@@ -127,7 +131,7 @@ public class Produit {
 	 * @param nom - Le nom à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setNom(String nom) throws ExceptionProduitEtablissement {
+	public void setNom(String nom) throws ExceptionProduitEtablissement {
 		if (nom != null && nom.length() != 0) {
 			this.nom = nom;
 		} else {
@@ -151,7 +155,7 @@ public class Produit {
 	 * @param prix - Le prix du produit à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setPrix(float prix) throws ExceptionProduitEtablissement {
+	public void setPrix(float prix) throws ExceptionProduitEtablissement {
 		if (prix >= 0) {
 			this.prix = prix;
 		} else {
@@ -175,7 +179,7 @@ public class Produit {
 	 * @param coutant - Le prix coutant du produit à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setCoutant(float coutant) throws ExceptionProduitEtablissement {
+	public void setCoutant(float coutant) throws ExceptionProduitEtablissement {
 
 		if (coutant >= 0) {
 			this.coutant = coutant;
@@ -199,7 +203,7 @@ public class Produit {
 	 * @param fournisseur - Le fournisseur du produit
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setFournisseur(String fournisseur) throws ExceptionProduitEtablissement {
+	public void setFournisseur(String fournisseur) throws ExceptionProduitEtablissement {
 
 		if (fournisseur != null && fournisseur.length() != 0) {
 			this.fournisseur = fournisseur;
@@ -224,7 +228,7 @@ public class Produit {
 	 * @param description - La description du produit à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setDescription(String description) throws ExceptionProduitEtablissement {
+	public void setDescription(String description) throws ExceptionProduitEtablissement {
 
 		if (description != null && description.length() != 0) {
 			this.description = description;
@@ -249,7 +253,7 @@ public class Produit {
 	 * @param quantite - La quantite du produit à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setQuantite(int quantite) throws ExceptionProduitEtablissement {
+	public void setQuantite(int quantite) throws ExceptionProduitEtablissement {
 		if (quantite >= 0) {
 			this.quantite = quantite;
 		} else {
@@ -272,7 +276,7 @@ public class Produit {
 	 * @param image - L'objet contenant l'image à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setImage(byte[] image) throws ExceptionProduitEtablissement {
+	public void setImage(byte[] image) throws ExceptionProduitEtablissement {
 		if (image != null && image.length != 0) {
 			this.image = image;
 		} else {

@@ -1,6 +1,8 @@
 package pos.modele;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
@@ -16,8 +18,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-
-import pos.modele.Vendeur;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -84,7 +84,7 @@ public class Connexion {
 
 		return true;
 	}
-	
+
 	/**
 	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
 	 * 
@@ -107,27 +107,15 @@ public class Connexion {
 	 * @param password le mot de passe
 	 * @return les informations du vendeur
 	 */
-	public DataVendeur connecter(String username, String password) {
+	public Vendeur connecter(String username, String password) {
 		BasicDBObject object = new BasicDBObject();
 		object.put("username", username);
 		object.put("password", password);
 
-		FindIterable<Document> result = database.getCollection(COMPTES_VENDEURS).find(object);
-		Iterator<Document> it = result.iterator();
+		FindIterable<Vendeur> result = database.getCollection(COMPTES_VENDEURS, Vendeur.class).find(object);
+		Iterator<Vendeur> it = result.iterator();
 
-		if (it.hasNext()) {
-			Document doc = it.next();
-			DataVendeur data = new DataVendeur();
-			data.setPrenom(doc.getString("prenom"));
-			data.setNom(doc.getString("nom"));
-			data.setPassword(doc.getString("password"));
-			data.setUsername(doc.getString("username"));
-			data.setCourriel(doc.getString("courriel"));
-
-			return data;
-		}
-
-		return null;
+		return it.next();
 	}
 
 	public boolean ajouterProduit(Produit produit) {
@@ -139,6 +127,19 @@ public class Connexion {
 		}
 
 		return true;
+	}
+
+	public List<Produit> getProduits() {
+		FindIterable<Produit> result = database.getCollection(PRODUITS, Produit.class).find();
+		Iterator<Produit> it = result.iterator();
+		ArrayList<Produit> produits = new ArrayList<>();
+		
+		while(it.hasNext())
+		{
+			produits.add(it.next());
+		}
+		
+		return produits;
 	}
 
 }

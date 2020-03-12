@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 
-import org.bson.types.Binary;
-
 import exception.ExceptionCreationCompte;
 import pos.modele.Transaction;
 

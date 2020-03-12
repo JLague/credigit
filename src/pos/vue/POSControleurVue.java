@@ -1,6 +1,7 @@
 package pos.vue;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -366,7 +367,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private VBox creerProduitWrapper(Produit p, int x, int y) {
 		// TODO ajouter les images des produits
 		VBox vbox = new VBox();
-		ImageView image = new ImageView(new Image(getClass().getResource("/images/produit_img.png").toExternalForm()));
+		ImageView image = convertFromBytes(p.getImage());
 		image.setFitHeight(234);
 		image.setFitWidth(234);
 
@@ -621,27 +622,24 @@ public class POSControleurVue implements IPOSControleurVue {
 	/**
 	 * Permet d'ouvrir un file chooser pour sélectionner une image pour le produit
 	 */
-
-	private FileInputStream choisirImage() {
+	private Image choisirImage() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Sélectionner une image pour votre produit");
 		fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
 		File file = fc.showOpenDialog(scene.getWindow());
-		System.out.println(file);
+		Image image = null;
 
-		FileInputStream retour = null;
 		try {
-			FileInputStream stream = new FileInputStream(file);
-			retour = stream;
-			stream.close();
+			FileInputStream fis = new FileInputStream(file);
+			image = new Image(fis);
+			fis.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return retour;
-
+		return image;
 	}
 
 	@FXML
@@ -661,10 +659,6 @@ public class POSControleurVue implements IPOSControleurVue {
 					Integer.parseInt(quantiteProduitTextField.getText()), descriptionProduitTextArea.getText(),
 					convertToBytes(imageProduitImageView));
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -674,7 +668,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			VueDialogue.erreurCreationDialogue(e.getMessage());
 			data = null;
 		}
-		
+
 		if (data != null) {
 			// TODO faire un dialogue pour la création de produit
 			VueDialogue.compteCree();
@@ -687,19 +681,42 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 	}
 
-	private byte[] convertToBytes(ImageView imageView) throws IOException {
-//		try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
-//			out.writeObject(object);
-//			return bos.toByteArray();
-//		}
-
+	/**
+	 * Convertit un ImageView en tableau de bytes
+	 * 
+	 * @param imageView l'image à convertir
+	 * @return le tableau de bytes
+	 */
+	private byte[] convertToBytes(ImageView imageView) {
 		BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
 		ByteArrayOutputStream s = new ByteArrayOutputStream();
-		ImageIO.write(bImage, "png", s);
-		byte[] res = s.toByteArray();
-		s.close();
+		byte[] res = null;
+
+		try {
+			ImageIO.write(bImage, "png", s);
+			res = s.toByteArray();
+			s.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return res;
+	}
+
+	private ImageView convertFromBytes(byte[] bytes) {
+		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+		BufferedImage bImage = null;
+		Image im = null;
+		try {
+			bImage = ImageIO.read(bis);
+			im = SwingFXUtils.toFXImage(bImage, null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return new ImageView(im);
 	}
 
 	@FXML
@@ -714,11 +731,8 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void imageProduitHandler(MouseEvent event) {
-		fileTemp = choisirImage();
-
-		imageProduitImageView.setImage(new Image(fileTemp));
 		imageProduitImageView.setPreserveRatio(false);
-
+		imageProduitImageView.setImage(choisirImage());
 	}
 
 	@FXML

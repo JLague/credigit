@@ -2,9 +2,8 @@ package inscription.modele;
 
 import java.io.IOException;
 
-import sk.mimac.fingerprint.FingerprintException;
 import sk.mimac.fingerprint.FingerprintSensor;
-import sk.mimac.fingerprint.adafruit.*;
+import sk.mimac.fingerprint.adafruit.AdafruitSensor;
 
 public class FingerTest {
 

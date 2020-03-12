@@ -9,7 +9,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
-import pos.modele.Connexion;
 import pos.modele.DataVendeur;
 import pos.modele.DataVue;
 import pos.modele.LigneFacture;

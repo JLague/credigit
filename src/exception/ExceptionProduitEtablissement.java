@@ -9,6 +9,10 @@ package exception;
  */
 public class ExceptionProduitEtablissement extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5755924989599046100L;
 	private String messageAffichage = null;
 
 	/**

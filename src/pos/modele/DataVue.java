@@ -42,6 +42,10 @@ public class DataVue {
 	 */
 	private byte[] image;
 
+	public DataVue() {
+
+	}
+
 	public DataVue(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
 			String description, byte[] image) {
 		setSku(sku);

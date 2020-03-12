@@ -2,9 +2,6 @@ package inscription.modele;
 
 import java.io.IOException;
 
-import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import sk.mimac.fingerprint.FingerprintSensor;
 import sk.mimac.fingerprint.adafruit.AdafruitSensor;
 

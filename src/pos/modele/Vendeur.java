@@ -30,15 +30,9 @@ public class Vendeur {
 	private String courriel;
 
 	/**
-	 * Constructeur appelé lorsqu'on reprend un vendeur déjà dans la base de donnée
-	 * 
-	 * @param data les informations du vendeur
-	 * @param encryptedPassword le mot de passe encrypté du vendeur
-	 * @throws ExceptionCreationCompte
+	 * Constructeur nécessaire pour POJO
 	 */
-	public Vendeur(DataVendeur data, String encryptedPassword) throws ExceptionCreationCompte {
-		this(data);
-		this.password = encryptedPassword;
+	public Vendeur() {
 	}
 
 	/**
@@ -51,7 +45,7 @@ public class Vendeur {
 		setPrenom(data.getPrenom());
 		setNom(data.getNom());
 		setUsername(data.getUsername());
-		setPassword(data.getPassword());
+		setPassword(encryption.SHAUtility.hashPassword(data.getPassword()));
 		setCourriel(data.getCourriel());
 	}
 
@@ -115,7 +109,7 @@ public class Vendeur {
 	 */
 	public void setPassword(String password) throws ExceptionCreationCompte {
 		if (validerPassword(password)) {
-			this.password = encryption.SHAUtility.hashPassword(password);
+			this.password = password;
 		} else {
 			throw new ExceptionCreationCompte("Le mot de passe doit contenir au moins 8 caractères.");
 		}

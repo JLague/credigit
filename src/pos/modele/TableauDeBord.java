@@ -1,13 +1,10 @@
 package pos.modele;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import exception.ExceptionCreationCompte;
 import exception.ExceptionProduitEtablissement;
-import pos.modele.Connexion;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -25,28 +22,10 @@ public class TableauDeBord {
 		dbConnection = new Connexion();
 
 		populerInventaire();
-		// TODO enlever lorsque Etablissement et Utilisateur sont finis
 	}
 
 	private void populerInventaire() {
-		// TODO Utiliser l'inventaire de l'établissement
-		byte[] stream = { 1 };
-
-		try {
-			Produit test1 = new Produit(11111, "test1", 05, 11, "SiFang", 13, "Une description", stream);
-			Produit test2 = new Produit(22222, "test2", 10, 12, "SiFang", 12, "Une description", stream);
-			Produit test3 = new Produit(33333, "test3", 27, 13, "SiFang", 10, "Une description", stream);
-			Produit test4 = new Produit(43434, "test4", 38.4f, 14, "SiFang", 12, "Une description", stream);
-
-			inventaire.add(test1);
-			inventaire.add(test2);
-			inventaire.add(test3);
-			inventaire.add(test4);
-		} catch (ExceptionProduitEtablissement e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		inventaire = dbConnection.getProduits();
 	}
 
 	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
@@ -178,18 +157,9 @@ public class TableauDeBord {
 	 */
 	public boolean connecter(String username, String password) {
 		password = encryption.SHAUtility.hashPassword(password);
-		DataVendeur data = dbConnection.connecter(username, password);
-
-		if (data != null) {
-			try {
-				vendeur = new Vendeur(data, data.getPassword());
-			} catch (ExceptionCreationCompte e) {
-				e.printStackTrace();
-			}
-			return true;
-		}
-
-		return false;
+		
+		this.vendeur = dbConnection.connecter(username, password);
+		return vendeur != null;
 	}
 
 	public boolean ajouterProduit(Produit produit) {
