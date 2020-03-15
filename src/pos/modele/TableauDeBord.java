@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 public class TableauDeBord {
 	private Transaction transactionCourante;
 	private Etablissement etablissement;
-	private Vendeur vendeur;
+	private Vendeur vendeur = null;
 	private List<Produit> inventaire;
 	private Connexion dbConnection;
 
@@ -156,9 +156,12 @@ public class TableauDeBord {
 	 * @return true si la connection est réussi
 	 */
 	public boolean connecter(String username, String password) {
-		password = encryption.SHAUtility.hashPassword(password);
+		if(username != null && password != null && username.length() != 0 && password.length() != 0)
+		{
+			password = encryption.SHAUtility.hashPassword(password);
+			this.vendeur = dbConnection.connecter(username, password);
+		}
 		
-		this.vendeur = dbConnection.connecter(username, password);
 		return vendeur != null;
 	}
 

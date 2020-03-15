@@ -115,7 +115,14 @@ public class Connexion {
 		FindIterable<Vendeur> result = database.getCollection(COMPTES_VENDEURS, Vendeur.class).find(object);
 		Iterator<Vendeur> it = result.iterator();
 
-		return it.next();
+		Vendeur vendeur = null;
+		
+		if(it.hasNext())
+		{
+			vendeur = it.next();
+		}
+		
+		return vendeur;
 	}
 
 	public boolean ajouterProduit(Produit produit) {

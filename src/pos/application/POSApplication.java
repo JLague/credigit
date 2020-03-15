@@ -22,6 +22,7 @@ public class POSApplication extends Application {
 		stage.setTitle("Connexion");
 		// stage.setFullScreen(true);
 		stage.sizeToScene();
+		stage.setResizable(true);
 		stage.show();
 	}
 

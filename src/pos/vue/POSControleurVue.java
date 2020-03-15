@@ -259,7 +259,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		if (data != null) {
 			// TODO ajouter une méthode pour la création d'un compte de vendeur
-			VueDialogue.compteCree();
+			VueDialogue.compteCreeSansCourriel();
 			annulerHandler(event);
 		}
 	}
@@ -638,15 +638,20 @@ public class POSControleurVue implements IPOSControleurVue {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		catch (NullPointerException e)
+		{
+			
+		}
 
 		return image;
 	}
 
 	@FXML
 	private void coutantProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(".")) {
-			event.consume();
-		}
+			if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
+				event.consume();
+			}
+
 	}
 
 	@FXML
@@ -697,7 +702,6 @@ public class POSControleurVue implements IPOSControleurVue {
 			res = s.toByteArray();
 			s.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -712,7 +716,6 @@ public class POSControleurVue implements IPOSControleurVue {
 			bImage = ImageIO.read(bis);
 			im = SwingFXUtils.toFXImage(bImage, null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -737,11 +740,11 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void prixProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[0-9]") && !event.getCharacter().matches(".")) {
+		if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
 			event.consume();
 		}
 	}
-
+	
 	@FXML
 	private void nomProduitHandler(KeyEvent event) {
 
