@@ -45,7 +45,14 @@ public class Vendeur {
 		setPrenom(data.getPrenom());
 		setNom(data.getNom());
 		setUsername(data.getUsername());
-		setPassword(data.getPassword());
+		if(validerPassword(data.getPassword()))
+		{
+			setPassword(encryption.SHAUtil.hashPassword(data.getPassword()));
+		}
+		else
+		{
+			throw new ExceptionCreationCompte("Votre mot de passe doit avoir au moins 8 caractères.");
+		}
 		setCourriel(data.getCourriel());
 	}
 
@@ -113,11 +120,8 @@ public class Vendeur {
 	 * @throws ExceptionCreationCompte
 	 */
 	public void setPassword(String password) throws ExceptionCreationCompte {
-		if (validerPassword(password)) {
-			this.password = encryption.SHAUtil.hashPassword(password);
-		} else {
-			throw new ExceptionCreationCompte("Le mot de passe doit contenir au moins 8 caractères.");
-		}
+
+			this.password = password;
 	}
 
 	/**
@@ -144,14 +148,7 @@ public class Vendeur {
 	}
 
 	private boolean validerPassword(String password) {
-		boolean retour = false;
-		
-		if(password.length() >= 8 && password != null)
-		{
-			retour = true;
-		}
-		
-		return retour;
+		return (password.length() >= 8 && password != null);
 	}
 
 	private boolean validerCourriel(String courriel) {
