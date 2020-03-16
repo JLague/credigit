@@ -20,7 +20,7 @@ import com.mongodb.client.MongoDatabase;
  * @author Bank-era Corp.
  *
  */
-public class Connexion {
+public class ConnexionInscription {
 
 	/**
 	 * String représentant le nom de la base de données sur le serveur
@@ -52,7 +52,7 @@ public class Connexion {
 	 * Constructeur par défaut utilisé lorsqu'on a pas besoin d'envoyer un courriel
 	 * de confirmation. De cette manière, l'attribut courriel reste à null.
 	 */
-	public Connexion(CourrielConfirmation courriel) {
+	public ConnexionInscription(CourrielConfirmation courriel) {
 		// Utilise la connexion existente
 		this.courriel = courriel;
 		

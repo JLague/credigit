@@ -1,6 +1,6 @@
 package pos.modele;
 
-public class DataVue {
+public class DataProduit {
 
 	/**
 	 * Le SKU du produit
@@ -42,11 +42,11 @@ public class DataVue {
 	 */
 	private byte[] image;
 
-	public DataVue() {
+	public DataProduit() {
 
 	}
 
-	public DataVue(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
+	public DataProduit(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
 			String description, byte[] image) {
 		setSku(sku);
 		setNom(nom);

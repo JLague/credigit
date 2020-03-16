@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Objet transitoire contenant des renseignements sur un Data Client
+ * Objet transitoire contenant des renseignements sur un Client
  * 
  * @author Bank-era Corp.
  *
  */
-public class DataTransition {
+public class DataClient {
 
 	/**
 	 * Le nom du client
@@ -75,7 +75,7 @@ public class DataTransition {
 	 * @param numero    - Le texte du textField du numéro
 	 * @param empreinte - Le byte array de l'empreinte
 	 */
-	public DataTransition(String nom, String prenom, String email, LocalDate date, LocalAdresse adresse, String nas,
+	public DataClient(String nom, String prenom, String email, LocalDate date, LocalAdresse adresse, String nas,
 			ArrayList<Questions> questions, ArrayList<String> reponses, String numero, byte[] empreinte) {
 		this.nom = nom;
 		this.prenom = prenom;
@@ -89,7 +89,7 @@ public class DataTransition {
 		this.empreinte = empreinte;
 	}
 
-	public DataTransition() {
+	public DataClient() {
 	}
 
 	/**

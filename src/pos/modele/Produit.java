@@ -81,7 +81,7 @@ public class Produit {
 		setImage(image);
 	}
 
-	public Produit(DataVue data) throws ExceptionProduitEtablissement {
+	public Produit(DataProduit data) throws ExceptionProduitEtablissement {
 		setSku(data.getSku());
 		setNom(data.getNom());
 		setPrix(data.getPrix());

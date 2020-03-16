@@ -10,12 +10,19 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
 import pos.modele.DataVendeur;
-import pos.modele.DataVue;
+import pos.modele.DataProduit;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.TableauDeBord;
 import pos.vue.POSControleurVue;
 
+/**
+ * 
+ * Classe servant de contrôleur à l'application POS
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class POSControleur implements IPOSControleur {
 
 	/**
@@ -72,7 +79,7 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public boolean creerProduit(DataVue data) throws ExceptionProduitEtablissement {
+	public boolean creerProduit(DataProduit data) throws ExceptionProduitEtablissement {
 		return tb.ajouterProduit(new Produit(data));
 
 	}

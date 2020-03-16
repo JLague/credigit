@@ -6,8 +6,8 @@ import java.util.List;
 
 import exception.ExceptionCreationCompte;
 import inscription.controleur.InscriptionCtrl;
-import inscription.modele.DataTransition;
-import inscription.modele.EmpreinteService;
+import inscription.modele.DataClient;
+import inscription.modele.EmpreinteUtil;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
 import javafx.animation.Interpolator;
@@ -343,7 +343,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			try {
-				DataTransition data = creerDataTransition();
+				DataClient data = creerDataTransition();
 				if (data != null && ctrl.envoyerDataClient(data)) {
 					VueDialogue.compteCree();
 				}
@@ -385,8 +385,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 * 
 	 * @return L'objet DataTransition
 	 */
-	private DataTransition creerDataTransition() {
-		DataTransition data = new DataTransition();
+	private DataClient creerDataTransition() {
+		DataClient data = new DataClient();
 
 		try {
 
@@ -422,7 +422,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			reponses.add(reponse1TextField.getText());
 			reponses.add(reponse2TextField.getText());
 			data.setReponses(reponses);
-			data.setEmpreinte(EmpreinteService.getEmpreinte());
+			data.setEmpreinte(EmpreinteUtil.getEmpreinte());
 
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());

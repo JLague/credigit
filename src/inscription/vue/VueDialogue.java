@@ -50,6 +50,17 @@ public class VueDialogue {
 	}
 
 	/**
+	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le produit
+	 * est bel et bien créé
+	 */
+	public static void produitCree() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("Le produit a été créé avec succès!");
+		alert.setContentText("Le produit a été créé et ajouté à la base de données.");
+		alert.showAndWait();
+	}
+
+	/**
 	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
 	 * est bel et bien créé
 	 */
@@ -61,7 +72,7 @@ public class VueDialogue {
 
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
 	 * est bel et bien créé
@@ -69,8 +80,7 @@ public class VueDialogue {
 	public static void compteCreeSansCourriel() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Votre compte a été créé avec succès!");
-		alert.setContentText(
-				"Nous sommes heureux de vous compter parmis nous!");
+		alert.setContentText("Nous sommes heureux de vous compter parmis nous!");
 
 		alert.showAndWait();
 	}

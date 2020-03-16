@@ -8,18 +8,26 @@ import exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
+/**
+ * 
+ * Classe métier permettant de contrôler les différentes fonctions de
+ * l'interface du POS
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class TableauDeBord {
 	private Transaction transactionCourante;
 	private Etablissement etablissement;
 	private Vendeur vendeur = null;
 	private List<Produit> inventaire;
-	private Connexion dbConnection;
+	private ConnexionPOS dbConnection;
 
 	public TableauDeBord() {
 		this.transactionCourante = new Transaction();
 		this.inventaire = new ArrayList<Produit>();
 
-		dbConnection = new Connexion();
+		dbConnection = new ConnexionPOS();
 
 		populerInventaire();
 	}
@@ -156,12 +164,11 @@ public class TableauDeBord {
 	 * @return true si la connection est réussi
 	 */
 	public boolean connecter(String username, String password) {
-		if(username != null && password != null && username.length() != 0 && password.length() != 0)
-		{
-			password = encryption.SHAUtility.hashPassword(password);
+		if (username != null && password != null && username.length() != 0 && password.length() != 0) {
+			password = encryption.SHAUtil.hashPassword(password);
 			this.vendeur = dbConnection.connecter(username, password);
 		}
-		
+
 		return vendeur != null;
 	}
 

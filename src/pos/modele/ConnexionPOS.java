@@ -25,7 +25,7 @@ import com.mongodb.client.MongoDatabase;
  * @author Bank-era Corp.
  *
  */
-public class Connexion {
+public class ConnexionPOS {
 
 	/**
 	 * String représentant le nom de la base de données sur le serveur
@@ -55,10 +55,10 @@ public class Connexion {
 	private MongoClient mongoClient;
 
 	/**
-	 * Constructeur par défaut utilisé lorsqu'on a pas besoin d'envoyer un courriel
-	 * de confirmation. De cette manière, l'attribut courriel reste à null.
+	 * Constructeur permettant de se connecter à la base de données et qui peuple
+	 * l'objet database et mongoClient
 	 */
-	public Connexion() {
+	public ConnexionPOS() {
 		// Connection à la base de donnée
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
@@ -74,6 +74,12 @@ public class Connexion {
 		database = mongoClient.getDatabase(DB);
 	}
 
+	/**
+	 * Ajoute un vendeur à la base de données
+	 * 
+	 * @param vendeur le vendeur à ajouter
+	 * @return true si le vendeur a été ajouté
+	 */
 	public boolean ajouterCompteVendeur(Vendeur vendeur) {
 		try {
 			MongoCollection<Vendeur> collection = database.getCollection(COMPTES_VENDEURS, Vendeur.class);
@@ -116,15 +122,20 @@ public class Connexion {
 		Iterator<Vendeur> it = result.iterator();
 
 		Vendeur vendeur = null;
-		
-		if(it.hasNext())
-		{
+
+		if (it.hasNext()) {
 			vendeur = it.next();
 		}
-		
+
 		return vendeur;
 	}
 
+	/**
+	 * Ajoute un produit à la base de données
+	 * 
+	 * @param produit le produit à ajouter
+	 * @return true si le produit a été ajouté avec succès
+	 */
 	public boolean ajouterProduit(Produit produit) {
 		try {
 			MongoCollection<Produit> collection = database.getCollection(PRODUITS, Produit.class);
@@ -136,16 +147,20 @@ public class Connexion {
 		return true;
 	}
 
+	/**
+	 * Permet d'aller chercher les produits contenus dans la base de données
+	 * 
+	 * @return une liste contenant tous les produits dans la base de données
+	 */
 	public List<Produit> getProduits() {
 		FindIterable<Produit> result = database.getCollection(PRODUITS, Produit.class).find();
 		Iterator<Produit> it = result.iterator();
 		ArrayList<Produit> produits = new ArrayList<>();
-		
-		while(it.hasNext())
-		{
+
+		while (it.hasNext()) {
 			produits.add(it.next());
 		}
-		
+
 		return produits;
 	}
 

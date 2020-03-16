@@ -46,29 +46,43 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import pos.ctrl.POSControleur;
 import pos.modele.DataVendeur;
-import pos.modele.DataVue;
+import pos.modele.DataProduit;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
+/**
+ * Classe permettant de contrôler les vues du POS
+ * 
+ * @author Bank-era Corp.
+ */
 public class POSControleurVue implements IPOSControleurVue {
 
+	// Définition des constantes reliées à l'interface du POS
 	private static final String[][] CLAVIER = { { "7", "8", "9", "DEL" }, { "4", "5", "6", "ENTER" }, { "1", "2", "3" },
 			{ "C", "0", ".", "00" } };
 	private static final String LOGIN = "POS.fxml";
 	private static final String MAIN_VIEW = "MainPOS.fxml";
 	private static final String VIEW_INSCRIPTION_VENDEUR = "NouveauVendeur.fxml";
 
+	// Conteneurs des fichiers FXML
 	private POSControleur ctrl;
 	private VBox rootVBox;
 	private BorderPane rootBP;
+
+	/**
+	 * Scène courante du POS
+	 */
 	private Scene scene;
 
+	// Déclaration des éléments du login
 	@FXML
 	private TextField userField;
 	@FXML
 	private PasswordField passField;
 	@FXML
 	private Button createAccountBtn;
+
+	// Déclaration des éléments du POS
 	@FXML
 	private Button produitBtn;
 	@FXML
@@ -88,89 +102,83 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Label totalLbl;
 	@FXML
+	private Label skuLbl;
+	@FXML
+	private Label nomLbl;
+	@FXML
+	private Label descLbl;
+	@FXML
+	private Label prixLbl;
+	@FXML
+	private Label fournisseurLbl;
+	@FXML
+	private Button ajoutProduitBouton;
+	@FXML
+	private TextField skuProduitTextField;
+	@FXML
+	private TextField nomProduitTextField;
+	@FXML
+	private TextField prixProduitTextField;
+	@FXML
+	private TextField coutantProduitTextField;
+	@FXML
+	private TextField quantiteProduitTextField;
+	@FXML
+	private TextField fournisseurProduitTextField;
+	@FXML
+	private Button creerBouton;
+	@FXML
+	private TextArea descriptionProduitTextArea;
+	@FXML
+	private ImageView imageProduitImageView;
+
+	// Déclaration des éléments de la grille de produits
+	@FXML
 	private GridPane gridProduits;
 	@FXML
 	private ScrollPane produitsScroll;
 
-	private BorderPane borderPaneProduit;
-
-	@FXML
-	private Label skuLbl;
-
-	@FXML
-	private Label nomLbl;
-
-	@FXML
-	private Label descLbl;
-
-	@FXML
-	private Label prixLbl;
-
-	@FXML
-	private Label fournisseurLbl;
-
-	@FXML
-	private Button ajoutProduitBouton;
-
-	private AnchorPane creationProduitPane;
-
-	@FXML
-	private TextField skuProduitTextField;
-
-	@FXML
-	private TextField nomProduitTextField;
-
-	@FXML
-	private TextField prixproduitTextField;
-
-	@FXML
-	private TextField coutantproduitTextField;
-
-	@FXML
-	private TextField quantiteProduitTextField;
-
-	@FXML
-	private TextField fournisseurProduitTextField;
-
-	@FXML
-	private Button creerBouton;
-
-	@FXML
-	private TextArea descriptionProduitTextArea;
-
-	@FXML
-	private ImageView imageProduitImageView;
-
+	// Déclaration des éléments de la création d'un vendeur
 	@FXML
 	private TextField prenomVendeurTextField;
-
 	@FXML
 	private TextField nomVendeurTextField;
-
 	@FXML
 	private TextField usernameVendeurTextField;
-
 	@FXML
 	private PasswordField vendeurPasswordField1;
-
 	@FXML
 	private PasswordField vendeurPasswordField2;
-
 	@FXML
 	private TextField courrielVendeurTextField;
-
-	FileInputStream fileTemp;
-
 	@FXML
 	private Button ajoutBtn;
 
-	private Produit produitCourant;
-
+	// Déclaration des éléments du clavier
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
-	TableView<Produit> rechercheResultat = null;
+	
+	/**
+	 * BorderPane contenant la grille des produits
+	 */
+	private BorderPane borderPaneProduit;
+
+	/**
+	 * AnchorPane contenant le formulaire de création de produit
+	 */
+	private AnchorPane creationProduitPane;
+
+	/**
+	 * TableView contenant les résultats de la recherche d'un produit
+	 */
+	private TableView<Produit> rechercheResultat = null;
+
+	/**
+	 * Le produit sélectionné
+	 */
+	private Produit produitCourant;
 
 	/**
 	 * Constructeur prenant un contrôleur et qui charge la première vue du POS
@@ -258,7 +266,6 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 
 		if (data != null) {
-			// TODO ajouter une méthode pour la création d'un compte de vendeur
 			VueDialogue.compteCreeSansCourriel();
 			annulerHandler(event);
 		}
@@ -365,7 +372,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @return le HBox wrapper
 	 */
 	private VBox creerProduitWrapper(Produit p, int x, int y) {
-		// TODO ajouter les images des produits
 		VBox vbox = new VBox();
 		ImageView image = convertFromBytes(p.getImage());
 		image.setFitHeight(234);
@@ -481,6 +487,9 @@ public class POSControleurVue implements IPOSControleurVue {
 		rechercheResultat.setEditable(false);
 	}
 
+	/**
+	 * Crée le TableView contenant les résultats de la recherche
+	 */
 	private void creerTableViewRecherche() {
 		rechercheResultat = new TableView<Produit>();
 
@@ -518,6 +527,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		column5.setResizable(false);
 	}
 
+	/**
+	 * Affiche la grille de produits
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void produitHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
@@ -525,6 +539,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().add(borderPaneProduit);
 	}
 
+	/**
+	 * Afficher le clavier
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void clavierHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
@@ -532,6 +551,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().add(clavierBox);
 	}
 
+	/**
+	 * Affiche le formulaire de création de produit
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
@@ -584,11 +608,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		scene = new Scene(root);
 	}
 
-	@Override
-	public Scene getScene() {
-		return this.scene;
-	}
-
+	/**
+	 * Permet d'enlever la ligne sélectionné dans la facture
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void enleverSelection(ActionEvent event) {
 		LigneFacture temp = this.factureTable.getSelectionModel().getSelectedItem();
@@ -599,6 +623,11 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	}
 
+	/**
+	 * Permet de créer une nouvelle transaction
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void annuler(ActionEvent event) {
 		this.createNewTransaction();
@@ -629,38 +658,33 @@ public class POSControleurVue implements IPOSControleurVue {
 		File file = fc.showOpenDialog(scene.getWindow());
 		Image image = null;
 
-		try {
-			FileInputStream fis = new FileInputStream(file);
-			image = new Image(fis);
-			fis.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		catch (NullPointerException e)
-		{
-			
+		if (file != null) {
+			try {
+				FileInputStream fis = new FileInputStream(file);
+				image = new Image(fis);
+				fis.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return image;
 	}
 
-	@FXML
-	private void coutantProduitHandler(KeyEvent event) {
-			if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
-				event.consume();
-			}
-
-	}
-
+	/**
+	 * Permet de générer un objet transitoire et de créer un produit
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void creerProduitHandler(ActionEvent event) {
-		DataVue data = null;
+		DataProduit data = null;
 		try {
-			data = new DataVue(Long.parseLong(skuProduitTextField.getText()), nomProduitTextField.getText(),
-					Float.parseFloat(prixproduitTextField.getText()),
-					Float.parseFloat(coutantproduitTextField.getText()), fournisseurProduitTextField.getText(),
+			data = new DataProduit(Long.parseLong(skuProduitTextField.getText()), nomProduitTextField.getText(),
+					Float.parseFloat(prixProduitTextField.getText()),
+					Float.parseFloat(coutantProduitTextField.getText()), fournisseurProduitTextField.getText(),
 					Integer.parseInt(quantiteProduitTextField.getText()), descriptionProduitTextArea.getText(),
 					convertToBytes(imageProduitImageView));
 		} catch (NumberFormatException e) {
@@ -675,11 +699,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 
 		if (data != null) {
-			// TODO faire un dialogue pour la création de produit
-			VueDialogue.compteCree();
+			VueDialogue.produitCree();
 			skuProduitTextField.clear();
-			prixproduitTextField.clear();
-			coutantproduitTextField.clear();
+			prixProduitTextField.clear();
+			coutantProduitTextField.clear();
 			descriptionProduitTextArea.clear();
 			fournisseurProduitTextField.clear();
 			quantiteProduitTextField.clear();
@@ -687,10 +710,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	/**
-	 * Convertit un ImageView en tableau de bytes
+	 * Permet de convertir un ImageView en array de bytes
 	 * 
 	 * @param imageView l'image à convertir
-	 * @return le tableau de bytes
+	 * @return l'array de bytes
 	 */
 	private byte[] convertToBytes(ImageView imageView) {
 		BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
@@ -708,6 +731,12 @@ public class POSControleurVue implements IPOSControleurVue {
 		return res;
 	}
 
+	/**
+	 * Permet de convertir un array de bytes en ImageView
+	 * 
+	 * @param bytes les bytes constituant l'image
+	 * @return un ImageView contenant l'image
+	 */
 	private ImageView convertFromBytes(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		BufferedImage bImage = null;
@@ -744,7 +773,15 @@ public class POSControleurVue implements IPOSControleurVue {
 			event.consume();
 		}
 	}
-	
+
+	@FXML
+	private void coutantProduitHandler(KeyEvent event) {
+		if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
+			event.consume();
+		}
+
+	}
+
 	@FXML
 	private void nomProduitHandler(KeyEvent event) {
 
@@ -785,5 +822,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		if (!event.getCharacter().matches("[0-9A-z\u0080-\u00ff]")) {
 			event.consume();
 		}
+	}
+
+	@Override
+	public Scene getScene() {
+		return this.scene;
 	}
 }

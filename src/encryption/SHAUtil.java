@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * donnée
  *
  */
-public class SHAUtility {
+public class SHAUtil {
 	public static String hashPassword(String originalPassword) {
 		MessageDigest digest = null;
 

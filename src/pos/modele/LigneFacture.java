@@ -3,25 +3,51 @@ package pos.modele;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+/**
+ * Classe représentant une ligne de la facture dans le TableView du POS
+ * 
+ * @author Bank-era Corp.
+ * 
+ */
 public class LigneFacture {
+	/**
+	 * Le prix unitaire du produit contenu dans la ligne de la facture
+	 */
 	private float prixUnitaire;
+
+	/**
+	 * Le prix total de la ligne
+	 */
 	private float prix;
-	private String prixString;
+
+	/**
+	 * La quantité du produit dans la ligne
+	 */
 	private int quantite;
+
+	/**
+	 * Le nom du produit
+	 */
 	private String nom;
+
+	/**
+	 * Le produit
+	 */
 	private Produit produit;
-	
+
+	/**
+	 * Formatteur pour l'argent
+	 */
 	private NumberFormat cf;
-	
 
 	/**
 	 * 
-	 * @param produit le produit associé à la ligne
+	 * @param produit  le produit associé à la ligne
 	 * @param quantite la quantité du produit
 	 */
 	public LigneFacture(Produit produit, int quantite) {
 		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
-		
+
 		this.prixUnitaire = produit.getPrix();
 		this.nom = produit.getNom();
 		this.quantite = quantite;
@@ -63,7 +89,6 @@ public class LigneFacture {
 	 */
 	private void calculerPrix() {
 		this.prix = this.prixUnitaire * this.quantite;
-		prixString = cf.format(this.prix);
 	}
 
 	/**
@@ -72,11 +97,11 @@ public class LigneFacture {
 	public Produit getProduit() {
 		return this.produit;
 	}
-	
+
 	/**
 	 * @return le prix en String
 	 */
 	public String getPrixString() {
-	    return prixString;
+		return cf.format(this.prix);
 	}
 }

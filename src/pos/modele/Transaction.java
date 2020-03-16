@@ -49,21 +49,37 @@ public class Transaction {
 	 */
 	private Etablissement etablissement;
 
+	/**
+	 * La propriété correspondant au sous-total
+	 */
 	private StringProperty sousTotalProperty;
 
+	/**
+	 * La propriété correspondant au taxes
+	 */
 	private StringProperty taxesProperty;
 
+	/**
+	 * La propriété correspondant au total
+	 */
 	private StringProperty totalProperty;
 
+	/**
+	 * Formatteur pour l'argent
+	 */
 	private NumberFormat cf;
 
+	/**
+	 * Les lignes de la facture. Chaque ligne correspond à un produit différent et
+	 * contient la quantité et le prix.
+	 */
 	private ObservableList<LigneFacture> lignesFacture;
 
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
-		this(getHeureCourrante(), pourcentageTaxes, new ArrayList<Produit>(), ((long) System.currentTimeMillis()));
+		this(getHeureCourante(), pourcentageTaxes, new ArrayList<Produit>(), ((long) System.currentTimeMillis()));
 	}
 
 	/**
@@ -95,10 +111,11 @@ public class Transaction {
 	}
 
 	/**
+	 * Permet d'aller chercher l'heure courante en String
 	 * 
-	 * @return
+	 * @return l'heure courante
 	 */
-	private static String getHeureCourrante() {
+	private static String getHeureCourante() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
 		return ("" + dtf.format(now));

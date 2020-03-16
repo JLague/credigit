@@ -114,7 +114,7 @@ public class Vendeur {
 	 */
 	public void setPassword(String password) throws ExceptionCreationCompte {
 		if (validerPassword(password)) {
-			this.password = encryption.SHAUtility.hashPassword(password);
+			this.password = encryption.SHAUtil.hashPassword(password);
 		} else {
 			throw new ExceptionCreationCompte("Le mot de passe doit contenir au moins 8 caractères.");
 		}

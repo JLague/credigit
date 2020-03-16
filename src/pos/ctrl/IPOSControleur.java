@@ -6,7 +6,7 @@ import exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import pos.modele.DataVue;
+import pos.modele.DataProduit;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -56,7 +56,7 @@ public interface IPOSControleur {
 
 	public void inputEntree(String input);
 
-	public boolean creerProduit(DataVue data) throws ExceptionProduitEtablissement;
+	public boolean creerProduit(DataProduit data) throws ExceptionProduitEtablissement;
 
 	public boolean connexion(String username, String password);
 

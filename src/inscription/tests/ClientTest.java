@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import exception.ExceptionCreationCompte;
 import inscription.modele.Client;
-import inscription.modele.DataTransition;
+import inscription.modele.DataClient;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
 
@@ -39,7 +39,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "youremail@here.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "    111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -58,7 +58,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 0;
-			client2 = new Client(new DataTransition("LeRond d'Alembert", "Jean", "mathislife@math.com", localDate,
+			client2 = new Client(new DataClient("LeRond d'Alembert", "Jean", "mathislife@math.com", localDate,
 
 					new LocalAdresse("Pi/2 rue du sinus", "G5C 4F7", "Cosinus", "Trigo", "Fonction"), "123 456 789",
 					questions, reponses, "1-555-555-5598", empreinte));
@@ -81,7 +81,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition(null, "Christophe", "youremail@here.com", localDate,
+			client1 = new Client(new DataClient(null, "Christophe", "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -101,7 +101,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("", "Christophe", "youremail@here.com", localDate,
+			client1 = new Client(new DataClient("", "Christophe", "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -121,7 +121,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", null, "youremail@here.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", null, "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -141,7 +141,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "", "youremail@here.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "", "youremail@here.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -161,7 +161,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", null, localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", null, localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -181,7 +181,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -201,7 +201,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", null,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", null,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -221,7 +221,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -241,7 +241,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -262,7 +262,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -283,7 +283,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111 111 111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -303,7 +303,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate, null,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate, null,
 					"111 111 111", questions, reponses, "555-555-5555", empreinte));
 
 			fail("Adresse null");
@@ -322,7 +322,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), null, questions,
 					reponses, "555-555-5555", empreinte));
 
@@ -342,7 +342,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "9111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -362,7 +362,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "11111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -382,7 +382,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111", null,
 					reponses, "555-555-5555", empreinte));
 
@@ -402,7 +402,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -421,7 +421,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -441,7 +441,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, null, "555-555-5555", empreinte));
 
@@ -460,7 +460,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -480,7 +480,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -500,7 +500,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 
@@ -520,7 +520,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, null, empreinte));
 
@@ -540,7 +540,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-555512", empreinte));
 
@@ -560,7 +560,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "55-555-5555", empreinte));
 
@@ -580,7 +580,7 @@ public class ClientTest {
 			byte[] empreinte = new byte[2];
 			empreinte[0] = 1;
 			empreinte[1] = 1;
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", null));
 
@@ -598,7 +598,7 @@ public class ClientTest {
 			reponses.add("Chien");
 			reponses.add("St-Pierre");
 			byte[] empreinte = new byte[0];
-			client1 = new Client(new DataTransition("Duchesne", "Christophe", "myemail@gmail.com", localDate,
+			client1 = new Client(new DataClient("Duchesne", "Christophe", "myemail@gmail.com", localDate,
 					new LocalAdresse("555 rue Yolo", "12", "G5C 4F7", "Québec", "Québec", "Canada"), "111111111",
 					questions, reponses, "555-555-5555", empreinte));
 

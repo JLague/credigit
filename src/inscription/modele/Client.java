@@ -89,7 +89,7 @@ public class Client {
 	 * @param data - Un objet transitoire contenant les informations sur le client
 	 * @throws ExceptionCreationCompte
 	 */
-	public Client(DataTransition data) throws ExceptionCreationCompte {
+	public Client(DataClient data) throws ExceptionCreationCompte {
 
 		setNom(data.getNom());
 		setPrenom(data.getPrenom());

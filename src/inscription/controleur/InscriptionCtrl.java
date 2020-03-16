@@ -2,9 +2,9 @@ package inscription.controleur;
 
 import exception.ExceptionCreationCompte;
 import inscription.modele.Client;
-import inscription.modele.Connexion;
+import inscription.modele.ConnexionInscription;
 import inscription.modele.CourrielConfirmation;
-import inscription.modele.DataTransition;
+import inscription.modele.DataClient;
 import inscription.vue.InscriptionVueCtrl;
 import javafx.scene.Scene;
 
@@ -24,7 +24,7 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	/**
 	 * Connexion avec la base de données
 	 */
-	private Connexion connexion;
+	private ConnexionInscription connexion;
 
 	/**
 	 * Connexion avec le serveur d'envoi de courriels
@@ -37,7 +37,7 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	public InscriptionCtrl() {
 		vue = new InscriptionVueCtrl(this);
 		courriel = new CourrielConfirmation();
-		connexion = new Connexion(courriel);
+		connexion = new ConnexionInscription(courriel);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	}
 
 	@Override
-	public boolean envoyerDataClient(DataTransition data) throws ExceptionCreationCompte {
+	public boolean envoyerDataClient(DataClient data) throws ExceptionCreationCompte {
 		return connexion.ajouterCompteClient(new Client(data));
 	}
 

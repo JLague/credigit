@@ -1,7 +1,7 @@
 package inscription.controleur;
 
 import exception.ExceptionCreationCompte;
-import inscription.modele.DataTransition;
+import inscription.modele.DataClient;
 import javafx.scene.Scene;
 
 /**
@@ -25,7 +25,7 @@ public interface IInscriptionCtrl {
 	 * 
 	 * @return - Vrai si l'utilisateur est ajouté avec succès, faux sinon
 	 */
-	public boolean envoyerDataClient(DataTransition data) throws ExceptionCreationCompte;
+	public boolean envoyerDataClient(DataClient data) throws ExceptionCreationCompte;
 
 	/**
 	 * Méthode qui demande au modèle de supprimer un compte
