@@ -33,7 +33,7 @@ public class VueDialogue {
 			Platform.exit();
 		}
 	}
-
+	
 	/**
 	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une
 	 * erreur lors de la création d'un client

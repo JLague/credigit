@@ -9,11 +9,13 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
-import pos.modele.DataVendeur;
+import pos.modele.ConnexionPOS;
 import pos.modele.DataProduit;
+import pos.modele.DataVendeur;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 import pos.modele.TableauDeBord;
+import pos.modele.Vendeur;
 import pos.vue.POSControleurVue;
 
 /**
@@ -30,7 +32,15 @@ public class POSControleur implements IPOSControleur {
 	 */
 	private POSApplication app;
 
+	/**
+	 * Tableau de bord de l'application
+	 */
 	private TableauDeBord tb;
+	
+	/**
+	 * Objet permettant la connexion à la base de données
+	 */
+	private ConnexionPOS connexion;
 
 	/**
 	 * Le contrôleur de la vue du POS
@@ -46,6 +56,10 @@ public class POSControleur implements IPOSControleur {
 		this.app = posApplication;
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
+		this.connexion = new ConnexionPOS();
+		
+		// Peuple l'inventaire de l'établissement
+		tb.setInventaire(connexion.getProduits());
 	}
 
 	/**
@@ -80,13 +94,18 @@ public class POSControleur implements IPOSControleur {
 
 	@Override
 	public boolean creerProduit(DataProduit data) throws ExceptionProduitEtablissement {
-		return tb.ajouterProduit(new Produit(data));
+		return connexion.ajouterProduit(data);
 
 	}
 
 	@Override
 	public boolean connexion(String username, String password) {
-		return tb.connecter(username, password);
+		Vendeur vendeur = connexion.connecter(username, password);
+		
+		if(vendeur != null)
+			tb.setVendeur(vendeur);
+		
+		return vendeur != null;
 	}
 
 	@Override
@@ -123,8 +142,8 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public List<Produit> getListeProduits() {
-		return tb.getListeProduits();
+	public List<Produit> getInventaire() {
+		return tb.getInventaire();
 	}
 
 	@Override
@@ -137,7 +156,7 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void creerVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement {
-		tb.creerNouveauVendeur(data);
+		connexion.ajouterCompteVendeur(data);
 	}
 
 	/**

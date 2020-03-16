@@ -352,7 +352,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * Popule le grid de produits à l'aide de la liste des produits
 	 */
 	private void populerGridProduit() {
-		List<Produit> listeProduits = ctrl.getListeProduits();
+		List<Produit> listeProduits = ctrl.getInventaire();
 		int cpt = 0;
 
 		for (Produit p : listeProduits) {
@@ -764,7 +764,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void imageProduitHandler(MouseEvent event) {
 		imageProduitImageView.setPreserveRatio(false);
-		imageProduitImageView.setImage(choisirImage());
+		Image im = choisirImage();
+		if(im != null)
+			imageProduitImageView.setImage(im);
 	}
 
 	@FXML

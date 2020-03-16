@@ -45,7 +45,7 @@ public interface IPOSControleur {
 	/**
 	 * @return la liste de tous les produits
 	 */
-	public List<Produit> getListeProduits();
+	public List<Produit> getInventaire();
 
 	/**
 	 * @return le produit correspondant au nom

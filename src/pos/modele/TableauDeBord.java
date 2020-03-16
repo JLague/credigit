@@ -3,8 +3,6 @@ package pos.modele;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ExceptionCreationCompte;
-import exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -21,19 +19,10 @@ public class TableauDeBord {
 	private Etablissement etablissement;
 	private Vendeur vendeur = null;
 	private List<Produit> inventaire;
-	private ConnexionPOS dbConnection;
 
 	public TableauDeBord() {
 		this.transactionCourante = new Transaction();
 		this.inventaire = new ArrayList<Produit>();
-
-		dbConnection = new ConnexionPOS();
-
-		populerInventaire();
-	}
-
-	private void populerInventaire() {
-		inventaire = dbConnection.getProduits();
 	}
 
 	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
@@ -93,13 +82,7 @@ public class TableauDeBord {
 		this.transactionCourante.removeProduit(produit);
 	}
 
-	/**
-	 * 
-	 * @return l'inventaire du magasin
-	 */
-	public List<Produit> getListeProduits() {
-		return this.inventaire;
-	}
+
 
 	/**
 	 * @param nom le nom du produit à chercher
@@ -133,19 +116,6 @@ public class TableauDeBord {
 		return listProd;
 	}
 
-	public void creerNouveauVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement {
-		Vendeur nouveauVendeur = new Vendeur(data);
-
-		// La validation se fait ici parce qu'on a besoin de communiquer avec la base de
-		// donnée
-		if (dbConnection.validerNomUtilisateur(nouveauVendeur.getUsername())) {
-			dbConnection.ajouterCompteVendeur(nouveauVendeur);
-			// TODO ajouter le vendeur à l'établissement
-			// etablissement.ajouterVendeur(nouveauVendeur);
-		} else
-			throw new ExceptionCreationCompte("Le nom d'utilisateur choisi est déjà utilisé.");
-	}
-
 	/**
 	 * @return le nom du vendeur ou null si personne n'est connecté
 	 */
@@ -154,25 +124,25 @@ public class TableauDeBord {
 			return vendeur.getPrenom();
 		return null;
 	}
-
-	/**
-	 * Méthode permettant à un utilisateur de se connecter si les informations sont
-	 * valides
-	 * 
-	 * @param username le nom d'utilisateur du vendeur
-	 * @param password le mot de passe du vendeur
-	 * @return true si la connection est réussi
+	
+	/*
+	 * @param vendeur le vendeur aillant une session ouverte
 	 */
-	public boolean connecter(String username, String password) {
-		if (username != null && password != null && username.length() != 0 && password.length() != 0) {
-			password = encryption.SHAUtil.hashPassword(password);
-			this.vendeur = dbConnection.connecter(username, password);
-		}
-
-		return vendeur != null;
+	public void setVendeur(Vendeur vendeur) {
+		this.vendeur = vendeur;
 	}
-
-	public boolean ajouterProduit(Produit produit) {
-		return dbConnection.ajouterProduit(produit);
+	
+	/**
+	 * @return l'inventaire du magasin
+	 */
+	public List<Produit> getInventaire() {
+		return this.inventaire;
+	}
+	
+	/**
+	 * @param produits les produits de l'inventaire
+	 */
+	public void setInventaire(List<Produit> produits) {
+		this.inventaire = produits;
 	}
 }
