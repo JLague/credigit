@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -44,6 +46,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
 import pos.modele.DataVendeur;
 import pos.modele.DataProduit;
@@ -110,6 +114,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Label prixLbl;
 	@FXML
+	private Label resetLbl;
+	@FXML
 	private Label fournisseurLbl;
 	@FXML
 	private Button ajoutProduitBouton;
@@ -159,7 +165,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
-	
+
 	/**
 	 * BorderPane contenant la grille des produits
 	 */
@@ -205,6 +211,13 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ouvrirVueInscriptionVendeur() {
 		creerScene(VIEW_INSCRIPTION_VENDEUR, rootVBox);
 		ctrl.chargerScene(this.scene, "Inscription vendeur", false);
+	}
+
+	@FXML
+	void onEnterPressed(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.ENTER)) {
+			connect(null);
+		}
 	}
 
 	@FXML
@@ -256,7 +269,12 @@ public class POSControleurVue implements IPOSControleurVue {
 			} else
 				throw new ExceptionCreationCompte("Les deux mots de passes entrés sont différents");
 
-			ctrl.creerVendeur(data);
+			if (ouvrirDialogueNip().equals("12345")) {
+				ctrl.creerVendeur(data);
+			} else {
+				throw new ExceptionCreationCompte();
+			}
+
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			data = null;
@@ -268,6 +286,29 @@ public class POSControleurVue implements IPOSControleurVue {
 		if (data != null) {
 			VueDialogue.compteCreeSansCourriel();
 			annulerHandler(event);
+		}
+	}
+
+	private String ouvrirDialogueNip() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NipDialoguePOS.fxml"));
+		Parent parent;
+		try {
+			NipDialogueControleurVue dialogController = new NipDialogueControleurVue();
+			fxmlLoader.setController(dialogController);
+
+			parent = fxmlLoader.load();
+			Scene scene = new Scene(parent, 300, 200);
+			Stage stage = new Stage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(scene);
+			stage.showAndWait();
+
+			return dialogController.getNip();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "";
 		}
 	}
 
@@ -709,6 +750,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 	}
 
+	@FXML
+	void resetHandler(MouseEvent event) {
+		chargerAjoutProduit();
+		middlePane.getChildren().clear();
+		middlePane.getChildren().add(creationProduitPane);
+	}
+
 	/**
 	 * Permet de convertir un ImageView en array de bytes
 	 * 
@@ -765,7 +813,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void imageProduitHandler(MouseEvent event) {
 		imageProduitImageView.setPreserveRatio(false);
 		Image im = choisirImage();
-		if(im != null)
+		if (im != null)
 			imageProduitImageView.setImage(im);
 	}
 

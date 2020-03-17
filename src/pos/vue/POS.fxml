@@ -7,14 +7,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="25.0" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="25.0" styleClass="root-1" stylesheets="@../../../res/styles/POS.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="322.0" fitWidth="294.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../res/images/logo_credigit.png" />
          </image></ImageView>
       <TextField fx:id="userField" maxWidth="400.0" minHeight="30.0" promptText="Nom d'utilisateur" styleClass="fields-1" />
-      <PasswordField fx:id="passField" maxWidth="400.0" minHeight="30.0" promptText="Mot de passe" styleClass="fields-1" />
+      <PasswordField fx:id="passField" maxWidth="400.0" minHeight="30.0" onKeyPressed="#onEnterPressed" promptText="Mot de passe" styleClass="fields-1" />
       <Button minHeight="50.0" minWidth="300.0" mnemonicParsing="false" onAction="#connect" styleClass="buttons-1" text="Se connecter" />
       <Button fx:id="createAccountBtn" minHeight="50.0" minWidth="300.0" mnemonicParsing="false" styleClass="buttons-1" text="Créer un compte" />
    </children>

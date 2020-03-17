@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <PasswordField fx:id="nip1" alignment="CENTER" layoutX="24.0" layoutY="81.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="80.0" />
+      <PasswordField fx:id="nip2" alignment="CENTER" layoutX="74.0" layoutY="80.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="72.0" AnchorPane.topAnchor="80.0" />
+      <PasswordField fx:id="nip3" alignment="CENTER" layoutX="131.0" layoutY="80.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="131.0" AnchorPane.topAnchor="80.0" />
+      <PasswordField fx:id="nip4" alignment="CENTER" layoutX="185.0" layoutY="80.0" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="72.0" AnchorPane.topAnchor="80.0" />
+      <PasswordField fx:id="nip5" alignment="CENTER" layoutX="158.0" layoutY="90.0" onKeyTyped="#DernierChiffreHandler" prefHeight="40.0" prefWidth="40.0" AnchorPane.bottomAnchor="80.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="80.0" />
+   </children>
+</AnchorPane>
