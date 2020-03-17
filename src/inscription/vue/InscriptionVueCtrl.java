@@ -147,6 +147,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	@FXML
 	private TextField quitterTextField;
 
+	@FXML
+	private ImageView ivEmpreinte;
+
 	/**
 	 * Le contrôleur principal de l'application
 	 */
@@ -167,6 +170,10 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	private List<Pane> etapes;
 
+	private byte[] empreinte;
+
+	private WorkIndicatorDialog<String> wd = null;
+
 	/**
 	 * Constructeur du contrôleur de la vue
 	 * 
@@ -174,6 +181,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	public InscriptionVueCtrl(InscriptionCtrl ctrl) {
 		this.ctrl = ctrl;
+		empreinte = null;
 
 		try {
 
@@ -339,12 +347,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			continuerBtn.setText("Terminer");
 			nouvelleEtape = EtapesVues.ETAPE4;
 			setupCompteur(etapeActuelle, nouvelleEtape);
+			if (empreinte == null) {
+				empreinte = EmpreinteUtil.getEmpreinte();
+				ivEmpreinte.setImage(
+						new Image(getClass().getResource("/images/ic_capteur_empreinte_vert.png").toExternalForm()));
+			}
+
 			break;
 
 		case ETAPE4:
 			try {
 				DataClient data = creerDataTransition();
 				if (data != null && ctrl.envoyerDataClient(data)) {
+					loading();
 					VueDialogue.compteCree();
 				}
 			} catch (ExceptionCreationCompte e) {
@@ -422,7 +437,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			reponses.add(reponse1TextField.getText());
 			reponses.add(reponse2TextField.getText());
 			data.setReponses(reponses);
-			data.setEmpreinte(EmpreinteUtil.getEmpreinte());
+			data.setEmpreinte(empreinte);
 
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
@@ -430,6 +445,29 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		}
 
 		return data;
+	}
+
+	private void loading() {
+		wd = new WorkIndicatorDialog(continuerBtn.getScene().getWindow(), "Loading Project Files...");
+
+		wd.addTaskEndNotification(result -> {
+			System.out.println(result);
+			wd = null; // don't keep the object, cleanup
+		});
+
+		wd.exec("123", inputParam -> {
+			// Thinks to do...
+			// NO ACCESS TO UI ELEMENTS!
+			for (int i = 0; i < 20; i++) {
+				System.out.println("Loading data... '123' =->" + inputParam);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			return new Integer(1);
+		});
 	}
 
 	/**

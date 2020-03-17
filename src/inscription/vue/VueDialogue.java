@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 
 /**
  * Classe permettant de créer des dialogues dans différentes situations
@@ -27,13 +28,16 @@ public class VueDialogue {
 		ButtonType buttonTypeOui = new ButtonType("Oui");
 		ButtonType buttonTypeNon = new ButtonType("Non", ButtonData.CANCEL_CLOSE);
 		alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		Optional<ButtonType> resultat = alert.showAndWait();
 
 		if (resultat.get() == buttonTypeOui) {
 			Platform.exit();
 		}
 	}
-	
+
 	/**
 	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une
 	 * erreur lors de la création d'un client
@@ -45,6 +49,10 @@ public class VueDialogue {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Erreur lors de la création d'un compte ");
 		alert.setHeaderText(message);
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets()
+				.add(VueDialogue.class.getClassLoader().getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 
 	}
@@ -57,6 +65,9 @@ public class VueDialogue {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Le produit a été créé avec succès!");
 		alert.setContentText("Le produit a été créé et ajouté à la base de données.");
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
 
@@ -70,6 +81,9 @@ public class VueDialogue {
 		alert.setContentText(
 				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votre adhésion de façon officielle.");
 
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
 
@@ -81,7 +95,9 @@ public class VueDialogue {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Votre compte a été créé avec succès!");
 		alert.setContentText("Nous sommes heureux de vous compter parmis nous!");
-
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
 
@@ -94,7 +110,9 @@ public class VueDialogue {
 		alert.setHeaderText("Votre compte a été supprimé avec succès!");
 		alert.setContentText(
 				"Nous sommes déçus de vous voir partir :( ... N'hésitez pas à revenir vous créer un compte dans le futur!");
-
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource("styles/Dialogue.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
 

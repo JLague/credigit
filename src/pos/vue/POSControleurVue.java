@@ -479,6 +479,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		clavierText.setMinHeight(50);
 		clavierText.setMaxWidth(500);
 		clavierText.setEditable(false);
+		clavierText.setPromptText("Prix : 3.99 et SKU: .123");
 		clavierText.getStyleClass().add("clavier-text");
 		clavierText.setAlignment(Pos.CENTER_RIGHT);
 

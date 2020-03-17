@@ -14,7 +14,7 @@
             <Font name="Montserrat Bold" size="24.0" />
          </font>
       </Label>
-      <ImageView fitHeight="225.0" fitWidth="122.0" layoutX="279.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="279.0" AnchorPane.rightAnchor="279.0">
+      <ImageView fx:id="ivEmpreinte" fitHeight="225.0" fitWidth="122.0" layoutX="279.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="279.0" AnchorPane.rightAnchor="279.0">
          <image>
             <Image url="@../../../res/images/ic_capteur_empreinte.png" />
          </image>
