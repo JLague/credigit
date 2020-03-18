@@ -14,9 +14,6 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
-import pos.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -28,7 +25,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -45,14 +41,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
-import pos.modele.DataVendeur;
+import pos.exception.ExceptionCreationCompte;
+import pos.exception.ExceptionProduitEtablissement;
 import pos.modele.DataProduit;
+import pos.modele.DataVendeur;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
@@ -164,7 +163,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Button modBtn;
 	@FXML
-	private Button buttonHBox;
+	private HBox buttonHBox;
 
 	// Déclaration des éléments du clavier
 	private GridPane clavierGrid;
@@ -201,7 +200,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param ctrl le contrôleur de l'application
 	 */
 	public POSControleurVue(POSControleur ctrl) {
-
 		this.ctrl = ctrl;
 		ouvrirLoginVendeur();
 	}
@@ -239,7 +237,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(true);
 		descriptionProduitTextArea.setDisable(true);
 
-		buttonHBox.getChildrenUnmodifiable().addAll(modifier, retour);
+		buttonHBox.getChildren().addAll(modifier, retour);
 	}
 
 	private void modificationProduit() {
@@ -252,7 +250,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(false);
 		descriptionProduitTextArea.setDisable(false);
 		
-		buttonHBox.getChildrenUnmodifiable().clear();
+		buttonHBox.getChildren().clear();
 	}
 
 	/**
@@ -427,7 +425,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * le supprimer
 	 */
 	private void modificationSuppressionProduit() {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificationSupressionProd.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
 		loader.setController(this);
 
 		try {
