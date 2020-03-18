@@ -103,9 +103,17 @@ public class Vendeur {
 
 	/**
 	 * @param username le username du vendeur à modifier
+	 * @throws ExceptionCreationCompte 
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String username) throws ExceptionCreationCompte {
+		if(validerNom(username))
+		{
+			this.username = username;
+		}
+		else {
+			throw new ExceptionCreationCompte("Votre username n'est pas valide.");
+		}
+		
 	}
 
 	/**
@@ -148,7 +156,7 @@ public class Vendeur {
 	}
 
 	private boolean validerPassword(String password) {
-		return (password.length() >= 8 && password != null);
+		return (password != null && password.length() >= 8);
 	}
 
 	private boolean validerCourriel(String courriel) {

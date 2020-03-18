@@ -59,28 +59,9 @@ public class Produit {
 	/**
 	 * Crée un nouveau produit
 	 * 
-	 * @param sku         - Le stock keeping unit du produit
-	 * @param nom         - Le nom du produit
-	 * @param prix        - Le prix du produit
-	 * @param coutant     - Le prix coutant du produit
-	 * @param fournisseur - Le fournisseur du produit
-	 * @param quantite    - La quantité du produit
-	 * @param description - La description du produit
-	 * @param image       - L'image du produit
+	 * @param data - L'objet transitoire contenant le produit
 	 * @throws ExceptionProduitEtablissement
 	 */
-	public Produit(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
-			String description, byte[] image) throws ExceptionProduitEtablissement {
-		setSku(sku);
-		setNom(nom);
-		setPrix(prix);
-		setCoutant(coutant);
-		setFournisseur(fournisseur);
-		setQuantite(quantite);
-		setDescription(description);
-		setImage(image);
-	}
-
 	public Produit(DataProduit data) throws ExceptionProduitEtablissement {
 		setSku(data.getSku());
 		setNom(data.getNom());
@@ -282,11 +263,6 @@ public class Produit {
 		} else {
 			throw new ExceptionProduitEtablissement("L'image n'est pas valide.");
 		}
-	}
-
-	@Override
-	public String toString() {
-		return this.nom;
 	}
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import exceptioncopy.ExceptionProduitEtablissement;
+import pos.exception.ExceptionProduitEtablissement;
 import javafx.collections.ObservableList;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;

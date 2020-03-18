@@ -208,7 +208,7 @@ public class Etablissement {
 	 * @param vendeur - Le vendeur à ajouter
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void ajouterVendeur(Vendeur vendeur) throws ExceptionProduitEtablissement {
+	public void ajouterVendeur(Vendeur vendeur) throws ExceptionProduitEtablissement {
 
 		if (vendeur != null) {
 			vendeurs.add(vendeur);
@@ -232,7 +232,7 @@ public class Etablissement {
 	 * 
 	 * @param balance - La balance de l'établissement à modifier
 	 */
-	protected void setBalance(float balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 
@@ -241,7 +241,8 @@ public class Etablissement {
 	 * 
 	 * @param ajout - Le montant à ajouter
 	 */
-	protected void ajouterBalance(float ajout) {
+	public void ajouterBalance(float ajout) {
+		
 		balance += ajout;
 	}
 
@@ -286,7 +287,13 @@ public class Etablissement {
 	 * @throws ExceptionProduitEtablissement
 	 */
 	public void setCourriel(String courriel) throws ExceptionProduitEtablissement {
+			
+		if (courriel != null && courriel.length() != 0) {
 			this.courriel = courriel;
+		} else {
+			throw new ExceptionProduitEtablissement("Le courriel de l'établissement n'est pas valide.");
+		}
+		
 
 	}
 
