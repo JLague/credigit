@@ -183,6 +183,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * AnchorPane contenant le formulaire de création de produit
 	 */
 	private AnchorPane creationProduitPane;
+	
+	/**
+	 * AnchorPane contenant le formulaire de modification de produit
+	 */
+	private AnchorPane modificationProduitPane;
 
 	/**
 	 * TableView contenant les résultats de la recherche d'un produit
@@ -211,18 +216,39 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(LOGIN, rootVBox);
 		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 	}
+	
+	/**
+	 * Méthode permettant de modifier les informations d'un produit exsitant ou de
+	 * le supprimer
+	 */
+	private void modificationSuppressionProduit() {
+		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
+		loader1.setController(this);
+		
+		try {
+			modificationProduitPane = loader1.load();
+			middlePane.getChildren().clear();
+			middlePane.getChildren().add(modificationProduitPane);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
 
 	/**
 	 * Se charge de l'ouverture de la vue pour la modification des produits
 	 */
 	@FXML
-	private void ouvrirVueModProd() {
+	private void ouvrirVueModProdHandler() {
+		System.out.println("Hello");
 		modificationSuppressionProduit();
+		System.out.println("Hello2");
 		modifier = new Button("Modifier cet item");
 		retour = new Button("Annuler");
 
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				modificationProduit();
@@ -410,22 +436,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void chargerAjoutProduit() {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("CreationProduitPOS.fxml"));
-		loader.setController(this);
-
-		try {
-			creationProduitPane = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	/**
-	 * Méthode permettant de modifier les informations d'un produit exsitant ou de
-	 * le supprimer
-	 */
-	private void modificationSuppressionProduit() {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
 		loader.setController(this);
 
 		try {
