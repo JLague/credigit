@@ -96,7 +96,7 @@
                      <children>
                         <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" onAction="#annuler" styleClass="buttons-1" text="Annuler transaction" />
                         <Button fx:id="ajoutBtn" mnemonicParsing="false" onAction="#ajouterSelection" styleClass="buttons-1" text="Ajouter item" />
-                        <Button fx:id="modBtn" mnemonicParsing="false" onAction="#ouvrirVueModProd" styleClass="buttons-1" text="Voir fiche item" />
+                        <Button fx:id="modBtn" mnemonicParsing="false" onAction="#ouvrirVueModProdHandler" styleClass="buttons-1" text="Voir fiche item" />
                         <Button mnemonicParsing="false" onAction="#enleverSelection" styleClass="buttons-1" text="Enlever sélection" />
                      </children>
                   </HBox>
