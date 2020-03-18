@@ -2,6 +2,7 @@ package pos.application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
 
@@ -22,6 +23,8 @@ public class POSApplication extends Application {
 		stage.setTitle("Connexion");
 		stage.sizeToScene();
 		stage.setResizable(true);
+		stage.getIcons()
+		.add(new Image(getClass().getResource("/images/pos/ic_empreinte.png").toExternalForm()));
 		stage.show();
 	}
 

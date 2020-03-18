@@ -319,13 +319,6 @@ public class Client {
 
 		if (empreinte != null && empreinte.length != 0) {
 			this.empreinte = Base64.getEncoder().encodeToString(empreinte);
-			System.out.println("Longueur" + empreinte.length);
-			for(byte b : empreinte)
-			{
-				System.out.print(b);
-			}
-			System.out.println();
-			System.out.println("Empreinte: " + this.empreinte);
 		} else {
 			throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
 		}

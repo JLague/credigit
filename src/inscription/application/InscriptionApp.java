@@ -2,6 +2,7 @@ package inscription.application;
 
 import inscription.controleur.InscriptionCtrl;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -25,6 +26,8 @@ public class InscriptionApp extends Application {
 		stage.setScene(ctrl.getScene());
 		stage.setResizable(true);
 		stage.setFullScreen(true);
+		stage.getIcons()
+				.add(new Image(getClass().getResource("/images/inscription/ic_empreinte.png").toExternalForm()));
 		stage.show();
 	}
 
