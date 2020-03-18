@@ -1,0 +1,10 @@
+.loading {
+	-fx-background-color: linear-gradient(to right, #374587, #0D1837);
+}
+
+.loading .label {
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+}

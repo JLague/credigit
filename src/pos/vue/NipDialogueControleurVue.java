@@ -1,6 +1,5 @@
 package pos.vue;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
@@ -57,12 +56,12 @@ public class NipDialogueControleurVue {
 	@FXML
 	void DernierChiffreHandler(KeyEvent event) {
 		if (!nip1.getText().isEmpty() && !nip2.getText().isEmpty() && !nip3.getText().isEmpty()
-				&& !nip4.getText().isEmpty() && !nip5.getText().isEmpty()) {
+				&& !nip4.getText().isEmpty() && event.getCharacter().matches("[0-9]")) {
 			nip += nip1.getText();
 			nip += nip2.getText();
 			nip += nip3.getText();
 			nip += nip4.getText();
-			nip += nip5.getText();
+			nip += event.getCharacter();
 			nip.trim();
 			closeStage(event);
 		}

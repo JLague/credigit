@@ -325,6 +325,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
+		continuerBtn.setDisable(false);
 		EtapesVues nouvelleEtape = null;
 		switch (etapeActuelle) {
 		case ETAPE1:
@@ -347,24 +348,16 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			continuerBtn.setText("Terminer");
 			nouvelleEtape = EtapesVues.ETAPE4;
 			setupCompteur(etapeActuelle, nouvelleEtape);
-			if (empreinte == null) {
-				empreinte = EmpreinteUtil.getEmpreinte();
-				ivEmpreinte.setImage(
-						new Image(getClass().getResource("/images/ic_capteur_empreinte_vert.png").toExternalForm()));
-			}
+			getEmpreinte();
 
 			break;
 
 		case ETAPE4:
-			try {
-				DataClient data = creerDataTransition();
-				if (data != null && ctrl.envoyerDataClient(data)) {
-					loading();
-					VueDialogue.compteCree();
-				}
-			} catch (ExceptionCreationCompte e) {
-				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+			DataClient data = creerDataTransition();
+			if (data != null) {
+				loading(data);
 			}
+
 			nouvelleEtape = EtapesVues.ETAPE4;
 			break;
 
@@ -447,25 +440,22 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		return data;
 	}
 
-	private void loading() {
-		wd = new WorkIndicatorDialog(continuerBtn.getScene().getWindow(), "Loading Project Files...");
+	private void loading(DataClient data) {
+		wd = new WorkIndicatorDialog<String>(continuerBtn.getScene().getWindow(),
+				"Création du compte... Veuillez patienter.");
 
 		wd.addTaskEndNotification(result -> {
-			System.out.println(result);
+			VueDialogue.compteCree();
 			wd = null; // don't keep the object, cleanup
 		});
 
-		wd.exec("123", inputParam -> {
-			// Thinks to do...
-			// NO ACCESS TO UI ELEMENTS!
-			for (int i = 0; i < 20; i++) {
-				System.out.println("Loading data... '123' =->" + inputParam);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+		wd.exec(new String(), inputParam -> {
+			try {
+				ctrl.envoyerDataClient(data);
+			} catch (ExceptionCreationCompte e) {
+				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
+
 			return new Integer(1);
 		});
 	}
@@ -535,7 +525,25 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			continuerBtn.setText("Terminer");
 			setupCompteur(etapeActuelle, EtapesVues.ETAPE4);
 			etapeActuelle = EtapesVues.ETAPE4;
+			getEmpreinte();
 		}
+	}
+
+	/**
+	 * Méthode permettant à la vue de gérer la prise de l'empreinte digitale du
+	 * client
+	 */
+	private void getEmpreinte() {
+		if (empreinte == null) {
+			new Thread(() -> {
+				continuerBtn.setDisable(true);
+				empreinte = EmpreinteUtil.getEmpreinte();
+				continuerBtn.setDisable(false);
+				ivEmpreinte.setImage(
+						new Image(getClass().getResource("/images/ic_capteur_empreinte_vert.png").toExternalForm()));
+			}).start();
+		}
+
 	}
 
 	/**

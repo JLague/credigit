@@ -29,11 +29,11 @@ import java.util.function.ToIntFunction;
  */
 public class WorkIndicatorDialog<P> {
 
-	private Task animationWorker;
+	private Task<Object> animationWorker;
 	private Task<Integer> taskWorker;
 
 	private final ProgressIndicator progressIndicator = new ProgressIndicator(ProgressIndicator.INDETERMINATE_PROGRESS);
-	private final Stage dialog = new Stage(StageStyle.UNDECORATED);
+	private final Stage dialog = new Stage(StageStyle.UTILITY);
 	private final Label label = new Label();
 	private final Group root = new Group();
 	private final Scene scene = new Scene(root, 330, 120, Color.WHITE);
@@ -52,6 +52,7 @@ public class WorkIndicatorDialog<P> {
 	 *
 	 */
 	public WorkIndicatorDialog(Window owner, String label) {
+		dialog.setTitle("Création du compte");
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(owner);
 		dialog.setResizable(false);
@@ -71,7 +72,7 @@ public class WorkIndicatorDialog<P> {
 	/**
 	 *
 	 */
-	public void exec(P parameter, ToIntFunction func) {
+	public void exec(P parameter, ToIntFunction<P> func) {
 		setupDialog();
 		setupAnimationThread();
 		setupWorkerThread(parameter, func);
@@ -87,8 +88,11 @@ public class WorkIndicatorDialog<P> {
 		vbox.setMinSize(330, 120);
 		vbox.getChildren().addAll(label, progressIndicator);
 		mainPane.setTop(vbox);
+		mainPane.getStylesheets().add(getClass().getResource("/styles/Loading.css").toExternalForm());
+		mainPane.getStyleClass().add("loading");
 		dialog.setScene(scene);
 
+		
 		dialog.setOnHiding(event -> {
 			/*
 			 * Gets notified when task ended, but BEFORE result value is attributed. Using
@@ -103,7 +107,7 @@ public class WorkIndicatorDialog<P> {
 	 */
 	private void setupAnimationThread() {
 
-		animationWorker = new Task() {
+		animationWorker = new Task<Object>() {
 			@Override
 			protected Object call() throws Exception {
 				/*

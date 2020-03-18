@@ -41,7 +41,7 @@ public final class EmpreinteUtil {
 
 		if (osName.indexOf("win") >= 0)
 			serialPort = WIN_SERIAL_PORT;
-		else if (osName.indexOf("linux") >= 0)
+		else if (osName.indexOf("nux") >= 0)
 			serialPort = LINUX_SERIAL_PORT;
 		else
 			System.out.println("Your OS is not supported.");
@@ -86,5 +86,4 @@ public final class EmpreinteUtil {
 
 		return empreinte;
 	}
-
 }

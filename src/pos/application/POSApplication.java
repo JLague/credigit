@@ -20,7 +20,6 @@ public class POSApplication extends Application {
 		ctrl = new POSControleur(this);
 		stage.setScene(ctrl.getScene());
 		stage.setTitle("Connexion");
-		// stage.setFullScreen(true);
 		stage.sizeToScene();
 		stage.setResizable(true);
 		stage.show();
@@ -36,7 +35,6 @@ public class POSApplication extends Application {
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);
-		// stage.sizeToScene();
 		stage.setFullScreen(fullscreen);
 	}
 }

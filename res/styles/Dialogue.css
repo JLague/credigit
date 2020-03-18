@@ -3,7 +3,8 @@
 }
 
 .myDialog > *.label.content{
-    -fx-font-size: 14px;
+	-fx-text-fill: white;
+    -fx-font-size: 15px;
 }
 .myDialog > *.header-panel{
     -fx-background-color: linear-gradient(to right, #042379, #010c31);

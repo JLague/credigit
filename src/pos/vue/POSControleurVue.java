@@ -272,7 +272,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			if (ouvrirDialogueNip().equals("12345")) {
 				ctrl.creerVendeur(data);
 			} else {
-				throw new ExceptionCreationCompte();
+				throw new ExceptionCreationCompte("Le code administrateur n'est pas valide");
 			}
 
 		} catch (ExceptionCreationCompte e) {
@@ -301,6 +301,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.setScene(scene);
+			stage.setTitle("Code administrateur");
 			stage.showAndWait();
 
 			return dialogController.getNip();
