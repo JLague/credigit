@@ -9,65 +9,63 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import pos.exception.ExceptionCreationCompte;
 import pos.exception.ExceptionProduitEtablissement;
 
+public class CreationEtablissementVueCtrl {
 
-
-public class CreationEtablissementVue {
-	
 	private CreationEtablissementCtrl ctrl;
-	
+
 	@FXML
-	private BorderPane rootBP;
+	private AnchorPane rootAP;
 
 	private Scene scene;
 
 	@FXML
 	private TextField nom;
-	
+
 	@FXML
 	private TextField adresse;
-	
+
 	@FXML
 	private TextField balance;
-	
+
 	@FXML
 	private TextField courriel;
-	
+
 	@FXML
 	private Button creer;
-	
-	public CreationEtablissementVue(CreationEtablissementCtrl ctrl)
-	{
+
+	public CreationEtablissementVueCtrl(CreationEtablissementCtrl ctrl) {
 		this.ctrl = ctrl;
-		
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreationEtablissement.fxml"));
+
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CreationEtablissementVue.fxml"));
 
 		try {
 
 			fxmlLoader.setController(this);
 
-			rootBP = fxmlLoader.load();
-			scene = new Scene(rootBP);
-		
+			rootAP = fxmlLoader.load();
+			scene = new Scene(rootAP);
+
 		} catch (IOException e) {
 
 			e.printStackTrace();
 		}
 	}
-	
-	public Scene getScene()
-	{
+
+	public Scene getScene() {
 		return scene;
 	}
-	
+
 	@FXML
-	private void creerHandle(ActionEvent event) {
-		
+	private void creerHandler(ActionEvent event) {
+
 		try {
-			ctrl.creerEtablissement(nom.getText(), adresse.getText(), Float.valueOf(balance.getText()), courriel.getText());
+			ctrl.creerEtablissement(nom.getText(), adresse.getText(), Float.valueOf(balance.getText()),
+					courriel.getText());
+			VueDialogue.compteCree();
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (ExceptionProduitEtablissement e) {

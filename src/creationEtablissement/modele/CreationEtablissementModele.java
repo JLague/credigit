@@ -37,12 +37,18 @@ import pos.modele.Etablissement;
 import pos.modele.Vendeur;
 
 public class CreationEtablissementModele {
-	
+
 	/**
 	 * String représentant le nom de la base de données sur le serveur
 	 */
-	private final static String DB = "credigit_etablissement";
-	
+	private final static String DB = "credigit_etablissements";
+
+	/**
+	 * String représentant le nom de la collection contenant les comptes dans la
+	 * base de données
+	 */
+	private final static String ETABLISSEMENTS = "etablissements";
+
 	/**
 	 * String représentant le compte d'envoi
 	 */
@@ -56,7 +62,7 @@ public class CreationEtablissementModele {
 	 * Session de communication avec le serveur
 	 */
 	private Session session;
-	
+
 	/**
 	 * Objet base de données
 	 */
@@ -66,7 +72,6 @@ public class CreationEtablissementModele {
 	 * Client ayant accès à la base de données
 	 */
 	private MongoClient mongoClient;
-
 
 	/**
 	 * Constructeur de la connection du serveur d'envoi de courriels
@@ -89,15 +94,15 @@ public class CreationEtablissementModele {
 							return new PasswordAuthentication(USER, PASSWORD);
 						}
 					});
-					
+
 					ConnectionString connectionString = new ConnectionString(
-							"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
+							"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 					CodecRegistry pojoCodecRegistry = CodecRegistries
 							.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-					CodecRegistry codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-							pojoCodecRegistry);
-					MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
-							.codecRegistry(codecRegistry).build();
+					CodecRegistry codecRegistry = CodecRegistries
+							.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
+					MongoClientSettings clientSettings = MongoClientSettings.builder()
+							.applyConnectionString(connectionString).codecRegistry(codecRegistry).build();
 
 					mongoClient = MongoClients.create(clientSettings);
 
@@ -132,12 +137,13 @@ public class CreationEtablissementModele {
 
 			// 3) Crée le corps du message
 			BodyPart messageBodyPart1 = new MimeBodyPart();
-			messageBodyPart1.setText("Bonjour " + etablissement.getNom() + ",\n\nLa grande famille de Credigit est heureuse de vous"
+			messageBodyPart1.setText("Bonjour " + etablissement.getNom()
+					+ ",\n\nLa grande famille de Credigit est heureuse de vous"
 					+ " compter comme un nouveau membre! Avec Credigit, vous pouvez d'un service de point de vente réinventé.\n\n"
 					+ "Si vous rencontrez des difficultés, n'hésitez pas à contacter notre service à la clientèle au 418-XXX-XXXX.\n\n"
-					+ "Voici votre numéro d'établissement qui vous permettra de créer des comptes pour vos vendeurs: " + etablissement.getNumero()
-					+ "\n\nContinuez à avoir l'argent au bout de votre doigt,\n\n" + "L'équipe de Crédigit\n"
-					+ "Une filiale de Bank-era Corp");
+					+ "Voici votre numéro d'établissement qui vous permettra de créer des comptes pour vos vendeurs: "
+					+ etablissement.getNumero() + "\n\nContinuez à avoir l'argent au bout de votre doigt,\n\n"
+					+ "L'équipe de Crédigit\n" + "Une filiale de Bank-era Corp");
 
 			// 4) Set le contenu du message
 			message.setContent(new MimeMultipart(messageBodyPart1));
@@ -152,20 +158,21 @@ public class CreationEtablissementModele {
 		return envoye;
 	}
 
-	 /** Ajoute un établissement à la base de données
+	/**
+	 * Ajoute un établissement à la base de données
 	 * 
 	 * @param etablissement - L'établissement à ajouter
-	 * @throws ExceptionCreationCompte 
+	 * @throws ExceptionCreationCompte
 	 */
 	public boolean ajouterCompteVendeur(Etablissement etablissement) throws ExceptionCreationCompte {
-		
+
 		boolean compteCree = false;
 
 		// Vérifie si le nom d'utilisateur n'est pas déjà utilisé
 		if (!isUsernameUsed(etablissement.getNom())) {
 			try {
 				// Ajoute le vendeur à la bonne collection
-				MongoCollection<Etablissement> collection = database.getCollection("credigit_etablissement", Etablissement.class);
+				MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
 				collection.insertOne(etablissement);
 				compteCree = true;
 			} catch (MongoWriteException e) {
@@ -176,7 +183,7 @@ public class CreationEtablissementModele {
 		return compteCree;
 
 	}
-	
+
 	/**
 	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
 	 * 

@@ -1,7 +1,7 @@
 package creationEtablissement.controleur;
 
 import creationEtablissement.modele.CreationEtablissementModele;
-import creationEtablissement.vue.CreationEtablissementVue;
+import creationEtablissement.vue.CreationEtablissementVueCtrl;
 import javafx.scene.Scene;
 import pos.exception.ExceptionCreationCompte;
 import pos.exception.ExceptionProduitEtablissement;
@@ -9,7 +9,7 @@ import pos.modele.Etablissement;
 
 public class CreationEtablissementCtrl {
 
-	CreationEtablissementVue vue;
+	CreationEtablissementVueCtrl vue;
 	
 	CreationEtablissementModele modele;
 
@@ -17,7 +17,7 @@ public class CreationEtablissementCtrl {
 	
 	public CreationEtablissementCtrl()
 	{
-		vue = new CreationEtablissementVue(this);
+		vue = new CreationEtablissementVueCtrl(this);
 		
 		modele = new CreationEtablissementModele();
 	

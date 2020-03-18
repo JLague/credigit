@@ -30,4 +30,20 @@ public class VueDialogue {
 
 	}
 
+	/**
+	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
+	 * est bel et bien créé
+	 */
+	public static void compteCree() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText("Établissement créé avec succès!");
+		alert.setContentText(
+				"L'établissement a été ajouté avec succès à la base de données et un email a été envoyé au gérant!");
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
+		alert.showAndWait();
+	}
+
 }
