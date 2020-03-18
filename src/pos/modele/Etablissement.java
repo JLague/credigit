@@ -7,6 +7,7 @@ import pos.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe créant un établissement
+ * 
  * @author Bank-era Corp.
  *
  */
@@ -40,54 +41,61 @@ public class Etablissement {
 	 * Liste contenant les transactions d'un établissement
 	 */
 	private List<Transaction> transactions;
-	
+
 	/**
 	 * Numéro d'établissement
 	 */
 	private long numero;
 
 	/**
-	 * Crée un établissement
-	 * @param nom - Nom de l'établissement
-	 * @param adresse - Adresse de l'établissement
-	 * @param balance - Balance de l'établissement
-	 * @param courriel - Courriel de l'établissment
-	 * @throws ExceptionProduitEtablissement 
+	 * Constructeur nécessaire pour POJO
 	 */
-	public Etablissement(String nom, String adresse, float balance, String courriel) throws ExceptionProduitEtablissement {
-		
+	public Etablissement() {
+	}
+
+	/**
+	 * Crée un établissement
+	 * 
+	 * @param nom      - Nom de l'établissement
+	 * @param adresse  - Adresse de l'établissement
+	 * @param balance  - Balance de l'établissement
+	 * @param courriel - Courriel de l'établissment
+	 * @throws ExceptionProduitEtablissement
+	 */
+	public Etablissement(String nom, String adresse, float balance, String courriel)
+			throws ExceptionProduitEtablissement {
+
 		setNom(nom);
 		setAdresse(adresse);
 		setBalance(balance);
 		setCourriel(courriel);
-		
+
 		inventaire = new ArrayList<Produit>();
 		transactions = new ArrayList<Transaction>();
 		vendeurs = new ArrayList<Vendeur>();
-		
+
 		genererNumero();
 	}
-	
+
 	/**
 	 * Génère un numéro de 5 chiffres aléatoire pour l'établissement
 	 */
-	private void genererNumero()
-	{
+	private void genererNumero() {
 		numero = (long) (Math.random() * (89999)) + 10000;
 	}
-	
+
 	/**
 	 * Retourne le numéro d'établissement
 	 * 
 	 * @return Le numéro d'établissment
 	 */
-	public long getNumero()
-	{
+	public long getNumero() {
 		return numero;
 	}
 
 	/**
 	 * Retourne le nom de l'établissement
+	 * 
 	 * @return Le nom de l'établissement
 	 */
 	public String getNom() {
@@ -96,24 +104,23 @@ public class Etablissement {
 
 	/**
 	 * Modifie le nom de l'établissement
+	 * 
 	 * @param nom - Le nom de l'établissement à modifier
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	protected void setNom(String nom) throws ExceptionProduitEtablissement {
-		
-		if(nom != null && nom.length() != 0)
-		{
+
+		if (nom != null && nom.length() != 0) {
 			this.nom = nom;
-		}
-		else
-		{
+		} else {
 			throw new ExceptionProduitEtablissement("Le nom de l'établissement n'est pas valide.");
 		}
-		
+
 	}
 
 	/**
 	 * Retourne l'adresse de l'établissement
+	 * 
 	 * @return L'adresse de l'établissement
 	 */
 	public String getAdresse() {
@@ -122,24 +129,23 @@ public class Etablissement {
 
 	/**
 	 * Modifie l'adresse de l'établissement
+	 * 
 	 * @param adresse - L'adresse de l'établissement à modifier
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	protected void setAdresse(String adresse) throws ExceptionProduitEtablissement {
-		
-		if(adresse != null && adresse.length() != 0)
-		{
+
+		if (adresse != null && adresse.length() != 0) {
 			this.adresse = adresse;
-		}
-		else
-		{
+		} else {
 			throw new ExceptionProduitEtablissement("L'adresse de l'établissement n'est pas valide.");
 		}
-		
+
 	}
 
 	/**
 	 * Retourne l'inventaire de l'établissement
+	 * 
 	 * @return L'inventaire de l'établissement
 	 */
 	public List<Produit> getInventaire() {
@@ -148,23 +154,22 @@ public class Etablissement {
 
 	/**
 	 * Ajoute un produit à l'inventaire de l'établissement
+	 * 
 	 * @param produit - Le produit à ajouter
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	protected void ajouterProduitInventaire(Produit produit) throws ExceptionProduitEtablissement {
-		
-		if(produit != null)
-		{
+
+		if (produit != null) {
 			inventaire.add(produit);
-		}	
-		else
-		{
+		} else {
 			throw new ExceptionProduitEtablissement("Le produit à ajouter n'est pas valide.");
 		}
 	}
 
 	/**
 	 * Retourne les utilisateurs de l'établissement
+	 * 
 	 * @return Les utilisateurs de de l'établissement
 	 */
 	public List<Vendeur> getUtilisateurs() {
@@ -173,24 +178,23 @@ public class Etablissement {
 
 	/**
 	 * Ajoute un vendeur à l'établissement
+	 * 
 	 * @param vendeur - Le vendeur à ajouter
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	protected void ajouterVendeur(Vendeur vendeur) throws ExceptionProduitEtablissement {
-		
-		if(vendeur != null)
-		{
+
+		if (vendeur != null) {
 			vendeurs.add(vendeur);
-		}
-		else
-		{
+		} else {
 			throw new ExceptionProduitEtablissement("Le vendeur à ajouter n'est pas valide.");
 		}
-		
+
 	}
 
 	/**
 	 * Retourne la balance de l'établissement
+	 * 
 	 * @return La balance de l'établissement
 	 */
 	public float getBalance() {
@@ -199,24 +203,25 @@ public class Etablissement {
 
 	/**
 	 * Modifie la balance de l'établissement
+	 * 
 	 * @param balance - La balance de l'établissement à modifier
 	 */
 	protected void setBalance(float balance) {
 		this.balance = balance;
 	}
-	
+
 	/**
 	 * Ajoute le montant de l'ajout à la balance
 	 * 
 	 * @param ajout - Le montant à ajouter
 	 */
-	protected void ajouterBalance(float ajout)
-	{
+	protected void ajouterBalance(float ajout) {
 		balance += ajout;
 	}
-	
+
 	/**
 	 * Retourne les transcations de l'établissement
+	 * 
 	 * @return Les transactions de l'établissement
 	 */
 	public List<Transaction> getTransactions() {
@@ -225,24 +230,23 @@ public class Etablissement {
 
 	/**
 	 * Ajoute une transactions à la liste de transactions de l'établissement
+	 * 
 	 * @param transaction - La transaction à ajouter
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	public void ajouterTransaction(Transaction transaction) throws ExceptionProduitEtablissement {
-		
-		if(transaction != null)
-		{
+
+		if (transaction != null) {
 			transactions.add(transaction);
-		}
-		else
-		{
+		} else {
 			throw new ExceptionProduitEtablissement("La transaction à ajouter n'est pas valide.");
 		}
-		
+
 	}
 
 	/**
 	 * Retourne le courriel de l'établissement
+	 * 
 	 * @return Le courriel de l'établissement
 	 */
 	public String getCourriel() {
@@ -251,20 +255,13 @@ public class Etablissement {
 
 	/**
 	 * Modifie le courriel de l'établissement
+	 * 
 	 * @param courriel - Le courriel à modifier
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
 	public void setCourriel(String courriel) throws ExceptionProduitEtablissement {
-		
-		if(adresse != null && adresse.length() != 0)
-		{
 			this.courriel = courriel;
-		}
-		else
-		{
-			throw new ExceptionProduitEtablissement("Le courriel de l'établissement n'est pas valide.");
-		}
-		
+
 	}
 
 }
