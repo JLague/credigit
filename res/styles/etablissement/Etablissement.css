@@ -1,0 +1,33 @@
+/* Style du texte */
+.text, .button, .fields {
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+}
+
+/* Style des champs de texte */
+.fields {
+	-fx-font-size: 13px;
+	-fx-background-color: rgba(255.0, 255.0, 255.0, 0.3); /* Blanc presque transparent */
+	-fx-prompt-text-fill: white;
+}
+
+.button:hover {
+	-fx-background-color: white;
+	-fx-background-radius: 15.0px;
+	-fx-text-fill: #0D1837;
+}
+
+/* Background de l'application */
+.root {
+	-fx-background-color: linear-gradient(to right, #374587, #0D1837);
+}
+
+.button {
+	-fx-background-insets: 0.0;
+	-fx-background-color: transparent;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 15.0px;
+	-fx-border-color: white;
+}

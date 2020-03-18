@@ -5,14 +5,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="rootAP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="rootAP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../res/styles/etablissement/Etablissement.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="234.0" layoutY="44.0" text="Création d'établissement" textAlignment="CENTER" />
-      <TextField fx:id="nom" layoutX="86.0" layoutY="88.0" prefHeight="25.0" prefWidth="449.0" promptText="Nom" />
-      <TextField fx:id="adresse" layoutX="87.0" layoutY="137.0" prefHeight="25.0" prefWidth="449.0" promptText="Adresse" />
-      <TextField fx:id="balance" layoutX="89.0" layoutY="188.0" prefHeight="25.0" prefWidth="449.0" promptText="Balance" />
-      <TextField fx:id="courriel" layoutX="89.0" layoutY="237.0" prefHeight="25.0" prefWidth="449.0" promptText="Courriel" />
-      <Button fx:id="creer" layoutX="274.0" layoutY="317.0" mnemonicParsing="false" onAction="#creerHandler" text="Créer" />
+      <Label layoutX="202.0" layoutY="48.0" styleClass="text" text="Création d'établissement" textAlignment="CENTER" />
+      <TextField fx:id="nom" layoutX="76.0" layoutY="97.0" prefHeight="25.0" prefWidth="449.0" promptText="Nom" styleClass="fields" />
+      <TextField fx:id="adresse" layoutX="76.0" layoutY="145.0" prefHeight="25.0" prefWidth="449.0" promptText="Adresse" styleClass="fields" />
+      <TextField fx:id="balance" layoutX="76.0" layoutY="194.0" onKeyTyped="#balanceHandler" prefHeight="25.0" prefWidth="449.0" promptText="Balance" styleClass="fields" />
+      <TextField fx:id="courriel" layoutX="76.0" layoutY="242.0" prefHeight="25.0" prefWidth="449.0" promptText="Courriel" styleClass="fields" />
+      <Button fx:id="creer" layoutX="270.0" layoutY="320.0" mnemonicParsing="false" onAction="#creerHandler" text="Créer" />
    </children>
 </AnchorPane>

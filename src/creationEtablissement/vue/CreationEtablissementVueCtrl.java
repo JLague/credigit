@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import pos.exception.ExceptionCreationCompte;
 import pos.exception.ExceptionProduitEtablissement;
@@ -66,12 +67,29 @@ public class CreationEtablissementVueCtrl {
 			ctrl.creerEtablissement(nom.getText(), adresse.getText(), Float.valueOf(balance.getText()),
 					courriel.getText());
 			VueDialogue.compteCree();
+			clearFields();
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			VueDialogue.erreurCreationDialogue("Un ou plusieurs des champs sont vides.");
 		} catch (ExceptionProduitEtablissement e) {
 			VueDialogue.erreurCreationDialogue(e.getMessage());
 		} catch (ExceptionCreationCompte e) {
 			VueDialogue.erreurCreationDialogue(e.getMessage());
+		}
+	}
+	
+	private void clearFields() {
+		nom.setText(null);
+		adresse.setText(null);
+		balance.setText(null);
+		courriel.setText(null);
+		
+	}
+
+	@FXML
+	private void balanceHandler(KeyEvent event) {
+		String text = balance.getText() + event.getCharacter();
+		if (!text.matches("^\\d+\u002E?(\\d{1,2})?$")) {
+			event.consume();
 		}
 	}
 

@@ -32,9 +32,7 @@ import com.mongodb.client.MongoDatabase;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import pos.exception.ExceptionCreationCompte;
-import pos.modele.DataVendeur;
 import pos.modele.Etablissement;
-import pos.modele.Vendeur;
 
 public class CreationEtablissementModele {
 
@@ -164,36 +162,36 @@ public class CreationEtablissementModele {
 	 * @param etablissement - L'établissement à ajouter
 	 * @throws ExceptionCreationCompte
 	 */
-	public boolean ajouterCompteVendeur(Etablissement etablissement) throws ExceptionCreationCompte {
+	public boolean ajouterEtablissement(Etablissement etablissement) throws ExceptionCreationCompte {
 
 		boolean compteCree = false;
 
-		// Vérifie si le nom d'utilisateur n'est pas déjà utilisé
-		if (!isUsernameUsed(etablissement.getNom())) {
+		// Vérifie si le nom d'établissement n'est pas déjà utilisé
+		if (!isNameUsed(etablissement.getNom())) {
 			try {
-				// Ajoute le vendeur à la bonne collection
+				// Ajoute l'établissement à la bonne collection
 				MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
 				collection.insertOne(etablissement);
 				compteCree = true;
 			} catch (MongoWriteException e) {
 			}
 		} else
-			throw new ExceptionCreationCompte("Le nom d'utilisateur choisi est déjà utilisé.");
+			throw new ExceptionCreationCompte("Le nom d'établissement est déjà utilisé.");
 
 		return compteCree;
 
 	}
 
 	/**
-	 * Permet de vérifier si le nom d'utilisateur choisi n'est pas déjà utilisé
+	 * Permet de vérifier si le nom d'établissement choisi n'est pas déjà utilisé
 	 * 
-	 * @param nomUtilisateur le nom d'utilisateur à valider
+	 * @param nomEtablissement le nom d'utilisateur à valider
 	 * @return true si le nom d'utilisateur est utilisé
 	 */
-	private boolean isUsernameUsed(String nomUtilisateur) {
+	private boolean isNameUsed(String nomEtablissement) {
 		BasicDBObject object = new BasicDBObject();
-		object.put("nom", nomUtilisateur);
-		FindIterable<Document> result = database.getCollection("credigit_etablissement").find(object);
+		object.put("nom", nomEtablissement);
+		FindIterable<Document> result = database.getCollection(ETABLISSEMENTS).find(object);
 		Iterator<Document> it = result.iterator();
 		return it.hasNext();
 	}

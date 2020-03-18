@@ -3,6 +3,7 @@ package creationEtablissement.vue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 
 /**
  * Classe permettant de créer des dialogues dans différentes situations
@@ -11,17 +12,17 @@ import javafx.scene.control.DialogPane;
  */
 public class VueDialogue {
 
-	private static final String CSS_URL = "/styles/pos/Dialogue.css";
+	private static final String CSS_URL = "/styles/etablissement/Dialogue.css";
 
 	/**
 	 * Méthode permettant d'afficher une boîte d'erreur signifiant qu'il y a une
-	 * erreur lors de la création d'un client
+	 * erreur lors de la création d'un établissement
 	 * 
 	 * @param message - Le message d'erreur
 	 */
 	public static void erreurCreationDialogue(String message) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setHeaderText("Erreur lors de la création d'un compte ");
+		alert.setHeaderText("Erreur lors de la création de l'établissement");
 		alert.setContentText(message);
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
@@ -37,8 +38,9 @@ public class VueDialogue {
 	public static void compteCree() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Établissement créé avec succès!");
-		alert.setContentText(
-				"L'établissement a été ajouté avec succès à la base de données et un email a été envoyé au gérant!");
+		Label label = new Label("L'établissement a été ajouté avec succès à la base de données\n et un email a été envoyé au gérant!");
+		label.setWrapText(true);
+		alert.getDialogPane().setContent(label);
 
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());

@@ -32,7 +32,7 @@ public class CreationEtablissementCtrl {
 	{
 		etablissement = new Etablissement(nom,adresse,balance, courriel);
 		
-		modele.ajouterCompteVendeur(etablissement);
+		modele.ajouterEtablissement(etablissement);
 		
 		modele.envoyerCourriel(etablissement);
 	}

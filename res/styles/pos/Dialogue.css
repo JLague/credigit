@@ -15,3 +15,21 @@
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
+
+.button {
+	-fx-background-insets: 0.0;
+	-fx-background-color: transparent;
+	-fx-border-width: 2.0px;
+	-fx-border-radius: 15.0px;
+	-fx-border-color: white;
+	-fx-font-size: 15.0px;
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+}
+
+.button:hover {
+	-fx-background-color: white;
+	-fx-background-radius: 15.0px;
+	-fx-text-fill: #0D1837;
+}
