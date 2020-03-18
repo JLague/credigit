@@ -36,7 +36,7 @@ public class POSControleur implements IPOSControleur {
 	 * Tableau de bord de l'application
 	 */
 	private TableauDeBord tb;
-	
+
 	/**
 	 * Objet permettant la connexion à la base de données
 	 */
@@ -57,7 +57,8 @@ public class POSControleur implements IPOSControleur {
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
 		this.connexion = new ConnexionPOS();
-		
+		connexion.setEtablissementFromDatabase(NOM_ETABLISSEMENT);
+
 		// Peuple l'inventaire de l'établissement
 		tb.setInventaire(connexion.getProduits());
 	}
@@ -101,10 +102,10 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public boolean connexion(String username, String password) {
 		Vendeur vendeur = connexion.connecter(username, password);
-		
-		if(vendeur != null)
+
+		if (vendeur != null)
 			tb.setVendeur(vendeur);
-		
+
 		return vendeur != null;
 	}
 

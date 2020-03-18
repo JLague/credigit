@@ -11,6 +11,8 @@ import pos.modele.LigneFacture;
 import pos.modele.Produit;
 
 public interface IPOSControleur {
+	
+	public final static String NOM_ETABLISSEMENT = "Credigit";
 
 	/**
 	 * Permet d'enlever un produit
