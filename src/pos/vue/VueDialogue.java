@@ -57,4 +57,14 @@ public class VueDialogue {
 		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
+	
+	public static void erreurConnexionDialogue(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText("Erreur lors de la connexion");
+		alert.setContentText(message);
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
+		alert.showAndWait();
+	}
 }

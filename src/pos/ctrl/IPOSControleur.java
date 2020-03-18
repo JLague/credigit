@@ -60,7 +60,7 @@ public interface IPOSControleur {
 
 	public boolean creerProduit(DataProduit data) throws ExceptionProduitEtablissement;
 
-	public boolean connexion(String username, String password);
+	public boolean connexion(String username, String password, String nomEtablissement) throws ExceptionProduitEtablissement;
 
 	public void paiementEmpreinte();
 

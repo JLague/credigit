@@ -18,11 +18,9 @@ public class TableauDeBord {
 	private Transaction transactionCourante;
 	private Etablissement etablissement;
 	private Vendeur vendeur = null;
-	private List<Produit> inventaire;
 
 	public TableauDeBord() {
 		this.transactionCourante = new Transaction();
-		this.inventaire = new ArrayList<Produit>();
 	}
 
 	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
@@ -89,7 +87,7 @@ public class TableauDeBord {
 	 * @return le produit
 	 */
 	public Produit getProduitFromString(String nom) {
-		for (Produit p : inventaire) {
+		for (Produit p : etablissement.getInventaire()) {
 			if (p.getNom().equals(nom)) {
 				return p;
 			}
@@ -100,7 +98,7 @@ public class TableauDeBord {
 
 	public ArrayList<Produit> search(String text) {
 		ArrayList<Produit> listProd = new ArrayList<Produit>();
-		for (Produit produit : inventaire) {
+		for (Produit produit : etablissement.getInventaire()) {
 
 			if (text.length() != 0 && text.charAt(0) == '.') {
 				// Il s'agit d'un sku
@@ -136,13 +134,20 @@ public class TableauDeBord {
 	 * @return l'inventaire du magasin
 	 */
 	public List<Produit> getInventaire() {
-		return this.inventaire;
+		return this.etablissement.getInventaire();
 	}
 	
 	/**
 	 * @param produits les produits de l'inventaire
 	 */
 	public void setInventaire(List<Produit> produits) {
-		this.inventaire = produits;
+		this.etablissement.setInventaire(produits);
+	}
+	
+	/**
+	 * @param etablissement l'établissement
+	 */
+	public void setEtablissement(Etablissement etablissement) {
+		this.etablissement = etablissement;
 	}
 }

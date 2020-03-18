@@ -1,10 +1,7 @@
 package pos.modele;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -12,8 +9,6 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
-import com.mongodb.MongoWriteException;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -81,12 +76,20 @@ public class ConnexionPOS {
 		database = mongoClient.getDatabase(DB);
 	}
 
-	public void setEtablissementFromDatabase(String nom) {
+	public void setEtablissementFromDatabase(String nom) throws ExceptionProduitEtablissement {
 		MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
 		BasicDBObject object = new BasicDBObject();
 		object.put("nom", nom);
 
 		etablissement = collection.find(object).first();
+		
+		if(etablissement == null)
+			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
+	}
+	
+	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
+		setEtablissementFromDatabase(nom);
+		return etablissement.getNumero();
 	}
 
 	public Etablissement getEtablissement() {
@@ -95,19 +98,10 @@ public class ConnexionPOS {
 
 	public boolean updateEtablissement() {
 		try {
-			BasicDBObject newEtablissement = new BasicDBObject();
-			newEtablissement.put("adresse", etablissement.getAdresse());
-			newEtablissement.put("balance", etablissement.getBalance());
-			newEtablissement.put("courriel", etablissement.getCourriel());
-			newEtablissement.put("inventaire", etablissement.getInventaire());
-			newEtablissement.put("nom", etablissement.getNom());
-			newEtablissement.put("numero", etablissement.getNumero());
-			newEtablissement.put("transactions", etablissement.getTransactions());
-			newEtablissement.put("utilisateurs", etablissement.getUtilisateurs());
-
-			BasicDBObject searchQuery = new BasicDBObject().append("nom", etablissement.getNom());
+			BasicDBObject searchQuery = new BasicDBObject();
+			searchQuery.put("nom", etablissement.getNom());
 			MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
-			collection.updateMany(searchQuery, newEtablissement);
+			collection.replaceOne(searchQuery, etablissement);
 
 		} catch (NullPointerException e) {
 			return false;
@@ -134,7 +128,6 @@ public class ConnexionPOS {
 				updateEtablissement();
 				compteCree = true;
 			} catch (ExceptionProduitEtablissement e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else
@@ -149,10 +142,14 @@ public class ConnexionPOS {
 	 * 
 	 * @param username le nom d'utilisateur
 	 * @param password le mot de passe
+	 * @param nomEtablissement 
 	 * @return les informations du vendeur
+	 * @throws ExceptionProduitEtablissement 
 	 */
-	public Vendeur connecter(String username, String password) {
+	public Vendeur connecter(String username, String password, String nomEtablissement) throws ExceptionProduitEtablissement {
 
+		setEtablissementFromDatabase(nomEtablissement);
+		
 		Vendeur vendeur = null;
 
 		if (validerPassword(password) && validerUsername(username)) {
@@ -164,6 +161,9 @@ public class ConnexionPOS {
 				}
 			}
 		}
+		
+		if(vendeur == null)
+			throw new ExceptionProduitEtablissement("Le nom d'utilisateur ou le mot de passe est invalide.");
 
 		return vendeur;
 	}
@@ -201,7 +201,7 @@ public class ConnexionPOS {
 	 */
 	private boolean isUsernameUsed(String nomUtilisateur) {
 		boolean estUtilise = false;
-
+		
 		if (etablissement.getUtilisateurs() != null) {
 			for (Vendeur utilisateur : etablissement.getUtilisateurs()) {
 				if (utilisateur.getUsername().equals(nomUtilisateur)) {

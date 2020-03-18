@@ -57,10 +57,6 @@ public class POSControleur implements IPOSControleur {
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
 		this.connexion = new ConnexionPOS();
-		connexion.setEtablissementFromDatabase(NOM_ETABLISSEMENT);
-
-		// Peuple l'inventaire de l'établissement
-		tb.setInventaire(connexion.getProduits());
 	}
 
 	/**
@@ -100,12 +96,14 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public boolean connexion(String username, String password) {
-		Vendeur vendeur = connexion.connecter(username, password);
-
-		if (vendeur != null)
+	public boolean connexion(String username, String password, String nomEtablissement) throws ExceptionProduitEtablissement {
+		Vendeur vendeur = connexion.connecter(username, password, nomEtablissement);
+		
+		if(vendeur != null) {
 			tb.setVendeur(vendeur);
-
+			tb.setEtablissement(connexion.getEtablissement());
+		}
+		
 		return vendeur != null;
 	}
 
@@ -165,5 +163,9 @@ public class POSControleur implements IPOSControleur {
 	 */
 	public String getNomVendeur() {
 		return tb.getNomVendeur();
+	}
+	
+	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
+		return connexion.getNumeroEtablissement(nom);
 	}
 }

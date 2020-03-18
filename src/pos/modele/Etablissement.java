@@ -92,7 +92,15 @@ public class Etablissement {
 	public long getNumero() {
 		return numero;
 	}
-
+	
+	/**
+	 * Permet de setter le numéro de l'établissement
+	 * 
+	 * @param numero
+	 */
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
 	/**
 	 * Retourne le nom de l'établissement
 	 * 
@@ -108,7 +116,7 @@ public class Etablissement {
 	 * @param nom - Le nom de l'établissement à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setNom(String nom) throws ExceptionProduitEtablissement {
+	public void setNom(String nom) throws ExceptionProduitEtablissement {
 
 		if (nom != null && nom.length() != 0) {
 			this.nom = nom;
@@ -133,7 +141,7 @@ public class Etablissement {
 	 * @param adresse - L'adresse de l'établissement à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void setAdresse(String adresse) throws ExceptionProduitEtablissement {
+	public void setAdresse(String adresse) throws ExceptionProduitEtablissement {
 
 		if (adresse != null && adresse.length() != 0) {
 			this.adresse = adresse;
@@ -151,6 +159,15 @@ public class Etablissement {
 	public List<Produit> getInventaire() {
 		return inventaire;
 	}
+	
+	/**
+	 * Permet de setter l'inventaire de l'établissement
+	 * 
+	 * @param produits les produits de l'inventaire
+	 */
+	public void setInventaire(List<Produit> produits) {
+		this.inventaire = produits;
+	}
 
 	/**
 	 * Ajoute un produit à l'inventaire de l'établissement
@@ -158,7 +175,7 @@ public class Etablissement {
 	 * @param produit - Le produit à ajouter
 	 * @throws ExceptionProduitEtablissement
 	 */
-	protected void ajouterProduitInventaire(Produit produit) throws ExceptionProduitEtablissement {
+	public void ajouterProduitInventaire(Produit produit) throws ExceptionProduitEtablissement {
 
 		if (produit != null) {
 			inventaire.add(produit);
@@ -174,6 +191,15 @@ public class Etablissement {
 	 */
 	public List<Vendeur> getUtilisateurs() {
 		return vendeurs;
+	}
+	
+	/**
+	 * Permet de setter la liste des vendeurs de l'établissement
+	 * 
+	 * @param vendeurs les vendeurs de l'établissement
+	 */
+	public void setUtilisateurs(List<Vendeur> utilisateurs) {
+		this.vendeurs = utilisateurs;
 	}
 
 	/**

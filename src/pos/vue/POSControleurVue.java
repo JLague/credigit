@@ -86,6 +86,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	private PasswordField passField;
 	@FXML
 	private Button createAccountBtn;
+	@FXML
+	private TextField nomEtablissementLoginField;
 
 	// Déclaration des éléments du POS
 	@FXML
@@ -158,6 +160,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	private PasswordField vendeurPasswordField2;
 	@FXML
 	private TextField courrielVendeurTextField;
+	@FXML
+	private TextField nomEtablissementCreationVendeur;
+	
 	@FXML
 	private Button ajoutBtn;
 	@FXML
@@ -296,10 +301,12 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void connect(ActionEvent ae) {
-		if (ctrl.connexion(userField.getText(), passField.getText()))
+		try {
+			ctrl.connexion(userField.getText(), passField.getText(), nomEtablissementLoginField.getText());
 			ouvrirVuePrincipale();
-		else
-			VueDialogue.erreurCreationDialogue("Le nom d'utilisateur ou le mot de passe est invalide.");
+		} catch (ExceptionProduitEtablissement e) {
+			VueDialogue.erreurConnexionDialogue(e.getMessage());
+		}
 
 	}
 
@@ -331,6 +338,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void inscriptionVendeurHandler(ActionEvent event) {
+		// Peuplement de l'objet transitoire
 		DataVendeur data = new DataVendeur();
 		data.setPrenom(prenomVendeurTextField.getText());
 		data.setNom(nomVendeurTextField.getText());
@@ -338,12 +346,18 @@ public class POSControleurVue implements IPOSControleurVue {
 		data.setCourriel(courrielVendeurTextField.getText());
 
 		try {
+			// Si les mots de passe sont différents
 			if (vendeurPasswordField1.getText().equals(vendeurPasswordField2.getText())) {
 				data.setPassword(vendeurPasswordField1.getText());
 			} else
 				throw new ExceptionCreationCompte("Les deux mots de passes entrés sont différents");
 
-			if (ouvrirDialogueNip().equals("12345")) {
+			// On cherche le numéro de l'établissement
+			long numero = ctrl.getNumeroEtablissement(nomEtablissementCreationVendeur.getText());
+			String numeroEtablissement = ouvrirDialogueNip();
+			
+			// On vérifie si les numéros sont pareils
+			if (numeroEtablissement.equals(Long.toString(numero))) {
 				ctrl.creerVendeur(data);
 			} else {
 				throw new ExceptionCreationCompte("Le code administrateur n'est pas valide");
