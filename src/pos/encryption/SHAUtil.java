@@ -1,4 +1,4 @@
-package encryption;
+package pos.encryption;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

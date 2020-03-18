@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/Inscription.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/inscription/Inscription.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" vbarPolicy="NEVER">
          <content>
@@ -22,7 +22,7 @@
                      <children>
                         <ImageView fitHeight="116.0" fitWidth="272.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="30.0">
                            <image>
-                              <Image url="@../../../res/images/logo_credigit.png" />
+                              <Image url="@../../../res/images/inscription/logo_credigit.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="931.0" layoutY="220.0" text="VOTRE ARGENT AU&#10;BOUT DES DOIGTS" textFill="WHITE" AnchorPane.leftAnchor="71.0" AnchorPane.topAnchor="411.0">
@@ -42,7 +42,7 @@
                         </Label>
                         <ImageView fx:id="ivDecouvrirPublicite" fitHeight="91.0" fitWidth="91.0" onMouseClicked="#decouvrirHandler" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="466.0" AnchorPane.topAnchor="926.0">
                            <image>
-                              <Image url="@../../../res/images/down.png" />
+                              <Image url="@../../../res/images/inscription/down.png" />
                            </image>
                         </ImageView>
                         <Button layoutX="1012.0" layoutY="30.0" mnemonicParsing="false" opacity="0.0" prefHeight="25.0" prefWidth="164.0" />
@@ -52,12 +52,12 @@
                      <children>
                         <ImageView fitHeight="1793.0" fitWidth="1447.0" pickOnBounds="true" preserveRatio="true" rotate="-15.0" AnchorPane.leftAnchor="-500.0" AnchorPane.topAnchor="520.0">
                            <image>
-                              <Image url="@../../../res/images/ic_empreinte.png" />
+                              <Image url="@../../../res/images/inscription/ic_empreinte.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="153.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="373.0" AnchorPane.topAnchor="216.0">
                            <image>
-                              <Image url="@../../../res/images/ic_cadenas_noir.png" />
+                              <Image url="@../../../res/images/inscription/ic_cadenas_noir.png" />
                            </image>
                         </ImageView>
                         <Label text="Credigit offre une sécurité incomparable. En effet, l'utilisation de&#10;l'empreinte digitale diminue grandement les risques de fraudes,&#10;de vols et de pertes." textAlignment="JUSTIFY" AnchorPane.leftAnchor="735.0" AnchorPane.topAnchor="273.0">
@@ -72,7 +72,7 @@
                         </Label>
                         <ImageView fitHeight="153.0" fitWidth="127.0" layoutX="333.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="1469.0" AnchorPane.topAnchor="506.0">
                            <image>
-                              <Image url="@../../../res/images/ic_pratique.png" />
+                              <Image url="@../../../res/images/inscription/ic_pratique.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="745.0" layoutY="283.0" text="Credigit offre une praticabilité encore jamais vue dans le domaine des paiements.&#10;En effet, vous n'avez plus à vous soucier des oublis de NIP ou de cartes pour payer.&#10;Votre pouvoir d'achat se retrouve au bout de vos doigts." AnchorPane.leftAnchor="401.0" AnchorPane.topAnchor="538.0">
@@ -87,7 +87,7 @@
                         </Label>
                         <ImageView fitHeight="153.0" fitWidth="127.0" layoutX="1479.0" layoutY="466.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="373.0" AnchorPane.topAnchor="771.0">
                            <image>
-                              <Image url="@../../../res/images/ic_honest.png" />
+                              <Image url="@../../../res/images/inscription/ic_honest.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="411.0" layoutY="548.0" text="Ici chez Credigit, nous avons à coeur votre satisfaction. C'est pourquoi&#10;nous vous permettons d'avoir accès à vos informations en tout temps&#10;et nous vous fournissons un état de compte détaillé et simple à comprendre." textAlignment="JUSTIFY" AnchorPane.leftAnchor="735.0" AnchorPane.topAnchor="803.0">
@@ -104,22 +104,22 @@
                            <children>
                               <ImageView fx:id="ivStep1" fitHeight="59.0" fitWidth="59.0" onMouseClicked="#ivStep1Handler" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../res/images/step1_bleu.png" />
+                                    <Image url="@../../../res/images/inscription/step1_bleu.png" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="ivStep2" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="10.0" onMouseClicked="#ivStep2Handler" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../res/images/step2.png" />
+                                    <Image url="@../../../res/images/inscription/step2.png" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="ivStep3" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="93.0" onMouseClicked="#ivStep3Handler" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../res/images/step3.png" />
+                                    <Image url="@../../../res/images/inscription/step3.png" />
                                  </image>
                               </ImageView>
                               <ImageView fx:id="ivStep4" fitHeight="59.0" fitWidth="59.0" layoutX="10.0" layoutY="176.0" onMouseClicked="#ivStep4Handler" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../res/images/step4.png" />
+                                    <Image url="@../../../res/images/inscription/step4.png" />
                                  </image>
                               </ImageView>
                            </children>
@@ -150,7 +150,7 @@
             <Insets right="24.0" top="64.0" />
          </StackPane.margin>
          <image>
-            <Image url="@../../../res/images/ic_desactiver.png" />
+            <Image url="@../../../res/images/inscription/ic_desactiver.png" />
          </image>
       </ImageView>
       <Button fx:id="InscrireBtn" mnemonicParsing="false" onAction="#inscrireBtnHandler" styleClass="buttonInscrire" text="S'inscrire" textFill="WHITE" StackPane.alignment="TOP_RIGHT">

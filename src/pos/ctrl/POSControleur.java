@@ -3,8 +3,8 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ExceptionCreationCompte;
-import exception.ExceptionProduitEtablissement;
+import pos.exception.ExceptionCreationCompte;
+import pos.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;

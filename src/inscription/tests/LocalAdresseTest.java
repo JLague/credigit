@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import exception.ExceptionCreationCompte;
+import exceptioncopy.ExceptionCreationCompte;
 import inscription.modele.LocalAdresse;
 
 /**

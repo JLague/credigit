@@ -14,6 +14,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import inscription.exception.ExceptionCreationCompte;
+
 /**
  * Classe permettant d'effectuer la connection avec la base de données
  * 
@@ -76,9 +78,9 @@ public class ConnexionInscription {
 	 * 
 	 * @param client - Le client à ajouter
 	 * @return Vrai si le client est ajouté avec succès, faux sinon
+	 * @throws ExceptionCreationCompte 
 	 */
-	public boolean ajouterCompteClient(Client client) {
-
+	public boolean ajouterCompteClient(Client client) throws ExceptionCreationCompte {
 		try {
 			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENTS, Client.class);
 			collection.insertOne(client);

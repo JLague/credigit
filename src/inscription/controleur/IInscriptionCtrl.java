@@ -1,6 +1,6 @@
 package inscription.controleur;
 
-import exception.ExceptionCreationCompte;
+import inscription.exception.ExceptionCreationCompte;
 import inscription.modele.DataClient;
 import javafx.scene.Scene;
 

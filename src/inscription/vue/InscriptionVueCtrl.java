@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ExceptionCreationCompte;
+import inscription.exception.ExceptionCreationCompte;
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataClient;
 import inscription.modele.EmpreinteUtil;
@@ -41,6 +41,8 @@ import javafx.util.Duration;
  *
  */
 public class InscriptionVueCtrl implements IInscriptionVueCtrl {
+
+	private static final String IMAGE_URL = "/images/inscription/";
 
 	@FXML
 	private StackPane root;
@@ -172,7 +174,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 	private byte[] empreinte;
 
-	private WorkIndicatorDialog<String> wd = null;
+	private WorkIndicatorDialog wd = null;
 
 	/**
 	 * Constructeur du contrôleur de la vue
@@ -325,7 +327,6 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	@FXML
 	public void continuerBtnHandler(ActionEvent event) {
-		continuerBtn.setDisable(false);
 		EtapesVues nouvelleEtape = null;
 		switch (etapeActuelle) {
 		case ETAPE1:
@@ -354,11 +355,10 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPE4:
 			DataClient data = creerDataTransition();
+			nouvelleEtape = EtapesVues.ETAPE4;
 			if (data != null) {
 				loading(data);
 			}
-
-			nouvelleEtape = EtapesVues.ETAPE4;
 			break;
 
 		case ETAPEDESACTIVER:
@@ -371,6 +371,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 					if (ctrl.supprimerCompte(desacNomTextField.getText(), desacPrenomTextField.getText(),
 							desacEmailTextField.getText(), desacNasPasswordField.getText())) {
 						VueDialogue.compteSupprime();
+						nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
+						clearDeleteFields();
 					} else {
 						VueDialogue.erreurCreationDialogue("Votre compte est inexistant ou n'a pas pu être supprimé.");
 					}
@@ -385,6 +387,44 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		}
 
 		etapeActuelle = nouvelleEtape;
+	}
+
+	/**
+	 * Clear les champs servant à supprimer un compte
+	 */
+	private void clearDeleteFields() {
+		desacNomTextField.setText(null);
+		desacPrenomTextField.setText(null);
+		desacEmailTextField.setText(null);
+		desacNasPasswordField.setText(null);
+		quitterTextField.setText(null);
+		
+	}
+
+	/**
+	 * Clear tous les champs de la création de compte
+	 */
+	private void clearFields() {
+		empreinte = null;
+
+		datePicker.setValue(null);
+
+		nomTextField.setText(null);
+		prenomTextField.setText(null);
+		emailTextField.setText(null);
+		telephoneTextField.setText(null);
+		nasPasswordField.setText(null);
+		villeTextField.setText(null);
+		provinceTextField.setText(null);
+		adresseTextField.setText(null);
+		appartementTextField.setText(null);
+		codePostalTextField.setText(null);
+		paysTextField.setText(null);
+		reponse1TextField.setText(null);
+		reponse2TextField.setText(null);
+
+		question1Choice.getSelectionModel().clearSelection();
+		question2Choice.getSelectionModel().clearSelection();
 	}
 
 	/**
@@ -441,23 +481,42 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	}
 
 	private void loading(DataClient data) {
-		wd = new WorkIndicatorDialog<String>(continuerBtn.getScene().getWindow(),
-				"Création du compte... Veuillez patienter.");
+		wd = new WorkIndicatorDialog(continuerBtn.getScene().getWindow(), "Création du compte... Veuillez patienter.");
 
-		wd.addTaskEndNotification(result -> {
-			VueDialogue.compteCree();
+		// Lorsque le compte est ajouté
+		wd.addTaskEndNotification(complete -> {
+			if (complete) {
+				VueDialogue.compteCree();
+				resetInscription();
+			}
 			wd = null; // don't keep the object, cleanup
 		});
 
-		wd.exec(new String(), inputParam -> {
+		// Essaye d'ajouter le compte
+		wd.exec(() -> {
 			try {
-				ctrl.envoyerDataClient(data);
+				return ctrl.envoyerDataClient(data);
 			} catch (ExceptionCreationCompte e) {
 				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
 			}
 
-			return new Integer(1);
+			return false;
 		});
+	}
+
+	private void resetInscription() {
+		clearFields();
+		
+		EtapesVues nouvelleEtape = EtapesVues.ETAPE1;
+		stepPane.getChildren().clear();
+		stepPane.getChildren().add(etapes.get(0));
+		setupCompteur(etapeActuelle, nouvelleEtape);
+		etapeActuelle = nouvelleEtape;
+		
+		continuerBtn.setText("Continuer");
+		
+		ivEmpreinte.setImage(new Image(
+				getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
 	}
 
 	/**
@@ -539,8 +598,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 				continuerBtn.setDisable(true);
 				empreinte = EmpreinteUtil.getEmpreinte();
 				continuerBtn.setDisable(false);
-				ivEmpreinte.setImage(
-						new Image(getClass().getResource("/images/ic_capteur_empreinte_vert.png").toExternalForm()));
+				ivEmpreinte.setImage(new Image(
+						getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));
 			}).start();
 		}
 
@@ -556,19 +615,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	private void setupCompteur(EtapesVues etapeActuelle, EtapesVues nouvelleEtape) {
 		switch (etapeActuelle) {
 		case ETAPE1:
-			ivStep1.setImage(new Image(getClass().getResource("/images/step1.png").toExternalForm()));
+			ivStep1.setImage(new Image(getClass().getResource(IMAGE_URL + "step1.png").toExternalForm()));
 			break;
 
 		case ETAPE2:
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2.png").toExternalForm()));
+			ivStep2.setImage(new Image(getClass().getResource(IMAGE_URL + "step2.png").toExternalForm()));
 			break;
 
 		case ETAPE3:
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
+			ivStep3.setImage(new Image(getClass().getResource(IMAGE_URL + "step3.png").toExternalForm()));
 			break;
 
 		case ETAPE4:
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource(IMAGE_URL + "step4.png").toExternalForm()));
 			break;
 
 		case ETAPEDESACTIVER:
@@ -581,19 +640,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		switch (nouvelleEtape) {
 		case ETAPE1:
-			ivStep1.setImage(new Image(getClass().getResource("/images/step1_bleu.png").toExternalForm()));
+			ivStep1.setImage(new Image(getClass().getResource(IMAGE_URL + "step1_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE2:
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2_bleu.png").toExternalForm()));
+			ivStep2.setImage(new Image(getClass().getResource(IMAGE_URL + "step2_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE3:
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3_bleu.png").toExternalForm()));
+			ivStep3.setImage(new Image(getClass().getResource(IMAGE_URL + "step3_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE4:
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource(IMAGE_URL + "step4_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPEDESACTIVER:
