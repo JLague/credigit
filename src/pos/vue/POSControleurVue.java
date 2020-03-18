@@ -14,9 +14,9 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
-import exception.ExceptionCreationCompte;
-import exception.ExceptionProduitEtablissement;
-import inscription.vue.VueDialogue;
+import pos.exception.ExceptionCreationCompte;
+import pos.exception.ExceptionProduitEtablissement;
+import pos.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;

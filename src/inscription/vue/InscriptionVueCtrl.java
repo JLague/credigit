@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ExceptionCreationCompte;
+import inscription.exception.ExceptionCreationCompte;
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataClient;
 import inscription.modele.EmpreinteUtil;
@@ -540,7 +540,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 				empreinte = EmpreinteUtil.getEmpreinte();
 				continuerBtn.setDisable(false);
 				ivEmpreinte.setImage(
-						new Image(getClass().getResource("/images/ic_capteur_empreinte_vert.png").toExternalForm()));
+						new Image(getClass().getResource("/images/inscription/ic_capteur_empreinte_vert.png").toExternalForm()));
 			}).start();
 		}
 
@@ -556,19 +556,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	private void setupCompteur(EtapesVues etapeActuelle, EtapesVues nouvelleEtape) {
 		switch (etapeActuelle) {
 		case ETAPE1:
-			ivStep1.setImage(new Image(getClass().getResource("/images/step1.png").toExternalForm()));
+			ivStep1.setImage(new Image(getClass().getResource("/images/inscription/step1.png").toExternalForm()));
 			break;
 
 		case ETAPE2:
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2.png").toExternalForm()));
+			ivStep2.setImage(new Image(getClass().getResource("/images/inscription/step2.png").toExternalForm()));
 			break;
 
 		case ETAPE3:
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3.png").toExternalForm()));
+			ivStep3.setImage(new Image(getClass().getResource("/images/inscription/step3.png").toExternalForm()));
 			break;
 
 		case ETAPE4:
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource("/images/inscription/step4.png").toExternalForm()));
 			break;
 
 		case ETAPEDESACTIVER:
@@ -581,19 +581,19 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		switch (nouvelleEtape) {
 		case ETAPE1:
-			ivStep1.setImage(new Image(getClass().getResource("/images/step1_bleu.png").toExternalForm()));
+			ivStep1.setImage(new Image(getClass().getResource("/images/inscription/step1_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE2:
-			ivStep2.setImage(new Image(getClass().getResource("/images/step2_bleu.png").toExternalForm()));
+			ivStep2.setImage(new Image(getClass().getResource("/images/inscription/step2_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE3:
-			ivStep3.setImage(new Image(getClass().getResource("/images/step3_bleu.png").toExternalForm()));
+			ivStep3.setImage(new Image(getClass().getResource("/images/inscription/step3_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPE4:
-			ivStep4.setImage(new Image(getClass().getResource("/images/step4_bleu.png").toExternalForm()));
+			ivStep4.setImage(new Image(getClass().getResource("/images/inscription/step4_bleu.png").toExternalForm()));
 			break;
 
 		case ETAPEDESACTIVER:

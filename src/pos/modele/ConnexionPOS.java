@@ -19,8 +19,8 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import exception.ExceptionCreationCompte;
-import exception.ExceptionProduitEtablissement;
+import pos.exception.ExceptionCreationCompte;
+import pos.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -115,7 +115,7 @@ public class ConnexionPOS {
 		Vendeur vendeur = null;
 
 		if (validerPassword(password) && validerUsername(username)) {
-			password = encryption.SHAUtil.hashPassword(password);
+			password = pos.encryption.SHAUtil.hashPassword(password);
 
 			// On crée le query
 			BasicDBObject object = new BasicDBObject();

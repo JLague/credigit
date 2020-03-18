@@ -16,7 +16,7 @@ import javafx.scene.control.DialogPane;
  */
 public class VueDialogue {
 
-	private static final String CSS_URL = "/styles/Dialogue.css";
+	private static final String CSS_URL = "/styles/inscription/Dialogue.css";
 
 	/**
 	 * Méthode statique permettant d'afficher un message de confirmation avant de
@@ -58,20 +58,6 @@ public class VueDialogue {
 	}
 
 	/**
-	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le produit
-	 * est bel et bien créé
-	 */
-	public static void produitCree() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setHeaderText("Le produit a été créé avec succès!");
-		alert.setContentText("Le produit a été créé et ajouté à la base de données.");
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
-		dialogPane.getStyleClass().add("myDialog");
-		alert.showAndWait();
-	}
-
-	/**
 	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
 	 * est bel et bien créé
 	 */
@@ -81,20 +67,6 @@ public class VueDialogue {
 		alert.setContentText(
 				"Nous sommes heureux de vous compter parmis nous! Un email vous sera envoyé sous peu confirmant votre adhésion de façon officielle.");
 
-		DialogPane dialogPane = alert.getDialogPane();
-		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
-		dialogPane.getStyleClass().add("myDialog");
-		alert.showAndWait();
-	}
-
-	/**
-	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
-	 * est bel et bien créé
-	 */
-	public static void compteCreeSansCourriel() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setHeaderText("Votre compte a été créé avec succès!");
-		alert.setContentText("Nous sommes heureux de vous compter parmis nous!");
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");

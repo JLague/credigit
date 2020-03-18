@@ -1,4 +1,4 @@
-package exception;
+package inscription.exception;
 
 /**
  * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment ne peut pas être

@@ -1,6 +1,6 @@
 package pos.modele;
 
-import exception.ExceptionProduitEtablissement;
+import pos.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe créant un produit

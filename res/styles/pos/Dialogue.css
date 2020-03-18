@@ -1,0 +1,17 @@
+.myDialog{
+    -fx-background-color: linear-gradient(to right, #374587, #0D1837);
+}
+
+.myDialog > *.label.content{
+	-fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+.myDialog > *.header-panel{
+    -fx-background-color: linear-gradient(to right, #042379, #010c31);
+}
+.myDialog > *.header-panel *.label{
+    -fx-font-size: 35.0px;
+    -fx-font-style: italic;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

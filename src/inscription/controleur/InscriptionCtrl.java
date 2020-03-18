@@ -1,6 +1,6 @@
 package inscription.controleur;
 
-import exception.ExceptionCreationCompte;
+import inscription.exception.ExceptionCreationCompte;
 import inscription.modele.Client;
 import inscription.modele.ConnexionInscription;
 import inscription.modele.CourrielConfirmation;

@@ -3,7 +3,7 @@ package pos.modele;
 import java.util.ArrayList;
 import java.util.List;
 
-import exception.ExceptionProduitEtablissement;
+import pos.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe créant un établissement

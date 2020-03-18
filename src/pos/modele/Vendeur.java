@@ -1,6 +1,6 @@
 package pos.modele;
 
-import exception.ExceptionCreationCompte;
+import pos.exception.ExceptionCreationCompte;
 
 public class Vendeur {
 
@@ -47,7 +47,7 @@ public class Vendeur {
 		setUsername(data.getUsername());
 		if(validerPassword(data.getPassword()))
 		{
-			setPassword(encryption.SHAUtil.hashPassword(data.getPassword()));
+			setPassword(pos.encryption.SHAUtil.hashPassword(data.getPassword()));
 		}
 		else
 		{

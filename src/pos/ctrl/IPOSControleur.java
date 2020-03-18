@@ -2,7 +2,7 @@ package pos.ctrl;
 
 import java.util.List;
 
-import exception.ExceptionProduitEtablissement;
+import pos.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
