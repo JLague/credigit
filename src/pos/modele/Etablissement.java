@@ -17,6 +17,10 @@ public class Etablissement {
 	 */
 	private String nom;
 	/**
+	 * Courriel de l'entreprise
+	 */
+	private String courriel;
+	/**
 	 * Adresse de l'entreprise
 	 */
 	private String adresse;
@@ -36,23 +40,50 @@ public class Etablissement {
 	 * Liste contenant les transactions d'un établissement
 	 */
 	private List<Transaction> transactions;
+	
+	/**
+	 * Numéro d'établissement
+	 */
+	private long numero;
 
 	/**
 	 * Crée un établissement
 	 * @param nom - Nom de l'établissement
 	 * @param adresse - Adresse de l'établissement
 	 * @param balance - Balance de l'établissement
+	 * @param courriel - Courriel de l'établissment
 	 * @throws ExceptionProduitEtablissement 
 	 */
-	public Etablissement(String nom, String adresse, float balance) throws ExceptionProduitEtablissement {
+	public Etablissement(String nom, String adresse, float balance, String courriel) throws ExceptionProduitEtablissement {
 		
 		setNom(nom);
 		setAdresse(adresse);
 		setBalance(balance);
+		setCourriel(courriel);
 		
 		inventaire = new ArrayList<Produit>();
 		transactions = new ArrayList<Transaction>();
 		vendeurs = new ArrayList<Vendeur>();
+		
+		genererNumero();
+	}
+	
+	/**
+	 * Génère un numéro de 5 chiffres aléatoire pour l'établissement
+	 */
+	private void genererNumero()
+	{
+		numero = (long) (Math.random() * (89999)) + 10000;
+	}
+	
+	/**
+	 * Retourne le numéro d'établissement
+	 * 
+	 * @return Le numéro d'établissment
+	 */
+	public long getNumero()
+	{
+		return numero;
 	}
 
 	/**
@@ -206,6 +237,32 @@ public class Etablissement {
 		else
 		{
 			throw new ExceptionProduitEtablissement("La transaction à ajouter n'est pas valide.");
+		}
+		
+	}
+
+	/**
+	 * Retourne le courriel de l'établissement
+	 * @return Le courriel de l'établissement
+	 */
+	public String getCourriel() {
+		return courriel;
+	}
+
+	/**
+	 * Modifie le courriel de l'établissement
+	 * @param courriel - Le courriel à modifier
+	 * @throws ExceptionProduitEtablissement 
+	 */
+	public void setCourriel(String courriel) throws ExceptionProduitEtablissement {
+		
+		if(adresse != null && adresse.length() != 0)
+		{
+			this.courriel = courriel;
+		}
+		else
+		{
+			throw new ExceptionProduitEtablissement("Le courriel de l'établissement n'est pas valide.");
 		}
 		
 	}
