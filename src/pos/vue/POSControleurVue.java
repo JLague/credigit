@@ -743,20 +743,19 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		if (data != null) {
 			VueDialogue.produitCree();
-			skuProduitTextField.clear();
-			prixProduitTextField.clear();
-			coutantProduitTextField.clear();
-			descriptionProduitTextArea.clear();
-			fournisseurProduitTextField.clear();
-			quantiteProduitTextField.clear();
+			resetChampsProduit(null);
 		}
 	}
 
 	@FXML
-	void resetHandler(MouseEvent event) {
-		chargerAjoutProduit();
-		middlePane.getChildren().clear();
-		middlePane.getChildren().add(creationProduitPane);
+	void resetChampsProduit(MouseEvent event) {
+		skuProduitTextField.clear();
+		prixProduitTextField.clear();
+		coutantProduitTextField.clear();
+		descriptionProduitTextArea.clear();
+		fournisseurProduitTextField.clear();
+		quantiteProduitTextField.clear();
+		imageProduitImageView.setImage(null);
 	}
 
 	/**
@@ -821,14 +820,16 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void prixProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
+		String text = prixProduitTextField.getText() + event.getCharacter();
+		if (!text.matches("^\\d+\u002E?(\\d{1,2})?$")) {
 			event.consume();
 		}
 	}
 
 	@FXML
 	private void coutantProduitHandler(KeyEvent event) {
-		if (!event.getCharacter().matches("[[0-9]\u002E\u002C\u0024]")) {
+		String text = coutantProduitTextField.getText() + event.getCharacter();
+		if (!text.matches("^\\d+\u002E?(\\d{1,3})?$")) {
 			event.consume();
 		}
 
