@@ -20,6 +20,7 @@ import pos.vue.VueDialogue;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -27,6 +28,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -159,12 +161,19 @@ public class POSControleurVue implements IPOSControleurVue {
 	private TextField courrielVendeurTextField;
 	@FXML
 	private Button ajoutBtn;
+	@FXML
+	private Button modBtn;
+	@FXML
+	private Button buttonHBox;
 
 	// Déclaration des éléments du clavier
 	private GridPane clavierGrid;
 	private Button[][] clavierButtons;
 	private VBox clavierBox;
 	private TextField clavierText;
+
+	Button modifier;
+	Button retour;
 
 	/**
 	 * BorderPane contenant la grille des produits
@@ -203,6 +212,47 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ouvrirLoginVendeur() {
 		creerScene(LOGIN, rootVBox);
 		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
+	}
+
+	/**
+	 * Se charge de l'ouverture de la vue pour la modification des produits
+	 */
+	@FXML
+	private void ouvrirVueModProd() {
+		modificationSuppressionProduit();
+		modifier = new Button("Modifier cet item");
+		retour = new Button("Annuler");
+
+		modifier.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				modificationProduit();
+			}
+		});
+
+		skuProduitTextField.setDisable(true);
+		nomProduitTextField.setDisable(true);
+		prixProduitTextField.setDisable(true);
+		coutantProduitTextField.setDisable(true);
+		quantiteProduitTextField.setDisable(true);
+		fournisseurProduitTextField.setDisable(true);
+		descriptionProduitTextArea.setDisable(true);
+
+		buttonHBox.getChildrenUnmodifiable().addAll(modifier, retour);
+	}
+
+	private void modificationProduit() {
+		//TODO : reste à implémenter
+		skuProduitTextField.setDisable(false);
+		nomProduitTextField.setDisable(false);
+		prixProduitTextField.setDisable(false);
+		coutantProduitTextField.setDisable(false);
+		quantiteProduitTextField.setDisable(false);
+		fournisseurProduitTextField.setDisable(false);
+		descriptionProduitTextArea.setDisable(false);
+		
+		buttonHBox.getChildrenUnmodifiable().clear();
 	}
 
 	/**
@@ -289,6 +339,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 	}
 
+	/**
+	 * Ouvre le dialogue qui demande à l'utilisateur le nip
+	 * 
+	 * @return
+	 */
 	private String ouvrirDialogueNip() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NipDialoguePOS.fxml"));
 		Parent parent;
@@ -365,6 +420,21 @@ public class POSControleurVue implements IPOSControleurVue {
 			e.printStackTrace();
 		}
 
+	}
+
+	/**
+	 * Méthode permettant de modifier les informations d'un produit exsitant ou de
+	 * le supprimer
+	 */
+	private void modificationSuppressionProduit() {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ModificationSupressionProd.fxml"));
+		loader.setController(this);
+
+		try {
+			creationProduitPane = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
