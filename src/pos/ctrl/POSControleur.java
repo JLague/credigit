@@ -173,6 +173,10 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void updateEtablissement() {
+<<<<<<< HEAD
 		connexion.updateEtablissement();
+=======
+		
+>>>>>>> branch 'master' of https://github.com/JLague/credigit.git
 	}
 }

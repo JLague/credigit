@@ -320,9 +320,9 @@ public class POSControleurVue implements IPOSControleurVue {
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
 				}
-				
-				
+
 				ouvrirVuePrincipale();
+				ctrl.updateEtablissement();
 			}
 
 		});
@@ -330,6 +330,8 @@ public class POSControleurVue implements IPOSControleurVue {
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				ctrl.getInventaire().remove(temp);
+				ctrl.updateEtablissement();
 			}
 		});
 
