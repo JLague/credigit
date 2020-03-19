@@ -183,6 +183,15 @@ public class Etablissement {
 			throw new ExceptionProduitEtablissement("Le produit à ajouter n'est pas valide.");
 		}
 	}
+	
+	/**
+	 * Méthode permettant de supprimer un produit de l'inventaire
+	 * 
+	 * @param produit le produit à supprimer
+	 */
+	public boolean supprimerProduitInventaire(Produit produit) {
+		return inventaire.remove(produit);
+	}
 
 	/**
 	 * Retourne les utilisateurs de l'établissement
