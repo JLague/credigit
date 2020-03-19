@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
 
 import org.junit.Before;
@@ -660,10 +661,12 @@ public class ClientTest {
 
 	@Test
 	public void testGetEmpreinte() {
-		assertTrue(client1.getEmpreinte()[0] == 1);
-		assertTrue(client1.getEmpreinte()[1] == 1);
-		assertTrue(client2.getEmpreinte()[0] == 1);
-		assertTrue(client2.getEmpreinte()[1] == 0);
+		byte[] empreinte1 = Base64.getDecoder().decode(client1.getEmpreinte());
+		byte[] empreinte2 = Base64.getDecoder().decode(client2.getEmpreinte());
+		assertTrue(empreinte1[0] == 1);
+		assertTrue(empreinte1[1] == 1);
+		assertTrue(empreinte2[0] == 1);
+		assertTrue(empreinte2[1] == 0);
 	}
 
 	@Test

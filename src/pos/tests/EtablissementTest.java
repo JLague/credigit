@@ -11,6 +11,7 @@ import pos.modele.DataProduit;
 import pos.modele.DataVendeur;
 import pos.modele.Etablissement;
 import pos.modele.Produit;
+import pos.modele.Transaction;
 import pos.modele.Vendeur;
 
 /**
@@ -22,10 +23,10 @@ import pos.modele.Vendeur;
 public class EtablissementTest {
 
 	private Etablissement e1, e2;
-	
+
 	@Before
 	public void testEtablissementStringStringFloatString() {
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, "allo@gmail.com");
 			e2 = new Etablissement("Credigit", "Montreal", 10000f, "credigit@gmail.com");
@@ -33,76 +34,76 @@ public class EtablissementTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testInavlide() {
-		
+
 		try {
 			e1 = new Etablissement("", "Quebec", 0f, "allo@gmail.com");
-			
+
 			fail("Nom vide");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement(null, "Quebec", 0f, "allo@gmail.com");
-			
+
 			fail("Nom null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "", 0f, "allo@gmail.com");
-			
+
 			fail("Adresse vide");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", null, 0f, "allo@gmail.com");
-			
+
 			fail("Adresse null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, "");
-			
+
 			fail("Courriel vide");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, null);
-			
+
 			fail("Courriel null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, "allo@gmail.com");
 			e1.ajouterProduitInventaire(null);
-			
+
 			fail("Ajout d'un produit null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, "allo@gmail.com");
 			e1.ajouterVendeur(null);
-			
+
 			fail("Ajout d'un vendeur null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 		try {
 			e1 = new Etablissement("Allo", "Quebec", 0f, "allo@gmail.com");
 			e1.ajouterTransaction(null);
-			
+
 			fail("Ajout transaction null");
 		} catch (ExceptionProduitEtablissement e) {
 		}
-		
+
 	}
 
 	@Test
@@ -110,11 +111,11 @@ public class EtablissementTest {
 		assertTrue(e1.getNumero() < 100000);
 		assertTrue(e1.getNumero() > 9999);
 		System.out.println(e1.getNumero());
-		
+
 		assertTrue(e2.getNumero() < 100000);
 		assertTrue(e2.getNumero() > 9999);
 		System.out.println(e2.getNumero());
-		
+
 	}
 
 	@Test
@@ -139,9 +140,9 @@ public class EtablissementTest {
 	public void testAjouterProduitInventaire() {
 		Produit p1 = null, p2 = null;
 		DataProduit d1 = new DataProduit();
-		
-		byte[] array1 = {0,1};
-		
+
+		byte[] array1 = { 0, 1 };
+
 		d1.setCoutant(12.34f);
 		d1.setDescription("Une banane d'Asie");
 		d1.setFournisseur("China");
@@ -150,11 +151,11 @@ public class EtablissementTest {
 		d1.setPrix(13.45f);
 		d1.setQuantite(45);
 		d1.setSku(1234);
-		
+
 		DataProduit d2 = new DataProduit();
-		
-		byte[] array2 = {1,1};
-		
+
+		byte[] array2 = { 1, 1 };
+
 		d2.setCoutant(2.3f);
 		d2.setDescription("Un chocolat");
 		d2.setFournisseur("Leclerc");
@@ -163,14 +164,14 @@ public class EtablissementTest {
 		d2.setPrix(3.5f);
 		d2.setQuantite(234);
 		d2.setSku(564);
-		
+
 		try {
 			p1 = new Produit(d1);
 			p2 = new Produit(d2);
 		} catch (ExceptionProduitEtablissement e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			e1.ajouterProduitInventaire(p1);
 			e1.ajouterProduitInventaire(p2);
@@ -178,11 +179,11 @@ public class EtablissementTest {
 		} catch (ExceptionProduitEtablissement e) {
 			e.printStackTrace();
 		}
-		
+
 		assertTrue(e1.getInventaire().get(0).equals(p1));
 		assertTrue(e1.getInventaire().get(1).equals(p2));
 		assertTrue(e2.getInventaire().get(0).equals(p2));
-		
+
 		assertTrue(e1.getInventaire().size() == 2);
 		assertTrue(e2.getInventaire().size() == 1);
 	}
@@ -195,18 +196,18 @@ public class EtablissementTest {
 
 	@Test
 	public void testAjouterVendeur() {
-		
+
 		Vendeur v1 = null, v2 = null;
 		DataVendeur d1 = new DataVendeur();
-		
+
 		d1.setCourriel("test1@gmail.com");
 		d1.setNom("Test");
 		d1.setPrenom("Un");
 		d1.setPassword("Test1234");
 		d1.setUsername("LePremierTest");
-		
+
 		DataVendeur d2 = new DataVendeur();
-		
+
 		d2.setCourriel("jean.talbot1@outlook.com");
 		d2.setNom("Talbot");
 		d2.setPrenom("Jean");
@@ -219,7 +220,7 @@ public class EtablissementTest {
 		} catch (ExceptionCreationCompte e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			e1.ajouterVendeur(v1);
 			e2.ajouterVendeur(v1);
@@ -227,11 +228,11 @@ public class EtablissementTest {
 		} catch (ExceptionProduitEtablissement e) {
 			e.printStackTrace();
 		}
-		
+
 		assertTrue(e1.getUtilisateurs().get(0).equals(v1));
 		assertTrue(e2.getUtilisateurs().get(0).equals(v1));
 		assertTrue(e2.getUtilisateurs().get(1).equals(v2));
-		
+
 		assertTrue(e1.getUtilisateurs().size() == 1);
 		assertTrue(e2.getUtilisateurs().size() == 2);
 	}
@@ -246,22 +247,54 @@ public class EtablissementTest {
 	public void testAjouterBalance() {
 		e1.ajouterBalance(345.89f);
 		assertTrue(e1.getBalance() == 345.89f);
-		
+
 		e2.ajouterBalance(45.6f);
 		assertTrue(e2.getBalance() == 10045.6f);
-		
+
 		e2.ajouterBalance(-1000f);
 		assertTrue(e2.getBalance() == 9045.6f);
 	}
 
 	@Test
 	public void testGetTransactions() {
-		À faire
+		assertTrue(e1.getTransactions().size() == 0);
+		Transaction transactionTest = new Transaction();
+		try {
+			e2.ajouterTransaction(transactionTest);
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(e2.getTransactions().size() == 1);
+		assertTrue(e2.getTransactions().get(0) == transactionTest);
 	}
 
 	@Test
 	public void testAjouterTransaction() {
-		À faire
+		assertTrue(e1.getTransactions().size() == 0);
+		Transaction transactionTest = new Transaction();
+		try {
+			e1.ajouterTransaction(transactionTest);
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(e1.getTransactions().size() == 1);
+		assertTrue(e1.getTransactions().get(0) == transactionTest);
+
+		assertTrue(e2.getTransactions().size() == 0);
+		Transaction transactionTest2 = new Transaction();
+		Transaction transactionTest3 = new Transaction();
+		try {
+			e2.ajouterTransaction(transactionTest2);
+			e2.ajouterTransaction(transactionTest3);
+		} catch (ExceptionProduitEtablissement e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertTrue(e2.getTransactions().size() == 2);
+		assertTrue(e2.getTransactions().get(0) == transactionTest2);
+		assertTrue(e2.getTransactions().get(1) == transactionTest3);
 	}
 
 	@Test
