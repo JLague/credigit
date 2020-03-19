@@ -15,10 +15,10 @@ import java.util.Locale;
 
 import javax.imageio.ImageIO;
 
-import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -186,6 +186,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	Button enregistrer;
 	Button annuler;
 	Button supprimer;
+	
+	Button ajouter;
 
 	/**
 	 * BorderPane contenant la grille des produits
@@ -235,7 +237,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * le supprimer
 	 */
 	private void modificationSuppressionProduit() {
-		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
+		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("CreationProduitPOS.fxml"));
 		loader1.setController(this);
 
 		try {
@@ -261,7 +263,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		modifier.getStyleClass().add("buttons-1");
 		retour = new Button("Annuler");
 		retour.getStyleClass().add("buttons-1");
-
+		
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -269,39 +271,45 @@ public class POSControleurVue implements IPOSControleurVue {
 			}
 		});
 
-		new Thread(() -> {
-			Platform.runLater(() -> {
-				DecimalFormat df1 = new DecimalFormat("###.##");
-				DecimalFormat df2 = new DecimalFormat("###.###");
+		retour.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					ouvrirVuePrincipale();
+				}
+		});
+		
+		skuProduitTextField.setDisable(true);
+		nomProduitTextField.setDisable(true);
+		prixProduitTextField.setDisable(true);
+		coutantProduitTextField.setDisable(true);
+		quantiteProduitTextField.setDisable(true);
+		fournisseurProduitTextField.setDisable(true);
+		descriptionProduitTextArea.setDisable(true);
 
-				skuProduitTextField.setText(temp.getSku() + "");
-				nomProduitTextField.setText(temp.getNom() + "");
-				prixProduitTextField.setText(df1.format(temp.getPrix()));
-				coutantProduitTextField.setText(df2.format(temp.getCoutant()));
-				quantiteProduitTextField.setText(temp.getQuantite() + "");
-				fournisseurProduitTextField.setText(temp.getFournisseur() + "");
-				descriptionProduitTextArea.setText(temp.getDescription() + "");
-				imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
+		
+		DecimalFormat df1 = new DecimalFormat("###.##");
+		DecimalFormat df2 = new DecimalFormat("###.###");
 
-				skuProduitTextField.setDisable(true);
-				nomProduitTextField.setDisable(true);
-				prixProduitTextField.setDisable(true);
-				coutantProduitTextField.setDisable(true);
-				quantiteProduitTextField.setDisable(true);
-				fournisseurProduitTextField.setDisable(true);
-				descriptionProduitTextArea.setDisable(true);
-			});
-		}).start();
-		;
-
+		skuProduitTextField.setText(temp.getSku() + "");
+		nomProduitTextField.setText(temp.getNom() + "");
+		prixProduitTextField.setText(df1.format(temp.getPrix()));
+		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
+		quantiteProduitTextField.setText(temp.getQuantite() + "");
+		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
+		descriptionProduitTextArea.setText(temp.getDescription() + "");
+		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
+		
+		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
 
 	private void modificationProduit(Produit temp) {
 		enregistrer = new Button("Enregistrer");
 		enregistrer.getStyleClass().add("buttons-1");
+
 		annuler = new Button("Annuler");
 		annuler.getStyleClass().add("buttons-1");
+
 		supprimer = new Button("Supprimer");
 		supprimer.getStyleClass().add("buttons-1");
 
@@ -327,6 +335,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					temp.setQuantite(Integer.parseInt(quantiteProduitTextField.getText()));
 					temp.setDescription(descriptionProduitTextArea.getText());
 					temp.setImage(convertToBytes(new ImageView(imageProduitImageView.getImage())));
+					temp.setFournisseur(fournisseurProduitTextField.getText());
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
 				}
@@ -342,6 +351,8 @@ public class POSControleurVue implements IPOSControleurVue {
 			public void handle(ActionEvent event) {
 				ctrl.getInventaire().remove(temp);
 				ctrl.updateEtablissement();
+				populerGridProduit();
+				ouvrirVuePrincipale();
 			}
 		});
 
@@ -773,6 +784,19 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(creationProduitPane);
+		
+		ajouter = new Button("Créer le produit !");
+		buttonHBox.getChildren().add(ajouter);
+		
+		ajouter.getStyleClass().add("buttons-1");
+		
+		ajouter.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				creerProduitHandler(event);
+				
+			}
+		});
 
 	}
 
@@ -891,7 +915,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * 
 	 * @param event
 	 */
-	@FXML
 	private void creerProduitHandler(ActionEvent event) {
 		DataProduit data = null;
 		try {
@@ -992,8 +1015,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void prixProduitHandler(KeyEvent event) {
 		String text = prixProduitTextField.getText() + event.getCharacter();
-		System.out.println(text);
-		System.out.println(!text.matches("^\\d+\u002E?(\\d{1,2})?$"));
 		if (!text.matches("^\\d+\u002E?(\\d{1,2})?$")) {
 			event.consume();
 		}
@@ -1001,7 +1022,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	@FXML
 	private void coutantProduitHandler(KeyEvent event) {
-		System.out.println("here too");
 		String text = coutantProduitTextField.getText() + event.getCharacter();
 		if (!text.matches("^\\d+\u002E?(\\d{1,3})?$")) {
 			event.consume();
