@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -275,10 +276,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(true);
 		descriptionProduitTextArea.setDisable(true);
 
+		DecimalFormat df1 = new DecimalFormat("###.##");
+		DecimalFormat df2 = new DecimalFormat("###.###");
+		
 		skuProduitTextField.setText(temp.getSku() + "");
 		nomProduitTextField.setText(temp.getNom() + "");
-		prixProduitTextField.setText(temp.getPrix() + "");
-		coutantProduitTextField.setText(temp.getCoutant() + "");
+		prixProduitTextField.setText(df1.format(temp.getPrix()));
+		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
@@ -459,7 +463,6 @@ public class POSControleurVue implements IPOSControleurVue {
 			return dialogController.getNip();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "";
 		}
