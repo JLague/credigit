@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -275,14 +276,18 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(true);
 		descriptionProduitTextArea.setDisable(true);
 
+		DecimalFormat df1 = new DecimalFormat("###.##");
+		DecimalFormat df2 = new DecimalFormat("###.###");
+		
 		skuProduitTextField.setText(temp.getSku() + "");
 		nomProduitTextField.setText(temp.getNom() + "");
-		prixProduitTextField.setText(Float.toString(temp.getPrix()));
-		coutantProduitTextField.setText(String.valueOf(temp.getCoutant()));
+		prixProduitTextField.setText(df1.format(temp.getPrix()));
+		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
+ 
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
-		imageProduitImageView.setImage(convertFromBytes(temp.getImage()).getImage());
+		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
 
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
@@ -461,7 +466,6 @@ public class POSControleurVue implements IPOSControleurVue {
 			return dialogController.getNip();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "";
 		}
@@ -569,7 +573,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	private VBox creerProduitWrapper(Produit p, int x, int y) {
 		VBox vbox = new VBox();
-		ImageView image = convertFromBytes(p.getImage());
+		ImageView image = new ImageView(convertFromBytes(p.getImage()));
 		image.setFitHeight(234);
 		image.setFitWidth(234);
 
@@ -943,7 +947,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param bytes les bytes constituant l'image
 	 * @return un ImageView contenant l'image
 	 */
-	private ImageView convertFromBytes(byte[] bytes) {
+	private Image convertFromBytes(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		BufferedImage bImage = null;
 		Image im = null;
@@ -954,7 +958,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			e.printStackTrace();
 		}
 
-		return new ImageView(im);
+		return im;
 	}
 
 	@FXML
