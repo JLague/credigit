@@ -162,7 +162,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private TextField courrielVendeurTextField;
 	@FXML
 	private TextField nomEtablissementCreationVendeur;
-	
+
 	@FXML
 	private Button ajoutBtn;
 	@FXML
@@ -180,7 +180,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	Button modifier;
 	Button retour;
-	
+
 	Button enregistrer;
 	Button annuler;
 	Button supprimer;
@@ -194,7 +194,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * AnchorPane contenant le formulaire de création de produit
 	 */
 	private AnchorPane creationProduitPane;
-	
+
 	/**
 	 * AnchorPane contenant le formulaire de modification de produit
 	 */
@@ -227,7 +227,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(LOGIN, rootVBox);
 		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 	}
-	
+
 	/**
 	 * Méthode permettant de modifier les informations d'un produit exsitant ou de
 	 * le supprimer
@@ -235,7 +235,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void modificationSuppressionProduit() {
 		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
 		loader1.setController(this);
-		
+
 		try {
 			modificationProduitPane = loader1.load();
 			middlePane.getChildren().clear();
@@ -243,9 +243,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
+
 	}
 
 	/**
@@ -253,6 +251,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void ouvrirVueModProdHandler() {
+
+		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
+
 		modificationSuppressionProduit();
 		modifier = new Button("Modifier cet item");
 		modifier.getStyleClass().add("buttons-1");
@@ -262,7 +263,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				modificationProduit();
+				modificationProduit(temp);
 			}
 		});
 
@@ -274,29 +275,26 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(true);
 		descriptionProduitTextArea.setDisable(true);
 
+		skuProduitTextField.setText(temp.getSku() + "");
+		nomProduitTextField.setText(temp.getNom() + "");
+		prixProduitTextField.setText(temp.getPrix() + "");
+		coutantProduitTextField.setText(temp.getCoutant() + "");
+		quantiteProduitTextField.setText(temp.getQuantite() + "");
+		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
+		descriptionProduitTextArea.setText(temp.getDescription() + "");
+		imageProduitImageView.setImage(convertFromBytes(temp.getImage()).getImage());
+
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
 
-	private void modificationProduit() {
+	private void modificationProduit(Produit temp) {
 		enregistrer = new Button("Enregistrer");
 		enregistrer.getStyleClass().add("buttons-1");
 		annuler = new Button("Annuler");
 		annuler.getStyleClass().add("buttons-1");
 		supprimer = new Button("Supprimer");
 		supprimer.getStyleClass().add("buttons-1");
-		
-		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
-		
-		skuProduitTextField.setText(temp.getSku() + "");
-		nomProduitTextField.setText(temp.getNom()+ "");
-		prixProduitTextField.setText(temp.getPrix()+ "");
-		coutantProduitTextField.setText(temp.getCoutant()+ "");
-		quantiteProduitTextField.setText(temp.getQuantite()+ "");
-		fournisseurProduitTextField.setText(temp.getFournisseur()+ "");
-		descriptionProduitTextArea.setText(temp.getDescription()+ "");
-		imageProduitImageView.setImage(temp.getImage());
-		
-		
+
 		skuProduitTextField.setDisable(false);
 		nomProduitTextField.setDisable(false);
 		prixProduitTextField.setDisable(false);
@@ -304,28 +302,41 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.setDisable(false);
 		fournisseurProduitTextField.setDisable(false);
 		descriptionProduitTextArea.setDisable(false);
-		
+
 		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(enregistrer, annuler, supprimer);
-		
+
 		enregistrer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				try {
+					temp.setSku(Integer.parseInt(skuProduitTextField.getText()));
+					temp.setNom(nomProduitTextField.getText());
+					temp.setPrix(Float.parseFloat(prixProduitTextField.getText()));
+					temp.setCoutant(Float.parseFloat(coutantProduitTextField.getText()));
+					temp.setQuantite(Integer.parseInt(quantiteProduitTextField.getText()));
+					temp.setDescription(descriptionProduitTextArea.getText());
+					temp.setImage(convertToBytes(new ImageView(imageProduitImageView.getImage())));
+				} catch (Exception e) {
+					System.out.println("Could not save the images :(");
+				}
 				
+				ctrl.updateEtablissement();
+				ouvrirVuePrincipale();
 			}
+
 		});
-		
+
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
 			}
 		});
-		
-		enregistrer.setOnAction(new EventHandler<ActionEvent>() {
+
+		annuler.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				
+				ouvrirVuePrincipale();
 			}
 		});
 	}
@@ -401,7 +412,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			// On cherche le numéro de l'établissement
 			long numero = ctrl.getNumeroEtablissement(nomEtablissementCreationVendeur.getText());
 			String numeroEtablissement = ouvrirDialogueNip();
-			
+
 			// On vérifie si les numéros sont pareils
 			if (numeroEtablissement.equals(Long.toString(numero))) {
 				ctrl.creerVendeur(data);

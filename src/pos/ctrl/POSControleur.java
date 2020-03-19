@@ -168,4 +168,8 @@ public class POSControleur implements IPOSControleur {
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
 		return connexion.getNumeroEtablissement(nom);
 	}
+
+	public void updateEtablissement() {
+		this.updateEtablissement();
+	}
 }
