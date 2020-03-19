@@ -49,7 +49,7 @@
       </TextArea>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="247.0" prefWidth="247.0" styleClass="creerProduitImage" stylesheets="@../../../res/styles/pos/POS.css">
          <children>
-            <ImageView fx:id="imageProduitImageView" fitHeight="247.0" fitWidth="247.0" onMouseClicked="#imageProduitHandler" pickOnBounds="true" preserveRatio="true" styleClass="creerProduitImageView" />
+            <ImageView fx:id="imageProduitImageView" fitHeight="247.0" fitWidth="247.0" layoutX="31.0" layoutY="-17.0" onMouseClicked="#imageProduitHandler" pickOnBounds="true" preserveRatio="true" styleClass="creerProduitImageView" />
          </children>
       </Pane>
       <Label fx:id="resetLbl" layoutX="99.0" layoutY="826.0" onMouseClicked="#resetChampsProduit" text="RESET" textAlignment="CENTER" textFill="RED">

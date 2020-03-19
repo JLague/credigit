@@ -286,6 +286,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		fournisseurProduitTextField.setDisable(true);
 		descriptionProduitTextArea.setDisable(true);
 
+		
 		DecimalFormat df1 = new DecimalFormat("###.##");
 		DecimalFormat df2 = new DecimalFormat("###.###");
 
@@ -409,8 +410,15 @@ public class POSControleurVue implements IPOSControleurVue {
 		chargerGridProduit();
 		chargerAjoutProduit();
 
+		// Vue par défaut au lancement de l'application
 		middlePane.getChildren().add(borderPaneProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
+
+		// Fait en sorte que les Label ne dépassent pas les limites de l'écran
+		AnchorPane.setRightAnchor(sousTotalLbl, 0.0);
+		AnchorPane.setRightAnchor(taxesLbl, 0.0);
+		AnchorPane.setRightAnchor(totalLbl, 0.0);
+
 	}
 
 	/**
