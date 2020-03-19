@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javafx.beans.property.StringProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -185,6 +186,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	Button enregistrer;
 	Button annuler;
 	Button supprimer;
+	
+	Button ajouter;
 
 	/**
 	 * BorderPane contenant la grille des produits
@@ -234,7 +237,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * le supprimer
 	 */
 	private void modificationSuppressionProduit() {
-		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
+		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("CreationProduitPOS.fxml"));
 		loader1.setController(this);
 
 		try {
@@ -260,7 +263,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		modifier.getStyleClass().add("buttons-1");
 		retour = new Button("Annuler");
 		retour.getStyleClass().add("buttons-1");
-
+		
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -268,6 +271,13 @@ public class POSControleurVue implements IPOSControleurVue {
 			}
 		});
 
+		retour.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					ouvrirVuePrincipale();
+				}
+		});
+		
 		skuProduitTextField.setDisable(true);
 		nomProduitTextField.setDisable(true);
 		prixProduitTextField.setDisable(true);
@@ -283,20 +293,22 @@ public class POSControleurVue implements IPOSControleurVue {
 		nomProduitTextField.setText(temp.getNom() + "");
 		prixProduitTextField.setText(df1.format(temp.getPrix()));
 		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
-
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
 		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
-
+		
+		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
 
 	private void modificationProduit(Produit temp) {
 		enregistrer = new Button("Enregistrer");
 		enregistrer.getStyleClass().add("buttons-1");
+
 		annuler = new Button("Annuler");
 		annuler.getStyleClass().add("buttons-1");
+
 		supprimer = new Button("Supprimer");
 		supprimer.getStyleClass().add("buttons-1");
 
@@ -764,6 +776,19 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(creationProduitPane);
+		
+		ajouter = new Button("Créer le produit !");
+		buttonHBox.getChildren().add(ajouter);
+		
+		ajouter.getStyleClass().add("buttons-1");
+		
+		ajouter.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				creerProduitHandler(event);
+				
+			}
+		});
 
 	}
 
@@ -882,7 +907,6 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * 
 	 * @param event
 	 */
-	@FXML
 	private void creerProduitHandler(ActionEvent event) {
 		DataProduit data = null;
 		try {
