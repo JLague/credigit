@@ -277,8 +277,8 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		skuProduitTextField.setText(temp.getSku() + "");
 		nomProduitTextField.setText(temp.getNom() + "");
-		prixProduitTextField.setText(temp.getPrix() + "");
-		coutantProduitTextField.setText(temp.getCoutant() + "");
+		prixProduitTextField.setText(Float.toString(temp.getPrix()));
+		coutantProduitTextField.setText(String.valueOf(temp.getCoutant()));
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
@@ -332,6 +332,8 @@ public class POSControleurVue implements IPOSControleurVue {
 			public void handle(ActionEvent event) {
 				ctrl.getInventaire().remove(temp);
 				ctrl.updateEtablissement();
+				populerGridProduit();
+				ouvrirVuePrincipale();
 			}
 		});
 
