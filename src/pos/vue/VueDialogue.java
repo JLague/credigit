@@ -67,4 +67,14 @@ public class VueDialogue {
 		dialogPane.getStyleClass().add("myDialog");
 		alert.showAndWait();
 	}
+	
+	public static void erreurProduit(String message) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setHeaderText("Erreur lors de la création ou de la modification du produit");
+			alert.setContentText(message);
+			DialogPane dialogPane = alert.getDialogPane();
+			dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
+			dialogPane.getStyleClass().add("myDialog");
+			alert.showAndWait();
+	}
 }

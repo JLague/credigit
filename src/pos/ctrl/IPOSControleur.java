@@ -49,11 +49,6 @@ public interface IPOSControleur {
 	 */
 	public List<Produit> getInventaire();
 
-	/**
-	 * @return le produit correspondant au nom
-	 */
-	public Produit getProduitFromString(String nom);
-
 	public void produitSelectionne(int ligne, int colonne);
 
 	public void inputEntree(String input);

@@ -1,8 +1,5 @@
 package pos.vue;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,12 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.imageio.ImageIO;
-
 import javafx.beans.property.StringProperty;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,6 +49,7 @@ import pos.modele.DataProduit;
 import pos.modele.DataVendeur;
 import pos.modele.LigneFacture;
 import pos.modele.Produit;
+import pos.utils.ImageUtil;
 
 /**
  * Classe permettant de contrôler les vues du POS
@@ -188,6 +182,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	Button supprimer;
 	
 	Button ajouter;
+	
+	List<Produit> produits = new ArrayList<>();
 
 	/**
 	 * BorderPane contenant la grille des produits
@@ -297,13 +293,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
-		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
+		imageProduitImageView.setImage(ImageUtil.convertFromBytes(temp.getImage()));
 		
 		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
 
-	private void modificationProduit(Produit temp) {
+	private void modificationProduit(Produit p) {
 		enregistrer = new Button("Enregistrer");
 		enregistrer.getStyleClass().add("buttons-1");
 
@@ -328,20 +324,23 @@ public class POSControleurVue implements IPOSControleurVue {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					Produit temp = new Produit();
 					temp.setSku(Integer.parseInt(skuProduitTextField.getText()));
 					temp.setNom(nomProduitTextField.getText());
 					temp.setPrix(Float.parseFloat(prixProduitTextField.getText()));
 					temp.setCoutant(Float.parseFloat(coutantProduitTextField.getText()));
 					temp.setQuantite(Integer.parseInt(quantiteProduitTextField.getText()));
 					temp.setDescription(descriptionProduitTextArea.getText());
-					temp.setImage(convertToBytes(new ImageView(imageProduitImageView.getImage())));
+					temp.setImage(ImageUtil.convertToBytes(imageProduitImageView.getImage()));
 					temp.setFournisseur(fournisseurProduitTextField.getText());
+					ctrl.modifierProduit(p, temp);
+				} catch(ExceptionProduitEtablissement e) {
+					VueDialogue.erreurProduit(e.getMessage());
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
 				}
 
 				ouvrirVuePrincipale();
-				ctrl.updateEtablissement();
 			}
 
 		});
@@ -349,7 +348,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ctrl.getInventaire().remove(temp);
+				ctrl.getInventaire().remove(p);
 				ctrl.updateEtablissement();
 				populerGridProduit();
 				ouvrirVuePrincipale();
@@ -573,10 +572,10 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * Popule le grid de produits à l'aide de la liste des produits
 	 */
 	private void populerGridProduit() {
-		List<Produit> listeProduits = ctrl.getInventaire();
+		produits = ctrl.getInventaire();
 		int cpt = 0;
 
-		for (Produit p : listeProduits) {
+		for (Produit p : produits) {
 			VBox vbox = creerProduitWrapper(p, cpt % 3, cpt / 3);
 			vbox.getStyleClass().add("vboxProduit");
 			gridProduits.getChildren().add(vbox);
@@ -593,22 +592,14 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @return le HBox wrapper
 	 */
 	private VBox creerProduitWrapper(Produit p, int x, int y) {
-		VBox vbox = new VBox();
-		ImageView image = new ImageView(convertFromBytes(p.getImage()));
-		image.setFitHeight(234);
-		image.setFitWidth(234);
-
-		Label nom = new Label(p.getNom());
-		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
-		Label prix = new Label(cf.format(p.getPrix()));
-
-		VBox.setMargin(nom, new Insets(8, 0, 0, 8));
-		VBox.setMargin(prix, new Insets(2, 0, 0, 8));
-		vbox.getChildren().addAll(image, nom, prix);
-		vbox.setOnMouseClicked((me) -> addProduitATransaction(me));
-
-		GridPane.setConstraints(vbox, x, y);
-		return vbox;
+		// Instantie le wrapper du Produit
+		VBox wrapper = new ProduitWrapper(p);
+		GridPane.setConstraints(wrapper, x, y);
+		
+		// Fonctionnalité d'ajout du produit
+		wrapper.setOnMouseClicked((me) -> addProduitATransaction(me));
+		
+		return wrapper;
 	}
 
 	/**
@@ -639,9 +630,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void addProduitATransaction(MouseEvent me) {
-		VBox source = (VBox) me.getSource();
-		Label l = (Label) source.getChildren().get(1);
-		produitCourant = ctrl.getProduitFromString(l.getText());
+		ProduitWrapper source = (ProduitWrapper) me.getSource();
+		produitCourant = source.getProduit();
 
 		ctrl.ajouterProduitATransaction(produitCourant);
 		factureTable.refresh();
@@ -672,7 +662,7 @@ public class POSControleurVue implements IPOSControleurVue {
 				if (!(i == 2 && j == 3)) {
 					GridPane.setConstraints(clavierButtons[i][j] = new Button(CLAVIER[i][j]), j, i);
 					clavierGrid.getChildren().add(clavierButtons[i][j]);
-					clavierButtons[i][j].setMinSize(150, 150);
+					clavierButtons[i][j].setMinSize(50, 50);
 					clavierButtons[i][j].getStyleClass().add("clavier-buttons");
 
 					clavierButtons[i][j].setOnMouseClicked(e -> {
@@ -922,7 +912,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					Float.parseFloat(prixProduitTextField.getText()),
 					Float.parseFloat(coutantProduitTextField.getText()), fournisseurProduitTextField.getText(),
 					Integer.parseInt(quantiteProduitTextField.getText()), descriptionProduitTextArea.getText(),
-					convertToBytes(imageProduitImageView));
+					ImageUtil.convertToBytes(imageProduitImageView.getImage()));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -952,47 +942,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		imageProduitImageView.setImage(null);
 	}
 
-	/**
-	 * Permet de convertir un ImageView en array de bytes
-	 * 
-	 * @param imageView l'image à convertir
-	 * @return l'array de bytes
-	 */
-	private byte[] convertToBytes(ImageView imageView) {
-		BufferedImage bImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
-		ByteArrayOutputStream s = new ByteArrayOutputStream();
-		byte[] res = null;
-
-		try {
-			ImageIO.write(bImage, "png", s);
-			res = s.toByteArray();
-			s.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return res;
-	}
-
-	/**
-	 * Permet de convertir un array de bytes en ImageView
-	 * 
-	 * @param bytes les bytes constituant l'image
-	 * @return un ImageView contenant l'image
-	 */
-	private Image convertFromBytes(byte[] bytes) {
-		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-		BufferedImage bImage = null;
-		Image im = null;
-		try {
-			bImage = ImageIO.read(bis);
-			im = SwingFXUtils.toFXImage(bImage, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return im;
-	}
+	
 
 	@FXML
 	private void descriptionProduitHandler(KeyEvent event) {
