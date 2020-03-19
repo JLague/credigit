@@ -873,6 +873,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		if (data != null) {
 			VueDialogue.produitCree();
 			resetChampsProduit(null);
+			populerGridProduit();
 		}
 	}
 
