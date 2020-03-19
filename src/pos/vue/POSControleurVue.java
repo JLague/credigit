@@ -169,6 +169,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	private Button modBtn;
 	@FXML
 	private HBox buttonHBox;
+	@FXML
+	private Button voirItemBtn;
 
 	// Déclaration des éléments du clavier
 	private GridPane clavierGrid;
@@ -178,6 +180,10 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	Button modifier;
 	Button retour;
+	
+	Button enregistrer;
+	Button annuler;
+	Button supprimer;
 
 	/**
 	 * BorderPane contenant la grille des produits
@@ -247,11 +253,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void ouvrirVueModProdHandler() {
-		System.out.println("Hello");
 		modificationSuppressionProduit();
-		System.out.println("Hello2");
 		modifier = new Button("Modifier cet item");
+		modifier.getStyleClass().add("button-1");
 		retour = new Button("Annuler");
+		retour.getStyleClass().add("button-1");
 
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -272,7 +278,13 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	private void modificationProduit() {
-		//TODO : reste à implémenter
+		enregistrer = new Button("Enregistrer");
+		enregistrer.getStyleClass().add("button-1");
+		annuler = new Button("Annuler");
+		annuler.getStyleClass().add("button-1");
+		supprimer = new Button("Supprimer");
+		supprimer.getStyleClass().add("button-1");
+		
 		skuProduitTextField.setDisable(false);
 		nomProduitTextField.setDisable(false);
 		prixProduitTextField.setDisable(false);
@@ -282,6 +294,28 @@ public class POSControleurVue implements IPOSControleurVue {
 		descriptionProduitTextArea.setDisable(false);
 		
 		buttonHBox.getChildren().clear();
+		buttonHBox.getChildren().addAll(enregistrer, annuler, supprimer);
+		
+		enregistrer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
+		
+		supprimer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
+		
+		enregistrer.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				
+			}
+		});
 	}
 
 	/**
@@ -480,6 +514,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		gridProduits.setVgap(38);
 
 		populerGridProduit();
+		voirItemBtn.setDisable(true);
 	}
 
 	/**
@@ -620,6 +655,8 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		rechercheResultat.getStyleClass().add("table-view");
 		rechercheResultat.setEditable(false);
+		
+		voirItemBtn.setDisable(false);
 	}
 
 	/**
