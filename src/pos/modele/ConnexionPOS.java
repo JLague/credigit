@@ -176,21 +176,6 @@ public class ConnexionPOS {
 
 		return true;
 	}
-	
-	/**
-	 * Permet de supprimer un produit de l'inventaire de l'établissement dans la base de données
-	 * 
-	 * @param p le produit à supprimer
-	 * @return true si le produit a été supprimé
-	 */
-	public boolean supprimerProduit(Produit p) {
-		if(etablissement.supprimerProduitInventaire(p)) {
-			updateEtablissement();
-			return true;
-		}
-		
-		return false;
-	}
 
 	/**
 	 * Permet d'aller chercher les produits contenus dans la base de données

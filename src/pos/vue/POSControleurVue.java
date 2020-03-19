@@ -321,7 +321,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					System.out.println("Could not save the images :(");
 				}
 				
-				ctrl.updateEtablissement();
+				
 				ouvrirVuePrincipale();
 			}
 

@@ -3,6 +3,8 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.corba.se.spi.legacy.connection.GetEndPointInfoAgainException;
+
 import pos.exception.ExceptionCreationCompte;
 import pos.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
@@ -170,6 +172,6 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void updateEtablissement() {
-		this.updateEtablissement();
+		ConnexionPOS.getEtablissement().updateEtablissement();
 	}
 }
