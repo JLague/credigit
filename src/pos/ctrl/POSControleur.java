@@ -172,6 +172,6 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void updateEtablissement() {
-		ConnexionPOS.getEtablissement().updateEtablissement();
+		
 	}
 }
