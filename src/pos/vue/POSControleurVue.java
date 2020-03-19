@@ -282,7 +282,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
-		imageProduitImageView.setImage(convertFromBytes(temp.getImage()).getImage());
+		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
 
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
@@ -567,7 +567,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	private VBox creerProduitWrapper(Produit p, int x, int y) {
 		VBox vbox = new VBox();
-		ImageView image = convertFromBytes(p.getImage());
+		ImageView image = new ImageView(convertFromBytes(p.getImage()));
 		image.setFitHeight(234);
 		image.setFitWidth(234);
 
@@ -941,7 +941,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * @param bytes les bytes constituant l'image
 	 * @return un ImageView contenant l'image
 	 */
-	private ImageView convertFromBytes(byte[] bytes) {
+	private Image convertFromBytes(byte[] bytes) {
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		BufferedImage bImage = null;
 		Image im = null;
@@ -952,7 +952,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			e.printStackTrace();
 		}
 
-		return new ImageView(im);
+		return im;
 	}
 
 	@FXML
