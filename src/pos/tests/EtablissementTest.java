@@ -302,5 +302,57 @@ public class EtablissementTest {
 		assertTrue(e1.getCourriel().equals("allo@gmail.com"));
 		assertTrue(e2.getCourriel().equals("credigit@gmail.com"));
 	}
+	
+	@Test
+	public void testSupprimerProduitInventaire() {
+		Produit p1 = null, p2 = null;
+		DataProduit d1 = new DataProduit();
+
+		byte[] array1 = { 0, 1 };
+
+		d1.setCoutant(12.34f);
+		d1.setDescription("Une banane d'Asie");
+		d1.setFournisseur("China");
+		d1.setImage(array1);
+		d1.setNom("Banane");
+		d1.setPrix(13.45f);
+		d1.setQuantite(45);
+		d1.setSku(1234);
+
+		DataProduit d2 = new DataProduit();
+
+		byte[] array2 = { 1, 1 };
+
+		d2.setCoutant(2.3f);
+		d2.setDescription("Un chocolat");
+		d2.setFournisseur("Leclerc");
+		d2.setImage(array2);
+		d2.setNom("Chocolat");
+		d2.setPrix(3.5f);
+		d2.setQuantite(234);
+		d2.setSku(564);
+		
+		try {
+			p1 = new Produit(d1);
+			p2 = new Produit(d2);
+		} catch (ExceptionProduitEtablissement e) {
+			e.printStackTrace();
+		}
+
+		try {
+			e1.ajouterProduitInventaire(p1);
+			e1.ajouterProduitInventaire(p2);
+			e2.ajouterProduitInventaire(p2);
+		} catch (ExceptionProduitEtablissement e) {
+			e.printStackTrace();
+		}
+		
+		assertTrue(e1.supprimerProduitInventaire(p1));
+		assertTrue(e1.supprimerProduitInventaire(p2));
+		assertTrue(e2.supprimerProduitInventaire(p2));
+		
+		assertTrue(e1.getInventaire().isEmpty());
+		assertTrue(e2.getInventaire().isEmpty());
+	}
 
 }
