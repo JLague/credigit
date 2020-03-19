@@ -298,6 +298,9 @@ public class POSControleurVue implements IPOSControleurVue {
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
 		imageProduitImageView.setImage(convertFromBytes(temp.getImage()));
 		
+		imageProduitImageView.setFitHeight(247);
+		imageProduitImageView.setFitHeight(247);
+		
 		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(modifier, retour);
 	}
