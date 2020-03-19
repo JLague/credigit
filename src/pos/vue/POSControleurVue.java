@@ -162,7 +162,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private TextField courrielVendeurTextField;
 	@FXML
 	private TextField nomEtablissementCreationVendeur;
-
+	
 	@FXML
 	private Button ajoutBtn;
 	@FXML
@@ -188,7 +188,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * AnchorPane contenant le formulaire de création de produit
 	 */
 	private AnchorPane creationProduitPane;
-
+	
 	/**
 	 * AnchorPane contenant le formulaire de modification de produit
 	 */
@@ -221,7 +221,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		creerScene(LOGIN, rootVBox);
 		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 	}
-
+	
 	/**
 	 * Méthode permettant de modifier les informations d'un produit exsitant ou de
 	 * le supprimer
@@ -229,7 +229,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void modificationSuppressionProduit() {
 		FXMLLoader loader1 = new FXMLLoader(getClass().getResource("ModificationSuppressionProd.fxml"));
 		loader1.setController(this);
-
+		
 		try {
 			modificationProduitPane = loader1.load();
 			middlePane.getChildren().clear();
@@ -237,7 +237,9 @@ public class POSControleurVue implements IPOSControleurVue {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		
+		
 	}
 
 	/**
@@ -270,7 +272,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	private void modificationProduit() {
-		// TODO : reste à implémenter
+		//TODO : reste à implémenter
 		skuProduitTextField.setDisable(false);
 		nomProduitTextField.setDisable(false);
 		prixProduitTextField.setDisable(false);
@@ -278,7 +280,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.setDisable(false);
 		fournisseurProduitTextField.setDisable(false);
 		descriptionProduitTextArea.setDisable(false);
-
+		
 		buttonHBox.getChildren().clear();
 	}
 
@@ -353,7 +355,7 @@ public class POSControleurVue implements IPOSControleurVue {
 			// On cherche le numéro de l'établissement
 			long numero = ctrl.getNumeroEtablissement(nomEtablissementCreationVendeur.getText());
 			String numeroEtablissement = ouvrirDialogueNip();
-
+			
 			// On vérifie si les numéros sont pareils
 			if (numeroEtablissement.equals(Long.toString(numero))) {
 				ctrl.creerVendeur(data);
