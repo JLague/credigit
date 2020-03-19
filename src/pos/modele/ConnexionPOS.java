@@ -31,18 +31,10 @@ public class ConnexionPOS {
 	private final static String DB = "credigit_etablissements";
 
 	/**
-	 * String représentant le nom de la collection contenant les comptes dans la
-	 * base de données
+	 * String représentant le nom de la collection contenant les établissements dans
+	 * la base de données
 	 */
-	private final static String PRODUITS = "produits";
-
 	private final static String ETABLISSEMENTS = "etablissements";
-
-	/**
-	 * String représentant le nom de la collection contenant les comptes des
-	 * vendeurs dans la base de données
-	 */
-	private final static String COMPTES_VENDEURS = "comptes_vendeurs";
 
 	/**
 	 * Objet base de données
@@ -82,11 +74,11 @@ public class ConnexionPOS {
 		object.put("nom", nom);
 
 		etablissement = collection.find(object).first();
-		
-		if(etablissement == null)
+
+		if (etablissement == null)
 			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
 	}
-	
+
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
 		setEtablissementFromDatabase(nom);
 		return etablissement.getNumero();
@@ -140,16 +132,17 @@ public class ConnexionPOS {
 	 * Permet d'aller chercher les informations du vendeur si les informations
 	 * passées en paramètre sont valides
 	 * 
-	 * @param username le nom d'utilisateur
-	 * @param password le mot de passe
-	 * @param nomEtablissement 
+	 * @param username         le nom d'utilisateur
+	 * @param password         le mot de passe
+	 * @param nomEtablissement
 	 * @return les informations du vendeur
-	 * @throws ExceptionProduitEtablissement 
+	 * @throws ExceptionProduitEtablissement
 	 */
-	public Vendeur connecter(String username, String password, String nomEtablissement) throws ExceptionProduitEtablissement {
+	public Vendeur connecter(String username, String password, String nomEtablissement)
+			throws ExceptionProduitEtablissement {
 
 		setEtablissementFromDatabase(nomEtablissement);
-		
+
 		Vendeur vendeur = null;
 
 		if (validerPassword(password) && validerUsername(username)) {
@@ -161,8 +154,8 @@ public class ConnexionPOS {
 				}
 			}
 		}
-		
-		if(vendeur == null)
+
+		if (vendeur == null)
 			throw new ExceptionProduitEtablissement("Le nom d'utilisateur ou le mot de passe est invalide.");
 
 		return vendeur;
@@ -201,7 +194,7 @@ public class ConnexionPOS {
 	 */
 	private boolean isUsernameUsed(String nomUtilisateur) {
 		boolean estUtilise = false;
-		
+
 		if (etablissement.getUtilisateurs() != null) {
 			for (Vendeur utilisateur : etablissement.getUtilisateurs()) {
 				if (utilisateur.getUsername().equals(nomUtilisateur)) {
