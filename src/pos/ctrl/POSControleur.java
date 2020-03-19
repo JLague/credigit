@@ -98,14 +98,15 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	@Override
-	public boolean connexion(String username, String password, String nomEtablissement) throws ExceptionProduitEtablissement {
+	public boolean connexion(String username, String password, String nomEtablissement)
+			throws ExceptionProduitEtablissement {
 		Vendeur vendeur = connexion.connecter(username, password, nomEtablissement);
-		
-		if(vendeur != null) {
+
+		if (vendeur != null) {
 			tb.setVendeur(vendeur);
 			tb.setEtablissement(connexion.getEtablissement());
 		}
-		
+
 		return vendeur != null;
 	}
 
@@ -166,12 +167,12 @@ public class POSControleur implements IPOSControleur {
 	public String getNomVendeur() {
 		return tb.getNomVendeur();
 	}
-	
+
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
 		return connexion.getNumeroEtablissement(nom);
 	}
 
 	public void updateEtablissement() {
-		ConnexionPOS.getEtablissement().updateEtablissement();
+		connexion.updateEtablissement();
 	}
 }
