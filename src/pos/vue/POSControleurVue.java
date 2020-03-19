@@ -278,12 +278,12 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		DecimalFormat df1 = new DecimalFormat("###.##");
 		DecimalFormat df2 = new DecimalFormat("###.###");
-		
+
 		skuProduitTextField.setText(temp.getSku() + "");
 		nomProduitTextField.setText(temp.getNom() + "");
 		prixProduitTextField.setText(df1.format(temp.getPrix()));
 		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
- 
+
 		quantiteProduitTextField.setText(temp.getQuantite() + "");
 		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 		descriptionProduitTextArea.setText(temp.getDescription() + "");
@@ -322,6 +322,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					temp.setQuantite(Integer.parseInt(quantiteProduitTextField.getText()));
 					temp.setDescription(descriptionProduitTextArea.getText());
 					temp.setImage(convertToBytes(new ImageView(imageProduitImageView.getImage())));
+					temp.setFournisseur(fournisseurProduitTextField.getText());
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
 				}
