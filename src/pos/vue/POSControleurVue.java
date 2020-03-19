@@ -255,9 +255,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ouvrirVueModProdHandler() {
 		modificationSuppressionProduit();
 		modifier = new Button("Modifier cet item");
-		modifier.getStyleClass().add("button-1");
+		modifier.getStyleClass().add("buttons-1");
 		retour = new Button("Annuler");
-		retour.getStyleClass().add("button-1");
+		retour.getStyleClass().add("buttons-1");
 
 		modifier.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -279,11 +279,23 @@ public class POSControleurVue implements IPOSControleurVue {
 
 	private void modificationProduit() {
 		enregistrer = new Button("Enregistrer");
-		enregistrer.getStyleClass().add("button-1");
+		enregistrer.getStyleClass().add("buttons-1");
 		annuler = new Button("Annuler");
-		annuler.getStyleClass().add("button-1");
+		annuler.getStyleClass().add("buttons-1");
 		supprimer = new Button("Supprimer");
-		supprimer.getStyleClass().add("button-1");
+		supprimer.getStyleClass().add("buttons-1");
+		
+		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
+		
+		skuProduitTextField.setText(temp.getSku() + "");
+		nomProduitTextField.setText(temp.getNom()+ "");
+		prixProduitTextField.setText(temp.getPrix()+ "");
+		coutantProduitTextField.setText(temp.getCoutant()+ "");
+		quantiteProduitTextField.setText(temp.getQuantite()+ "");
+		fournisseurProduitTextField.setText(temp.getFournisseur()+ "");
+		descriptionProduitTextArea.setText(temp.getDescription()+ "");
+		imageProduitImageView.setImage(temp.getImage());
+		
 		
 		skuProduitTextField.setDisable(false);
 		nomProduitTextField.setDisable(false);
@@ -655,8 +667,6 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		rechercheResultat.getStyleClass().add("table-view");
 		rechercheResultat.setEditable(false);
-		
-		voirItemBtn.setDisable(false);
 	}
 
 	/**
@@ -709,6 +719,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().clear();
 		ajoutBtn.setDisable(true);
 		middlePane.getChildren().add(borderPaneProduit);
+		voirItemBtn.setDisable(true);
 	}
 
 	/**
@@ -721,6 +732,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().clear();
 		ajoutBtn.setDisable(false);
 		middlePane.getChildren().add(clavierBox);
+		voirItemBtn.setDisable(false);
 	}
 
 	/**
