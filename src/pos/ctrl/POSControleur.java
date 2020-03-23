@@ -92,7 +92,6 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public boolean creerProduit(DataProduit data) throws ExceptionProduitEtablissement {
 		return connexion.ajouterProduit(data);
-
 	}
 
 	@Override
@@ -146,11 +145,6 @@ public class POSControleur implements IPOSControleur {
 		return tb.getInventaire();
 	}
 
-	@Override
-	public Produit getProduitFromString(String nom) {
-		return tb.getProduitFromString(nom);
-	}
-
 	public ArrayList<Produit> search(String text) {
 		return tb.search(text);
 	}
@@ -171,6 +165,11 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void updateEtablissement() {
+		connexion.updateEtablissement();
+	}
+
+	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
+		tb.getEtablissement().modifierProduit(ancien, nouveau);
 		connexion.updateEtablissement();
 	}
 }

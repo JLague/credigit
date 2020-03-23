@@ -80,22 +80,6 @@ public class TableauDeBord {
 		this.transactionCourante.removeProduit(produit);
 	}
 
-
-
-	/**
-	 * @param nom le nom du produit à chercher
-	 * @return le produit
-	 */
-	public Produit getProduitFromString(String nom) {
-		for (Produit p : etablissement.getInventaire()) {
-			if (p.getNom().equals(nom)) {
-				return p;
-			}
-		}
-
-		return null;
-	}
-
 	public ArrayList<Produit> search(String text) {
 		ArrayList<Produit> listProd = new ArrayList<Produit>();
 		for (Produit produit : etablissement.getInventaire()) {
@@ -149,5 +133,12 @@ public class TableauDeBord {
 	 */
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
+	}
+	
+	/**
+	 * @return l'établissement
+	 */
+	public Etablissement getEtablissement() {
+		return this.etablissement;
 	}
 }
