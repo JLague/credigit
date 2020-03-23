@@ -45,12 +45,9 @@ public class Vendeur {
 		setPrenom(data.getPrenom());
 		setNom(data.getNom());
 		setUsername(data.getUsername());
-		if(validerPassword(data.getPassword()))
-		{
-			setPassword(pos.encryption.SHAUtil.hashPassword(data.getPassword()));
-		}
-		else
-		{
+		if (validerPassword(data.getPassword())) {
+			setPassword(pos.utils.SHAUtil.hashPassword(data.getPassword()));
+		} else {
 			throw new ExceptionCreationCompte("Votre mot de passe doit avoir au moins 8 caractères.");
 		}
 		setCourriel(data.getCourriel());
@@ -65,7 +62,7 @@ public class Vendeur {
 
 	/**
 	 * @param prenom le prenom du vendeur à modifier
-	 * @throws ExceptionCreationCompte 
+	 * @throws ExceptionCreationCompte
 	 */
 	public void setPrenom(String prenom) throws ExceptionCreationCompte {
 		if (validerNom(prenom)) {
@@ -103,17 +100,15 @@ public class Vendeur {
 
 	/**
 	 * @param username le username du vendeur à modifier
-	 * @throws ExceptionCreationCompte 
+	 * @throws ExceptionCreationCompte
 	 */
 	public void setUsername(String username) throws ExceptionCreationCompte {
-		if(validerNom(username))
-		{
+		if (validerNom(username)) {
 			this.username = username;
-		}
-		else {
+		} else {
 			throw new ExceptionCreationCompte("Votre username n'est pas valide.");
 		}
-		
+
 	}
 
 	/**
@@ -129,7 +124,7 @@ public class Vendeur {
 	 */
 	public void setPassword(String password) throws ExceptionCreationCompte {
 
-			this.password = password;
+		this.password = password;
 	}
 
 	/**
