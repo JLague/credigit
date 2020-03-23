@@ -912,6 +912,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * 
 	 * @param event
 	 */
+	@FXML
 	private void creerProduitHandler(ActionEvent event) {
 		DataProduit data = null;
 		try {
