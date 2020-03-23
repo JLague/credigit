@@ -38,6 +38,8 @@ public class POSApplication extends Application {
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);
+		stage.setFullScreenExitHint("");
+		stage.setResizable(true);
 		stage.setFullScreen(fullscreen);
 	}
 }

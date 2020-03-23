@@ -179,7 +179,7 @@ public class Etablissement {
 
 		if (produit == null)
 			throw new ExceptionProduitEtablissement("Le produit à ajouter n'est pas valide.");
-		else if (validerSku(produit.getSku()))
+		else if (!validerSku(produit.getSku()))
 			throw new ExceptionProduitEtablissement("Le SKU est déjà utilisé.");
 		
 		inventaire.add(produit);
@@ -316,8 +316,10 @@ public class Etablissement {
 
 	private boolean validerSku(long sku) {
 		boolean utilise = false;
+		System.out.println("SKU à vérifier : " + sku);
 		
 		for(Produit p : inventaire) {
+			System.out.println("SKU courant : " + p.getSku());
 			if(p.getSku() == sku)
 				utilise = true;
 		}

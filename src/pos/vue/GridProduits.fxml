@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="915.0" prefWidth="959.0" stylesheets="@../../../res/styles/pos/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <ScrollPane fx:id="produitsScroll" hbarPolicy="NEVER" prefHeight="718.0" prefWidth="1144.0" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+<Pane stylesheets="@../../../res/styles/pos/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="produitsScroll" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="1000.0" minWidth="976.0" vbarPolicy="ALWAYS">
          <content>
             <GridPane fx:id="gridProduits" prefHeight="429.0" prefWidth="689.0">
             </GridPane>
          </content>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
       </ScrollPane>
-   </center>
-</BorderPane>
+   </children>
+</Pane>

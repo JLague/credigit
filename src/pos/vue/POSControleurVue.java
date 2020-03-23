@@ -186,9 +186,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	List<Produit> produits = new ArrayList<>();
 
 	/**
-	 * BorderPane contenant la grille des produits
+	 * Pane contenant la grille des produits
 	 */
-	private BorderPane borderPaneProduit;
+	private Pane paneProduit;
 
 	/**
 	 * AnchorPane contenant le formulaire de création de produit
@@ -334,13 +334,12 @@ public class POSControleurVue implements IPOSControleurVue {
 					temp.setImage(ImageUtil.convertToBytes(imageProduitImageView.getImage()));
 					temp.setFournisseur(fournisseurProduitTextField.getText());
 					ctrl.modifierProduit(p, temp);
+					ouvrirVuePrincipale();
 				} catch(ExceptionProduitEtablissement e) {
 					VueDialogue.erreurProduit(e.getMessage());
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
 				}
-
-				ouvrirVuePrincipale();
 			}
 
 		});
@@ -348,10 +347,13 @@ public class POSControleurVue implements IPOSControleurVue {
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				ctrl.getInventaire().remove(p);
-				ctrl.updateEtablissement();
-				populerGridProduit();
-				ouvrirVuePrincipale();
+				if (ctrl.getInventaire().remove(p)) {
+					ctrl.updateEtablissement();
+					VueDialogue.produitEfface();
+					populerGridProduit();
+					ouvrirVuePrincipale();
+				}
+				
 			}
 		});
 
@@ -407,7 +409,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		chargerAjoutProduit();
 
 		// Vue par défaut au lancement de l'application
-		middlePane.getChildren().add(borderPaneProduit);
+		middlePane.getChildren().add(paneProduit);
 		middlePane.setAlignment(Pos.TOP_CENTER);
 
 		// Fait en sorte que les Label ne dépassent pas les limites de l'écran
@@ -554,14 +556,15 @@ public class POSControleurVue implements IPOSControleurVue {
 		loader.setController(this);
 
 		try {
-			borderPaneProduit = loader.load();
+			paneProduit = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		produitsScroll.setFitToWidth(true);
 		produitsScroll.setFitToHeight(true);
-		gridProduits.setHgap(110);
+
+		gridProduits.setHgap(100);
 		gridProduits.setVgap(38);
 
 		populerGridProduit();
@@ -662,7 +665,7 @@ public class POSControleurVue implements IPOSControleurVue {
 				if (!(i == 2 && j == 3)) {
 					GridPane.setConstraints(clavierButtons[i][j] = new Button(CLAVIER[i][j]), j, i);
 					clavierGrid.getChildren().add(clavierButtons[i][j]);
-					clavierButtons[i][j].setMinSize(50, 50);
+					clavierButtons[i][j].setMinSize(150, 150);
 					clavierButtons[i][j].getStyleClass().add("clavier-buttons");
 
 					clavierButtons[i][j].setOnMouseClicked(e -> {
@@ -696,6 +699,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		clavierBox.getChildren().add(rechercheResultat);
 
 		rechercheResultat.getStyleClass().add("table-view");
+		rechercheResultat.getStyleClass().add("my-table");
 		rechercheResultat.setEditable(false);
 	}
 
@@ -748,7 +752,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void produitHandler(ActionEvent event) {
 		middlePane.getChildren().clear();
 		ajoutBtn.setDisable(true);
-		middlePane.getChildren().add(borderPaneProduit);
+		middlePane.getChildren().add(paneProduit);
 		voirItemBtn.setDisable(true);
 	}
 
@@ -934,6 +938,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	void resetChampsProduit(MouseEvent event) {
 		skuProduitTextField.clear();
+		nomProduitTextField.clear();
 		prixProduitTextField.clear();
 		coutantProduitTextField.clear();
 		descriptionProduitTextArea.clear();
