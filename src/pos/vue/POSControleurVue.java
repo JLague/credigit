@@ -337,6 +337,8 @@ public class POSControleurVue implements IPOSControleurVue {
 					temp.setImage(ImageUtil.convertToBytes(imageProduitImageView.getImage()));
 					temp.setFournisseur(fournisseurProduitTextField.getText());
 					ctrl.modifierProduit(p, temp);
+					VueDialogue.produitModifie();
+					populerGridProduit();
 					ouvrirVuePrincipale();
 				} catch(ExceptionProduitEtablissement e) {
 					VueDialogue.erreurProduit(e.getMessage());
@@ -704,6 +706,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		rechercheResultat.getStyleClass().add("table-view");
 		rechercheResultat.getStyleClass().add("my-table");
 		rechercheResultat.setEditable(false);
+		rechercheResultat.autosize();
 	}
 
 	/**

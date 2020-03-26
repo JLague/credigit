@@ -309,17 +309,15 @@ public class Etablissement {
 	
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
 		if(validerSku(nouveau.getSku()))
-			ancien = nouveau;
+			inventaire.set(inventaire.indexOf(ancien), nouveau);
 		else
 			throw new ExceptionProduitEtablissement("Le SKU est déjà utilisé");
 	}
 
 	private boolean validerSku(long sku) {
 		boolean utilise = false;
-		System.out.println("SKU à vérifier : " + sku);
 		
 		for(Produit p : inventaire) {
-			System.out.println("SKU courant : " + p.getSku());
 			if(p.getSku() == sku)
 				utilise = true;
 		}
