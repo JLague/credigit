@@ -251,9 +251,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void ouvrirVueModProdHandler() {
-
+		
 		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
 
+		if(temp != null)
+		{
+		
 		modificationSuppressionProduit();
 		modifier = new Button("Modifier cet item");
 		modifier.getStyleClass().add("buttons-1");
@@ -300,6 +303,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		
 		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(modifier, retour);
+	}
 	}
 
 	private void modificationProduit(Produit p) {
