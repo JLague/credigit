@@ -42,7 +42,13 @@
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000" />
+                  <Label alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding></Label>
                </children>
             </HBox>
             <ScrollPane hbarPolicy="NEVER" prefHeight="266.0" prefWidth="320.0" vbarPolicy="ALWAYS" />
