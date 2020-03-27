@@ -19,7 +19,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="44.0" prefWidth="320.0" spacing="20.0" styleClass="facture">
                <children>
-                  <Label prefHeight="44.0" prefWidth="227.0" text="Nom de l'établissement">
+                  <Label fx:id="nomEtablissementLabel" prefHeight="44.0" prefWidth="227.0" text="Nom de l'établissement">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
@@ -42,7 +42,7 @@
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000">
+                  <Label fx:id="noFactureLabel" alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -66,9 +66,9 @@
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Sous-total :" GridPane.halignment="RIGHT" />
                   <Label contentDisplay="CENTER" text="Taxes :" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                   <Label contentDisplay="CENTER" text="Total :" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Label contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Label fx:id="sousTotalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label fx:id="taxesLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Label fx:id="totalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets />
@@ -79,7 +79,7 @@
             </GridPane>
             <HBox alignment="CENTER" prefHeight="54.0" prefWidth="320.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="81.0" styleClass="buttons-1" stylesheets="@../../../res/styles/pos/POS.css" text="Confirmer" />
+                  <Button mnemonicParsing="false" onAction="#confimerTerminalHandler" prefHeight="22.0" prefWidth="81.0" styleClass="buttons-1" stylesheets="@../../../res/styles/pos/POS.css" text="Confirmer" />
                </children>
             </HBox>
          </children>

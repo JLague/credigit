@@ -106,39 +106,43 @@ public class TableauDeBord {
 			return vendeur.getPrenom();
 		return null;
 	}
-	
+
 	/*
 	 * @param vendeur le vendeur aillant une session ouverte
 	 */
 	public void setVendeur(Vendeur vendeur) {
 		this.vendeur = vendeur;
 	}
-	
+
 	/**
 	 * @return l'inventaire du magasin
 	 */
 	public List<Produit> getInventaire() {
 		return this.etablissement.getInventaire();
 	}
-	
+
 	/**
 	 * @param produits les produits de l'inventaire
 	 */
 	public void setInventaire(List<Produit> produits) {
 		this.etablissement.setInventaire(produits);
 	}
-	
+
 	/**
 	 * @param etablissement l'établissement
 	 */
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
 	}
-	
+
 	/**
 	 * @return l'établissement
 	 */
 	public Etablissement getEtablissement() {
 		return this.etablissement;
+	}
+
+	public Transaction getTransaction() {
+		return transactionCourante;
 	}
 }

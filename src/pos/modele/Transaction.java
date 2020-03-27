@@ -1,5 +1,9 @@
 package pos.modele;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,11 +19,15 @@ import javafx.collections.ObservableList;
 /**
  * Cette classe métier s'occupe des transactions
  */
-public class Transaction {
+public class Transaction implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Heure à laquelle la transaction a été effectué
 	 */
-	private String heure;
+	private transient String heure;
 	/**
 	 * Liste des produits sélectionnés par l'utilisateur
 	 */
@@ -31,7 +39,7 @@ public class Transaction {
 	/**
 	 * Pourcentage de taxe a appliqué
 	 */
-	private static float pourcentageTaxes = 0.15f;
+	private transient static float pourcentageTaxes = 0.15f;
 	/**
 	 * Montant de taxe que nous devons rajouter à la facture
 	 */
@@ -47,33 +55,33 @@ public class Transaction {
 	/**
 	 * Établissement qui délivre la facture
 	 */
-	private Etablissement etablissement;
+	private transient Etablissement etablissement;
 
 	/**
 	 * La propriété correspondant au sous-total
 	 */
-	private StringProperty sousTotalProperty;
+	private transient StringProperty sousTotalProperty;
 
 	/**
 	 * La propriété correspondant au taxes
 	 */
-	private StringProperty taxesProperty;
+	private transient StringProperty taxesProperty;
 
 	/**
 	 * La propriété correspondant au total
 	 */
-	private StringProperty totalProperty;
+	private transient StringProperty totalProperty;
 
 	/**
 	 * Formatteur pour l'argent
 	 */
-	private NumberFormat cf;
+	private transient NumberFormat cf;
 
 	/**
 	 * Les lignes de la facture. Chaque ligne correspond à un produit différent et
 	 * contient la quantité et le prix.
 	 */
-	private ObservableList<LigneFacture> lignesFacture;
+	private transient ObservableList<LigneFacture> lignesFacture;
 
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
@@ -347,6 +355,21 @@ public class Transaction {
 	 */
 	public StringProperty totalProperty() {
 		return totalProperty;
+	}
+
+	public void store() {
+		try
+
+		{
+			FileOutputStream file = new FileOutputStream("test");
+			ObjectOutputStream ous = new ObjectOutputStream(file);
+			ous.writeObject(this);
+			ous.close();
+			file.close();
+			System.out.printf("Serialized data is saved in /tmp/employee.ser");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

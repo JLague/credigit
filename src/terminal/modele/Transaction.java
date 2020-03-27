@@ -1,5 +1,6 @@
 package terminal.modele;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +16,11 @@ import javafx.collections.ObservableList;
 /**
  * Cette classe métier s'occupe des transactions
  */
-public class Transaction {
+public class Transaction implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1;
 	/**
 	 * Heure à laquelle la transaction a été effectué
 	 */

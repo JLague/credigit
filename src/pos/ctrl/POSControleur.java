@@ -172,4 +172,9 @@ public class POSControleur implements IPOSControleur {
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
 		connexion.updateEtablissement();
 	}
+
+	public void transferTerminal() {
+		tb.getTransaction().store();
+	}
+
 }

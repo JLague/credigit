@@ -1041,4 +1041,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	public Scene getScene() {
 		return this.scene;
 	}
+	
+	@FXML
+	private void empreinteButtonHandler() {
+		ctrl.transferTerminal();
+	}
 }
