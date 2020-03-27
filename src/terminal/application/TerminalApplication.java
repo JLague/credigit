@@ -17,10 +17,10 @@ public class TerminalApplication extends Application {
 	public void start(Stage stage) {
 		this.stage = stage;
 		ctrl = new TerminalControleur(this);
-		stage.setScene(ctrl.getScene());
-		stage.setTitle("Terminal");
-		stage.sizeToScene();
-		stage.setResizable(true);
-		stage.show();
+		this.stage.setScene(ctrl.getScene());
+		this.stage.setTitle("Terminal");
+		this.stage.sizeToScene();
+		this.stage.setResizable(true);
+		this.stage.show();
 	}
 }

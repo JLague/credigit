@@ -1,9 +1,14 @@
 package inscription.modele;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.Binary;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
@@ -35,6 +40,10 @@ public class ConnexionInscription {
 	 */
 	private final static String COMPTES_CLIENTS = "comptes";
 
+	/**
+	 * String représentant le nom de la collection contenant les empreintes dans la
+	 * base de données
+	 */
 	private final static String EMPREINTES = "empreintes";
 
 	/**
@@ -46,6 +55,16 @@ public class ConnexionInscription {
 	 * Client ayant accès à la base de données
 	 */
 	private MongoClient mongoClient;
+
+	/**
+	 * Collection contenant les comptes client
+	 */
+	private MongoCollection<Client> clientsCollection;
+
+	/**
+	 * Collection contenant les empreintes
+	 */
+	private MongoCollection<Document> empreintesCollection;
 
 	/**
 	 * Connexion au serveur d'envoi de courriels
@@ -73,6 +92,10 @@ public class ConnexionInscription {
 		mongoClient = MongoClients.create(clientSettings);
 
 		database = mongoClient.getDatabase(DB);
+
+		// Instantiation des collections
+		clientsCollection = database.getCollection(COMPTES_CLIENTS, Client.class);
+		empreintesCollection = database.getCollection(EMPREINTES);
 	}
 
 	/**
@@ -84,10 +107,14 @@ public class ConnexionInscription {
 	 */
 	public boolean ajouterCompteClient(Client client) throws ExceptionCreationCompte {
 		try {
-			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENTS, Client.class);
-			collection.insertOne(client);
-			MongoCollection<Document> collectionEmpreintes = database.getCollection(EMPREINTES);
-			collectionEmpreintes.insertOne(new Document("empreinte", client.getEmpreinte()));
+			// On insère le compte
+			clientsCollection.insertOne(client);
+
+			// On insère l'empreinte
+			Document doc = new Document("empreinte", client.getEmpreinte());
+			empreintesCollection.insertOne(doc);
+
+			// On envoie un courriel
 			courriel.envoyerCourriel(client.getEmail(), client.getPrenom());
 		} catch (MongoWriteException e) {
 			return false;
@@ -113,12 +140,31 @@ public class ConnexionInscription {
 			object.put("prenom", prenom);
 			object.put("email", email);
 			object.put("nas", nas);
-			Document result = database.getCollection(COMPTES_CLIENTS).findOneAndDelete(object);
-			System.out.println("Document supprimé: " + result.toString());
+			Client result = clientsCollection.findOneAndDelete(object);
+			System.out.println("Client supprimé: " + result.toString());
 		} catch (NullPointerException e) {
 			return false;
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Méthode qui va chercher toutes les empreintes dans la base de donnée et les
+	 * retourne dans une liste
+	 * 
+	 * @return les empreintes
+	 */
+	public List<byte[]> getEmpreintes() {
+		List<byte[]> listeEmpreintes = new ArrayList<>();
+		MongoCollection<Document> collection = database.getCollection(EMPREINTES);
+		Iterator<Document> it = collection.find().cursor();
+
+		while (it.hasNext()) {
+			Binary binaryData = (Binary) it.next().get("empreinte");
+			listeEmpreintes.add(binaryData.getData());
+		}
+
+		return listeEmpreintes;
 	}
 }

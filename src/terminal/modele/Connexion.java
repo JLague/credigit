@@ -18,7 +18,6 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import commun.Etablissement;
 import commun.Transaction;
 import inscription.modele.Client;
 
@@ -79,7 +78,7 @@ public class Connexion {
 	 * 
 	 * @return les empreintes
 	 */
-	public List<byte[]> getAllEmpreintes() {
+	public List<byte[]> getEmpreintes() {
 		List<byte[]> listeEmpreintes = new ArrayList<>();
 		MongoCollection<Document> collection = database.getCollection(EMPREINTES);
 		Iterator<Document> it = collection.find().cursor();

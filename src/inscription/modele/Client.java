@@ -3,10 +3,9 @@ package inscription.modele;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Base64;
 
-import commun.exception.ExceptionCreationCompte;
 import commun.Transaction;
+import commun.exception.ExceptionCreationCompte;
 
 /**
  * Cette classe permet de créer des clients.
@@ -61,7 +60,7 @@ public class Client {
 	/**
 	 * L'empreinte du client
 	 */
-	private String empreinte;
+	private byte[] empreinte;
 
 	/**
 	 * Les questions de sécurité du client
@@ -306,7 +305,7 @@ public class Client {
 	 * 
 	 * @return L'empreinte du client
 	 */
-	public String getEmpreinte() {
+	public byte[] getEmpreinte() {
 		return empreinte;
 	}
 
@@ -318,7 +317,7 @@ public class Client {
 	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
 
 		if (empreinte != null && empreinte.length != 0) {
-			this.empreinte = Base64.getEncoder().encodeToString(empreinte);
+			this.empreinte = empreinte;
 		} else {
 			throw new ExceptionCreationCompte("Votre empreinte n'est pas valide.");
 		}

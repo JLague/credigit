@@ -1,4 +1,4 @@
-package terminal.utils;
+package commun.utils;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,13 +47,51 @@ public class EmpreinteUtil {
 
 		return serialPort;
 	}
+	
+	/**
+	 * Permet de scanner une empreinte
+	 * 
+	 * @return l'empreinte
+	 */
+	public static byte[] getEmpreinte() {
+		byte[] empreinte = null;
+		FingerprintSensor sensor = new AdafruitSensor(getSerialPort());
+
+		try {
+			sensor.connect();
+
+			// Attend d'avoir une empreinte
+			while (!sensor.hasFingerprint());
+
+			// L'empreinte est scannée, on attend qu'elle soit ôtée
+			while (sensor.hasFingerprint()) {
+				Thread.sleep(50);
+			}
+
+			// L'empreinte doit être rescannée lors de la création du modèle
+			while ((empreinte = sensor.createModel()) == null) {
+				Thread.sleep(50);
+			}
+
+			sensor.close();
+
+		} catch (FingerprintException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return empreinte;
+	}
 
 	/**
 	 * Scan l'empreinte et la prend directement du buffer sans créer de modèle
 	 * 
 	 * @return l'empreinte scannée
 	 */
-	public static byte[] getEmpreinte() {
+	public static byte[] getEmpreinteUnScan() {
 		FingerprintSensor sensor = new AdafruitSensor(getSerialPort());
 		byte[] empreinte = null;
 
