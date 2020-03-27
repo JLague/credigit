@@ -3,14 +3,10 @@ package terminal.ctrl;
 import javafx.scene.Scene;
 import commun.*;
 import terminal.application.TerminalApplication;
+import terminal.utils.EmpreinteUtil;
 import terminal.vue.TerminalControleurVue;
 
 public class TerminalControleur {
-
-	/**
-	 * Tableau de bord de l'application
-	 */
-	private TableauDeBord tb;
 
 	/**
 	 * Transaction courrante
@@ -24,10 +20,7 @@ public class TerminalControleur {
 
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
-		tb = new TableauDeBord();
-		tb.setTransaction(new Transaction());
-		trans = tb.getTransaction();
-
+		trans = new Transaction();
 		actualiser();
 
 	}
@@ -38,5 +31,9 @@ public class TerminalControleur {
 
 	public void actualiser() {
 		vue.actualiser(trans);
+	}
+
+	public void effectuerTransaction() {
+		byte[] empreinte = EmpreinteUtil.getEmpreinte();
 	}
 }

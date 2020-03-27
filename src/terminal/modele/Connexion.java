@@ -10,12 +10,17 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.Binary;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+
+import commun.Etablissement;
+import commun.Transaction;
+import inscription.modele.Client;
 
 /**
  * 
@@ -85,6 +90,33 @@ public class Connexion {
 		}
 
 		return listeEmpreintes;
+	}
+
+	public boolean effectuerTransaction(byte[] empreinte, Transaction transaction, int solde) {
+		try {
+			// Recherche le client à modifier
+			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENT, Client.class);
+			BasicDBObject object = new BasicDBObject();
+			object.put("empreinte", empreinte);
+
+			Client clientAModifier = collection.find(object).first();
+
+			// Mets à jour le client
+			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
+			transactions.add(transaction);
+			clientAModifier.setTransaction(transactions);
+			clientAModifier.setSolde(clientAModifier.getSolde() + solde);
+
+			// Update client dans la base de données
+			BasicDBObject searchQuery = new BasicDBObject();
+			searchQuery.put("empreinte", empreinte);
+			collection.replaceOne(searchQuery, clientAModifier);
+
+		} catch (NullPointerException e) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

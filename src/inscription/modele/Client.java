@@ -279,7 +279,7 @@ public class Client {
 	 * 
 	 * @param solde - Le solde du client à modifier
 	 */
-	private void setSolde(int solde) {
+	public void setSolde(int solde) {
 		this.solde = solde;
 	}
 
@@ -405,6 +405,10 @@ public class Client {
 	 */
 	public ArrayList<Transaction> getTransaction() {
 		return transaction;
+	}
+
+	public void setTransaction(ArrayList<Transaction> transaction) {
+		this.transaction = transaction;
 	}
 
 	/**
