@@ -1,7 +1,9 @@
 package pos.modele;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -357,7 +359,7 @@ public class Transaction implements Serializable {
 		return totalProperty;
 	}
 
-	public void store() {
+	public void serialize() {
 		try
 
 		{
@@ -370,6 +372,23 @@ public class Transaction implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Transaction deserialize() {
+		Transaction t = null;
+		
+		try {
+			 FileInputStream file = new FileInputStream("test");
+	         ObjectInputStream ois = new ObjectInputStream(file);
+	         t = (Transaction) ois.readObject();
+	         ois.close();
+	         file.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return t;
+		
 	}
 
 }
