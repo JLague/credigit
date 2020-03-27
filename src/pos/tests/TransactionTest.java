@@ -10,12 +10,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.ExceptionProduitEtablissement;
 import javafx.collections.ObservableList;
-import pos.modele.DataProduit;
-import pos.modele.LigneFacture;
-import pos.modele.Produit;
-import pos.modele.Transaction;
+import commun.*;
 
 public class TransactionTest {
 

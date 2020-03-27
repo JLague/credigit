@@ -31,8 +31,8 @@ import com.mongodb.client.MongoDatabase;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import pos.exception.ExceptionCreationCompte;
-import pos.modele.Etablissement;
+import commun.exception.ExceptionCreationCompte;
+import commun.Etablissement;
 
 public class CreationEtablissementModele {
 

@@ -1,6 +1,6 @@
-package pos.modele;
+package commun;
 
-import pos.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionCreationCompte;
 
 public class Vendeur {
 

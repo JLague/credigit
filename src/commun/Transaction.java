@@ -1,4 +1,4 @@
-package pos.modele;
+package commun;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -363,22 +363,21 @@ public class Transaction implements Serializable {
 		try
 
 		{
-			FileOutputStream file = new FileOutputStream("test");
+			FileOutputStream file = new FileOutputStream("transaction.ser");
 			ObjectOutputStream ous = new ObjectOutputStream(file);
 			ous.writeObject(this);
 			ous.close();
 			file.close();
-			System.out.printf("Serialized data is saved in /tmp/employee.ser");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Transaction deserialize() {
+	public static Transaction deserialize() {
 		Transaction t = null;
 		
 		try {
-			 FileInputStream file = new FileInputStream("test");
+			 FileInputStream file = new FileInputStream("transaction.ser");
 	         ObjectInputStream ois = new ObjectInputStream(file);
 	         t = (Transaction) ois.readObject();
 	         ois.close();
@@ -386,7 +385,6 @@ public class Transaction implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return t;
 		
 	}

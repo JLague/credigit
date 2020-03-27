@@ -2,13 +2,12 @@ package pos.ctrl;
 
 import java.util.List;
 
-import pos.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import pos.modele.DataProduit;
-import pos.modele.LigneFacture;
-import pos.modele.Produit;
+
+import commun.*;
+import commun.exception.ExceptionProduitEtablissement;
 
 public interface IPOSControleur {
 	

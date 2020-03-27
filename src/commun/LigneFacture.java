@@ -1,4 +1,4 @@
-package pos.modele;
+package commun;
 
 import java.text.NumberFormat;
 import java.util.Locale;

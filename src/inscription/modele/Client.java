@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 
-import inscription.exception.ExceptionCreationCompte;
-import pos.modele.Transaction;
+import commun.exception.ExceptionCreationCompte;
+import commun.Transaction;
 
 /**
  * Cette classe permet de créer des clients.

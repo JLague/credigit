@@ -3,19 +3,15 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.*;
+
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
 import pos.modele.ConnexionPOS;
-import pos.modele.DataProduit;
-import pos.modele.DataVendeur;
-import pos.modele.LigneFacture;
-import pos.modele.Produit;
-import pos.modele.TableauDeBord;
-import pos.modele.Vendeur;
+import commun.*;
+
 import pos.vue.POSControleurVue;
 
 /**

@@ -1,4 +1,4 @@
-package pos.modele;
+package commun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,5 +144,9 @@ public class TableauDeBord {
 
 	public Transaction getTransaction() {
 		return transactionCourante;
+	}
+
+	public void setTransaction(Transaction t) {
+		transactionCourante = t;
 	}
 }

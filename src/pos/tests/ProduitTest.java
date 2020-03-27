@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import pos.exception.ExceptionProduitEtablissement;
-import pos.modele.DataProduit;
-import pos.modele.Produit;
+import commun.exception.ExceptionProduitEtablissement;
+import commun.DataProduit;
+import commun.Produit;
 
 /**
  * Classe testant la classe produit

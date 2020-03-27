@@ -1,4 +1,4 @@
-package pos.exception;
+package commun.exception;
 
 /**
  * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment ne peut pas être

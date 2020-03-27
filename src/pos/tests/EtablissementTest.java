@@ -5,14 +5,10 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
-import pos.modele.DataProduit;
-import pos.modele.DataVendeur;
-import pos.modele.Etablissement;
-import pos.modele.Produit;
-import pos.modele.Transaction;
-import pos.modele.Vendeur;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
+import commun.*;
+
 
 /**
  * Classe testant la classe Etablissement

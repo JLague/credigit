@@ -1,4 +1,4 @@
-package pos.modele;
+package commun;
 
 public class DataProduit {
 
