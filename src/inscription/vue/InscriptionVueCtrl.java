@@ -134,22 +134,13 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	private ChoiceBox<String> question2Choice;
 
 	@FXML
-	private TextField desacNomTextField;
-
-	@FXML
-	private TextField desacPrenomTextField;
-
-	@FXML
-	private TextField desacEmailTextField;
-
-	@FXML
-	private PasswordField desacNasPasswordField;
-
-	@FXML
 	private TextField quitterTextField;
 
 	@FXML
 	private ImageView ivEmpreinte;
+
+	@FXML
+	private ImageView desacEmpreinte;
 
 	/**
 	 * Le contrôleur principal de l'application
@@ -317,6 +308,24 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			scroll.getKeyFrames().addAll(frame);
 			scroll.play();
 		}
+
+		new Thread(() -> {
+			continuerBtn.setDisable(true);
+			
+			empreinte = commun.utils.EmpreinteUtil.getEmpreinte();
+			
+			byte[] vraieEmpreinte = ctrl.verifierEmpreinte(empreinte);
+			
+			if(vraieEmpreinte != null) {
+				continuerBtn.setDisable(false);
+				desacEmpreinte.setImage(
+						new Image(getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));
+			} else {
+				VueDialogue.comptePasTrouve();
+			}
+		}).start();
+
+		
 	}
 
 	/**
@@ -362,21 +371,13 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		case ETAPEDESACTIVER:
 			if (quitterTextField.getText().equals("QUITTER")) {
-				if (desacNomTextField.getText().equals("") || desacPrenomTextField.getText().equals("")
-						|| desacEmailTextField.getText().equals("") || desacNasPasswordField.getText().equals("")) {
-					VueDialogue.erreurCreationDialogue("Vous devez remplir tous les champs pour continuer!");
+				if(ctrl.supprimerCompte(empreinte)) {
+					VueDialogue.compteSupprime();
+					nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
+					clearDeleteFields();
 				} else {
-
-					if (ctrl.supprimerCompte(desacNomTextField.getText(), desacPrenomTextField.getText(),
-							desacEmailTextField.getText(), desacNasPasswordField.getText())) {
-						VueDialogue.compteSupprime();
-						nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
-						clearDeleteFields();
-					} else {
-						VueDialogue.erreurCreationDialogue("Votre compte est inexistant ou n'a pas pu être supprimé.");
-					}
+					VueDialogue.erreurCreationDialogue("Une erreur s'est produite lors de la désactivation de votre compte.");
 				}
-
 			} else {
 				VueDialogue.erreurCreationDialogue("Vous devez entrer QUITTER pour continuer!");
 			}
@@ -385,19 +386,15 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 		}
 
-		etapeActuelle = nouvelleEtape;
+	etapeActuelle=nouvelleEtape;
+
 	}
 
 	/**
 	 * Clear les champs servant à supprimer un compte
 	 */
 	private void clearDeleteFields() {
-		desacNomTextField.setText(null);
-		desacPrenomTextField.setText(null);
-		desacEmailTextField.setText(null);
-		desacNasPasswordField.setText(null);
 		quitterTextField.setText(null);
-		
 	}
 
 	/**
@@ -505,17 +502,17 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 	private void resetInscription() {
 		clearFields();
-		
+
 		EtapesVues nouvelleEtape = EtapesVues.ETAPE1;
 		stepPane.getChildren().clear();
 		stepPane.getChildren().add(etapes.get(0));
 		setupCompteur(etapeActuelle, nouvelleEtape);
 		etapeActuelle = nouvelleEtape;
-		
+
 		continuerBtn.setText("Continuer");
-		
-		ivEmpreinte.setImage(new Image(
-				getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
+
+		ivEmpreinte
+				.setImage(new Image(getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
 	}
 
 	/**
@@ -601,7 +598,6 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 						getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));
 			}).start();
 		}
-
 	}
 
 	/**

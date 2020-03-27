@@ -1,6 +1,7 @@
 package commun.utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import sk.mimac.fingerprint.FingerprintException;
@@ -128,10 +129,23 @@ public class EmpreinteUtil {
 	 */
 	public static byte[] matchEmpreinte(byte[] empreinteAVerifier, List<byte[]> empreintes) {
 		FingerprintSensor sensor = new AdafruitSensor(getSerialPort());
+		
+//		empreintes = new ArrayList<>();
+//		
+//		for(int i = 0; i < 50; i++) {
+//			byte[] b = new byte[768];
+//			for(int j = 0; j < 768; j++) {
+//				b[j] = 0;
+//			}
+//			empreintes.add(b);
+//		}
+		
 		byte[] empreinte = null;
 
 		try {
 			sensor.connect();
+			sensor.setSecurityLevel(5);
+			sensor.clearAllSaved();
 
 			int loop = empreintes.size() / MAX_EMPREINTES + 1;
 			int realIndex = 0;
@@ -142,8 +156,6 @@ public class EmpreinteUtil {
 
 				// Upload max fingerprints and get index in empreintes
 				for (int j = 0; j < MAX_EMPREINTES && (realIndex = j + (i * MAX_EMPREINTES)) < empreintes.size(); j++) {
-					if (empreintes.get(realIndex).length < 100) // Fix for bug with test cases
-						continue;
 					sensor.saveModel(empreintes.get(realIndex), j);
 				}
 

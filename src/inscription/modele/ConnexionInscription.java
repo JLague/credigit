@@ -133,14 +133,11 @@ public class ConnexionInscription {
 	 * @param nas    - Le NAS du client
 	 * @return Vrai si la suppression est effectuée, faux sinon
 	 */
-	public boolean supprimerCompteClient(String nom, String prenom, String email, String nas) {
+	public boolean supprimerCompteClient(byte[] empreinte) {
 		try {
-			BasicDBObject object = new BasicDBObject();
-			object.put("nom", nom);
-			object.put("prenom", prenom);
-			object.put("email", email);
-			object.put("nas", nas);
+			BasicDBObject object = new BasicDBObject("empreinte", empreinte);
 			Client result = clientsCollection.findOneAndDelete(object);
+			empreintesCollection.findOneAndDelete(object);
 			System.out.println("Client supprimé: " + result.toString());
 		} catch (NullPointerException e) {
 			return false;
