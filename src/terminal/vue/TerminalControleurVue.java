@@ -1,5 +1,8 @@
 package terminal.vue;
 
+import java.text.DecimalFormat;
+
+import commun.Transaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -51,6 +54,16 @@ public class TerminalControleurVue {
 
 	public Scene getScene() {
 		return scene;
+	}
+
+	public void actualiser(Transaction trans) {
+		
+		DecimalFormat df1 = new DecimalFormat("###.##");
+		
+		noFactureLabel.setText(trans.getNumero()+"");
+		sousTotalLabel.setText(df1.format(trans.getSousTotal()));
+		taxesLabel.setText(df1.format(trans.getMontantTaxes()));
+		totalLabel.setText(df1.format(trans.getMontantTotal()));
 	}
 
 }
