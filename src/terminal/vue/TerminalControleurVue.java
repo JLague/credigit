@@ -1,13 +1,20 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+import java.util.Observable;
 
+import com.sun.javafx.collections.ObservableListWrapper;
+
+import commun.LigneFacture;
 import commun.Transaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
@@ -27,6 +34,9 @@ public class TerminalControleurVue {
 
 	@FXML
 	private Label totalLabel;
+
+	@FXML
+	private TableView<LigneFacture> tabView;
 
 	private Pane root;
 	private Scene scene;
@@ -57,13 +67,39 @@ public class TerminalControleurVue {
 	}
 
 	public void actualiser(Transaction trans) {
-		
-		DecimalFormat df1 = new DecimalFormat("###.##");
-		
-		noFactureLabel.setText(trans.getNumero()+"");
+
+		DecimalFormat df1 = new DecimalFormat("#####.##");
+
+		noFactureLabel.setText(trans.getNumero() + "");
 		sousTotalLabel.setText(df1.format(trans.getSousTotal()));
 		taxesLabel.setText(df1.format(trans.getMontantTaxes()));
 		totalLabel.setText(df1.format(trans.getMontantTotal()));
+
+		nomEtablissementLabel.setText(trans.getNomEtablissement());
+		
+		chargerTabView();
+		
+		tabView.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
+		tabView.refresh();
 	}
 
+	private void chargerTabView() {
+		tabView.getStyleClass().add("table-view");
+		tabView.setEditable(false);
+
+		TableColumn<LigneFacture, String> column1 = new TableColumn<>("Produit(s)");
+		column1.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		column1.getStyleClass().add("align-left");
+
+		TableColumn<LigneFacture, Float> column2 = new TableColumn<>("Quantité");
+		column2.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+		column2.getStyleClass().add("align-center");
+
+		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
+		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
+		column3.getStyleClass().add("align-right");
+		
+		tabView.getColumns().addAll(column1, column2, column3);
+		tabView.setPlaceholder(new Label("Le panier est vide !"));
+	}
 }

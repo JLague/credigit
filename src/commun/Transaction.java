@@ -86,10 +86,25 @@ public class Transaction implements Serializable {
 	private transient ObservableList<LigneFacture> lignesFacture;
 
 	/**
+	 * Nom de l'établissement
+	 */
+	private String nomEtablissement;
+
+	/**
+	 * Constante soustraite au temps présent en millisescondes afin d'éviter que le
+	 * numéro de facture soit trop long
+	 */
+	private static final long CONST = 1585281727947L;
+
+	
+	public ArrayList<LigneFacture> ligneFactureArray;
+
+	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction() {
-		this(getHeureCourante(), pourcentageTaxes, new ArrayList<Produit>(), ((long) System.currentTimeMillis()));
+		this(getHeureCourante(), pourcentageTaxes, new ArrayList<Produit>(),
+				((long) System.currentTimeMillis() - CONST));
 	}
 
 	/**
@@ -115,6 +130,8 @@ public class Transaction implements Serializable {
 		this.totalProperty = new SimpleStringProperty();
 
 		lignesFacture = FXCollections.observableArrayList();
+
+		nomEtablissement = "";
 
 		addProduits(produits);
 
@@ -359,9 +376,19 @@ public class Transaction implements Serializable {
 		return totalProperty;
 	}
 
-	public void serialize() {
-		try
+	public void setNomEtablissement(String s) {
+		nomEtablissement = s;
+	}
 
+	public String getNomEtablissement() {
+		return nomEtablissement;
+	}
+
+	public void serialize() {
+		
+		ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
+		
+		try
 		{
 			FileOutputStream file = new FileOutputStream("transaction.ser");
 			ObjectOutputStream ous = new ObjectOutputStream(file);
@@ -375,18 +402,18 @@ public class Transaction implements Serializable {
 
 	public static Transaction deserialize() {
 		Transaction t = null;
-		
+
 		try {
-			 FileInputStream file = new FileInputStream("transaction.ser");
-	         ObjectInputStream ois = new ObjectInputStream(file);
-	         t = (Transaction) ois.readObject();
-	         ois.close();
-	         file.close();
+			FileInputStream file = new FileInputStream("transaction.ser");
+			ObjectInputStream ois = new ObjectInputStream(file);
+			t = (Transaction) ois.readObject();
+			ois.close();
+			file.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return t;
-		
+
 	}
 
 }
