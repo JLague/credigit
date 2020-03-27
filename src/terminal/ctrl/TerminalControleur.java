@@ -25,9 +25,9 @@ public class TerminalControleur {
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
 		tb = new TableauDeBord();
-		tb.setTransaction(Transaction.deserialize());
+		tb.setTransaction(new Transaction());
 		trans = tb.getTransaction();
-		
+
 		actualiser();
 
 	}

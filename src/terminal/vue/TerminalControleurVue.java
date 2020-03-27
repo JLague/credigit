@@ -1,34 +1,39 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
+import commun.LigneFacture;
 import commun.Transaction;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
 public class TerminalControleurVue {
+	@FXML
+	private AnchorPane root;
 
 	@FXML
-	private Label nomEtablissementLabel;
+	private TableView<LigneFacture> factureTable;
 
 	@FXML
-	private Label noFactureLabel;
+	private Label sousTotalLbl;
 
 	@FXML
-	private Label sousTotalLabel;
+	private Label taxesLbl;
 
 	@FXML
-	private Label taxesLabel;
+	private Label totalLbl;
 
-	@FXML
-	private Label totalLabel;
-
-	private Pane root;
 	private Scene scene;
 	private TerminalControleur ctrl;
 
@@ -57,13 +62,37 @@ public class TerminalControleurVue {
 	}
 
 	public void actualiser(Transaction trans) {
-		
+
+		chargerTableView();
 		DecimalFormat df1 = new DecimalFormat("###.##");
-		
-		noFactureLabel.setText(trans.getNumero()+"");
-		sousTotalLabel.setText(df1.format(trans.getSousTotal()));
-		taxesLabel.setText(df1.format(trans.getMontantTaxes()));
-		totalLabel.setText(df1.format(trans.getMontantTotal()));
+
+		sousTotalLbl.setText(df1.format(trans.getSousTotal()));
+		taxesLbl.setText(df1.format(trans.getMontantTaxes()));
+		totalLbl.setText(df1.format(trans.getMontantTotal()));
+	}
+
+	/**
+	 * Méthode permettant de charger le TableView contenant la facture
+	 */
+	@SuppressWarnings("unchecked")
+	private void chargerTableView() {
+		factureTable.getStyleClass().add("table-view");
+		factureTable.setEditable(false);
+
+		TableColumn<LigneFacture, String> column1 = new TableColumn<>("Produit(s)");
+		column1.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		column1.getStyleClass().add("align-left");
+
+		TableColumn<LigneFacture, Float> column2 = new TableColumn<>("Quantité");
+		column2.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+		column2.getStyleClass().add("align-center");
+
+		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
+		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
+		column3.getStyleClass().add("align-right");
+
+		factureTable.getColumns().addAll(column1, column2, column3);
+		factureTable.setPlaceholder(new Label(""));
 	}
 
 }
