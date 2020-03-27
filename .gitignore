@@ -26,3 +26,6 @@ hs_err_pid*
 # Remove bin folder
 /bin/
 /.classpath
+
+# Test local de sérialisation
+*.ser
