@@ -1,9 +1,9 @@
-package pos.modele;
+package commun;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe créant un établissement

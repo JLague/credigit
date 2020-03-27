@@ -1,6 +1,6 @@
 package terminal.modele;
 
-import pos.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionCreationCompte;
 
 public class Vendeur {
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import inscription.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionCreationCompte;
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataClient;
 import inscription.modele.EmpreinteUtil;

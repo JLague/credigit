@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
 
 public class CreationEtablissementVueCtrl {
 

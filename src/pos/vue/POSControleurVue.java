@@ -1,6 +1,7 @@
 package pos.vue;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,13 +44,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
-import pos.modele.DataProduit;
-import pos.modele.DataVendeur;
-import pos.modele.LigneFacture;
-import pos.modele.Produit;
 import pos.utils.ImageUtil;
+import commun.*;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe permettant de contrôler les vues du POS

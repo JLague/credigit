@@ -1,6 +1,6 @@
 package terminal.modele;
 
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe créant un produit

@@ -374,7 +374,7 @@ public class Transaction implements Serializable {
 		}
 	}
 
-	public Transaction deserialize() {
+	public static Transaction deserialize() {
 		Transaction t = null;
 		
 		try {
@@ -386,7 +386,6 @@ public class Transaction implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return t;
 		
 	}

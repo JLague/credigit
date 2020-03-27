@@ -14,8 +14,10 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
+
+import commun.*;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données

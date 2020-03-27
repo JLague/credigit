@@ -3,9 +3,9 @@ package creationEtablissement.controleur;
 import creationEtablissement.modele.CreationEtablissementModele;
 import creationEtablissement.vue.CreationEtablissementVueCtrl;
 import javafx.scene.Scene;
-import pos.exception.ExceptionCreationCompte;
-import pos.exception.ExceptionProduitEtablissement;
-import pos.modele.Etablissement;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
+import commun.Etablissement;
 
 public class CreationEtablissementCtrl {
 

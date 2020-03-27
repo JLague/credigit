@@ -10,7 +10,7 @@ import java.util.Calendar;
 import org.junit.Before;
 import org.junit.Test;
 
-import inscription.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionCreationCompte;
 import inscription.modele.Client;
 import inscription.modele.DataClient;
 import inscription.modele.LocalAdresse;

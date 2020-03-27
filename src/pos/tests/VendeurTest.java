@@ -5,9 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import pos.exception.ExceptionCreationCompte;
-import pos.modele.DataVendeur;
-import pos.modele.Vendeur;
+import commun.exception.ExceptionCreationCompte;
+import commun.*;
 
 /**
  * Classe testant la classe Vendeur
