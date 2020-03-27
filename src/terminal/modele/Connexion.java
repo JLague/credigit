@@ -36,6 +36,8 @@ public class Connexion {
 	 */
 	private final static String COMPTES_CLIENT = "comptes";
 
+	private final static String EMPREINTES = "empreintes";
+
 	/**
 	 * Objet base de données
 	 */
@@ -74,7 +76,7 @@ public class Connexion {
 	 */
 	public List<byte[]> getAllEmpreintes() {
 		List<byte[]> listeEmpreintes = new ArrayList<>();
-		MongoCollection<Document> collection = database.getCollection(COMPTES_CLIENT);
+		MongoCollection<Document> collection = database.getCollection(EMPREINTES);
 		Iterator<Document> it = collection.find().cursor();
 
 		while (it.hasNext()) {
@@ -84,6 +86,5 @@ public class Connexion {
 
 		return listeEmpreintes;
 	}
-	
-	
+
 }

@@ -85,7 +85,7 @@ public class EmpreinteUtil {
 	 * Permet de comparer des empreintes à celle scannée
 	 * 
 	 * @param empreinteAVerifier l'empreinte à vérifier
-	 * @param empreintes         les empreintes dans lequelles il faut vérifier
+	 * @param empreintes         les empreintes dans les quelles il faut vérifier
 	 * @return l'empreinte si elle est trouvée, sinon null
 	 */
 	public static byte[] matchEmpreinte(byte[] empreinteAVerifier, List<byte[]> empreintes) {

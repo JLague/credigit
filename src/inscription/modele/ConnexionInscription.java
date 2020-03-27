@@ -35,6 +35,8 @@ public class ConnexionInscription {
 	 */
 	private final static String COMPTES_CLIENTS = "comptes";
 
+	private final static String EMPREINTES = "empreintes";
+
 	/**
 	 * Objet base de données
 	 */
@@ -57,7 +59,7 @@ public class ConnexionInscription {
 	public ConnexionInscription(CourrielConfirmation courriel) {
 		// Utilise la connexion existente
 		this.courriel = courriel;
-		
+
 		// Connection à la base de donnée
 		ConnectionString connectionString = new ConnectionString(
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
@@ -78,12 +80,14 @@ public class ConnexionInscription {
 	 * 
 	 * @param client - Le client à ajouter
 	 * @return Vrai si le client est ajouté avec succès, faux sinon
-	 * @throws ExceptionCreationCompte 
+	 * @throws ExceptionCreationCompte
 	 */
 	public boolean ajouterCompteClient(Client client) throws ExceptionCreationCompte {
 		try {
 			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENTS, Client.class);
 			collection.insertOne(client);
+			MongoCollection<Document> collectionEmpreintes = database.getCollection(EMPREINTES);
+			collectionEmpreintes.insertOne(new Document("empreinte", client.getEmpreinte()));
 			courriel.envoyerCourriel(client.getEmail(), client.getPrenom());
 		} catch (MongoWriteException e) {
 			return false;
@@ -118,4 +122,3 @@ public class ConnexionInscription {
 		return true;
 	}
 }
-
