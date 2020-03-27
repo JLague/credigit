@@ -174,7 +174,7 @@ public class POSControleur implements IPOSControleur {
 	}
 
 	public void transferTerminal() {
-		tb.getTransaction().store();
+		tb.getTransaction().serialize();
 	}
 
 }
