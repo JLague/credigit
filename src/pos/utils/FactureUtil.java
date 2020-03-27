@@ -1,5 +1,6 @@
 package pos.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -70,7 +71,7 @@ public class FactureUtil {
 			
 
 	
-	public static boolean envoyerCourriel() {
+	public static boolean envoyerCourriel(String path) {
 
 		boolean envoye = true;
 
@@ -93,10 +94,9 @@ public class FactureUtil {
 
 	         // Part two is attachment
 	         messageBodyPart1 = new MimeBodyPart();
-	         String filename = "/Users/etiennecloutier/Desktop/Test/test2.pdf";
-	         DataSource source = new FileDataSource(filename);    
+	         DataSource source = new FileDataSource(path);    
 	         messageBodyPart1.setDataHandler(new DataHandler(source));
-	         messageBodyPart1.setFileName(filename);
+	         messageBodyPart1.setFileName("Facture Test");
 	         multipart.addBodyPart(messageBodyPart1);
 
 	         // Send the complete message parts
@@ -105,7 +105,7 @@ public class FactureUtil {
 			// 5) Envoir le message
 			Transport.send(message);
 			
-			System.out.print("Envoye");
+			System.out.println("Envoye");
 			
 			
 
@@ -120,6 +120,10 @@ public class FactureUtil {
 	    public static void main(String[] args) throws IOException {
 
 	    	connexionCourriel();
+	    	
+	    	String filename = "newFile.pdf";
+			String workingDirectory = System.getProperty("user.dir");			
+			String absoluteFilePath = workingDirectory + File.separator + filename;
 	    	
 	        try (PDDocument doc = new PDDocument()) {
 
@@ -158,11 +162,29 @@ public class FactureUtil {
 	                cont.endText();
 	            }
 	            
-	            doc.save("/Users/etiennecloutier/Desktop/Test/test2.pdf");
+	            doc.save(absoluteFilePath);
 	            
 	            System.out.println("Document enregistré");
 
-	            envoyerCourriel();
+	            envoyerCourriel(absoluteFilePath);
+	            
+	            //Enresgistré la facture sur la base de données
+	            
+	            try{
+	        		
+	        		File file = new File(absoluteFilePath);
+	            	
+	        		if(file.delete()){
+	        			System.out.println(file.getName() + " is deleted!");
+	        		}else{
+	        			System.out.println("Delete operation is failed.");
+	        		}
+	        	   
+	        	}catch(Exception e){
+	        		
+	        		e.printStackTrace();
+	        		
+	        	}
 	        }
 	    }
 	}
