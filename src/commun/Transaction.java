@@ -393,6 +393,7 @@ public class Transaction implements Serializable {
 			FileOutputStream file = new FileOutputStream("transaction.ser");
 			ObjectOutputStream ous = new ObjectOutputStream(file);
 			ous.writeObject(this);
+			ous.flush();
 			ous.close();
 			file.close();
 		} catch (IOException e) {

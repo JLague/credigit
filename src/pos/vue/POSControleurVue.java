@@ -178,9 +178,9 @@ public class POSControleurVue implements IPOSControleurVue {
 	Button enregistrer;
 	Button annuler;
 	Button supprimer;
-	
+
 	Button ajouter;
-	
+
 	List<Produit> produits = new ArrayList<>();
 
 	/**
@@ -249,59 +249,57 @@ public class POSControleurVue implements IPOSControleurVue {
 	 */
 	@FXML
 	private void ouvrirVueModProdHandler() {
-		
+
 		Produit temp = this.rechercheResultat.getSelectionModel().getSelectedItem();
 
-		if(temp != null)
-		{
-		
-		modificationSuppressionProduit();
-		modifier = new Button("Modifier cet item");
-		modifier.getStyleClass().add("buttons-1");
-		retour = new Button("Annuler");
-		retour.getStyleClass().add("buttons-1");
-		
-		modifier.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				modificationProduit(temp);
-			}
-		});
+		if (temp != null) {
 
-		retour.setOnAction(new EventHandler<ActionEvent>() {
+			modificationSuppressionProduit();
+			modifier = new Button("Modifier cet item");
+			modifier.getStyleClass().add("buttons-1");
+			retour = new Button("Annuler");
+			retour.getStyleClass().add("buttons-1");
+
+			modifier.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					modificationProduit(temp);
+				}
+			});
+
+			retour.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					ouvrirVuePrincipale();
 				}
-		});
-		
-		skuProduitTextField.setDisable(true);
-		nomProduitTextField.setDisable(true);
-		prixProduitTextField.setDisable(true);
-		coutantProduitTextField.setDisable(true);
-		quantiteProduitTextField.setDisable(true);
-		fournisseurProduitTextField.setDisable(true);
-		descriptionProduitTextArea.setDisable(true);
+			});
 
-		
-		DecimalFormat df1 = new DecimalFormat("###.##");
-		DecimalFormat df2 = new DecimalFormat("###.###");
+			skuProduitTextField.setDisable(true);
+			nomProduitTextField.setDisable(true);
+			prixProduitTextField.setDisable(true);
+			coutantProduitTextField.setDisable(true);
+			quantiteProduitTextField.setDisable(true);
+			fournisseurProduitTextField.setDisable(true);
+			descriptionProduitTextArea.setDisable(true);
 
-		skuProduitTextField.setText(temp.getSku() + "");
-		nomProduitTextField.setText(temp.getNom() + "");
-		prixProduitTextField.setText(df1.format(temp.getPrix()));
-		coutantProduitTextField.setText(df2.format(temp.getCoutant()));
-		quantiteProduitTextField.setText(temp.getQuantite() + "");
-		fournisseurProduitTextField.setText(temp.getFournisseur() + "");
-		descriptionProduitTextArea.setText(temp.getDescription() + "");
-		imageProduitImageView.setImage(ImageUtil.convertFromBytes(temp.getImage()));
-		
-		imageProduitImageView.setFitHeight(247);
-		imageProduitImageView.setFitHeight(247);
-		
-		buttonHBox.getChildren().clear();
-		buttonHBox.getChildren().addAll(modifier, retour);
-	}
+			DecimalFormat df1 = new DecimalFormat("###.##");
+			DecimalFormat df2 = new DecimalFormat("###.###");
+
+			skuProduitTextField.setText(temp.getSku() + "");
+			nomProduitTextField.setText(temp.getNom() + "");
+			prixProduitTextField.setText(df1.format(temp.getPrix()));
+			coutantProduitTextField.setText(df2.format(temp.getCoutant()));
+			quantiteProduitTextField.setText(temp.getQuantite() + "");
+			fournisseurProduitTextField.setText(temp.getFournisseur() + "");
+			descriptionProduitTextArea.setText(temp.getDescription() + "");
+			imageProduitImageView.setImage(ImageUtil.convertFromBytes(temp.getImage()));
+
+			imageProduitImageView.setFitHeight(247);
+			imageProduitImageView.setFitHeight(247);
+
+			buttonHBox.getChildren().clear();
+			buttonHBox.getChildren().addAll(modifier, retour);
+		}
 	}
 
 	private void modificationProduit(Produit p) {
@@ -342,7 +340,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					VueDialogue.produitModifie();
 					populerGridProduit();
 					ouvrirVuePrincipale();
-				} catch(ExceptionProduitEtablissement e) {
+				} catch (ExceptionProduitEtablissement e) {
 					VueDialogue.erreurProduit(e.getMessage());
 				} catch (Exception e) {
 					System.out.println("Could not save the images :(");
@@ -360,7 +358,7 @@ public class POSControleurVue implements IPOSControleurVue {
 					populerGridProduit();
 					ouvrirVuePrincipale();
 				}
-				
+
 			}
 		});
 
@@ -605,10 +603,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		// Instantie le wrapper du Produit
 		VBox wrapper = new ProduitWrapper(p);
 		GridPane.setConstraints(wrapper, x, y);
-		
+
 		// Fonctionnalité d'ajout du produit
 		wrapper.setOnMouseClicked((me) -> addProduitATransaction(me));
-		
+
 		return wrapper;
 	}
 
@@ -787,17 +785,17 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(creationProduitPane);
-		
+
 		ajouter = new Button("Créer le produit !");
 		buttonHBox.getChildren().add(ajouter);
-		
+
 		ajouter.getStyleClass().add("buttons-1");
-		
+
 		ajouter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				creerProduitHandler(event);
-				
+
 			}
 		});
 
@@ -841,6 +839,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		try {
 			root = loader.load();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -958,8 +957,6 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.clear();
 		imageProduitImageView.setImage(null);
 	}
-
-	
 
 	@FXML
 	private void descriptionProduitHandler(KeyEvent event) {

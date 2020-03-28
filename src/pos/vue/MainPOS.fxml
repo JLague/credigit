@@ -120,7 +120,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Button>
-            <Button maxHeight="60.0" maxWidth="300.0" minHeight="60.0" minWidth="300.0" mnemonicParsing="false" onAction="#empreinteButtonHandler" styleClass="buttons-2" text="Empreinte">
+            <Button maxHeight="60.0" maxWidth="300.0" minHeight="60.0" minWidth="300.0" mnemonicParsing="false" styleClass="buttons-2" text="Empreinte">
                <VBox.margin>
                   <Insets bottom="20.0" top="10.0" />
                </VBox.margin>

@@ -58,6 +58,7 @@ public class ServeurTerminal {
 			byte[] buffer = entrant.getBytes();
 			FileOutputStream os = new FileOutputStream(fichier);
 			os.write(buffer);
+			os.flush();
 			os.close();
 		} catch (Exception e) {
 			System.out.println("Fuck pas capable d'écrire");

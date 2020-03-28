@@ -38,7 +38,7 @@ public class ClientPOS implements Runnable {
 	@Override
 	public void run() {
 		try {
-			socketClient = new Socket("24.201.124.201", 47800);
+			socketClient = new Socket("192.168.1.120", 47800);
 			outgoing = new PrintWriter(socketClient.getOutputStream(), true);
 			incoming = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 		} catch (Exception e) {
@@ -63,6 +63,7 @@ public class ClientPOS implements Runnable {
 		}
 
 		outgoing.println(fichierEnvoi);
+		outgoing.flush();
 	}
 
 	public void stop() throws IOException {
