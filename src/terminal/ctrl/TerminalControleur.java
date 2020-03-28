@@ -1,6 +1,9 @@
 package terminal.ctrl;
 
 import javafx.scene.Scene;
+
+import java.io.IOException;
+
 import commun.*;
 import terminal.application.TerminalApplication;
 import terminal.modele.ServeurTerminal;
@@ -27,7 +30,12 @@ public class TerminalControleur {
 		vue = new TerminalControleurVue(this);
 		tb = new TableauDeBord();
 
-		serveur = new ServeurTerminal(this);
+		try {
+			serveur = new ServeurTerminal(this);
+			serveur.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

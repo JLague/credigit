@@ -25,7 +25,7 @@ public class ServeurTerminal {
 		ip = InetAddress.getLocalHost();
 		System.out.println("Adresse ip du terminal (à enter dans le POS) : " + ip.getHostAddress());
 		
-		socketServer = new ServerSocket(6666);
+		socketServer = new ServerSocket(47800);
 		socketClient = socketServer.accept();
 
 		outgoing = new PrintWriter(socketClient.getOutputStream(), true);

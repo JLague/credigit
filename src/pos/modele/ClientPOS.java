@@ -38,7 +38,7 @@ public class ClientPOS implements Runnable {
 	@Override
 	public void run() {
 		try {
-			socketClient = new Socket("24.201.124.201", 6666);
+			socketClient = new Socket("24.201.124.201", 47800);
 			outgoing = new PrintWriter(socketClient.getOutputStream(), true);
 			incoming = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
 		} catch (Exception e) {
