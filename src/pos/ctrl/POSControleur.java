@@ -9,6 +9,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
+import pos.modele.ClientPOS;
 import pos.modele.ConnexionPOS;
 import commun.*;
 
@@ -42,6 +43,11 @@ public class POSControleur implements IPOSControleur {
 	 * Le contrôleur de la vue du POS
 	 */
 	private POSControleurVue vue;
+	
+	/**
+	 * Client qui communique avec le server (temrinal)
+	 */
+	private ClientPOS clientPOS;
 
 	/**
 	 * Constructeur servant à instantier un contrôleur du POS
@@ -53,6 +59,8 @@ public class POSControleur implements IPOSControleur {
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
 		this.connexion = new ConnexionPOS();
+		clientPOS = new ClientPOS(this);
+		clientPOS.run();
 	}
 
 	/**
@@ -172,6 +180,7 @@ public class POSControleur implements IPOSControleur {
 	public void transferTerminal() {
 		tb.getTransaction().setNomEtablissement(tb.getEtablissement().getNom());
 		tb.getTransaction().serialize();
+		clientPOS.send();
 	}
 
 }

@@ -3,6 +3,7 @@ package terminal.ctrl;
 import javafx.scene.Scene;
 import commun.*;
 import terminal.application.TerminalApplication;
+import terminal.modele.ServeurTerminal;
 import terminal.vue.TerminalControleurVue;
 
 public class TerminalControleur {
@@ -13,23 +14,26 @@ public class TerminalControleur {
 	private TableauDeBord tb;
 
 	/**
-	 * Transaction courrante
-	 */
-	private Transaction trans;
-
-	/**
 	 * Vue associé à ce controleur
 	 */
 	private TerminalControleurVue vue;
 
+	/**
+	 * S'occupe d'établir et d'intéragir avec le terminal
+	 */
+	private ServeurTerminal serveur;
+
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
 		tb = new TableauDeBord();
-		tb.setTransaction(Transaction.deserialize());
-		trans = tb.getTransaction();
-		
-		actualiser();
 
+		serveur = new ServeurTerminal(this);
+
+	}
+
+	public void updateTransaction() {
+		tb.setTransaction(Transaction.deserialize());
+		actualiser();
 	}
 
 	public Scene getScene() {
@@ -37,6 +41,6 @@ public class TerminalControleur {
 	}
 
 	public void actualiser() {
-		vue.actualiser(trans);
+		vue.actualiser(tb.getTransaction());
 	}
 }

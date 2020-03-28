@@ -645,6 +645,7 @@ public class POSControleurVue implements IPOSControleurVue {
 
 		ctrl.ajouterProduitATransaction(produitCourant);
 		factureTable.refresh();
+		ctrl.transferTerminal();
 	}
 
 	/**
@@ -859,6 +860,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		if (temp != null) {
 			ctrl.enleverProduit(temp.getProduit());
 		}
+		ctrl.transferTerminal();
 
 	}
 
@@ -870,6 +872,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private void annuler(ActionEvent event) {
 		this.createNewTransaction();
+		ctrl.transferTerminal();
 	}
 
 	/**
@@ -1038,10 +1041,5 @@ public class POSControleurVue implements IPOSControleurVue {
 	@Override
 	public Scene getScene() {
 		return this.scene;
-	}
-	
-	@FXML
-	private void empreinteButtonHandler() {
-		ctrl.transferTerminal();
 	}
 }
