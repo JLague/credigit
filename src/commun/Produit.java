@@ -1,5 +1,7 @@
 package commun;
 
+import java.io.Serializable;
+
 import commun.exception.ExceptionProduitEtablissement;
 
 /**
@@ -8,7 +10,7 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Produit {
+public class Produit implements Serializable{
 
 	/**
 	 * Le sku du produit

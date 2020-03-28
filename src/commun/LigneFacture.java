@@ -1,5 +1,6 @@
 package commun;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -9,7 +10,10 @@ import java.util.Locale;
  * @author Bank-era Corp.
  * 
  */
-public class LigneFacture {
+public class LigneFacture implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Le prix unitaire du produit contenu dans la ligne de la facture
 	 */

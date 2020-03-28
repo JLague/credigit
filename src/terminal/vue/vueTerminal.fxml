@@ -18,10 +18,63 @@
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="160.0" styleClass="facture" AnchorPane.leftAnchor="0.0">
          <children>
-            <Label styleClass="title" text="Facture" textFill="WHITE">
-               <font>
-                  <Font name="Noto Serif Tibetan Regular" size="13.0" />
-               </font>
+            <HBox alignment="CENTER" prefHeight="44.0" prefWidth="320.0" spacing="20.0" styleClass="facture">
+               <children>
+                  <Label fx:id="nomEtablissementLabel" prefHeight="44.0" prefWidth="227.0" text="Nom de l'établissement">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Pane prefHeight="44.0" prefWidth="113.0" style="-fx-background-color: gray;">
+                     <children>
+                        <ImageView fitHeight="39.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../res/images/pos/logo_credigit.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="48.0" prefWidth="320.0">
+               <children>
+                  <Label prefHeight="73.0" prefWidth="175.0" styleClass="titl" stylesheets="@../../../res/styles/pos/POS.css" text="Facture numéro :">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="noFactureLabel" alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding></Label>
+               </children>
+            </HBox>
+            <TableView fx:id="tabView" prefHeight="284.0" prefWidth="320.0" stylesheets="@../../../res/styles/pos/POS.css">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <GridPane alignment="CENTER" prefHeight="73.0" prefWidth="320.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="0.0" minWidth="10.0" percentWidth="43.0" prefWidth="0.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="0.0" minWidth="10.0" percentWidth="57.0" prefWidth="0.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Sous-total :" GridPane.halignment="RIGHT" />
+                  <Label contentDisplay="CENTER" text="Taxes :" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label contentDisplay="CENTER" text="Total :" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                  <Label fx:id="sousTotalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Label fx:id="taxesLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <Label fx:id="totalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+               </children>
                <VBox.margin>
                   <Insets top="8.0" />
                </VBox.margin>

@@ -1,6 +1,12 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+
+import java.util.Observable;
+
+import com.sun.javafx.collections.ObservableListWrapper;
+
+
 import java.util.List;
 
 import commun.LigneFacture;
@@ -15,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
@@ -33,6 +40,12 @@ public class TerminalControleurVue {
 
 	@FXML
 	private Label totalLbl;
+
+
+	@FXML
+	private TableView<LigneFacture> tabView;
+
+	private Pane root;
 
 	private Scene scene;
 	private TerminalControleur ctrl;
@@ -63,21 +76,25 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-		chargerTableView();
-		DecimalFormat df1 = new DecimalFormat("###.##");
 
-		sousTotalLbl.setText(df1.format(trans.getSousTotal()));
-		taxesLbl.setText(df1.format(trans.getMontantTaxes()));
-		totalLbl.setText(df1.format(trans.getMontantTotal()));
+		DecimalFormat df1 = new DecimalFormat("####.##");
+
+		noFactureLabel.setText(trans.getNumero() + "");
+		sousTotalLabel.setText(df1.format(trans.getSousTotal()));
+		taxesLabel.setText(df1.format(trans.getMontantTaxes()));
+		totalLabel.setText(df1.format(trans.getMontantTotal()));
+
+		nomEtablissementLabel.setText(trans.getNomEtablissement());
+		
+		chargerTabView();
+		
+		tabView.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
+		tabView.refresh();
 	}
 
-	/**
-	 * Méthode permettant de charger le TableView contenant la facture
-	 */
-	@SuppressWarnings("unchecked")
-	private void chargerTableView() {
-		factureTable.getStyleClass().add("table-view");
-		factureTable.setEditable(false);
+	private void chargerTabView() {
+		tabView.getStyleClass().add("table-view");
+		tabView.setEditable(false);
 
 		TableColumn<LigneFacture, String> column1 = new TableColumn<>("Produit(s)");
 		column1.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -90,9 +107,8 @@ public class TerminalControleurVue {
 		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
 		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
 		column3.getStyleClass().add("align-right");
-
-		factureTable.getColumns().addAll(column1, column2, column3);
-		factureTable.setPlaceholder(new Label(""));
+		
+		tabView.getColumns().addAll(column1, column2, column3);
+		tabView.setPlaceholder(new Label("Le panier est vide !"));
 	}
-
 }
