@@ -2,6 +2,8 @@ package pos.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -23,6 +25,14 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.junit.Before;
+import org.junit.Test;
+
+import commun.DataProduit;
+import commun.Produit;
+import commun.Transaction;
+import commun.exception.ExceptionProduitEtablissement;
+import inscription.modele.Client;
 
 
 /**
@@ -52,9 +62,9 @@ public class FactureUtil {
 	/**
 	 * Constructeur de la connection du serveur d'envoi de courriels
 	 */
-	public static void connexionCourriel() {
+	private static void connexionCourriel() {
 
-					System.out.println("Création de la connection...");
+					System.out.println("Création de la connection au courriel...");
 					Properties properties = System.getProperties();
 					properties.put("mail.smtp.host", "smtp.gmail.com");
 					properties.put("mail.smtp.port", "587");
@@ -68,10 +78,10 @@ public class FactureUtil {
 					});
 
 	}
-			
+	
 
 	
-	public static boolean envoyerCourriel(String path) {
+	private static boolean envoyerCourriel(String path, String prenom, String courriel, String nomEtablissement, String heure) {
 
 		boolean envoye = true;
 
@@ -79,12 +89,15 @@ public class FactureUtil {
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(USER));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("eticlo24@gmail.com"));
-			message.setSubject("Bienvenue dans la famille!");
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(courriel));
+			message.setSubject("Facture de votre achat - " + nomEtablissement + " - " 
+			+ heure);
 
 			// 3) Crée le corps du message
 			BodyPart messageBodyPart1 = new MimeBodyPart();
-			messageBodyPart1.setText("Bonjour " );
+			messageBodyPart1.setText("Bonjour, \n\n" + "Voici en pièce jointe la facture de"
+			+ " votre achat réalisé à " + nomEtablissement + ".\n\nMerci de faire confiance à la grande famille de Crédigit,"
+					+ "\n\nCredigit\nUne filiale de Bank-era\n\n\n");
 
 			// Create a multipar message
 	         Multipart multipart = new MimeMultipart();
@@ -96,7 +109,7 @@ public class FactureUtil {
 	         messageBodyPart1 = new MimeBodyPart();
 	         DataSource source = new FileDataSource(path);    
 	         messageBodyPart1.setDataHandler(new DataHandler(source));
-	         messageBodyPart1.setFileName("Facture Test");
+	         messageBodyPart1.setFileName("Facture " + nomEtablissement + "/" + heure);
 	         multipart.addBodyPart(messageBodyPart1);
 
 	         // Send the complete message parts
@@ -105,7 +118,7 @@ public class FactureUtil {
 			// 5) Envoir le message
 			Transport.send(message);
 			
-			System.out.println("Envoye");
+			System.out.println("Courriel envoyé");
 			
 			
 
@@ -116,76 +129,122 @@ public class FactureUtil {
 		return envoye;
 	}
 
+	
+	public static PDDocument envoyerFacture(String prenomClient, String courrielClient, Transaction transaction) throws IOException
+	{
+		connexionCourriel();
+    	
+		PDDocument retour = null;
+    	String filename = "facture" + prenomClient + ".pdf";
+		String workingDirectory = System.getProperty("java.io.tmpdir");			
+		String absoluteFilePath = workingDirectory + File.separator + filename;
+    	
+        try (PDDocument doc = new PDDocument()) {
 
-	    public static void main(String[] args) throws IOException {
+            PDPage myPage = new PDPage();
+            doc.addPage(myPage);
 
-	    	connexionCourriel();
+            try (PDPageContentStream cont = new PDPageContentStream(doc, myPage)) {
+
+                cont.beginText();
+
+                cont.setFont(PDType1Font.TIMES_ROMAN, 12);
+                cont.setLeading(14.5f);
+
+                cont.newLineAtOffset(25, 700);
+                String line1 = "";
+                cont.showText(line1);
+                cont.newLine();
+
+                cont.endText();
+            }
+            
+            doc.save(absoluteFilePath);
+            retour = doc;
+            
+            System.out.println("Document enregistré");
+
+            envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
+
+            try{
+        		
+        		File file = new File(absoluteFilePath);
+            	
+        		if(file.delete()){
+        			System.out.println("Document supprimé");
+        		}else{
+        			System.out.println("Document non supprimé");
+        		}
+        	   
+        	}catch(Exception e){
+        		
+        		e.printStackTrace();
+        		
+        	}
+        }
+        
+        return retour;
+    }
+	
+
+	    public static void main(String[] args) throws IOException, ExceptionProduitEtablissement {
 	    	
-	    	String filename = "newFile.pdf";
-			String workingDirectory = System.getProperty("java.io.tmpdir");			
-			String absoluteFilePath = workingDirectory + File.separator + filename;
+	    	Produit p1, p2, p3;
+
+	    	Transaction tr1 = new Transaction();
+
+	    		DataProduit d1 = new DataProduit();
+
+	    		byte[] array1 = { 0, 1 };
+
+	    		d1.setCoutant(12.34f);
+	    		d1.setDescription("Une banane d'Asie");
+	    		d1.setFournisseur("China");
+	    		d1.setImage(array1);
+	    		d1.setNom("Banane");
+	    		d1.setPrix(13.45f);
+	    		d1.setQuantite(45);
+	    		d1.setSku(12);
+
+	    		DataProduit d2 = new DataProduit();
+
+	    		byte[] array2 = { 1, 1 };
+
+	    		d2.setCoutant(2.3f);
+	    		d2.setDescription("Un chocolat");
+	    		d2.setFournisseur("Leclerc");
+	    		d2.setImage(array2);
+	    		d2.setNom("Chocolat");
+	    		d2.setPrix(3.5f);
+	    		d2.setQuantite(234);
+	    		d2.setSku(564);
+
+	    		DataProduit d3 = new DataProduit();
+
+	    		byte[] array3 = { 1, 1 };
+
+	    		d3.setCoutant(2.3f);
+	    		d3.setDescription("Un gateau");
+	    		d3.setFournisseur("Vachon");
+	    		d3.setImage(array3);
+	    		d3.setNom("Gateau");
+	    		d3.setPrix(3.5f);
+	    		d3.setQuantite(234);
+	    		d3.setSku(565);
+
+	    		p1 = new Produit(d1);
+	    		p2 = new Produit(d2);
+	    		p3 = new Produit(d3);
+	    
+	    		tr1.addProduit(p1);
+	    		tr1.addProduit(p1);
+	    		tr1.addProduit(p2);
+	    		tr1.addProduit(p3);
+	    		
+	    		envoyerFacture("Étienne", "eticlo24@gmail.com", tr1);
 	    	
-	        try (PDDocument doc = new PDDocument()) {
-
-	            PDPage myPage = new PDPage();
-	            doc.addPage(myPage);
-
-	            try (PDPageContentStream cont = new PDPageContentStream(doc, myPage)) {
-
-	                cont.beginText();
-
-	                cont.setFont(PDType1Font.TIMES_ROMAN, 12);
-	                cont.setLeading(14.5f);
-
-	                cont.newLineAtOffset(25, 700);
-	                String line1 = "World War II (often abbreviated to WWII or WW2), "
-	                        + "also known as the Second World War,";
-	                cont.showText(line1);
-
-	                cont.newLine();
-
-	                String line2 = "was a global war that lasted from 1939 to 1945, "
-	                        + "although related conflicts began earlier.";
-	                cont.showText(line2);
-	                cont.newLine();
-
-	                String line3 = "It involved the vast majority of the world's "
-	                        + "countries—including all of the great powers—";
-	                cont.showText(line3);
-	                cont.newLine();
-
-	                String line4 = "eventually forming two opposing military "
-	                        + "alliances: the Allies and the Axis.";
-	                cont.showText(line4);
-	                cont.newLine();
-
-	                cont.endText();
-	            }
-	            
-	            doc.save(absoluteFilePath);
-	            
-	            System.out.println("Document enregistré");
-
-	            envoyerCourriel(absoluteFilePath);
-	            
-	            //Enresgistré la facture sur la base de données
-	            
-	            try{
-	        		
-	        		File file = new File(absoluteFilePath);
-	            	
-	        		if(file.delete()){
-	        			System.out.println(file.getName() + " is deleted!");
-	        		}else{
-	        			System.out.println("Delete operation is failed.");
-	        		}
-	        	   
-	        	}catch(Exception e){
-	        		
-	        		e.printStackTrace();
-	        		
-	        	}
-	        }
 	    }
+
+	    	
 	}
 
