@@ -96,7 +96,6 @@ public class Transaction implements Serializable {
 	 */
 	private static final long CONST = 1585281727947L;
 
-	
 	public ArrayList<LigneFacture> ligneFactureArray;
 
 	/**
@@ -384,37 +383,27 @@ public class Transaction implements Serializable {
 		return nomEtablissement;
 	}
 
-	public void serialize() {
-		
+	public void serialize(ObjectOutputStream oos) {
+
 		ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
-		
-		try
-		{
-			FileOutputStream file = new FileOutputStream("transaction.ser");
-			ObjectOutputStream ous = new ObjectOutputStream(file);
-			ous.writeObject(this);
-			ous.flush();
-			ous.close();
-			file.close();
+
+		try {
+			oos.writeObject(this);
+			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static Transaction deserialize() {
-		Transaction t = null;
+	public static Transaction deserialize(ObjectInputStream ois) {
 
+		Transaction t = null;
 		try {
-			FileInputStream file = new FileInputStream("transaction.ser");
-			ObjectInputStream ois = new ObjectInputStream(file);
 			t = (Transaction) ois.readObject();
-			ois.close();
-			file.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return t;
-
 	}
 
 }

@@ -3,6 +3,7 @@ package terminal.ctrl;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import commun.*;
 import terminal.application.TerminalApplication;
@@ -44,8 +45,8 @@ public class TerminalControleur {
 
 	}
 
-	public void updateTransaction() {
-		tb.setTransaction(Transaction.deserialize());
+	public void updateTransaction(ObjectInputStream ois) {
+		tb.setTransaction(Transaction.deserialize(ois));
 
 		actualiser();
 	}

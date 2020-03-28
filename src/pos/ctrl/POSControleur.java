@@ -43,7 +43,7 @@ public class POSControleur implements IPOSControleur {
 	 * Le contrôleur de la vue du POS
 	 */
 	private POSControleurVue vue;
-	
+
 	/**
 	 * Client qui communique avec le server (temrinal)
 	 */
@@ -179,8 +179,7 @@ public class POSControleur implements IPOSControleur {
 
 	public void transferTerminal() {
 		tb.getTransaction().setNomEtablissement(tb.getEtablissement().getNom());
-		tb.getTransaction().serialize();
-		clientPOS.send();
+		clientPOS.send(tb);
 	}
 
 }

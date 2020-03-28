@@ -4,9 +4,12 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import commun.TableauDeBord;
 import pos.ctrl.POSControleur;
 
 public class ClientPOS implements Runnable {
@@ -24,12 +27,12 @@ public class ClientPOS implements Runnable {
 	/**
 	 * Expédition du POS ves le terminal
 	 */
-	private PrintWriter outgoing;
+	private ObjectOutputStream oos;
 
 	/**
 	 * Réception des messages du terminal
 	 */
-	private BufferedReader incoming;
+	private ObjectInputStream ois;
 
 	public ClientPOS(POSControleur pCtrl) {
 		ctrl = pCtrl;
@@ -39,36 +42,21 @@ public class ClientPOS implements Runnable {
 	public void run() {
 		try {
 			socketClient = new Socket("192.168.1.120", 47800);
-			outgoing = new PrintWriter(socketClient.getOutputStream(), true);
-			incoming = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+			oos = new ObjectOutputStream(socketClient.getOutputStream());
+			ois = new ObjectInputStream(socketClient.getInputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	public void send() {
-		String fichier = "transaction.ser";
-		String fichierEnvoi ="";
-		try {
-			byte[] buffer = new byte[5000];
-			FileInputStream is = new FileInputStream(fichier);
-			int nb = 0;
-			while ((nb = is.read(buffer)) != -1) {
-				fichierEnvoi += new String(buffer);
-			}
-			is.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		outgoing.println(fichierEnvoi);
-		outgoing.flush();
+	public void send(TableauDeBord tb) {
+		tb.getTransaction().serialize(oos);
 	}
 
 	public void stop() throws IOException {
-		incoming.close();
-		outgoing.close();
+		ois.close();
+		oos.close();
 		socketClient.close();
 	}
 
