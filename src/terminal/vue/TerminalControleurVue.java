@@ -27,19 +27,22 @@ import terminal.ctrl.TerminalControleur;
 
 public class TerminalControleurVue {
 	@FXML
-	private AnchorPane root;
-
-	@FXML
 	private TableView<LigneFacture> factureTable;
 
 	@FXML
-	private Label sousTotalLbl;
+	private Label sousTotalLabel;
 
 	@FXML
-	private Label taxesLbl;
+	private Label taxesLabel;
 
 	@FXML
-	private Label totalLbl;
+	private Label totalLabel;
+	
+	@FXML
+	private Label noFactureLabel;
+	
+	@FXML
+	private Label nomEtablissementLabel;
 
 
 	@FXML
