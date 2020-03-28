@@ -1,12 +1,17 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+
 import java.util.Observable;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 
+
+import java.util.List;
+
 import commun.LigneFacture;
 import commun.Transaction;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,30 +20,33 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
 public class TerminalControleurVue {
+	@FXML
+	private AnchorPane root;
 
 	@FXML
-	private Label nomEtablissementLabel;
+	private TableView<LigneFacture> factureTable;
 
 	@FXML
-	private Label noFactureLabel;
+	private Label sousTotalLbl;
 
 	@FXML
-	private Label sousTotalLabel;
+	private Label taxesLbl;
 
 	@FXML
-	private Label taxesLabel;
+	private Label totalLbl;
 
-	@FXML
-	private Label totalLabel;
 
 	@FXML
 	private TableView<LigneFacture> tabView;
 
 	private Pane root;
+
 	private Scene scene;
 	private TerminalControleur ctrl;
 
@@ -68,7 +76,8 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-		DecimalFormat df1 = new DecimalFormat("#####.##");
+
+		DecimalFormat df1 = new DecimalFormat("####.##");
 
 		noFactureLabel.setText(trans.getNumero() + "");
 		sousTotalLabel.setText(df1.format(trans.getSousTotal()));

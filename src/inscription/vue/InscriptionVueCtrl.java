@@ -7,7 +7,6 @@ import java.util.List;
 import commun.exception.ExceptionCreationCompte;
 import inscription.controleur.InscriptionCtrl;
 import inscription.modele.DataClient;
-import inscription.modele.EmpreinteUtil;
 import inscription.modele.LocalAdresse;
 import inscription.modele.Questions;
 import javafx.animation.Interpolator;
@@ -596,7 +595,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		if (empreinte == null) {
 			new Thread(() -> {
 				continuerBtn.setDisable(true);
-				empreinte = EmpreinteUtil.getEmpreinte();
+				empreinte = commun.utils.EmpreinteUtil.getEmpreinte();
 				continuerBtn.setDisable(false);
 				ivEmpreinte.setImage(new Image(
 						getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));

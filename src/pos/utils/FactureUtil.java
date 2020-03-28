@@ -122,7 +122,7 @@ public class FactureUtil {
 	    	connexionCourriel();
 	    	
 	    	String filename = "newFile.pdf";
-			String workingDirectory = System.getProperty("user.dir");			
+			String workingDirectory = System.getProperty("java.io.tmpdir");			
 			String absoluteFilePath = workingDirectory + File.separator + filename;
 	    	
 	        try (PDDocument doc = new PDDocument()) {

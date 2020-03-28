@@ -26,4 +26,7 @@ hs_err_pid*
 # Remove bin folder
 /bin/
 /.classpath
-/transaction.ser
+
+# Test local de sérialisation
+*.ser
+
