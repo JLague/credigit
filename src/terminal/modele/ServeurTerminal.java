@@ -4,9 +4,12 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 
+import com.pi4j.platform.Platform;
+
+import commun.Transaction;
 import terminal.ctrl.*;
 
-public class ServeurTerminal {
+public class ServeurTerminal implements Runnable {
 
 	private TerminalControleur ctrl;
 
@@ -23,18 +26,30 @@ public class ServeurTerminal {
 		ctrl = pCtrl;
 	}
 
-	public void start() throws IOException {
-		ip = InetAddress.getLocalHost();
-		System.out.println("Adresse ip du terminal (à enter dans le POS) : " + ip.getHostAddress());
+	@Override
+	public void run() {
+		try {
+			ip = InetAddress.getLocalHost();
+			System.out.println("Adresse ip du terminal (à enter dans le POS) : " + ip.getHostAddress());
 
-		socketServer = new ServerSocket(47800);
-		socketClient = socketServer.accept();
+			socketServer = new ServerSocket(47800);
+			socketClient = socketServer.accept();
 
-		oos = new ObjectOutputStream(socketClient.getOutputStream());
-		ois = new ObjectInputStream(socketClient.getInputStream());
+			oos = new ObjectOutputStream(socketClient.getOutputStream());
+			ois = new ObjectInputStream(socketClient.getInputStream());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		while (true) {
-			ctrl.updateTransaction(ois);
+		Transaction t;
+
+		try {
+			while ((t = (Transaction) ois.readObject()) != null) {
+				ctrl.updateTransaction(ois);
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

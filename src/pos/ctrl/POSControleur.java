@@ -1,5 +1,6 @@
 package pos.ctrl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class POSControleur implements IPOSControleur {
 		this.tb = new TableauDeBord();
 		this.vue = new POSControleurVue(this);
 		this.connexion = new ConnexionPOS();
+
 		clientPOS = new ClientPOS(this);
 		clientPOS.run();
 	}
@@ -180,6 +182,14 @@ public class POSControleur implements IPOSControleur {
 	public void transferTerminal() {
 		tb.getTransaction().setNomEtablissement(tb.getEtablissement().getNom());
 		clientPOS.send(tb);
+
+		try {
+			clientPOS.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		clientPOS.run();
 	}
 
 }

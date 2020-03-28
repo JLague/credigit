@@ -38,7 +38,7 @@ public class TerminalControleur {
 
 		try {
 			serveur = new ServeurTerminal(this);
-			serveur.start();
+			serveur.run();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
