@@ -2,8 +2,6 @@ package pos.utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -25,14 +23,11 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.junit.Before;
-import org.junit.Test;
 
 import commun.DataProduit;
 import commun.Produit;
 import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
-import inscription.modele.Client;
 
 
 /**

@@ -1,16 +1,12 @@
 package terminal.ctrl;
 
-import javafx.scene.Scene;
-
-import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import commun.*;
+import commun.TableauDeBord;
+import commun.Transaction;
+import javafx.scene.Scene;
 import terminal.application.TerminalApplication;
-
 import terminal.modele.ServeurTerminal;
-import terminal.utils.EmpreinteUtil;
-
 import terminal.vue.TerminalControleurVue;
 
 public class TerminalControleur {
@@ -60,6 +56,6 @@ public class TerminalControleur {
 	}
 
 	public void effectuerTransaction() {
-		byte[] empreinte = EmpreinteUtil.getEmpreinte();
+		// byte[] empreinte = EmpreinteUtil.getEmpreinte();
 	}
 }

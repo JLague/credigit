@@ -1,18 +1,19 @@
 package pos.tests;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import commun.DataProduit;
+import commun.LigneFacture;
+import commun.Produit;
+import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
 import javafx.collections.ObservableList;
-import commun.*;
 
 public class TransactionTest {
 
@@ -137,14 +138,27 @@ public class TransactionTest {
 
 		ObservableList<LigneFacture> liste = tr1.getLignesFacture();
 
+		boolean flag1 = false;
+		boolean flag2 = false;
 		for (LigneFacture ligne : liste) {
-
+			if(ligne.getProduit() == p1) {
+				flag1 = true;
+			}
 		}
+		assertTrue(flag1);
+		
+		tr1.removeProduit(p1);
+		
+		flag1 = false;
+		
+		for (LigneFacture ligne : liste) {
+			if(ligne.getProduit() == p1) {
+				flag1 = true;
+			} else if(ligne.getProduit() == p2) {
+				flag2 = true;
+			}
+		}
+		assertFalse(flag1);
+		assertTrue(flag2);
 	}
-
-	@Test
-	public void calculerTaxesTotaux() {
-
-	}
-
 }

@@ -1,23 +1,13 @@
 package pos.modele;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 import commun.TableauDeBord;
-import pos.ctrl.POSControleur;
 
 public class ClientPOS implements Runnable {
-
-	/**
-	 * Controleur du POS
-	 */
-	private POSControleur ctrl;
 
 	/**
 	 * Socket du client
@@ -33,10 +23,6 @@ public class ClientPOS implements Runnable {
 	 * Réception des messages du terminal
 	 */
 	private ObjectInputStream ois;
-
-	public ClientPOS(POSControleur pCtrl) {
-		ctrl = pCtrl;
-	}
 
 	@Override
 	public void run() {

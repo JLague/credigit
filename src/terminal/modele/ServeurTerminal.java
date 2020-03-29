@@ -1,13 +1,14 @@
 package terminal.modele;
 
-import java.io.*;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-
-import com.pi4j.platform.Platform;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 import commun.Transaction;
-import terminal.ctrl.*;
+import terminal.ctrl.TerminalControleur;
 
 public class ServeurTerminal implements Runnable {
 
@@ -41,7 +42,7 @@ public class ServeurTerminal implements Runnable {
 			e.printStackTrace();
 		}
 
-		Transaction t;
+		Transaction t = null;
 
 		try {
 			while ((t = (Transaction) ois.readObject()) != null) {

@@ -56,7 +56,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Courriel vide");
 		} catch (ExceptionCreationCompte e) {
 
@@ -71,7 +71,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Courriel null");
 		} catch (ExceptionCreationCompte e) {
 
@@ -86,7 +86,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Nom vide");
 		} catch (ExceptionCreationCompte e) {
 
@@ -101,7 +101,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Nom null");
 		} catch (ExceptionCreationCompte e) {
 
@@ -116,7 +116,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Prenom vide");
 		} catch (ExceptionCreationCompte e) {
 
@@ -131,7 +131,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Prenom null");
 		} catch (ExceptionCreationCompte e) {
 
@@ -146,7 +146,7 @@ public class VendeurTest {
 			d1.setPassword("Test123");
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Password trop court");
 		} catch (ExceptionCreationCompte e) {
 
@@ -161,7 +161,7 @@ public class VendeurTest {
 			d1.setPassword(null);
 			d1.setUsername("LePremierTest");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Password null");
 		} catch (ExceptionCreationCompte e) {
 
@@ -176,7 +176,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername("");
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Username vide");
 		} catch (ExceptionCreationCompte e) {
 
@@ -191,7 +191,7 @@ public class VendeurTest {
 			d1.setPassword("Test1234");
 			d1.setUsername(null);
 
-			Vendeur v = new Vendeur(d1);
+			new Vendeur(d1);
 			fail("Username null");
 		} catch (ExceptionCreationCompte e) {
 

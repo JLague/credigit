@@ -1,19 +1,22 @@
 package pos.ctrl;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import commun.exception.*;
-
+import commun.DataProduit;
+import commun.DataVendeur;
+import commun.LigneFacture;
+import commun.Produit;
+import commun.TableauDeBord;
+import commun.Vendeur;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import pos.application.POSApplication;
 import pos.modele.ClientPOS;
 import pos.modele.ConnexionPOS;
-import commun.*;
-
 import pos.vue.POSControleurVue;
 
 /**
@@ -61,7 +64,7 @@ public class POSControleur implements IPOSControleur {
 		this.vue = new POSControleurVue(this);
 		this.connexion = new ConnexionPOS();
 
-		clientPOS = new ClientPOS(this);
+		clientPOS = new ClientPOS();
 		clientPOS.run();
 	}
 

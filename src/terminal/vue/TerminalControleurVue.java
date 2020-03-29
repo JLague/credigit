@@ -2,16 +2,10 @@ package terminal.vue;
 
 import java.text.DecimalFormat;
 
-import java.util.Observable;
-
 import com.sun.javafx.collections.ObservableListWrapper;
-
-
-import java.util.List;
 
 import commun.LigneFacture;
 import commun.Transaction;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 

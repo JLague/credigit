@@ -53,80 +53,78 @@ public class LocalAdresseTest {
 	@Test
 	public void testInvalide() {
 
-		LocalAdresse a;
-
 		try {
-			a = new LocalAdresse("", "g1q 1u8", "   Washington", "Washington DC", "United States");
+			new LocalAdresse("", "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("L'adresse est vide");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse(null, "g1q 1u8", "   Washington", "Washington DC", "United States");
+			new LocalAdresse(null, "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("L'adresse est nulle");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("1245 Hibou", null, "g1q 1u8", "   Washington", "Washington DC", "United States");
+			new LocalAdresse("1245 Hibou", null, "g1q 1u8", "   Washington", "Washington DC", "United States");
 			fail("Le numéro d'appartment est null");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("1 Crocodile", "g1q91u8", "   Washington", "Washington DC", "United States");
+			new LocalAdresse("1 Crocodile", "g1q91u8", "   Washington", "Washington DC", "United States");
 			fail("Le code postal est trop long");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("1 Crocodile", "g1qu8", "   Washington", "Washington DC", "United States");
+			new LocalAdresse("1 Crocodile", "g1qu8", "   Washington", "Washington DC", "United States");
 			fail("Le code postal est trop court");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", "", "Washington DC", "United States");
+			new LocalAdresse("AS", "g1q 1u8", "", "Washington DC", "United States");
 			fail("La ville est vide");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "", "United States");
+			new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "", "United States");
 			fail("L'état est vide");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", "");
+			new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", "");
 			fail("Le pays est vide");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", null, "Washington DC", "United States");
+			new LocalAdresse("AS", "g1q 1u8", null, "Washington DC", "United States");
 			fail("La ville est nulle");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", null, "United States");
+			new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", null, "United States");
 			fail("L'état est nul");
 		} catch (ExceptionCreationCompte e) {
 
 		}
 
 		try {
-			a = new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", null);
+			new LocalAdresse("AS", "g1q 1u8", "ST-LUCIE", "Washington DC", null);
 			fail("Le pays est nul");
 		} catch (ExceptionCreationCompte e) {
 

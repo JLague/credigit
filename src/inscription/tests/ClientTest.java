@@ -192,7 +192,6 @@ public class ClientTest {
 		}
 
 		try {
-			LocalDate localDate = LocalDate.of(2001, 4, 24);
 			ArrayList<Questions> questions = new ArrayList<Questions>();
 			ArrayList<String> reponses = new ArrayList<String>();
 			questions.add(Questions.ANIMAL);

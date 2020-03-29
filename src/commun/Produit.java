@@ -13,6 +13,11 @@ import commun.exception.ExceptionProduitEtablissement;
 public class Produit implements Serializable{
 
 	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 5192964164564910569L;
+
+	/**
 	 * Le sku du produit
 	 */
 	private long sku;

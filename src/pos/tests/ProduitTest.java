@@ -74,7 +74,7 @@ public class ProduitTest {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 			
-			Produit p = new Produit(d1);
+			new Produit(d1);
 			
 			fail("Coutant négatif");
 		} catch (ExceptionProduitEtablissement e) {
@@ -96,7 +96,7 @@ public class ProduitTest {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 			
-			Produit p = new Produit(d1);
+			new Produit(d1);
 			
 			fail("Description vide");
 		} catch (ExceptionProduitEtablissement e) {
@@ -118,7 +118,7 @@ public class ProduitTest {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 			
-			Produit p = new Produit(d1);
+			new Produit(d1);
 			
 			fail("Description null");
 		} catch (ExceptionProduitEtablissement e) {
@@ -140,7 +140,7 @@ public class ProduitTest {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 			
-			Produit p = new Produit(d1);
+			new Produit(d1);
 			
 			fail("Fournisseur vide");
 		} catch (ExceptionProduitEtablissement e) {
@@ -162,7 +162,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 			
-			Produit p = new Produit(d1);
+			new Produit(d1);
 			
 			fail("Fournisseur null");
 		} catch (ExceptionProduitEtablissement e) {
@@ -184,7 +184,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Image vide");
 		} catch (ExceptionProduitEtablissement e) {
@@ -195,8 +195,6 @@ try {
 			
 			DataProduit d1 = new DataProduit();
 	
-			byte[] array1 = {0,1};
-	
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -206,7 +204,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Image null");
 		} catch (ExceptionProduitEtablissement e) {
@@ -228,7 +226,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Nom vide");
 		} catch (ExceptionProduitEtablissement e) {
@@ -250,7 +248,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Nom null");
 		} catch (ExceptionProduitEtablissement e) {
@@ -272,7 +270,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Prix négatif");
 		} catch (ExceptionProduitEtablissement e) {
@@ -294,7 +292,7 @@ try {
 			d1.setQuantite(-1);
 			d1.setSku(1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Quantité négative");
 		} catch (ExceptionProduitEtablissement e) {
@@ -316,7 +314,7 @@ try {
 			d1.setQuantite(45);
 			d1.setSku(-1234);
 	
-			Produit p = new Produit(d1);
+			new Produit(d1);
 	
 			fail("Sku négatif");
 		} catch (ExceptionProduitEtablissement e) {
