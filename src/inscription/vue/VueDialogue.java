@@ -91,8 +91,7 @@ public class VueDialogue {
 	public static void comptePasTrouve() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Votre compte n'a pas été trouvé");
-		alert.setContentText(
-				"Nous sommes déçus de vous voir partir :( ... N'hésitez pas à revenir vous créer un compte dans le futur!");
+		alert.setContentText("Votre compte n'as pa été trouvé, veuillez réessayer à nouveau.");
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");

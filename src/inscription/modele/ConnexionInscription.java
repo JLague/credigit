@@ -127,25 +127,25 @@ public class ConnexionInscription {
 	/**
 	 * Méthode permettant de supprimer un compte selon les informations reçues
 	 * 
-	 * @param nom    - Le nom du client
-	 * @param prenom - Le prénom du client
-	 * @param email  - L'email du client
-	 * @param nas    - Le NAS du client
-	 * @return Vrai si la suppression est effectuée, faux sinon
+	 * @param empreinte l'empreinte à supprimer
+	 * @return true si la suppression est effectuée
 	 */
 	public boolean supprimerCompteClient(byte[] empreinte) {
-		try {
-			BasicDBObject object = new BasicDBObject("empreinte", empreinte);
-			Client result = clientsCollection.findOneAndDelete(object);
-			empreintesCollection.findOneAndDelete(object);
-			System.out.println("Client supprimé: " + result.toString());
-		} catch (NullPointerException e) {
+
+		BasicDBObject object = new BasicDBObject("empreinte", empreinte);
+		Document result = database.getCollection(COMPTES_CLIENTS).findOneAndDelete(object);
+		byte[] empreinteSupprime = ((Binary) (empreintesCollection.findOneAndDelete(object).get("empreinte"))).getData();
+		
+		if(result == null || empreinteSupprime == null) {
 			return false;
 		}
+		
+		System.out.println("Client supprimé: " + result.toString());
+		System.out.println("Empreinte supprimé: " + empreinteSupprime);
 
 		return true;
 	}
-	
+
 	/**
 	 * Méthode qui va chercher toutes les empreintes dans la base de donnée et les
 	 * retourne dans une liste

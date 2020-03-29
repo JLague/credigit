@@ -13,6 +13,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -257,7 +258,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	@FXML
 	public void inscrireBtnHandler(ActionEvent event) {
-
+		clearFields();
+		
 		if (etapeActuelle == EtapesVues.ETAPEDESACTIVER) {
 			stepPane.getChildren().clear();
 			stepPane.getChildren().add(etapes.get(0));
@@ -270,6 +272,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			ivStep4.setVisible(true);
 
 			continuerBtn.setText("Continuer");
+			continuerBtn.setDisable(false);
 			sectionTitreLabel.setText("Créer un compte");
 		}
 
@@ -289,12 +292,15 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 
 	@FXML
 	void desactiverBtnHandler(MouseEvent event) {
+		clearDeleteFields();
+		
 		// Set la nouvelle vue
 		stepPane.getChildren().clear();
 		stepPane.getChildren().add(etapes.get(4));
 		setupCompteur(etapeActuelle, EtapesVues.ETAPEDESACTIVER);
 		etapeActuelle = EtapesVues.ETAPEDESACTIVER;
-		continuerBtn.setText("Désactiver");
+		continuerBtn.setText("Scanner");
+		quitterTextField.setDisable(true);
 		sectionTitreLabel.setText("Désactivation");
 
 		if (scrollPane.getVvalue() < scrollPane.getVmax()) {
@@ -309,23 +315,27 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			scroll.play();
 		}
 
+	}
+
+	/**
+	 * Méthode s'occupant de scanner l'empreinte digitale lors de la désactivation
+	 * d'un compte
+	 */
+	private void scannerEmpreinteDesac() {
 		new Thread(() -> {
-			continuerBtn.setDisable(true);
+			byte[] empreinteTemp = commun.utils.EmpreinteUtil.getEmpreinte();
+
+			empreinte = ctrl.verifierEmpreinte(empreinteTemp);
 			
-			empreinte = commun.utils.EmpreinteUtil.getEmpreinte();
-			
-			byte[] vraieEmpreinte = ctrl.verifierEmpreinte(empreinte);
-			
-			if(vraieEmpreinte != null) {
-				continuerBtn.setDisable(false);
-				desacEmpreinte.setImage(
-						new Image(getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));
+			if (empreinte != null) {
+				Platform.runLater(() -> continuerBtn.setText("Désactiver"));
+				quitterTextField.setDisable(false);
+				desacEmpreinte.setImage(new Image(
+						getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));
 			} else {
-				VueDialogue.comptePasTrouve();
+				javafx.application.Platform.runLater(() -> VueDialogue.comptePasTrouve());
 			}
 		}).start();
-
-		
 	}
 
 	/**
@@ -370,23 +380,28 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			break;
 
 		case ETAPEDESACTIVER:
-			if (quitterTextField.getText().equals("QUITTER")) {
-				if(ctrl.supprimerCompte(empreinte)) {
+			if(empreinte == null) {
+				scannerEmpreinteDesac();
+			}
+			else if (quitterTextField.getText().equals("QUITTER")) {
+				if (ctrl.supprimerCompte(empreinte)) {
 					VueDialogue.compteSupprime();
-					nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
 					clearDeleteFields();
 				} else {
-					VueDialogue.erreurCreationDialogue("Une erreur s'est produite lors de la désactivation de votre compte.");
+					VueDialogue.erreurCreationDialogue(
+							"Une erreur s'est produite lors de la désactivation de votre compte.");
 				}
 			} else {
 				VueDialogue.erreurCreationDialogue("Vous devez entrer QUITTER pour continuer!");
 			}
+			
+			nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
 
 			break;
 
 		}
 
-	etapeActuelle=nouvelleEtape;
+		etapeActuelle = nouvelleEtape;
 
 	}
 
@@ -394,6 +409,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 * Clear les champs servant à supprimer un compte
 	 */
 	private void clearDeleteFields() {
+		desacEmpreinte.setImage(new Image(
+				getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
+		empreinte = null;
 		quitterTextField.setText(null);
 	}
 

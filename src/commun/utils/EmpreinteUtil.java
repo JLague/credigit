@@ -1,19 +1,24 @@
 package commun.utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+
+import com.machinezoo.sourceafis.FingerprintImage;
+import com.machinezoo.sourceafis.FingerprintMatcher;
+import com.machinezoo.sourceafis.FingerprintTemplate;
 
 import sk.mimac.fingerprint.FingerprintException;
 import sk.mimac.fingerprint.FingerprintSensor;
 import sk.mimac.fingerprint.adafruit.AdafruitSensor;
 
+/**
+ * Classe permettant de faciliter l'utilisation du lecteur d'empreintes
+ * digitales et de matcher des empreintes en utilisant la librairie sourceAFIS
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class EmpreinteUtil {
-
-	/**
-	 * Nombre maximal d'empreintes sur le sensor d'empreintes
-	 */
-	private static final int MAX_EMPREINTES = 162;
 
 	/**
 	 * Le port série sur Windows
@@ -24,6 +29,21 @@ public class EmpreinteUtil {
 	 * Le port série sur GNU/Linux
 	 */
 	private static final String LINUX_SERIAL_PORT = "/dev/ttyUSB0";
+
+	/**
+	 * La largeur de l'image du lecteur d'empreintes digitales
+	 */
+	private static final int LARGEUR_EMPREINTE = 256;
+
+	/**
+	 * La hauteur de l'image du lecteur d'empreintes digitales
+	 */
+	private static final int HAUTEUR_EMPREINTE = 288;
+
+	/**
+	 * Le seul minimal pour avoir un match d'empreintes
+	 */
+	private static final double THRESHOLD = 40.0;
 
 	/**
 	 * Le nom de l'OS
@@ -48,7 +68,7 @@ public class EmpreinteUtil {
 
 		return serialPort;
 	}
-	
+
 	/**
 	 * Permet de scanner une empreinte
 	 * 
@@ -62,122 +82,77 @@ public class EmpreinteUtil {
 			sensor.connect();
 
 			// Attend d'avoir une empreinte
-			while (!sensor.hasFingerprint());
+			while (!sensor.genImage())
+				;
 
-			// L'empreinte est scannée, on attend qu'elle soit ôtée
-			while (sensor.hasFingerprint()) {
-				Thread.sleep(50);
-			}
-
-			// L'empreinte doit être rescannée lors de la création du modèle
-			while ((empreinte = sensor.createModel()) == null) {
-				Thread.sleep(50);
-			}
-
+			empreinte = sensor.uploadImage();
 			sensor.close();
 
 		} catch (FingerprintException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return empreinte;
+		return decompresserEmpreinte(empreinte);
 	}
 
 	/**
-	 * Scan l'empreinte et la prend directement du buffer sans créer de modèle
+	 * Méthode permettant de créer un FingerprintTemplate (sourceAFIS) avec une
+	 * image d'empreinte digitale scannée par le lecteur d'empreintes
 	 * 
-	 * @return l'empreinte scannée
+	 * @param empreinte l'empreinte servant à créer le template
+	 * @return le template de l'empreinte
 	 */
-	public static byte[] getEmpreinteUnScan() {
-		FingerprintSensor sensor = new AdafruitSensor(getSerialPort());
-		byte[] empreinte = null;
-
-		try {
-			sensor.connect();
-
-			// Scan fingerprint
-			while (!sensor.hasFingerprint()) {
-				Thread.sleep(50);
-			}
-
-			// Get fingerprint directly from buffer
-			empreinte = sensor.upload();
-
-			sensor.close();
-
-		} catch (FingerprintException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return empreinte;
+	public static FingerprintTemplate getTemplate(byte[] empreinte) {
+		return new FingerprintTemplate(
+				new FingerprintImage().grayscale(LARGEUR_EMPREINTE, HAUTEUR_EMPREINTE, empreinte));
 	}
 
 	/**
-	 * Permet de comparer des empreintes à celle scannée
 	 * 
-	 * @param empreinteAVerifier l'empreinte à vérifier
-	 * @param empreintes         les empreintes dans les quelles il faut vérifier
-	 * @return l'empreinte si elle est trouvée, sinon null
+	 * @param empreinte l'image de l'empreinte à matcher
+	 * @param candidats les images des candidats possibles
+	 * @return
 	 */
-	public static byte[] matchEmpreinte(byte[] empreinteAVerifier, List<byte[]> empreintes) {
-		FingerprintSensor sensor = new AdafruitSensor(getSerialPort());
-		
-//		empreintes = new ArrayList<>();
-//		
-//		for(int i = 0; i < 50; i++) {
-//			byte[] b = new byte[768];
-//			for(int j = 0; j < 768; j++) {
-//				b[j] = 0;
-//			}
-//			empreintes.add(b);
-//		}
-		
-		byte[] empreinte = null;
+	public static byte[] matchEmpreinte(byte[] empreinte, List<byte[]> candidats) {
+		// Créer le template et le matcher
+		FingerprintTemplate probe = getTemplate(empreinte);
+		FingerprintMatcher matcher = new FingerprintMatcher().index(probe);
+		byte[] match = null;
 
-		try {
-			sensor.connect();
-			sensor.setSecurityLevel(5);
-			sensor.clearAllSaved();
-
-			int loop = empreintes.size() / MAX_EMPREINTES + 1;
-			int realIndex = 0;
-			Integer index = null;
-
-			// Loop every time max fingerprints is achieved
-			for (int i = 0; i < loop; i++) {
-
-				// Upload max fingerprints and get index in empreintes
-				for (int j = 0; j < MAX_EMPREINTES && (realIndex = j + (i * MAX_EMPREINTES)) < empreintes.size(); j++) {
-					sensor.saveModel(empreintes.get(realIndex), j);
-				}
-
-				// Put fingerprint in buffer
-				sensor.saveToBuffer(empreinteAVerifier);
-
-				// Search for fingerprint
-				index = sensor.searchFingerprint();
-				if (index != null) {
-					empreinte = empreintes.get(index);
-					break;
-				}
+		// Loop sur tous les candidats possibles et retient celui avec le score le plus
+		// haut
+		double high = 0;
+		for (byte[] candidat : candidats) {
+			FingerprintTemplate template = getTemplate(candidat);
+			double score = matcher.match(template);
+			if (score > high) {
+				high = score;
+				match = candidat;
 			}
-
-			sensor.close();
-
-		} catch (FingerprintException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
-		return empreinte;
+		return high >= THRESHOLD ? match : null;
+
+	}
+
+	/**
+	 * Permet de décompresser les empreintes venant directement du lecteur
+	 * d'empreinte. Le byte 1010 0101 devient alors 1010 0000 et 0101 0000
+	 * 
+	 * @param empreinte l'empreinte à décompresser
+	 * @return l'empreinte à décompresser
+	 */
+	public static byte[] decompresserEmpreinte(byte[] empreinte) {
+		byte[] empreinteImg = new byte[empreinte.length * 2];
+		int count = 0;
+
+		for (int i = 0; i < empreinte.length; i++) {
+			empreinteImg[count++] = (byte) (empreinte[i] & (0b1111 << 4));
+			empreinteImg[count++] = (byte) ((empreinte[i] & 0b1111) << 4);
+		}
+
+		return empreinteImg;
 	}
 }

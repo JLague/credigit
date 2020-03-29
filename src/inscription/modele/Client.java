@@ -83,6 +83,12 @@ public class Client {
 	private ArrayList<Transaction> transaction;
 
 	/**
+	 * Constructeur par défaut utilisé par POJO
+	 */
+	public Client() {
+	}
+	
+	/**
 	 * Crée un client
 	 * 
 	 * @param data - Un objet transitoire contenant les informations sur le client
