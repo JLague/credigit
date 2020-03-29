@@ -30,12 +30,17 @@ public interface IInscriptionCtrl {
 	/**
 	 * Méthode qui demande au modèle de supprimer un compte
 	 * 
-	 * @param nom    - Le nom du client
-	 * @param prenom - Le prénom du client
-	 * @param email  - L'email du client
-	 * @param nas    - Le NAS du client
+	 * @param empreinte l'empreinte associée au compte
 	 * @return Vrai si le compte est supprimé, faux sinon
 	 */
-	public boolean supprimerCompte(String nom, String prenom, String email, String nas);
+	public boolean supprimerCompte(byte[] empreinte);
+
+	/**
+	 * Méthode qui vérifie l'empreinte passée en paramètre avec le modèle
+	 * 
+	 * @param empreinteScanne l'empreinte scannée à vérifier
+	 * @return l'empreinte si elle est trouvée dans la base de données, null sinon
+	 */
+	byte[] verifierEmpreinte(byte[] empreinteScanne);
 
 }

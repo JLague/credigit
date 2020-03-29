@@ -1,5 +1,7 @@
 package inscription.controleur;
 
+import java.util.List;
+
 import commun.exception.ExceptionCreationCompte;
 import inscription.modele.Client;
 import inscription.modele.ConnexionInscription;
@@ -51,8 +53,14 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	}
 
 	@Override
-	public boolean supprimerCompte(String nom, String prenom, String email, String nas) {
-		return connexion.supprimerCompteClient(nom, prenom, email, nas);
+	public boolean supprimerCompte(byte[] empreinte) {
+		return connexion.supprimerCompteClient(empreinte);
+	}
+	
+	@Override
+	public byte[] verifierEmpreinte(byte[] empreinteScanne) {
+		List<byte[]> empreintes = connexion.getEmpreintes();
+		return commun.utils.EmpreinteUtil.matchEmpreinte(empreinteScanne, empreintes);
 	}
 
 }
