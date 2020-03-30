@@ -12,7 +12,7 @@ import terminal.vue.TerminalControleurVue;
 public class TerminalControleur {
 
 	/**
-
+	 * 
 	 * Tableau de bord de l'application
 	 */
 	private TableauDeBord tb;

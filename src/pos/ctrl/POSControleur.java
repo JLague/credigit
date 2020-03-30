@@ -65,7 +65,6 @@ public class POSControleur implements IPOSControleur {
 		this.connexion = new ConnexionPOS();
 
 		clientPOS = new ClientPOS();
-		clientPOS.run();
 	}
 
 	/**

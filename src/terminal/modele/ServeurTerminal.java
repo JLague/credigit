@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import commun.Transaction;
+import javafx.application.Platform;
 import terminal.ctrl.TerminalControleur;
 
 public class ServeurTerminal implements Runnable {
@@ -34,21 +35,29 @@ public class ServeurTerminal implements Runnable {
 			System.out.println("Adresse ip du terminal (à enter dans le POS) : " + ip.getHostAddress());
 
 			socketServer = new ServerSocket(47800);
-			socketClient = socketServer.accept();
+			Platform.runLater(() -> {
 
-			oos = new ObjectOutputStream(socketClient.getOutputStream());
-			ois = new ObjectInputStream(socketClient.getInputStream());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+				try {
+					socketClient = socketServer.accept();
+					oos = new ObjectOutputStream(socketClient.getOutputStream());
+					ois = new ObjectInputStream(socketClient.getInputStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
-		Transaction t = null;
+				Transaction t = null;
 
-		try {
-			while ((t = (Transaction) ois.readObject()) != null) {
-				ctrl.updateTransaction(ois);
-				
-			}
+				try {
+					while ((t = (Transaction) ois.readObject()) != null) {
+						ctrl.updateTransaction(ois);
+					}
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
