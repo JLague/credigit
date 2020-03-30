@@ -4,6 +4,7 @@ import java.io.ObjectInputStream;
 
 import commun.TableauDeBord;
 import commun.Transaction;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import terminal.application.TerminalApplication;
 import terminal.modele.ServeurTerminal;
@@ -32,27 +33,23 @@ public class TerminalControleur {
 
 		tb = new TableauDeBord();
 
-		try {
-			serveur = new ServeurTerminal(this);
-			serveur.run();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		serveur = new ServeurTerminal(this);
+		new Thread(serveur).start();
 
 	}
 
+	public void updateTransaction(Transaction t) {
+		tb.setTransaction(t);
+		Platform.runLater(() -> vue.actualiser(t));
+	}
+	
 	public void updateTransaction(ObjectInputStream ois) {
 		tb.setTransaction(Transaction.deserialize(ois));
-
-		actualiser();
+		Platform.runLater(() -> vue.actualiser(tb.getTransaction()));
 	}
 
 	public Scene getScene() {
 		return vue.getScene();
-	}
-
-	public void actualiser() {
-		vue.actualiser(tb.getTransaction());
 	}
 
 	public void effectuerTransaction() {

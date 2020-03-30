@@ -5,11 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import commun.TableauDeBord;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+import commun.Transaction;
 
-public class ClientPOS implements Runnable {
+public class ClientPOS {
 
 	/**
 	 * Socket du client
@@ -26,37 +24,18 @@ public class ClientPOS implements Runnable {
 	 */
 	private ObjectInputStream ois;
 
+
 	public ClientPOS() {
-		try {
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				socketClient = new Socket("127.0.1.1", 47800);
+				oos = new ObjectOutputStream(socketClient.getOutputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
-
-	public void run() {
-		try {
-			socketClient = new Socket("192.168.0.153", 47800);
-			Platform.runLater(() -> {
-				try {
-					oos = new ObjectOutputStream(socketClient.getOutputStream());
-					ois = new ObjectInputStream(socketClient.getInputStream());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			});
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void send(TableauDeBord tb) {
-		tb.getTransaction().serialize(oos);
+	
+	public void send(Transaction trans) {
+		trans.serialize(oos);
 	}
 
 	public void stop() throws IOException {

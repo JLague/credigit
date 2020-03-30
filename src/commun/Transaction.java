@@ -382,10 +382,10 @@ public class Transaction implements Serializable {
 	}
 
 	public void serialize(ObjectOutputStream oos) {
-
 		ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
 
 		try {
+			System.out.println("Wrote object");
 			oos.writeObject(this);
 			oos.flush();
 		} catch (IOException e) {
@@ -398,6 +398,7 @@ public class Transaction implements Serializable {
 		Transaction t = null;
 		try {
 			t = (Transaction) ois.readObject();
+			System.out.println("Read object");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

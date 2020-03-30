@@ -29,13 +29,12 @@ public class TerminalControleurVue {
 
 	@FXML
 	private Label totalLabel;
-	
+
 	@FXML
 	private Label noFactureLabel;
-	
+
 	@FXML
 	private Label nomEtablissementLabel;
-
 
 	@FXML
 	private TableView<LigneFacture> tabView;
@@ -58,6 +57,7 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
+		chargerTabView();
 	}
 
 	@FXML
@@ -71,7 +71,6 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-
 		DecimalFormat df1 = new DecimalFormat("####.##");
 
 		noFactureLabel.setText(trans.getNumero() + "");
@@ -80,9 +79,7 @@ public class TerminalControleurVue {
 		totalLabel.setText(df1.format(trans.getMontantTotal()));
 
 		nomEtablissementLabel.setText(trans.getNomEtablissement());
-		
-		chargerTabView();
-		
+
 		tabView.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
 		tabView.refresh();
 	}
@@ -102,7 +99,7 @@ public class TerminalControleurVue {
 		TableColumn<LigneFacture, String> column3 = new TableColumn<>("Prix");
 		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
 		column3.getStyleClass().add("align-right");
-		
+
 		tabView.getColumns().addAll(column1, column2, column3);
 		tabView.setPlaceholder(new Label("Le panier est vide !"));
 	}
