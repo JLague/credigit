@@ -1,92 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="480.0" maxWidth="320.0" minHeight="480.0" minWidth="320.0" prefHeight="480.0" prefWidth="320.0" styleClass="root-1" stylesheets="@../../../res/styles/pos/POS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="480.0" styleClass="root-1" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox prefHeight="480.0" prefWidth="320.0">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="160.0" styleClass="facture" AnchorPane.leftAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="44.0" prefWidth="320.0" spacing="20.0" styleClass="facture">
-               <children>
-                  <Label fx:id="nomEtablissementLabel" prefHeight="44.0" prefWidth="227.0" text="Nom de l'établissement">
-                     <padding>
-                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Pane prefHeight="44.0" prefWidth="113.0" style="-fx-background-color: gray;">
-                     <children>
-                        <ImageView fitHeight="39.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../res/images/pos/logo_credigit.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
-               </children>
-            </HBox>
-            <HBox prefHeight="48.0" prefWidth="320.0">
-               <children>
-                  <Label prefHeight="73.0" prefWidth="175.0" styleClass="titl" stylesheets="@../../../res/styles/pos/POS.css" text="Facture numéro :">
-                     <padding>
-                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="noFactureLabel" alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="143.0" text="#0000000">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding></Label>
-               </children>
-            </HBox>
-            <TableView fx:id="tabView" prefHeight="284.0" prefWidth="320.0" stylesheets="@../../../res/styles/pos/POS.css">
+            <Label styleClass="title" text="Facture" textFill="WHITE">
+               <font>
+                  <Font name="Noto Serif Tibetan Regular" size="13.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+            </Label>
+            <TableView fx:id="factureTable" prefHeight="200.0" prefWidth="160.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <GridPane alignment="CENTER" prefHeight="73.0" prefWidth="320.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="0.0" minWidth="10.0" percentWidth="43.0" prefWidth="0.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="0.0" minWidth="10.0" percentWidth="57.0" prefWidth="0.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <Line endX="-49.60997009277344" endY="7.071091175079346" startX="-192.1957550048828" startY="5.799014091491699" stroke="WHITE" strokeType="OUTSIDE" />
+            <GridPane>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Sous-total :" GridPane.halignment="RIGHT" />
-                  <Label contentDisplay="CENTER" text="Taxes :" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <Label contentDisplay="CENTER" text="Total :" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <Label fx:id="sousTotalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <Label fx:id="taxesLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="totalLabel" contentDisplay="CENTER" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Label styleClass="big-text" text="Sous-total" />
+                  <Label styleClass="big-text" text="Taxes (15 %)" GridPane.rowIndex="1" />
+                  <Label styleClass="big-text" text="Total" GridPane.rowIndex="2" />
+                  <Label fx:id="sousTotalLbl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" styleClass="big-text" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                  <Label fx:id="taxesLbl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" styleClass="big-text" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <Label fx:id="totalLbl" alignment="CENTER_RIGHT" contentDisplay="RIGHT" styleClass="big-text" text="Label" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-               </padding>
             </GridPane>
-            <HBox alignment="CENTER" prefHeight="54.0" prefWidth="320.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#confimerTerminalHandler" prefHeight="22.0" prefWidth="81.0" styleClass="buttons-1" stylesheets="@../../../res/styles/pos/POS.css" text="Confirmer" />
-               </children>
-            </HBox>
          </children>
+         <padding>
+            <Insets left="8.0" right="8.0" />
+         </padding>
       </VBox>
+      <Label layoutX="173.0" layoutY="139.0" styleClass="title" text="Veuillez présenter tous vos articles&#10;à la caisse. Merci!" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="42.0" fitWidth="124.0" layoutX="360.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../OneDrive%20-%20Cégep%20Limoilou/workspace/Credigit/res/images/pos/logo_credigit.png" />
+         </image>
+      </ImageView>
    </children>
-</Pane>
+   <stylesheets>
+      <URL value="@../OneDrive%20-%20Cégep%20Limoilou/workspace/Credigit/res/styles/terminal/Terminal.css" />
+      <URL value="@../../../res/styles/terminal/Terminal.css" />
+   </stylesheets>
+</AnchorPane>

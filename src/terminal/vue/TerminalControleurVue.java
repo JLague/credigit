@@ -14,32 +14,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
 public class TerminalControleurVue {
 	@FXML
+	private AnchorPane root;
+
+	@FXML
 	private TableView<LigneFacture> factureTable;
 
 	@FXML
-	private Label sousTotalLabel;
+	private Label sousTotalLbl;
 
 	@FXML
-	private Label taxesLabel;
+	private Label taxesLbl;
 
 	@FXML
-	private Label totalLabel;
-
-	@FXML
-	private Label noFactureLabel;
-
-	@FXML
-	private Label nomEtablissementLabel;
-
-	@FXML
-	private TableView<LigneFacture> tabView;
-
-	private Pane root;
+	private Label totalLbl;
 
 	private Scene scene;
 	private TerminalControleur ctrl;
@@ -57,7 +50,6 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
-		chargerTabView();
 	}
 
 	@FXML
@@ -71,22 +63,24 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-		DecimalFormat df1 = new DecimalFormat("####.##");
+		chargerTableView();
+		DecimalFormat df1 = new DecimalFormat("###.##");
 
-		noFactureLabel.setText(trans.getNumero() + "");
-		sousTotalLabel.setText(df1.format(trans.getSousTotal()));
-		taxesLabel.setText(df1.format(trans.getMontantTaxes()));
-		totalLabel.setText(df1.format(trans.getMontantTotal()));
+		sousTotalLbl.setText(df1.format(trans.getSousTotal()) + "$");
+		taxesLbl.setText(df1.format(trans.getMontantTaxes()) + "$");
+		totalLbl.setText(df1.format(trans.getMontantTotal()) + "$");
 
-		nomEtablissementLabel.setText(trans.getNomEtablissement());
-
-		tabView.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
-		tabView.refresh();
+		factureTable.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
+		factureTable.refresh();
 	}
 
-	private void chargerTabView() {
-		tabView.getStyleClass().add("table-view");
-		tabView.setEditable(false);
+	/**
+	 * Méthode permettant de charger le TableView contenant la facture
+	 */
+	@SuppressWarnings("unchecked")
+	private void chargerTableView() {
+		factureTable.getStyleClass().add("table-view");
+		factureTable.setEditable(false);
 
 		TableColumn<LigneFacture, String> column1 = new TableColumn<>("Produit(s)");
 		column1.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -100,7 +94,7 @@ public class TerminalControleurVue {
 		column3.setCellValueFactory(new PropertyValueFactory<>("prixString"));
 		column3.getStyleClass().add("align-right");
 
-		tabView.getColumns().addAll(column1, column2, column3);
-		tabView.setPlaceholder(new Label("Le panier est vide !"));
+		factureTable.getColumns().addAll(column1, column2, column3);
+		factureTable.setPlaceholder(new Label("La facture est vide."));
 	}
 }
