@@ -1,7 +1,5 @@
 package terminal.ctrl;
 
-import java.io.ObjectInputStream;
-
 import commun.TableauDeBord;
 import commun.Transaction;
 import javafx.application.Platform;
@@ -30,7 +28,6 @@ public class TerminalControleur {
 
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
-
 		tb = new TableauDeBord();
 
 		serveur = new ServeurTerminal(this);
@@ -38,14 +35,15 @@ public class TerminalControleur {
 
 	}
 
-	public void updateTransaction(Transaction t) {
-		tb.setTransaction(t);
-		Platform.runLater(() -> vue.actualiser(t));
-	}
-	
-	public void updateTransaction(ObjectInputStream ois) {
-		tb.setTransaction(Transaction.deserialize(ois));
-		Platform.runLater(() -> vue.actualiser(tb.getTransaction()));
+	/**
+	 * Update la transaction du TableauDeBord et update la vue avec la nouvelle
+	 * transaction reçue
+	 * 
+	 * @param newTransaction
+	 */
+	public void updateTransaction(Transaction newTransaction) {
+		tb.setTransaction(newTransaction);
+		Platform.runLater(() -> vue.actualiser(newTransaction));
 	}
 
 	public Scene getScene() {

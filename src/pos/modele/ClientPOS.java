@@ -1,13 +1,29 @@
 package pos.modele;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import commun.Transaction;
 
+/**
+ * Classe permettant d'envoyer des objets Transaction au serveur du Terminal
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class ClientPOS {
+
+	/**
+	 * L'addresse IP du server
+	 */
+	private static final String REMOTE_IP = "localhost";
+
+	/**
+	 * Le port du serveur
+	 */
+	private static final int REMOTE_PORT = 47800;
 
 	/**
 	 * Socket du client
@@ -20,28 +36,44 @@ public class ClientPOS {
 	private ObjectOutputStream oos;
 
 	/**
-	 * Réception des messages du terminal
+	 * Constructeur qui permet de se connecter au serveur et d'ouvrir un output
+	 * stream
 	 */
-	private ObjectInputStream ois;
-
-
 	public ClientPOS() {
-			try {
-				socketClient = new Socket("127.0.1.1", 47800);
-				oos = new ObjectOutputStream(socketClient.getOutputStream());
-			} catch (IOException e) {
-				e.printStackTrace();
+
+		// Ferme le socket et l'output stream lorsque l'application ferme
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				try {
+					if (oos != null || socketClient != null) {
+						System.out.println("[CLIENT] Déconnexion du serveur!");
+						oos.close();
+						socketClient.close();
+					}
+				} catch (IOException e) {
+					/* failed */ }
 			}
-	}
-	
-	public void send(Transaction trans) {
-		trans.serialize(oos);
+		});
+
+		try {
+			// Se connecte et crée l'output stream
+			socketClient = new Socket(REMOTE_IP, REMOTE_PORT);
+			oos = new ObjectOutputStream(socketClient.getOutputStream());
+			System.out.println("[CLIENT] Connecté au serveur à " + REMOTE_IP + ":" + REMOTE_PORT);
+		} catch(ConnectException ce) {
+			System.err.println("[CLIENT] Vous devez ouvrir le serveur avant le client!");
+			System.exit(0);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void stop() throws IOException {
-		ois.close();
-		oos.close();
-		socketClient.close();
+	/**
+	 * Sérialise la transaction et l'envoie
+	 * 
+	 * @param transaction la transaction à envoyer
+	 */
+	public void send(Transaction transaction) {
+		transaction.serialize(oos);
 	}
-
 }

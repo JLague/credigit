@@ -1,7 +1,6 @@
 package commun;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.NumberFormat;
@@ -373,36 +372,38 @@ public class Transaction implements Serializable {
 		return totalProperty;
 	}
 
-	public void setNomEtablissement(String s) {
-		nomEtablissement = s;
+	/**
+	 * Set le nom de l'établissement
+	 * 
+	 * @param nomEtablissement le nom de l'établissement
+	 */
+	public void setNomEtablissement(String nomEtablissement) {
+		this.nomEtablissement = nomEtablissement;
 	}
 
+	/**
+	 * @return le nom de l'établissement
+	 */
 	public String getNomEtablissement() {
 		return nomEtablissement;
 	}
 
+	/**
+	 * Méthode qui update l'array de lignes de facture et qui envoie l'objet dans
+	 * l'ObjectOutputStream. Le oos.reset() est nécessaire pour s'assurer que
+	 * l'objet soit bien renvoyé puisqu'il a été updaté.
+	 * 
+	 * @param oos l'output stream où on envoie l'objet
+	 */
 	public void serialize(ObjectOutputStream oos) {
 		ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
 
 		try {
-			System.out.println("Wrote object");
+			oos.reset();
 			oos.writeObject(this);
 			oos.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public static Transaction deserialize(ObjectInputStream ois) {
-
-		Transaction t = null;
-		try {
-			t = (Transaction) ois.readObject();
-			System.out.println("Read object");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return t;
-	}
-
 }
