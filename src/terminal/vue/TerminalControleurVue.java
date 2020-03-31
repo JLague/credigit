@@ -1,6 +1,7 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.TimeUnit;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
@@ -34,6 +36,21 @@ public class TerminalControleurVue {
 	@FXML
 	private Label totalLbl;
 
+	@FXML
+	private Label presenterArticlesLbl;
+
+	@FXML
+	private Label payerLbl;
+
+	@FXML
+	private ImageView empreinteIv;
+
+	@FXML
+	private Label paiementAccepteLbl;
+
+	@FXML
+	private ImageView paiementAccepteIv;
+
 	private Scene scene;
 	private TerminalControleur ctrl;
 
@@ -50,6 +67,7 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
+		reinitialiserInterface();
 	}
 
 	@FXML
@@ -72,6 +90,40 @@ public class TerminalControleurVue {
 
 		factureTable.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
 		factureTable.refresh();
+	}
+
+	public void reinitialiserInterface() {
+		// Mets les bons éléments invisibles
+		payerLbl.setVisible(false);
+		empreinteIv.setVisible(false);
+		paiementAccepteIv.setVisible(false);
+		paiementAccepteLbl.setVisible(false);
+	}
+
+	public void effectuerTransaction() {
+		presenterArticlesLbl.setVisible(false);
+		payerLbl.setVisible(true);
+		empreinteIv.setVisible(true);
+	}
+
+	public void afficherStatutTransaction(boolean estReussie) {
+		if (estReussie) {
+			payerLbl.setVisible(false);
+			empreinteIv.setVisible(false);
+			paiementAccepteIv.setVisible(true);
+			paiementAccepteLbl.setVisible(true);
+		} else {
+
+		}
+
+		try {
+			TimeUnit.SECONDS.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		reinitialiserInterface();
 	}
 
 	/**

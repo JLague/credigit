@@ -51,6 +51,6 @@ public class TerminalControleur {
 	}
 
 	public void effectuerTransaction() {
-		// byte[] empreinte = EmpreinteUtil.getEmpreinte();
+		vue.effectuerTransaction();
 	}
 }

@@ -56,14 +56,34 @@
             <Insets left="8.0" right="8.0" />
          </padding>
       </VBox>
-      <Label layoutX="173.0" layoutY="139.0" styleClass="title" text="Veuillez présenter tous vos articles&#10;à la caisse. Merci!" textAlignment="CENTER">
+      <Label fx:id="presenterArticlesLbl" layoutX="173.0" layoutY="139.0" styleClass="title" text="Veuillez présenter tous vos articles&#10;à la caisse. Merci!" textAlignment="CENTER">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
       <ImageView fitHeight="42.0" fitWidth="124.0" layoutX="360.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../OneDrive%20-%20Cégep%20Limoilou/workspace/Credigit/res/images/pos/logo_credigit.png" />
+            <Image url="@../../../res/images/pos/logo_credigit.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="payerLbl" layoutX="195.0" layoutY="90.0" styleClass="title" text="Veuillez déposer votre doigt&#10;sur le scanner afin d'effectuer&#10;le paiement." textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="empreinteIv" fitHeight="74.0" fitWidth="54.0" layoutX="293.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../res/images/terminal/ic_empreinte_blanche.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="paiementAccepteLbl" layoutX="197.0" layoutY="90.0" styleClass="title" text="Paiement accepté! Un reçu&#10;vous sera envoyé par courriel&#10;dans les prochaines minutes." textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="paiementAccepteIv" fitHeight="88.0" fitWidth="82.0" layoutX="280.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../res/images/terminal/ic_accepte.png" />
          </image>
       </ImageView>
    </children>

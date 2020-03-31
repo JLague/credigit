@@ -131,6 +131,8 @@ public class POSControleurVue implements IPOSControleurVue {
 	@FXML
 	private Button creerBouton;
 	@FXML
+	private Button empreinteBtn;
+	@FXML
 	private TextArea descriptionProduitTextArea;
 	@FXML
 	private ImageView imageProduitImageView;
@@ -774,6 +776,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		ajoutBtn.setDisable(false);
 		middlePane.getChildren().add(clavierBox);
 		voirItemBtn.setDisable(false);
+	}
+
+	@FXML
+	void empreinteBtnHandler(ActionEvent event) {
+		ctrl.paiementEmpreinte();
 	}
 
 	/**
