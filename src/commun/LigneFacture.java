@@ -65,6 +65,13 @@ public class LigneFacture implements Serializable{
 	public float getPrix() {
 		return prix;
 	}
+	
+	/**
+	 * @return le prix
+	 */
+	public float getPrixUnitaire() {
+		return prixUnitaire;
+	}
 
 	/**
 	 * @return le quantite

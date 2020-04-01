@@ -1,7 +1,10 @@
 package pos.utils;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -28,6 +31,13 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.vandeseer.easytable.TableDrawer;
+import org.vandeseer.easytable.settings.HorizontalAlignment;
+import org.vandeseer.easytable.structure.Row;
+import org.vandeseer.easytable.structure.Table;
+import org.vandeseer.easytable.structure.Row.RowBuilder;
+import org.vandeseer.easytable.structure.Table.TableBuilder;
+import org.vandeseer.easytable.structure.cell.TextCell;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
@@ -39,9 +49,11 @@ import com.mongodb.client.MongoDatabase;
 
 import commun.DataProduit;
 import commun.Etablissement;
+import commun.LigneFacture;
 import commun.Produit;
 import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
+import javafx.collections.ObservableList;
 
 
 /**
@@ -199,6 +211,88 @@ public class FactureUtil {
 
                 cont.endText();
             }
+               
+               try (PDPageContentStream contentStream = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false)) {
+
+                   // Build the table
+                   TableBuilder myTable = Table.builder();
+                          myTable.addColumnsOfWidth(200, 150, 100, 100 );                      
+             
+                          RowBuilder row = Row.builder();
+                          row.add(TextCell.builder().text(String.valueOf("Produit")).borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                          .add(TextCell.builder().text(String.valueOf("Quantité")).borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                          .add(TextCell.builder().text(String.valueOf("Prix unitaire")).borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                          .add(TextCell.builder().text(String.valueOf("Prix")).borderWidth(1).borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build());
+          
+                   myTable.addRow(row.build());
+                   
+                   NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+                   
+                   for(int i = 0; i < transaction.getLignesFacture().size(); i++)
+                   {
+                	   RowBuilder row1 = Row.builder();
+                	   
+                	   LigneFacture lignesFacture = transaction.getLignesFacture().get(i);
+                	   
+                	   
+                	   row1.add(TextCell.builder().text(lignesFacture.getNom()).borderWidth(1).backgroundColor(Color.WHITE).build())
+						.add(TextCell.builder().text(String.valueOf(lignesFacture.getQuantite())).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+						.add(TextCell.builder().text(String.valueOf(cf.format(lignesFacture.getPrixUnitaire()))).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+						.add(TextCell.builder().text(lignesFacture.getPrixString()).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build());
+						
+						
+                       myTable.addRow(row1.build());
+                   }
+                   
+                   
+                   RowBuilder rowTemp = Row.builder();
+                   rowTemp.add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).borderWidth(1).backgroundColor(Color.GRAY).horizontalAlignment(HorizontalAlignment.CENTER).build());
+   
+                   myTable.addRow(rowTemp.build());
+                   
+                   RowBuilder row2 = Row.builder();
+                   row2.add(TextCell.builder().text(String.valueOf("Sous-Total")).borderWidth(1).backgroundColor(Color.WHITE).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text(String.valueOf(cf.format(transaction.getSousTotal()))).borderWidth(1).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build());
+   
+                   myTable.addRow(row2.build());
+                   
+                   
+                   RowBuilder row3 = Row.builder();
+                   row3.add(TextCell.builder().text(String.valueOf("Taxe")).borderWidth(1).backgroundColor(Color.WHITE).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text(String.valueOf(cf.format(transaction.getMontantTaxes()))).borderWidth(1).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build());
+   
+                   myTable.addRow(row3.build());
+                   
+                   RowBuilder row4 = Row.builder();
+                   row4.add(TextCell.builder().text(String.valueOf("Montant Total")).borderWidth(1).backgroundColor(Color.WHITE).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text("").borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).horizontalAlignment(HorizontalAlignment.CENTER).build())
+                   .add(TextCell.builder().text(String.valueOf(cf.format(transaction.getMontantTotal()))).borderWidth(1).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build());
+   
+                   myTable.addRow(row4.build());
+                   //Sous-Total, Taxes et Total
+                   //Mettre pour rejoindre Credigit
+
+              
+                   // Set up the drawer
+                   TableDrawer tableDrawer = TableDrawer.builder()
+                           .contentStream(contentStream)
+                           .startX(25f)
+                           .startY(570f)
+                           .table(myTable.build())
+                           .build();
+               
+
+                   // And go for it!
+                   tableDrawer.draw();
+               }
             
            // doc.save(absoluteFilePath);
             doc.save("/Users/etiennecloutier/Desktop/Test/test2.pdf");
