@@ -22,9 +22,23 @@ import javax.mail.internet.MimeMultipart;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import commun.DataProduit;
+import commun.Etablissement;
 import commun.Produit;
 import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
@@ -125,9 +139,9 @@ public class FactureUtil {
 	}
 
 	
-	public static PDDocument envoyerFacture(String prenomClient, String courrielClient, Transaction transaction) throws IOException
+	public static PDDocument envoyerFacture(String prenomClient, String nomClient, String courrielClient, Transaction transaction) throws IOException
 	{
-		connexionCourriel();
+		//connexionCourriel();
     	
 		PDDocument retour = null;
     	String filename = "facture" + prenomClient + ".pdf";
@@ -139,54 +153,136 @@ public class FactureUtil {
             PDPage myPage = new PDPage();
             doc.addPage(myPage);
 
-            try (PDPageContentStream cont = new PDPageContentStream(doc, myPage)) {
+                try (PDPageContentStream contTitre = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false))
+                {
+                	contTitre.beginText();
+                	
+                	contTitre.setFont(PDType1Font.TIMES_ROMAN, 25);
+                	contTitre.setLeading(14.5f);
 
+                	contTitre.newLineAtOffset(250, 700);
+                    
+                    String line0 = "FACTURE" ;
+                    contTitre.showText(line0);
+                    contTitre.newLine();
+                    
+                    contTitre.endText();
+                    
+                }
+                
+               try (PDPageContentStream cont = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false)) {   
                 cont.beginText();
-
                 cont.setFont(PDType1Font.TIMES_ROMAN, 12);
                 cont.setLeading(14.5f);
 
-                cont.newLineAtOffset(25, 700);
-                String line1 = "";
+                cont.newLineAtOffset(25, 650);
+                String line1 = "Client : " + prenomClient + " "+ nomClient ;
                 cont.showText(line1);
+                cont.newLine();
+                
+                String line2 = "Endroit de la transaction : " + transaction.getNomEtablissement() + ", " + transaction.getEtablissement().getAdresse();
+                cont.showText(line2);
+                cont.newLine();
+                
+                String line3 = "Heure de la transaction : " + transaction.getHeure();
+                cont.showText(line3);
+                cont.newLine();
+                
+                String line4 = "Numéro de la transaction : " + transaction.getNumero();
+                cont.showText(line4);
+                cont.newLine();
+                
+                String line5 = "Courriel de l'établissment : " + transaction.getEtablissement().getCourriel();
+                cont.showText(line5);
+                cont.newLine();
                 cont.newLine();
 
                 cont.endText();
             }
             
-            doc.save(absoluteFilePath);
+           // doc.save(absoluteFilePath);
+            doc.save("/Users/etiennecloutier/Desktop/Test/test2.pdf");
             retour = doc;
             
             System.out.println("Document enregistré");
 
-            envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
+            //envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
 
-            try{
-        		
-        		File file = new File(absoluteFilePath);
-            	
-        		if(file.delete()){
-        			System.out.println("Document supprimé");
-        		}else{
-        			System.out.println("Document non supprimé");
-        		}
-        	   
-        	}catch(Exception e){
-        		
-        		e.printStackTrace();
-        		
-        	}
+//            try{
+//        		
+//        		File file = new File(absoluteFilePath);
+//            	
+//        		if(file.delete()){
+//        			System.out.println("Document supprimé");
+//        		}else{
+//        			System.out.println("Document non supprimé");
+//        		}
+//        	   
+//        	}catch(Exception e){
+//        		
+//        		e.printStackTrace();
+//        		
+//        	}
         }
         
         return retour;
     }
 	
+	
+	
 
 	    public static void main(String[] args) throws IOException, ExceptionProduitEtablissement {
 	    	
+	    	/**
+	    	 * String représentant le nom de la base de données sur le serveur
+	    	 */
+	    	final String DB = "credigit_etablissements";
+
+	    	/**
+	    	 * String représentant le nom de la collection contenant les établissements dans
+	    	 * la base de données
+	    	 */
+	    	final String ETABLISSEMENTS = "etablissements";
+
+	    	/**
+	    	 * Objet base de données
+	    	 */
+	    	MongoDatabase database;
+
+	    	/**
+	    	 * Client ayant accès à la base de données
+	    	 */
+	    	MongoClient mongoClient;
+
+	    	Etablissement etablissement;
+
+	    		// Connection à la base de donnée
+	    		ConnectionString connectionString = new ConnectionString(
+	    				"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
+	    		CodecRegistry pojoCodecRegistry = CodecRegistries
+	    				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
+	    		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+	    				pojoCodecRegistry);
+	    		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
+	    				.codecRegistry(codecRegistry).build();
+
+	    		mongoClient = MongoClients.create(clientSettings);
+
+	    		database = mongoClient.getDatabase(DB);
+
+
+
+	    		MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
+	    		BasicDBObject object = new BasicDBObject();
+	    		object.put("nom", "Credigit");
+
+	    		etablissement = collection.find(object).first();
+
+
+	    	
 	    	Produit p1, p2, p3;
 
-	    	Transaction tr1 = new Transaction();
+	    	Transaction tr1 = new Transaction(etablissement);
 
 	    		DataProduit d1 = new DataProduit();
 
@@ -236,7 +332,7 @@ public class FactureUtil {
 	    		tr1.addProduit(p2);
 	    		tr1.addProduit(p3);
 	    		
-	    		envoyerFacture("Étienne", "eticlo24@gmail.com", tr1);
+	    		envoyerFacture("Étienne", "Cloutier", "eticlo24@gmail.com", tr1);
 	    	
 	    }
 

@@ -98,9 +98,9 @@ public class Transaction implements Serializable {
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
-	public Transaction() {
+	public Transaction(Etablissement etablissement) {
 		this(getHeureCourante(), pourcentageTaxes, new ArrayList<Produit>(),
-				((long) System.currentTimeMillis() - CONST));
+				((long) System.currentTimeMillis() - CONST), etablissement);
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Transaction implements Serializable {
 	 * @param numero           - le numéro de la transaction
 	 */
 
-	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero) {
+	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero, Etablissement etablissement) {
 		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
 
 		this.heure = heure;
@@ -127,7 +127,9 @@ public class Transaction implements Serializable {
 
 		lignesFacture = FXCollections.observableArrayList();
 
-		nomEtablissement = "";
+		this.etablissement = etablissement;
+		
+		nomEtablissement = this.etablissement.getNom();
 
 		addProduits(produits);
 
