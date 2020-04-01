@@ -20,7 +20,7 @@ public class TableauDeBord {
 	private Vendeur vendeur = null;
 
 	public TableauDeBord() {
-		this.transactionCourante = new Transaction();
+		this.transactionCourante = new Transaction(etablissement);
 	}
 
 	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
@@ -69,7 +69,7 @@ public class TableauDeBord {
 	 * Permet de créer une nouvelle transaction
 	 */
 	public void creerNouvelleTransaction() {
-		this.transactionCourante = new Transaction();
+		this.transactionCourante = new Transaction(etablissement);
 	}
 
 	/**
