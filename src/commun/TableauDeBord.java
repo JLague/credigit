@@ -3,6 +3,7 @@ package commun;
 import java.util.ArrayList;
 import java.util.List;
 
+import commun.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
@@ -20,6 +21,12 @@ public class TableauDeBord {
 	private Vendeur vendeur = null;
 
 	public TableauDeBord() {
+		this.etablissement = new Etablissement();
+		try {
+			this.etablissement.setNom("Etablissement non enregistré");
+		} catch (ExceptionProduitEtablissement e) {
+			e.printStackTrace();
+		}
 		this.transactionCourante = new Transaction(etablissement);
 	}
 

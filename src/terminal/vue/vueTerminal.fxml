@@ -88,7 +88,7 @@
       </ImageView>
    </children>
    <stylesheets>
-      <URL value="@../OneDrive%20-%20Cégep%20Limoilou/workspace/Credigit/res/styles/terminal/Terminal.css" />
+      <URL value="@~/res/styles/terminal/Terminal.css" />
       <URL value="@../../../res/styles/terminal/Terminal.css" />
    </stylesheets>
 </AnchorPane>
