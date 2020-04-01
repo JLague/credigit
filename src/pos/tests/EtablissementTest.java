@@ -254,7 +254,7 @@ public class EtablissementTest {
 	@Test
 	public void testGetTransactions() {
 		assertTrue(e1.getTransactions().size() == 0);
-		Transaction transactionTest = new Transaction();
+		Transaction transactionTest = new Transaction(e1);
 		try {
 			e2.ajouterTransaction(transactionTest);
 		} catch (ExceptionProduitEtablissement e) {
@@ -268,7 +268,7 @@ public class EtablissementTest {
 	@Test
 	public void testAjouterTransaction() {
 		assertTrue(e1.getTransactions().size() == 0);
-		Transaction transactionTest = new Transaction();
+		Transaction transactionTest = new Transaction(e1);
 		try {
 			e1.ajouterTransaction(transactionTest);
 		} catch (ExceptionProduitEtablissement e) {
@@ -279,8 +279,8 @@ public class EtablissementTest {
 		assertTrue(e1.getTransactions().get(0) == transactionTest);
 
 		assertTrue(e2.getTransactions().size() == 0);
-		Transaction transactionTest2 = new Transaction();
-		Transaction transactionTest3 = new Transaction();
+		Transaction transactionTest2 = new Transaction(e2);
+		Transaction transactionTest3 = new Transaction(e2);
 		try {
 			e2.ajouterTransaction(transactionTest2);
 			e2.ajouterTransaction(transactionTest3);

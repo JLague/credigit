@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import commun.DataProduit;
+import commun.Etablissement;
 import commun.LigneFacture;
 import commun.Produit;
 import commun.Transaction;
@@ -23,7 +24,8 @@ public class TransactionTest {
 
 	@Before
 	public void setup() throws ExceptionProduitEtablissement {
-		tr1 = new Transaction();
+		Etablissement e1 = new Etablissement();
+		tr1 = new Transaction(e1);
 
 		DataProduit d1 = new DataProduit();
 
