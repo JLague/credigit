@@ -7,6 +7,7 @@ import com.sun.javafx.collections.ObservableListWrapper;
 
 import commun.LigneFacture;
 import commun.Transaction;
+import commun.EtatTransaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,8 +66,13 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
-		reinitialiserInterface();
+		// reinitialiserInterface();
 		chargerTableView();
+		factureTable.setVisible(true);
+		payerLbl.setVisible(false);
+		empreinteIv.setVisible(false);
+		paiementAccepteIv.setVisible(false);
+		paiementAccepteLbl.setVisible(false);
 	}
 
 	@FXML
@@ -88,42 +94,40 @@ public class TerminalControleurVue {
 
 		factureTable.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
 		factureTable.refresh();
+		modInterface(trans);
 	}
 
-	public void reinitialiserInterface() {
-		// Mets les bons éléments invisibles
-		factureTable.setVisible(true);
-		payerLbl.setVisible(false);
-		empreinteIv.setVisible(false);
-		paiementAccepteIv.setVisible(false);
-		paiementAccepteLbl.setVisible(false);
-	}
+	public void modInterface(Transaction trans) {
+		switch (trans.getEtat()) {
 
-	public void effectuerTransaction() {
-		factureTable.setVisible(false);
-		payerLbl.setVisible(true);
-		empreinteIv.setVisible(true);
-	}
+		default:
+		case NULL:
+		case SCAN:
+		case ERREUR:
+			factureTable.setVisible(true);
+			payerLbl.setVisible(false);
+			empreinteIv.setVisible(false);
+			paiementAccepteIv.setVisible(false);
+			paiementAccepteLbl.setVisible(false);
+			break;
 
-	public void afficherStatutTransaction(boolean estReussie) {
-		if (estReussie) {
+		case EMPREINTE:
+		case ATTENTE:
+			factureTable.setVisible(false);
+			payerLbl.setVisible(true);
+			empreinteIv.setVisible(true);
+			paiementAccepteIv.setVisible(false);
+			paiementAccepteLbl.setVisible(false);
+			break;
+
+		case CONFIRMATION:
 			factureTable.setVisible(false);
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
 			paiementAccepteLbl.setVisible(true);
-		} else {
-
+			break;
 		}
-
-		try {
-			TimeUnit.SECONDS.sleep(10);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		reinitialiserInterface();
 	}
 
 	/**

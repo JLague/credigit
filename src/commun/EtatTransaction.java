@@ -10,6 +10,6 @@ package commun;
  *
  */
 public enum EtatTransaction {
-	SCAN, EMPREINTE, ATTENTE, CONFIRMATION
+	SCAN, EMPREINTE, ATTENTE, CONFIRMATION, ERREUR, NULL
 }
 

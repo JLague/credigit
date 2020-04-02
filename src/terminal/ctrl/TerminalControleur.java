@@ -51,6 +51,6 @@ public class TerminalControleur {
 	}
 
 	public void effectuerTransaction() {
-		vue.effectuerTransaction();
+		vue.actualiser(tb.getTransaction());
 	}
 }
