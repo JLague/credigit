@@ -1,13 +1,9 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
-import java.util.concurrent.TimeUnit;
-
 import com.sun.javafx.collections.ObservableListWrapper;
-
 import commun.LigneFacture;
 import commun.Transaction;
-import commun.EtatTransaction;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
