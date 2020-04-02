@@ -1,5 +1,8 @@
 # credigit
 
+## Installs
+Pour que ce programme soit foncitonnelle, vous devez ajouter les librairies se trouvant sous credigit/res/librairies/* au build path.
+
 ## Useful links
 
 ### Fingerprint scanner
