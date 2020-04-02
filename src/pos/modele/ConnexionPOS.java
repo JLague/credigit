@@ -148,7 +148,7 @@ public class ConnexionPOS {
 		Vendeur vendeur = null;
 
 		if (validerPassword(password) && validerUsername(username)) {
-			password = pos.utils.SHAUtil.hashPassword(password);
+			password = commun.utils.SHAUtil.hashPassword(password);
 
 			for (Vendeur utilisateur : etablissement.getUtilisateurs()) {
 				if (utilisateur.getPassword().equals(password) && utilisateur.getUsername().equals(username)) {
