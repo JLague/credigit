@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,6 +35,11 @@ public class ServeurTerminal implements Runnable, Closeable {
 	 * L'input stream servant à lire les objets Transaction
 	 */
 	private ObjectInputStream ois;
+	
+	/**
+	 * L'output stream pour renvoyer transaciton au terminal
+	 */
+	private ObjectOutputStream oos;
 
 	/**
 	 * Le socket servant de serveur
@@ -87,6 +93,7 @@ public class ServeurTerminal implements Runnable, Closeable {
 
 			// Open input stream
 			ois = new ObjectInputStream(socketClient.getInputStream());
+			oos = new ObjectOutputStream(socketClient.getOutputStream());
 		} catch (UnknownHostException e1) {
 			e1.printStackTrace();
 		} catch (IOException e) {
@@ -123,6 +130,15 @@ public class ServeurTerminal implements Runnable, Closeable {
 		ois.close();
 		socketClient.close();
 		socketServer.close();
+	}
+	
+	/**
+	 * Sérialise la transaction et l'envoie
+	 * 
+	 * @param transaction la transaction à envoyer
+	 */
+	public void send(Transaction transaction) {
+		transaction.serialize(oos);
 	}
 
 }

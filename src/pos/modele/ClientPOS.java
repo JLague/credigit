@@ -1,6 +1,7 @@
 package pos.modele;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -36,6 +37,13 @@ public class ClientPOS {
 	private ObjectOutputStream oos;
 
 	/**
+	 * Réception par le Pos venant du terminal
+	 */
+	private ObjectInputStream ois;
+
+	private Transaction t;
+
+	/**
 	 * Constructeur qui permet de se connecter au serveur et d'ouvrir un output
 	 * stream
 	 */
@@ -59,8 +67,9 @@ public class ClientPOS {
 			// Se connecte et crée l'output stream
 			socketClient = new Socket(REMOTE_IP, REMOTE_PORT);
 			oos = new ObjectOutputStream(socketClient.getOutputStream());
+			ois = new ObjectInputStream(socketClient.getInputStream());
 			System.out.println("[CLIENT] Connecté au serveur à " + REMOTE_IP + ":" + REMOTE_PORT);
-		} catch(ConnectException ce) {
+		} catch (ConnectException ce) {
 			System.err.println("[CLIENT] Vous devez ouvrir le serveur avant le client!");
 			System.exit(0);
 		} catch (IOException e) {
@@ -75,5 +84,9 @@ public class ClientPOS {
 	 */
 	public void send(Transaction transaction) {
 		transaction.serialize(oos);
+	}
+
+	public Transaction retourTrans() throws ClassNotFoundException, IOException {
+		return (Transaction) ois.readObject();
 	}
 }

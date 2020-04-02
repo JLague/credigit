@@ -53,7 +53,6 @@ public class POSControleur implements IPOSControleur {
 	 * Client qui communique avec le server (temrinal)
 	 */
 	private ClientPOS clientPOS;
-	
 
 	/**
 	 * Constructeur servant à instantier un contrôleur du POS
@@ -121,6 +120,10 @@ public class POSControleur implements IPOSControleur {
 	public void paiementEmpreinte() {
 		tb.getTransaction().setEtat(EtatTransaction.EMPREINTE);
 		this.transferTerminal();
+		try {
+			tb.setTransaction(clientPOS.retourTrans());
+		} catch (Exception e) {
+		}
 
 	}
 
