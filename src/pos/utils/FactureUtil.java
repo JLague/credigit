@@ -28,16 +28,14 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.vandeseer.easytable.RepeatedHeaderTableDrawer;
-import org.vandeseer.easytable.TableDrawer;
 import org.vandeseer.easytable.settings.HorizontalAlignment;
 import org.vandeseer.easytable.structure.Row;
-import org.vandeseer.easytable.structure.Table;
 import org.vandeseer.easytable.structure.Row.RowBuilder;
+import org.vandeseer.easytable.structure.Table;
 import org.vandeseer.easytable.structure.Table.TableBuilder;
 import org.vandeseer.easytable.structure.cell.TextCell;
 
@@ -55,7 +53,6 @@ import commun.LigneFacture;
 import commun.Produit;
 import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
-import javafx.collections.ObservableList;
 
 
 /**
