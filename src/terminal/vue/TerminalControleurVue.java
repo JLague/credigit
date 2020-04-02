@@ -68,6 +68,7 @@ public class TerminalControleurVue {
 
 		scene = new Scene(root);
 		reinitialiserInterface();
+		chargerTableView();
 	}
 
 	@FXML
@@ -81,7 +82,6 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-		chargerTableView();
 		DecimalFormat df1 = new DecimalFormat("###.##");
 
 		sousTotalLbl.setText(df1.format(trans.getSousTotal()) + "$");
