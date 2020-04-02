@@ -17,7 +17,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import terminal.ctrl.TerminalControleur;
 
 public class TerminalControleurVue {
@@ -52,6 +51,8 @@ public class TerminalControleurVue {
 	private ImageView paiementAccepteIv;
 
 	private Scene scene;
+	
+	@SuppressWarnings("unused")
 	private TerminalControleur ctrl;
 
 	public TerminalControleurVue(TerminalControleur ctrl) {
