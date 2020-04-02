@@ -19,7 +19,9 @@ public class TerminalApplication extends Application {
 		ctrl = new TerminalControleur(this);
 		this.stage.setScene(ctrl.getScene());
 		this.stage.setTitle("Terminal");
+		stage.setFullScreenExitHint("");
 		this.stage.sizeToScene();
+		this.stage.setFullScreen(true);
 		this.stage.setResizable(true);
 		this.stage.show();
 	}
