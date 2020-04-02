@@ -26,11 +26,13 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.vandeseer.easytable.RepeatedHeaderTableDrawer;
 import org.vandeseer.easytable.TableDrawer;
 import org.vandeseer.easytable.settings.HorizontalAlignment;
 import org.vandeseer.easytable.structure.Row;
@@ -153,7 +155,7 @@ public class FactureUtil {
 	
 	public static PDDocument envoyerFacture(String prenomClient, String nomClient, String courrielClient, Transaction transaction) throws IOException
 	{
-		//connexionCourriel();
+		connexionCourriel();
     	
 		PDDocument retour = null;
     	String filename = "facture" + prenomClient + ".pdf";
@@ -230,6 +232,7 @@ public class FactureUtil {
                    
                    for(int i = 0; i < transaction.getLignesFacture().size(); i++)
                    {
+                	   
                 	   RowBuilder row1 = Row.builder();
                 	   
                 	   LigneFacture lignesFacture = transaction.getLignesFacture().get(i);
@@ -242,6 +245,7 @@ public class FactureUtil {
 						
 						
                        myTable.addRow(row1.build());
+                	   
                    }
                    
                    
@@ -277,46 +281,46 @@ public class FactureUtil {
                    .add(TextCell.builder().text(String.valueOf(cf.format(transaction.getMontantTotal()))).borderWidth(1).borderWidth(1).backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER).build());
    
                    myTable.addRow(row4.build());
-                   //Sous-Total, Taxes et Total
-                   //Mettre pour rejoindre Credigit
 
               
                    // Set up the drawer
-                   TableDrawer tableDrawer = TableDrawer.builder()
-                           .contentStream(contentStream)
-                           .startX(25f)
-                           .startY(570f)
-                           .table(myTable.build())
-                           .build();
+                   RepeatedHeaderTableDrawer.builder()
+                   .table(myTable.build())
+                   .startX(25)
+                   .startY(570F)
+                   .endY(50F) // note: if not set, table is drawn over the end of the page
+                   .build()
+                   .draw(() -> doc, () -> new PDPage(PDRectangle.A4), 25f);
                
 
-                   // And go for it!
-                   tableDrawer.draw();
                }
+               
+               
+               //Mettre pour rejoindre Credigit
             
-           // doc.save(absoluteFilePath);
-            doc.save("/Users/etiennecloutier/Desktop/Test/test2.pdf");
+            doc.save(absoluteFilePath);
+
             retour = doc;
             
             System.out.println("Document enregistré");
 
-            //envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
+            envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
 
-//            try{
-//        		
-//        		File file = new File(absoluteFilePath);
-//            	
-//        		if(file.delete()){
-//        			System.out.println("Document supprimé");
-//        		}else{
-//        			System.out.println("Document non supprimé");
-//        		}
-//        	   
-//        	}catch(Exception e){
-//        		
-//        		e.printStackTrace();
-//        		
-//        	}
+            try{
+        		
+        		File file = new File(absoluteFilePath);
+            	
+        		if(file.delete()){
+        			System.out.println("Document supprimé");
+        		}else{
+       			System.out.println("Document non supprimé");
+        		}
+        	   
+        	}catch(Exception e){
+        		
+        		e.printStackTrace();
+        		
+        	}
         }
         
         return retour;
