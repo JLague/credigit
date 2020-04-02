@@ -1,6 +1,9 @@
 package terminal.vue;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import com.sun.javafx.collections.ObservableListWrapper;
 import commun.LigneFacture;
 import commun.Transaction;
@@ -22,6 +25,9 @@ public class TerminalControleurVue {
 
 	@FXML
 	private TableView<LigneFacture> factureTable;
+
+	@FXML
+	private Label factureTitleLbl;
 
 	@FXML
 	private Label sousTotalLbl;
@@ -82,11 +88,11 @@ public class TerminalControleurVue {
 
 	public void actualiser(Transaction trans) {
 
-		DecimalFormat df1 = new DecimalFormat("###.##");
+		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
 
-		sousTotalLbl.setText(df1.format(trans.getSousTotal()) + "$");
-		taxesLbl.setText(df1.format(trans.getMontantTaxes()) + "$");
-		totalLbl.setText(df1.format(trans.getMontantTotal()) + "$");
+		sousTotalLbl.setText(cf.format(trans.getSousTotal()));
+		taxesLbl.setText(cf.format(trans.getMontantTaxes()));
+		totalLbl.setText(cf.format(trans.getMontantTotal()));
 
 		factureTable.setItems(new ObservableListWrapper<LigneFacture>(trans.ligneFactureArray));
 		factureTable.refresh();
@@ -100,6 +106,7 @@ public class TerminalControleurVue {
 		case NULL:
 		case SCAN:
 		case ERREUR:
+			factureTitleLbl.setVisible(true);
 			factureTable.setVisible(true);
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
@@ -109,6 +116,7 @@ public class TerminalControleurVue {
 
 		case EMPREINTE:
 		case ATTENTE:
+			factureTitleLbl.setVisible(false);
 			factureTable.setVisible(false);
 			payerLbl.setVisible(true);
 			empreinteIv.setVisible(true);
@@ -117,6 +125,7 @@ public class TerminalControleurVue {
 			break;
 
 		case CONFIRMATION:
+			factureTitleLbl.setVisible(false);
 			factureTable.setVisible(false);
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);

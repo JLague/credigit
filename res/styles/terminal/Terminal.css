@@ -102,7 +102,7 @@
 
 /* TableView font size and transparency */
 .table-view {
-	-fx-font-size: 15.0px;
+	-fx-font-size: 8.0px;
 	-fx-background-color: transparent;
 }
 
@@ -132,7 +132,6 @@
 .cell {
 	-fx-text-fill: white;
 	-fx-font-family: 'Montserrat';
-	-fx-font-weight: bold;
 	-fx-background-color: transparent;
 }
 
