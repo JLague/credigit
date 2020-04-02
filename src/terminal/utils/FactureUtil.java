@@ -1,4 +1,4 @@
-package pos.utils;
+package terminal.utils;
 
 import java.awt.Color;
 import java.io.File;
@@ -28,31 +28,17 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.bson.codecs.configuration.CodecRegistries;
-import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.PojoCodecProvider;
 import org.vandeseer.easytable.RepeatedHeaderTableDrawer;
 import org.vandeseer.easytable.settings.HorizontalAlignment;
 import org.vandeseer.easytable.structure.Row;
-import org.vandeseer.easytable.structure.Row.RowBuilder;
 import org.vandeseer.easytable.structure.Table;
+import org.vandeseer.easytable.structure.Row.RowBuilder;
 import org.vandeseer.easytable.structure.Table.TableBuilder;
 import org.vandeseer.easytable.structure.cell.TextCell;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
-import commun.DataProduit;
-import commun.Etablissement;
 import commun.LigneFacture;
-import commun.Produit;
 import commun.Transaction;
-import commun.exception.ExceptionProduitEtablissement;
+
 
 
 /**
@@ -84,7 +70,6 @@ public class FactureUtil {
 	 */
 	private static void connexionCourriel() {
 
-					System.out.println("Création de la connection au courriel...");
 					Properties properties = System.getProperties();
 					properties.put("mail.smtp.host", "smtp.gmail.com");
 					properties.put("mail.smtp.port", "587");
@@ -100,8 +85,17 @@ public class FactureUtil {
 	}
 	
 
-	
-	private static boolean envoyerCourriel(String path, String prenom, String courriel, String nomEtablissement, String heure) {
+	/**
+	 * Envoye le courriel au client
+	 * 
+	 * @param prenom - Le prenom du client
+	 * @param courriel - Le courriel du client
+	 * @param nomEtablissement - Le nom de l'établissment
+	 * @param heure - L'heure de la transaction
+	 * @param fichier - Le fichier de la facture
+	 * @return Vrai si le courriel est envoyé sinon faux
+	 */
+	private static boolean envoyerCourriel(String prenom, String courriel, String nomEtablissement, String heure, File fichier) {
 
 		boolean envoye = true;
 
@@ -113,48 +107,51 @@ public class FactureUtil {
 			message.setSubject("Facture de votre achat - " + nomEtablissement + " - " 
 			+ heure);
 
-			// 3) Crée le corps du message
+			// Crée le corps du message
 			BodyPart messageBodyPart1 = new MimeBodyPart();
 			messageBodyPart1.setText("Bonjour, \n\n" + "Voici en pièce jointe la facture de"
 			+ " votre achat réalisé à " + nomEtablissement + ".\n\nMerci de faire confiance à la grande famille de Crédigit,"
 					+ "\n\nCredigit\nUne filiale de Bank-era\n\n\n");
 
-			// Create a multipar message
-	         Multipart multipart = new MimeMultipart();
 
-	         // Set text message part
+	         Multipart multipart = new MimeMultipart();
 	         multipart.addBodyPart(messageBodyPart1);
 
-	         // Part two is attachment
+	         // Attache le fichier au courriel
 	         messageBodyPart1 = new MimeBodyPart();
-	         DataSource source = new FileDataSource(path);    
+	         DataSource source = new FileDataSource(fichier);    
 	         messageBodyPart1.setDataHandler(new DataHandler(source));
 	         messageBodyPart1.setFileName("Facture " + nomEtablissement + "/" + heure);
 	         multipart.addBodyPart(messageBodyPart1);
 
-	         // Send the complete message parts
 	         message.setContent(multipart );
 
-			// 5) Envoir le message
+			// Envoie le message
 			Transport.send(message);
-			
-			System.out.println("Courriel envoyé");
-			
-			
 
 		} catch (MessagingException ex) {
-			ex.printStackTrace();
+			envoye = false;
 		}
 
 		return envoye;
 	}
 
-	
-	public static PDDocument envoyerFacture(String prenomClient, String nomClient, String courrielClient, Transaction transaction) throws IOException
+	/**
+	 * Permet de créer le fichier de la facture et appelle les méthodes pour l'envoyer par courriel
+	 * 
+	 * @param prenomClient - Le prenom du client
+	 * @param nomClient - Le nom du client
+	 * @param courrielClient - Le courriel du client
+	 * @param transaction - La transaction que le client a fait
+	 * @return Vrai si le courriel s'envoye sinon faux
+	 * @throws IOException - Erreur dans la création du fichier
+	 */
+	public static boolean envoyerFacture(String prenomClient, String nomClient, String courrielClient, Transaction transaction) throws IOException
 	{
+		boolean retour = false;
+		
 		connexionCourriel();
-    	
-		PDDocument retour = null;
+	
     	String filename = "facture" + prenomClient + ".pdf";
 		String workingDirectory = System.getProperty("java.io.tmpdir");			
 		String absoluteFilePath = workingDirectory + File.separator + filename;
@@ -164,6 +161,7 @@ public class FactureUtil {
             PDPage myPage = new PDPage();
             doc.addPage(myPage);
 
+            	//Créer le titre Facture
                 try (PDPageContentStream contTitre = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false))
                 {
                 	contTitre.beginText();
@@ -181,6 +179,7 @@ public class FactureUtil {
                     
                 }
                 
+                //Crée les informations générales du client
                try (PDPageContentStream cont = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false)) {   
                 cont.beginText();
                 cont.setFont(PDType1Font.TIMES_ROMAN, 12);
@@ -211,9 +210,9 @@ public class FactureUtil {
                 cont.endText();
             }
                
+               //Crée le tableau avec les produits achetés et les montants
                try (PDPageContentStream contentStream = new PDPageContentStream(doc, myPage, AppendMode.APPEND, false)) {
 
-                   // Build the table
                    TableBuilder myTable = Table.builder();
                           myTable.addColumnsOfWidth(200, 150, 100, 100 );                      
              
@@ -279,40 +278,27 @@ public class FactureUtil {
    
                    myTable.addRow(row4.build());
 
-              
-                   // Set up the drawer
+                   //Permet de dessiner le tableau sur plusieurs pages s'il est trop grand
                    RepeatedHeaderTableDrawer.builder()
                    .table(myTable.build())
                    .startX(25)
                    .startY(570F)
-                   .endY(50F) // note: if not set, table is drawn over the end of the page
+                   .endY(50F) 
                    .build()
                    .draw(() -> doc, () -> new PDPage(PDRectangle.A4), 25f);
                
 
                }
-               
-               
-               //Mettre pour rejoindre Credigit
             
-            doc.save(absoluteFilePath);
+              //Enregistre le document dans un fichier pour l'envoi du courriel
+            File fichier = new File(absoluteFilePath);
+            doc.save(fichier);
+            retour = envoyerCourriel(prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure(), fichier);
 
-            retour = doc;
-            
-            System.out.println("Document enregistré");
-
-            envoyerCourriel(absoluteFilePath, prenomClient, courrielClient, transaction.getNomEtablissement(), transaction.getHeure());
-
+            //Supprime le fichier du terminal
             try{
-        		
-        		File file = new File(absoluteFilePath);
-            	
-        		if(file.delete()){
-        			System.out.println("Document supprimé");
-        		}else{
-       			System.out.println("Document non supprimé");
-        		}
-        	   
+        		fichier.delete();
+
         	}catch(Exception e){
         		
         		e.printStackTrace();
@@ -321,116 +307,7 @@ public class FactureUtil {
         }
         
         return retour;
-    }
+
+    	}  
 	
-	
-	
-
-	    public static void main(String[] args) throws IOException, ExceptionProduitEtablissement {
-	    	
-	    	/**
-	    	 * String représentant le nom de la base de données sur le serveur
-	    	 */
-	    	final String DB = "credigit_etablissements";
-
-	    	/**
-	    	 * String représentant le nom de la collection contenant les établissements dans
-	    	 * la base de données
-	    	 */
-	    	final String ETABLISSEMENTS = "etablissements";
-
-	    	/**
-	    	 * Objet base de données
-	    	 */
-	    	MongoDatabase database;
-
-	    	/**
-	    	 * Client ayant accès à la base de données
-	    	 */
-	    	MongoClient mongoClient;
-
-	    	Etablissement etablissement;
-
-	    		// Connection à la base de donnée
-	    		ConnectionString connectionString = new ConnectionString(
-	    				"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
-	    		CodecRegistry pojoCodecRegistry = CodecRegistries
-	    				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-	    		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-	    				pojoCodecRegistry);
-	    		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
-	    				.codecRegistry(codecRegistry).build();
-
-	    		mongoClient = MongoClients.create(clientSettings);
-
-	    		database = mongoClient.getDatabase(DB);
-
-
-
-	    		MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
-	    		BasicDBObject object = new BasicDBObject();
-	    		object.put("nom", "Credigit");
-
-	    		etablissement = collection.find(object).first();
-
-
-	    	
-	    	Produit p1, p2, p3;
-
-	    	Transaction tr1 = new Transaction(etablissement);
-
-	    		DataProduit d1 = new DataProduit();
-
-	    		byte[] array1 = { 0, 1 };
-
-	    		d1.setCoutant(12.34f);
-	    		d1.setDescription("Une banane d'Asie");
-	    		d1.setFournisseur("China");
-	    		d1.setImage(array1);
-	    		d1.setNom("Banane");
-	    		d1.setPrix(13.45f);
-	    		d1.setQuantite(45);
-	    		d1.setSku(12);
-
-	    		DataProduit d2 = new DataProduit();
-
-	    		byte[] array2 = { 1, 1 };
-
-	    		d2.setCoutant(2.3f);
-	    		d2.setDescription("Un chocolat");
-	    		d2.setFournisseur("Leclerc");
-	    		d2.setImage(array2);
-	    		d2.setNom("Chocolat");
-	    		d2.setPrix(3.5f);
-	    		d2.setQuantite(234);
-	    		d2.setSku(564);
-
-	    		DataProduit d3 = new DataProduit();
-
-	    		byte[] array3 = { 1, 1 };
-
-	    		d3.setCoutant(2.3f);
-	    		d3.setDescription("Un gateau");
-	    		d3.setFournisseur("Vachon");
-	    		d3.setImage(array3);
-	    		d3.setNom("Gateau");
-	    		d3.setPrix(3.5f);
-	    		d3.setQuantite(234);
-	    		d3.setSku(565);
-
-	    		p1 = new Produit(d1);
-	    		p2 = new Produit(d2);
-	    		p3 = new Produit(d3);
-	    
-	    		tr1.addProduit(p1);
-	    		tr1.addProduit(p1);
-	    		tr1.addProduit(p2);
-	    		tr1.addProduit(p3);
-	    		
-	    		envoyerFacture("Étienne", "Cloutier", "eticlo24@gmail.com", tr1);
-	    	
-	    }
-
-	    	
 	}
-
