@@ -5,6 +5,7 @@ import java.util.List;
 
 import commun.DataProduit;
 import commun.DataVendeur;
+import commun.EtatTransaction;
 import commun.LigneFacture;
 import commun.Produit;
 import commun.TableauDeBord;
@@ -118,7 +119,8 @@ public class POSControleur implements IPOSControleur {
 
 	@Override
 	public void paiementEmpreinte() {
-		// TODO Auto-generated method stub
+		tb.getTransaction().setEtat(EtatTransaction.EMPREINTE);
+		this.transferTerminal();
 
 	}
 

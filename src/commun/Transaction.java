@@ -24,6 +24,10 @@ public class Transaction implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
+	 * État de la transaction
+	 */
+	private EtatTransaction etat;
+	/**
 	 * Heure à laquelle la transaction a été effectué
 	 */
 	private transient String heure;
@@ -113,7 +117,8 @@ public class Transaction implements Serializable {
 	 * @param numero           - le numéro de la transaction
 	 */
 
-	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero, Etablissement etablissement) {
+	public Transaction(String heure, float pourcentageTaxes, ArrayList<Produit> produits, long numero,
+			Etablissement etablissement) {
 		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
 
 		this.heure = heure;
@@ -128,7 +133,9 @@ public class Transaction implements Serializable {
 		lignesFacture = FXCollections.observableArrayList();
 
 		this.etablissement = etablissement;
-		
+
+		this.etat = EtatTransaction.SCAN;
+
 		nomEtablissement = this.etablissement.getNom();
 
 		addProduits(produits);
@@ -407,5 +414,13 @@ public class Transaction implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void setEtat(EtatTransaction pEtat) {
+		this.etat = pEtat;
+	}
+
+	public EtatTransaction getEtat() {
+		return etat;
 	}
 }
