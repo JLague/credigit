@@ -36,9 +36,6 @@ public class TerminalControleurVue {
 	private Label totalLbl;
 
 	@FXML
-	private Label presenterArticlesLbl;
-
-	@FXML
 	private Label payerLbl;
 
 	@FXML
@@ -51,7 +48,7 @@ public class TerminalControleurVue {
 	private ImageView paiementAccepteIv;
 
 	private Scene scene;
-	
+
 	@SuppressWarnings("unused")
 	private TerminalControleur ctrl;
 
@@ -95,6 +92,7 @@ public class TerminalControleurVue {
 
 	public void reinitialiserInterface() {
 		// Mets les bons éléments invisibles
+		factureTable.setVisible(true);
 		payerLbl.setVisible(false);
 		empreinteIv.setVisible(false);
 		paiementAccepteIv.setVisible(false);
@@ -102,13 +100,14 @@ public class TerminalControleurVue {
 	}
 
 	public void effectuerTransaction() {
-		presenterArticlesLbl.setVisible(false);
+		factureTable.setVisible(false);
 		payerLbl.setVisible(true);
 		empreinteIv.setVisible(true);
 	}
 
 	public void afficherStatutTransaction(boolean estReussie) {
 		if (estReussie) {
+			factureTable.setVisible(false);
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
