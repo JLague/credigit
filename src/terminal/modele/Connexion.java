@@ -1,5 +1,6 @@
 package terminal.modele;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +19,10 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import commun.EtatTransaction;
 import commun.Transaction;
 import inscription.modele.Client;
+import terminal.utils.FactureUtil;
 
 /**
  * 
@@ -103,6 +106,7 @@ public class Connexion {
 			// Mets à jour le client
 			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
 			transactions.add(transaction);
+			transaction.setEtat(EtatTransaction.CONFIRMATION);
 			clientAModifier.setTransaction(transactions);
 			clientAModifier.setSolde(clientAModifier.getSolde() + transaction.getMontantTotal());
 
@@ -111,8 +115,14 @@ public class Connexion {
 			searchQuery.put("empreinte", empreinte);
 			collection.replaceOne(searchQuery, clientAModifier);
 
+			FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
+					clientAModifier.getEmail(), transaction);
+
 		} catch (NullPointerException e) {
 			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return true;
 		}
 
 		return true;

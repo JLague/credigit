@@ -80,8 +80,6 @@ public class ConnexionPOS {
 
 		if (etablissement == null)
 			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
-
-		System.out.println(etablissement.getTransactions().size());
 	}
 
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {

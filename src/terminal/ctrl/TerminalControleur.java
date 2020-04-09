@@ -1,13 +1,15 @@
 package terminal.ctrl;
 
+import java.util.List;
+
 import commun.EtatTransaction;
 import commun.Transaction;
+import commun.utils.EmpreinteUtil;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import terminal.application.TerminalApplication;
 import terminal.modele.Connexion;
 import terminal.modele.ServeurTerminal;
-import terminal.utils.EmpreinteUtil;
 import terminal.vue.TerminalControleurVue;
 
 public class TerminalControleur {
@@ -49,25 +51,24 @@ public class TerminalControleur {
 		trans = newTransaction;
 		Platform.runLater(() -> {
 			vue.actualiser(trans);
-			if (trans.getEtat() == EtatTransaction.EMPREINTE || trans.getEtat() == EtatTransaction.ATTENTE) {
-				effectuerTransaction();
-			}
 		});
+		
+		if (trans.getEtat() == EtatTransaction.EMPREINTE || trans.getEtat() == EtatTransaction.ATTENTE) {
+			effectuerTransaction(connexion.getEmpreintes());
+		}
 	}
 
 	public Scene getScene() {
 		return vue.getScene();
 	}
 
-	public void effectuerTransaction() {
+	public void effectuerTransaction(List<byte[]> empreintes) {
+		byte[] empreinteClient = EmpreinteUtil.matchEmpreinte(EmpreinteUtil.getEmpreinte(), empreintes);
 
-		byte[] empreinteClient = EmpreinteUtil.matchEmpreinte(EmpreinteUtil.getEmpreinte(), connexion.getEmpreintes());
-
-		if (connexion.effectuerTransaction(empreinteClient, trans)) {
-			trans.setEtat(EtatTransaction.CONFIRMATION);
-		} else {
+		if (!connexion.effectuerTransaction(empreinteClient, trans)) {
 			trans.setEtat(EtatTransaction.ERREUR);
 		}
+		
 		serveur.send(trans);
 		vue.actualiser(trans);
 	}

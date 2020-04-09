@@ -100,6 +100,12 @@ public class Transaction implements Serializable {
 	public ArrayList<LigneFacture> ligneFactureArray;
 
 	/**
+	 * Ne pas effacer, constructeur utilisé par POJO
+	 */
+	public Transaction() {
+	}
+	
+	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
 	public Transaction(Etablissement etablissement) {
@@ -165,7 +171,6 @@ public class Transaction implements Serializable {
 	 */
 	public void setEtablissement(Etablissement etablissement) {
 		this.etablissement = etablissement;
-
 	}
 
 	/**
@@ -405,7 +410,11 @@ public class Transaction implements Serializable {
 	 * @param oos l'output stream où on envoie l'objet
 	 */
 	public void serialize(ObjectOutputStream oos) {
-		ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
+//		if (lignesFacture == null) {
+//			lignesFacture = FXCollections.observableArrayList(ligneFactureArray);
+//		}
+		if(lignesFacture != null)
+			ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
 
 		try {
 			oos.reset();

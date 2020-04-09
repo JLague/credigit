@@ -135,7 +135,7 @@ public class Client {
 	 * 
 	 * @param nom - Le nom du client à modifier
 	 */
-	private void setNom(String nom) throws ExceptionCreationCompte {
+	public void setNom(String nom) throws ExceptionCreationCompte {
 
 		if (validerNom(nom)) {
 			this.nom = nom.trim();
@@ -159,7 +159,7 @@ public class Client {
 	 * 
 	 * @param prenom - Le prénom du client à modifier
 	 */
-	private void setPrenom(String prenom) throws ExceptionCreationCompte {
+	public void setPrenom(String prenom) throws ExceptionCreationCompte {
 
 		if (validerNom(prenom)) {
 			this.prenom = prenom.trim();
@@ -183,7 +183,7 @@ public class Client {
 	 * 
 	 * @param email - Le email du client à modfier
 	 */
-	private void setEmail(String email) throws ExceptionCreationCompte {
+	public void setEmail(String email) throws ExceptionCreationCompte {
 
 		if (email != null && email.length() != 0) {
 			this.email = email;
@@ -206,7 +206,7 @@ public class Client {
 	 * 
 	 * @param date - La date de naissance du client à modifier
 	 */
-	private void setDate(LocalDate date) throws ExceptionCreationCompte {
+	public void setDate(LocalDate date) throws ExceptionCreationCompte {
 
 		if (date != null && date.getYear() > 1910) {
 			if (validerMajeur(date)) {
@@ -237,7 +237,7 @@ public class Client {
 	 * 
 	 * @param adresse - L'adresse du client à modifier
 	 */
-	private void setAdresse(LocalAdresse adresse) throws ExceptionCreationCompte {
+	public void setAdresse(LocalAdresse adresse) throws ExceptionCreationCompte {
 
 		if (adresse != null)
 			this.adresse = adresse;
@@ -261,7 +261,7 @@ public class Client {
 	 * 
 	 * @param nas - Le NAS du client à modifier
 	 */
-	private void setNas(String nas) throws ExceptionCreationCompte {
+	public void setNas(String nas) throws ExceptionCreationCompte {
 
 		if (validerNas(nas)) {
 			this.nas = formatterNumero(nas);
@@ -302,7 +302,7 @@ public class Client {
 	 * 
 	 * @param limiteCredit - La limite de crédit du client à modifier
 	 */
-	private void setLimiteCredit(float limiteCredit) {
+	public void setLimiteCredit(float limiteCredit) {
 		this.limiteCredit = limiteCredit;
 	}
 
@@ -320,7 +320,7 @@ public class Client {
 	 * 
 	 * @param empreinte - L'empreinte du client à modifier
 	 */
-	private void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
+	public void setEmpreinte(byte[] empreinte) throws ExceptionCreationCompte {
 
 		if (empreinte != null && empreinte.length != 0) {
 			this.empreinte = empreinte;
@@ -343,7 +343,7 @@ public class Client {
 	 * 
 	 * @param questions - La liste de questions du clients à modifier
 	 */
-	private void setQuestions(ArrayList<Questions> questions) throws ExceptionCreationCompte {
+	public void setQuestions(ArrayList<Questions> questions) throws ExceptionCreationCompte {
 		if (questions != null && questions.size() == 2 && !questions.get(0).equals(questions.get(1))) {
 			this.questions = questions;
 		} else {
@@ -367,7 +367,7 @@ public class Client {
 	 * 
 	 * @param reponses - La liste de réponses du client à modifier
 	 */
-	private void setReponses(ArrayList<String> reponses) throws ExceptionCreationCompte {
+	public void setReponses(ArrayList<String> reponses) throws ExceptionCreationCompte {
 
 		if (reponses != null && reponses.size() == 2 && reponses.get(0).length() != 0
 				&& reponses.get(1).length() != 0) {
@@ -394,7 +394,7 @@ public class Client {
 	 * 
 	 * @param numero - Le numéro de téléphone du client à modifier
 	 */
-	private void setNumero(String numero) throws ExceptionCreationCompte {
+	public void setNumero(String numero) throws ExceptionCreationCompte {
 
 		if (validerNumero(numero)) {
 			this.numero = formatterNumero(numero);
@@ -422,7 +422,7 @@ public class Client {
 	 * @param nom - Le nom à valider
 	 * @return Vrai si valide sinon faux
 	 */
-	private boolean validerNom(String nom) {
+	public boolean validerNom(String nom) {
 		return nom != null && nom.length() != 0;
 	}
 

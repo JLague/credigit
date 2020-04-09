@@ -41,6 +41,12 @@ public class LocalAdresse {
 	private String pays;
 
 	/**
+	 * Ne pas supprimer, nécessaire pour POJO
+	 */
+	public LocalAdresse() {
+	}
+	
+	/**
 	 * Construit l'adresse du client avec un appartement
 	 * 
 	 * @param adresse     - L'adresse

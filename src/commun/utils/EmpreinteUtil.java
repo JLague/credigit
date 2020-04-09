@@ -125,6 +125,7 @@ public class EmpreinteUtil {
 		// haut
 		double high = 0;
 		for (byte[] candidat : candidats) {
+			System.out.println(candidat);
 			FingerprintTemplate template = getTemplate(candidat);
 			double score = matcher.match(template);
 			if (score > high) {
