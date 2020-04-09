@@ -50,12 +50,12 @@ public class Client {
 	/**
 	 * Le solde du client
 	 */
-	private int solde;
+	private float solde;
 
 	/**
 	 * La limite de crédit du client
 	 */
-	private int limiteCredit;
+	private float limiteCredit;
 
 	/**
 	 * L'empreinte du client
@@ -87,7 +87,7 @@ public class Client {
 	 */
 	public Client() {
 	}
-	
+
 	/**
 	 * Crée un client
 	 * 
@@ -275,7 +275,7 @@ public class Client {
 	 * 
 	 * @return Le solde du client
 	 */
-	public int getSolde() {
+	public float getSolde() {
 		return solde;
 	}
 
@@ -284,7 +284,7 @@ public class Client {
 	 * 
 	 * @param solde - Le solde du client à modifier
 	 */
-	public void setSolde(int solde) {
+	public void setSolde(float solde) {
 		this.solde = solde;
 	}
 
@@ -293,7 +293,7 @@ public class Client {
 	 * 
 	 * @return La limite de crédit du client
 	 */
-	public int getLimiteCredit() {
+	public float getLimiteCredit() {
 		return limiteCredit;
 	}
 
@@ -302,7 +302,7 @@ public class Client {
 	 * 
 	 * @param limiteCredit - La limite de crédit du client à modifier
 	 */
-	private void setLimiteCredit(int limiteCredit) {
+	private void setLimiteCredit(float limiteCredit) {
 		this.limiteCredit = limiteCredit;
 	}
 

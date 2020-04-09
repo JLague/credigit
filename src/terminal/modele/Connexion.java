@@ -91,7 +91,7 @@ public class Connexion {
 		return listeEmpreintes;
 	}
 
-	public boolean effectuerTransaction(byte[] empreinte, Transaction transaction, int solde) {
+	public boolean effectuerTransaction(byte[] empreinte, Transaction transaction) {
 		try {
 			// Recherche le client à modifier
 			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENT, Client.class);
@@ -104,7 +104,7 @@ public class Connexion {
 			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
 			transactions.add(transaction);
 			clientAModifier.setTransaction(transactions);
-			clientAModifier.setSolde(clientAModifier.getSolde() + solde);
+			clientAModifier.setSolde(clientAModifier.getSolde() + transaction.getMontantTotal());
 
 			// Update client dans la base de données
 			BasicDBObject searchQuery = new BasicDBObject();

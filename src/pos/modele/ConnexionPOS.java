@@ -1,5 +1,6 @@
 package pos.modele;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.codecs.configuration.CodecRegistries;
@@ -16,7 +17,7 @@ import com.mongodb.client.MongoDatabase;
 
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
-
+import inscription.modele.Client;
 import commun.*;
 
 /**
@@ -79,6 +80,8 @@ public class ConnexionPOS {
 
 		if (etablissement == null)
 			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
+
+		System.out.println(etablissement.getTransactions().size());
 	}
 
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {

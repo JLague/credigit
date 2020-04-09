@@ -1,11 +1,13 @@
 package terminal.ctrl;
 
-import commun.TableauDeBord;
+import commun.EtatTransaction;
 import commun.Transaction;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import terminal.application.TerminalApplication;
+import terminal.modele.Connexion;
 import terminal.modele.ServeurTerminal;
+import terminal.utils.EmpreinteUtil;
 import terminal.vue.TerminalControleurVue;
 
 public class TerminalControleur {
@@ -14,7 +16,7 @@ public class TerminalControleur {
 	 * 
 	 * Tableau de bord de l'application
 	 */
-	private TableauDeBord tb;
+	private Transaction trans;
 
 	/**
 	 * Vue associé à ce controleur
@@ -26,9 +28,11 @@ public class TerminalControleur {
 	 */
 	private ServeurTerminal serveur;
 
+	private Connexion connexion;
+
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
-		tb = new TableauDeBord();
+		connexion = new Connexion();
 
 		serveur = new ServeurTerminal(this);
 		new Thread(serveur).start();
@@ -42,8 +46,13 @@ public class TerminalControleur {
 	 * @param newTransaction
 	 */
 	public void updateTransaction(Transaction newTransaction) {
-		tb.setTransaction(newTransaction);
-		Platform.runLater(() -> vue.actualiser(newTransaction));
+		trans = newTransaction;
+		Platform.runLater(() -> {
+			vue.actualiser(trans);
+			if (trans.getEtat() == EtatTransaction.EMPREINTE || trans.getEtat() == EtatTransaction.ATTENTE) {
+				effectuerTransaction();
+			}
+		});
 	}
 
 	public Scene getScene() {
@@ -51,6 +60,15 @@ public class TerminalControleur {
 	}
 
 	public void effectuerTransaction() {
-		vue.actualiser(tb.getTransaction());
+
+		byte[] empreinteClient = EmpreinteUtil.matchEmpreinte(EmpreinteUtil.getEmpreinte(), connexion.getEmpreintes());
+
+		if (connexion.effectuerTransaction(empreinteClient, trans)) {
+			trans.setEtat(EtatTransaction.CONFIRMATION);
+		} else {
+			trans.setEtat(EtatTransaction.ERREUR);
+		}
+		serveur.send(trans);
+		vue.actualiser(trans);
 	}
 }

@@ -5,10 +5,12 @@ import java.util.List;
 
 import commun.DataProduit;
 import commun.DataVendeur;
+import commun.Etablissement;
 import commun.EtatTransaction;
 import commun.LigneFacture;
 import commun.Produit;
 import commun.TableauDeBord;
+import commun.Transaction;
 import commun.Vendeur;
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
@@ -121,7 +123,19 @@ public class POSControleur implements IPOSControleur {
 		tb.getTransaction().setEtat(EtatTransaction.EMPREINTE);
 		this.transferTerminal();
 		try {
-			tb.setTransaction(clientPOS.retourTrans());
+			Transaction transRetour = clientPOS.retourTrans();
+			if (transRetour.getEtat() == EtatTransaction.CONFIRMATION) {
+				Etablissement etablissement = tb.getEtablissement();
+				etablissement.ajouterTransaction(transRetour);
+				connexion.updateEtablissement();
+				creerNouvelleTransaction();
+			} else {
+				transRetour.setEtat(EtatTransaction.SCAN);
+				tb.setTransaction(transRetour);
+			}
+
+			transferTerminal();
+
 		} catch (Exception e) {
 		}
 
