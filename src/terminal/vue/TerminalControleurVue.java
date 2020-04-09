@@ -1,10 +1,10 @@
 package terminal.vue;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import com.sun.javafx.collections.ObservableListWrapper;
+
 import commun.LigneFacture;
 import commun.Transaction;
 import javafx.event.ActionEvent;
@@ -68,6 +68,9 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
+		
+		root.getStylesheets().add("styles/terminal/Terminal.css");
+		
 		// reinitialiserInterface();
 		chargerTableView();
 		factureTable.setVisible(true);
