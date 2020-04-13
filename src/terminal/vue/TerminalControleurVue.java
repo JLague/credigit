@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import com.sun.javafx.collections.ObservableListWrapper;
 
+import commun.EtatTransaction;
 import commun.LigneFacture;
 import commun.Transaction;
 import javafx.event.ActionEvent;
@@ -18,6 +19,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import terminal.ctrl.TerminalControleur;
+import terminal.gpio.buzzer.Buzzer;
+import terminal.gpio.buzzer.BuzzerSounds;
+import terminal.gpio.led.RgbLed;
 
 public class TerminalControleurVue {
 	@FXML
@@ -49,6 +53,10 @@ public class TerminalControleurVue {
 
 	@FXML
 	private ImageView paiementAccepteIv;
+	
+	private Buzzer buzzer;
+	
+	private RgbLed led;
 
 	private Scene scene;
 
@@ -69,7 +77,13 @@ public class TerminalControleurVue {
 
 		scene = new Scene(root);
 		
+		// Charge la feuille de style (pour le Raspberry Pi)
 		root.getStylesheets().add("styles/terminal/Terminal.css");
+		
+		if(System.getProperty("user.name").equals("pi")) {
+			buzzer = new Buzzer();
+			led = new RgbLed();
+		}
 		
 		// reinitialiserInterface();
 		chargerTableView();
@@ -115,6 +129,7 @@ public class TerminalControleurVue {
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(false);
 			paiementAccepteLbl.setVisible(false);
+			jouerConfirmation(EtatTransaction.ERREUR);
 			break;
 
 		case EMPREINTE:
@@ -134,6 +149,7 @@ public class TerminalControleurVue {
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
 			paiementAccepteLbl.setVisible(true);
+			jouerConfirmation(EtatTransaction.CONFIRMATION);
 			break;
 		}
 	}
@@ -160,5 +176,41 @@ public class TerminalControleurVue {
 
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label("La facture est vide."));
+	}
+	
+	/**
+	 * Permet de jouer un son de confirmation selon l'état de la transaction
+	 * 
+	 * @param et l'état de la transaction
+	 */
+	private void jouerConfirmation(EtatTransaction et) {
+		BuzzerSounds son = null;
+		int couleur = 0;
+		
+		switch(et) {
+		case CONFIRMATION:
+			son = BuzzerSounds.CONFIRME;
+			couleur = RgbLed.GREEN;
+			break;
+		case ERREUR:
+			son = BuzzerSounds.REFUSE;
+			couleur = RgbLed.RED;
+			break;
+		default:
+			break;
+		}
+		
+		if(son != null && buzzer != null && led != null) {
+			buzzer.playSong(son);
+			led.setHigh(couleur);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			led.setAllLow();
+		}
 	}
 }

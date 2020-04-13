@@ -20,6 +20,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import commun.EtatTransaction;
+import commun.LigneFacture;
 import commun.Transaction;
 import inscription.modele.Client;
 import terminal.utils.FactureUtil;
@@ -100,8 +101,15 @@ public class Connexion {
 			MongoCollection<Client> collection = database.getCollection(COMPTES_CLIENT, Client.class);
 			BasicDBObject object = new BasicDBObject();
 			object.put("empreinte", empreinte);
-
 			Client clientAModifier = collection.find(object).first();
+
+			// Envoye la facture au client
+			FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
+					clientAModifier.getEmail(), transaction);
+
+			// Prépare la transaction pour la stocker dans la base de données
+			effacerImages(transaction);
+			transaction.effacerEtablissement();
 
 			// Mets à jour le client
 			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
@@ -115,17 +123,24 @@ public class Connexion {
 			searchQuery.put("empreinte", empreinte);
 			collection.replaceOne(searchQuery, clientAModifier);
 
-			FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
-					clientAModifier.getEmail(), transaction);
-
 		} catch (NullPointerException e) {
 			return false;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return true;
 		}
 
 		return true;
+	}
+
+	/**
+	 * Efface les images des produits pour ne pas encombrer la base de données
+	 * 
+	 * @param transaction la transaction contenant les produits
+	 */
+	private static void effacerImages(Transaction transaction) {
+		for (LigneFacture lf : transaction.ligneFactureArray) {
+			lf.getProduit().effacerImage();
+		}
 	}
 
 }

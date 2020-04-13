@@ -885,7 +885,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	 * Méthode interne permettant de créer une nouvelle transaction et d'associer
 	 * les Labels de prix à celle-ci.
 	 */
-	private void createNewTransaction() {
+	public void createNewTransaction() {
 		ctrl.creerNouvelleTransaction();
 		factureTable.setItems(ctrl.getLignesFacture());
 

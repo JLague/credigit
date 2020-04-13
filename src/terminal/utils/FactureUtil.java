@@ -121,10 +121,10 @@ public class FactureUtil {
 	         messageBodyPart1 = new MimeBodyPart();
 	         DataSource source = new FileDataSource(fichier);    
 	         messageBodyPart1.setDataHandler(new DataHandler(source));
-	         messageBodyPart1.setFileName("Facture " + nomEtablissement + "/" + heure);
+	         messageBodyPart1.setFileName("Facture " + nomEtablissement + "/" + heure + ".pdf");
 	         multipart.addBodyPart(messageBodyPart1);
 
-	         message.setContent(multipart );
+	         message.setContent(multipart);
 
 			// Envoie le message
 			Transport.send(message);
@@ -153,7 +153,7 @@ public class FactureUtil {
 		connexionCourriel();
 	
     	String filename = "facture" + prenomClient + ".pdf";
-		String workingDirectory = System.getProperty("java.io.tmpdir");			
+		String workingDirectory = System.getProperty("user.home");	
 		String absoluteFilePath = workingDirectory + File.separator + filename;
     	
         try (PDDocument doc = new PDDocument()) {
@@ -226,12 +226,12 @@ public class FactureUtil {
                    
                    NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
                    
-                   for(int i = 0; i < transaction.getLignesFacture().size(); i++)
+                   for(int i = 0; i < transaction.ligneFactureArray.size(); i++)
                    {
                 	   
                 	   RowBuilder row1 = Row.builder();
                 	   
-                	   LigneFacture lignesFacture = transaction.getLignesFacture().get(i);
+                	   LigneFacture lignesFacture = transaction.ligneFactureArray.get(i);
                 	   
                 	   
                 	   row1.add(TextCell.builder().text(lignesFacture.getNom()).borderWidth(1).backgroundColor(Color.WHITE).build())

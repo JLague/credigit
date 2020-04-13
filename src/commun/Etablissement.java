@@ -1,5 +1,6 @@
 package commun;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,12 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Etablissement {
+public class Etablissement implements Serializable{
 
+	/**
+	 * Serial version ID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Nom de l'établissement
 	 */
@@ -264,6 +269,10 @@ public class Etablissement {
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
+	
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
 
 	/**
 	 * Ajoute une transactions à la liste de transactions de l'établissement
@@ -272,7 +281,6 @@ public class Etablissement {
 	 * @throws ExceptionProduitEtablissement
 	 */
 	public void ajouterTransaction(Transaction transaction) throws ExceptionProduitEtablissement {
-
 		if (transaction != null) {
 			transactions.add(transaction);
 		} else {

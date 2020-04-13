@@ -124,7 +124,7 @@ public class LocalAdresse {
 	 * 
 	 * @param appartement - Le nouveau numéro d'appartement du client
 	 */
-	private void setAppartement(String appartement) throws ExceptionCreationCompte {
+	public void setAppartement(String appartement) throws ExceptionCreationCompte {
 		if (validerAppartement(appartement)) {
 			this.appartement = appartement;
 		} else {
@@ -147,7 +147,7 @@ public class LocalAdresse {
 	 * 
 	 * @param codePostal - Le nouveau code postal du client
 	 */
-	private void setCodePostal(String codePostal) throws ExceptionCreationCompte {
+	public void setCodePostal(String codePostal) throws ExceptionCreationCompte {
 		if (validerCodePostal(codePostal)) {
 			this.codePostal = arrangerString(codePostal);
 		} else {
@@ -170,7 +170,7 @@ public class LocalAdresse {
 	 * 
 	 * @param ville - la nouvelle ville du client
 	 */
-	private void setVille(String ville) throws ExceptionCreationCompte {
+	public void setVille(String ville) throws ExceptionCreationCompte {
 		if (ville != null && validerString(ville)) {
 			this.ville = arrangerString(ville);
 		} else {
@@ -192,7 +192,7 @@ public class LocalAdresse {
 	 * 
 	 * @param etat - Le nouvel état du client
 	 */
-	private void setEtat(String etat) throws ExceptionCreationCompte {
+	public void setEtat(String etat) throws ExceptionCreationCompte {
 		if (etat != null && validerString(etat)) {
 			this.etat = arrangerString(etat);
 		} else {
@@ -214,7 +214,7 @@ public class LocalAdresse {
 	 * 
 	 * @param pays - Le nouvel état du client
 	 */
-	private void setPays(String pays) throws ExceptionCreationCompte {
+	public void setPays(String pays) throws ExceptionCreationCompte {
 		if (pays != null && validerString(pays)) {
 			this.pays = arrangerString(pays);
 		} else {

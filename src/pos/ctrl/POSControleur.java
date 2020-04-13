@@ -112,7 +112,14 @@ public class POSControleur implements IPOSControleur {
 
 		if (vendeur != null) {
 			tb.setVendeur(vendeur);
-			tb.setEtablissement(connexion.getEtablissement());
+
+			Etablissement e = connexion.getEtablissement();
+			tb.setEtablissement(e);
+			
+			// Instancie les transaction de l'établissement s'il n'y en avait pas
+			if (e.getTransactions() == null) {
+				e.setTransactions(new ArrayList<Transaction>());
+			}
 		}
 
 		return vendeur != null;
@@ -125,10 +132,15 @@ public class POSControleur implements IPOSControleur {
 		try {
 			Transaction transRetour = clientPOS.retourTrans();
 			if (transRetour.getEtat() == EtatTransaction.CONFIRMATION) {
+				
+				// Ajoute la transaction à l'établissement
 				Etablissement etablissement = tb.getEtablissement();
 				etablissement.ajouterTransaction(transRetour);
 				connexion.updateEtablissement();
-				creerNouvelleTransaction();
+
+				// Crée une nouvelle transaction
+				vue.createNewTransaction();
+				
 			} else {
 				transRetour.setEtat(EtatTransaction.SCAN);
 				tb.setTransaction(transRetour);
@@ -137,6 +149,7 @@ public class POSControleur implements IPOSControleur {
 			transferTerminal();
 
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

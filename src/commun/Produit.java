@@ -271,5 +271,12 @@ public class Produit implements Serializable{
 			throw new ExceptionProduitEtablissement("L'image n'est pas valide.");
 		}
 	}
+	
+	/**
+	 * Permet d'effacer l'image du produit
+	 */
+	public void effacerImage() {
+		this.image = null;
+	}
 
 }

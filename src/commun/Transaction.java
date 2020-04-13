@@ -30,7 +30,7 @@ public class Transaction implements Serializable {
 	/**
 	 * Heure à laquelle la transaction a été effectué
 	 */
-	private transient String heure;
+	private String heure;
 	/**
 	 * Liste des produits sélectionnés par l'utilisateur
 	 */
@@ -58,7 +58,7 @@ public class Transaction implements Serializable {
 	/**
 	 * Établissement qui délivre la facture
 	 */
-	private transient Etablissement etablissement;
+	private Etablissement etablissement;
 
 	/**
 	 * La propriété correspondant au sous-total
@@ -104,7 +104,7 @@ public class Transaction implements Serializable {
 	 */
 	public Transaction() {
 	}
-	
+
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
 	 */
@@ -413,7 +413,7 @@ public class Transaction implements Serializable {
 //		if (lignesFacture == null) {
 //			lignesFacture = FXCollections.observableArrayList(ligneFactureArray);
 //		}
-		if(lignesFacture != null)
+		if (lignesFacture != null)
 			ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
 
 		try {
@@ -431,5 +431,13 @@ public class Transaction implements Serializable {
 
 	public EtatTransaction getEtat() {
 		return etat;
+	}
+
+	/**
+	 * Permet d'effacer l'établissement de la transaction pour la stocker dans la
+	 * base de données
+	 */
+	public void effacerEtablissement() {
+		this.etablissement = null;
 	}
 }

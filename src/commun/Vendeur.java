@@ -1,8 +1,15 @@
 package commun;
 
+import java.io.Serializable;
+
 import commun.exception.ExceptionCreationCompte;
 
-public class Vendeur {
+public class Vendeur implements Serializable{
+
+	/**
+	 * Serial version ID
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * le prénom du vendeur
