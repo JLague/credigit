@@ -22,6 +22,8 @@ import com.mongodb.client.MongoDatabase;
 import commun.EtatTransaction;
 import commun.LigneFacture;
 import commun.Transaction;
+import commun.TransactionReduite;
+import commun.exception.ExceptionTransaction;
 import inscription.modele.Client;
 import terminal.utils.FactureUtil;
 
@@ -101,6 +103,7 @@ public class Connexion {
 	 * @param empreinte   - L'empreinte scannée
 	 * @param transaction - La transaction à ajouter
 	 * @return vrai si la transaction est bel et bien réalisée
+	 * @throws ExceptionTransaction
 	 */
 	public boolean effectuerTransaction(byte[] empreinte, Transaction transaction) {
 		try {
@@ -110,25 +113,29 @@ public class Connexion {
 			object.put("empreinte", empreinte);
 			Client clientAModifier = collection.find(object).first();
 
-			// Envoye la facture au client
+			// Envoie la facture au client
 			FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
 					clientAModifier.getEmail(), transaction);
 
 			// Prépare la transaction pour la stocker dans la base de données
-			effacerImages(transaction);
-			transaction.effacerEtablissement();
+			TransactionReduite transReduite = new TransactionReduite(transaction);
 
 			// Mets à jour le client
-			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
-			transactions.add(transaction);
-			transaction.setEtat(EtatTransaction.CONFIRMATION);
+			ArrayList<TransactionReduite> transactions = clientAModifier.getTransaction();
+			transactions.add(transReduite);
 			clientAModifier.setTransaction(transactions);
 			clientAModifier.setSolde(clientAModifier.getSolde() + transaction.getMontantTotal());
 
-			// Update client dans la base de données
-			BasicDBObject searchQuery = new BasicDBObject();
-			searchQuery.put("empreinte", empreinte);
-			collection.replaceOne(searchQuery, clientAModifier);
+			// Vérifie si la limite est dépassée et update client dans la base de données
+			if (clientAModifier.getSolde() <= clientAModifier.getLimiteCredit()) {
+				transaction.setEtat(EtatTransaction.CONFIRMATION);
+				transReduite.setEtat(EtatTransaction.CONFIRMATION);
+				BasicDBObject searchQuery = new BasicDBObject();
+				searchQuery.put("empreinte", empreinte);
+				collection.replaceOne(searchQuery, clientAModifier);
+			} else {
+				return false;
+			}
 
 		} catch (NullPointerException e) {
 			return false;

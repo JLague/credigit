@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import commun.Transaction;
+import commun.TransactionReduite;
 import commun.exception.ExceptionCreationCompte;
 
 /**
@@ -80,7 +81,7 @@ public class Client {
 	/**
 	 * Les transactions du client
 	 */
-	private ArrayList<Transaction> transaction;
+	private ArrayList<TransactionReduite> transaction;
 
 	/**
 	 * Constructeur par défaut utilisé par POJO
@@ -116,7 +117,7 @@ public class Client {
 	 * et la limite de credit
 	 */
 	private void ajouterInfoCompte() {
-		transaction = new ArrayList<Transaction>();
+		transaction = new ArrayList<TransactionReduite>();
 		setSolde(0);
 		setLimiteCredit(500);
 	}
@@ -408,11 +409,11 @@ public class Client {
 	 * 
 	 * @return Les transactions du client
 	 */
-	public ArrayList<Transaction> getTransaction() {
+	public ArrayList<TransactionReduite> getTransaction() {
 		return transaction;
 	}
 
-	public void setTransaction(ArrayList<Transaction> transaction) {
+	public void setTransaction(ArrayList<TransactionReduite> transaction) {
 		this.transaction = transaction;
 	}
 
