@@ -1,6 +1,5 @@
 package pos.modele;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.codecs.configuration.CodecRegistries;
@@ -17,7 +16,7 @@ import com.mongodb.client.MongoDatabase;
 
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
-import inscription.modele.Client;
+
 import commun.*;
 
 /**
@@ -71,6 +70,12 @@ public class ConnexionPOS {
 		database = mongoClient.getDatabase(DB);
 	}
 
+	/**
+	 * Méthode permettant d'aller rechercher l'établissement dans la base de données
+	 * 
+	 * @param nom - Le nom de l'établissement
+	 * @throws ExceptionProduitEtablissement
+	 */
 	public void setEtablissementFromDatabase(String nom) throws ExceptionProduitEtablissement {
 		MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
 		BasicDBObject object = new BasicDBObject();
@@ -82,15 +87,32 @@ public class ConnexionPOS {
 			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
 	}
 
+	/**
+	 * Permet d'avoir le numéro d'établissement
+	 * 
+	 * @param nom - L'établissement
+	 * @return
+	 * @throws ExceptionProduitEtablissement
+	 */
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
 		setEtablissementFromDatabase(nom);
 		return etablissement.getNumero();
 	}
 
+	/**
+	 * Permet d'obtenir l'établissement courant
+	 * 
+	 * @return l'établissement courant
+	 */
 	public Etablissement getEtablissement() {
 		return etablissement;
 	}
 
+	/**
+	 * Mets à jour l'établissement dans la base de données
+	 * 
+	 * @return vrai si l'établissement est bel et bien mis à jour
+	 */
 	public boolean updateEtablissement() {
 		try {
 			BasicDBObject searchQuery = new BasicDBObject();

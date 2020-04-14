@@ -259,7 +259,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	@FXML
 	public void inscrireBtnHandler(ActionEvent event) {
 		clearFields();
-		
+
 		if (etapeActuelle == EtapesVues.ETAPEDESACTIVER) {
 			stepPane.getChildren().clear();
 			stepPane.getChildren().add(etapes.get(0));
@@ -293,7 +293,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	@FXML
 	void desactiverBtnHandler(MouseEvent event) {
 		clearDeleteFields();
-		
+
 		// Set la nouvelle vue
 		stepPane.getChildren().clear();
 		stepPane.getChildren().add(etapes.get(4));
@@ -326,7 +326,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			byte[] empreinteTemp = commun.utils.EmpreinteUtil.getEmpreinte();
 
 			empreinte = ctrl.verifierEmpreinte(empreinteTemp);
-			
+
 			if (empreinte != null) {
 				Platform.runLater(() -> continuerBtn.setText("Désactiver"));
 				quitterTextField.setDisable(false);
@@ -380,10 +380,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			break;
 
 		case ETAPEDESACTIVER:
-			if(empreinte == null) {
+			if (empreinte == null) {
 				scannerEmpreinteDesac();
-			}
-			else if (quitterTextField.getText().equals("QUITTER")) {
+			} else if (quitterTextField.getText().equals("QUITTER")) {
 				if (ctrl.supprimerCompte(empreinte)) {
 					VueDialogue.compteSupprime();
 					clearDeleteFields();
@@ -394,7 +393,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			} else {
 				VueDialogue.erreurCreationDialogue("Vous devez entrer QUITTER pour continuer!");
 			}
-			
+
 			nouvelleEtape = EtapesVues.ETAPEDESACTIVER;
 
 			break;
@@ -409,8 +408,8 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 * Clear les champs servant à supprimer un compte
 	 */
 	private void clearDeleteFields() {
-		desacEmpreinte.setImage(new Image(
-				getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
+		desacEmpreinte
+				.setImage(new Image(getClass().getResource(IMAGE_URL + "ic_capteur_empreinte.png").toExternalForm()));
 		empreinte = null;
 		quitterTextField.setText(null);
 	}
@@ -494,6 +493,11 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		return data;
 	}
 
+	/**
+	 * Méthode permettant d'afficher un dialogue de chargement
+	 * 
+	 * @param data - Le data du client à créer
+	 */
 	private void loading(DataClient data) {
 		wd = new WorkIndicatorDialog(continuerBtn.getScene().getWindow(), "Création du compte... Veuillez patienter.");
 
@@ -518,6 +522,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		});
 	}
 
+	/**
+	 * Permet de réinitialiser le formulaire d'inscription
+	 */
 	private void resetInscription() {
 		clearFields();
 

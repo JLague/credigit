@@ -1,18 +1,19 @@
 package commun.exception;
 
 /**
- * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment ne peut pas être
- * crée
+ * Classe permettant de lancer des Exceptions lorsqu'un produit ou établissment
+ * ne peut pas être crée
  * 
  * @author Bank-era Corp.
  *
  */
 public class ExceptionProduitEtablissement extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5755924989599046100L;
+
+	/**
+	 * Le message à afficher lors d'erreur
+	 */
 	private String messageAffichage = null;
 
 	/**

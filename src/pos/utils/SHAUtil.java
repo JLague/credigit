@@ -11,6 +11,13 @@ import java.security.NoSuchAlgorithmException;
  *
  */
 public class SHAUtil {
+
+	/**
+	 * Méthode permettant de hacher le mot de passe
+	 * 
+	 * @param originalPassword - Le mot de passe original
+	 * @return le mot de passe haché en hexadécimal
+	 */
 	public static String hashPassword(String originalPassword) {
 		MessageDigest digest = null;
 
@@ -25,6 +32,12 @@ public class SHAUtil {
 		return bytesToHex(encodedHash);
 	}
 
+	/**
+	 * Méthode permettant de transformer des bytes en hexadécimal
+	 * 
+	 * @param hash - les bytes hachés
+	 * @return les bytes en hexadécimal
+	 */
 	private static String bytesToHex(byte[] hash) {
 		StringBuffer hexString = new StringBuffer();
 		for (int i = 0; i < hash.length; i++) {

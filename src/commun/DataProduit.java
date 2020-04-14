@@ -1,5 +1,11 @@
 package commun;
 
+/**
+ * Classe transitoire contenant le data d'un produit
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class DataProduit {
 
 	/**
@@ -42,10 +48,25 @@ public class DataProduit {
 	 */
 	private byte[] image;
 
+	/**
+	 * Constructeur par défaut
+	 */
 	public DataProduit() {
 
 	}
 
+	/**
+	 * Constructeur avec paramètres
+	 * 
+	 * @param sku         - Le code du produit
+	 * @param nom         - Le nom du produit
+	 * @param prix        - Le prix de vente du produit
+	 * @param coutant     - Le prix coûtant du produit
+	 * @param fournisseur - Le nom du fournisseur
+	 * @param quantite    - La quantité en inventaire
+	 * @param description - La description du produit
+	 * @param image       - L'image du produit
+	 */
 	public DataProduit(long sku, String nom, float prix, float coutant, String fournisseur, int quantite,
 			String description, byte[] image) {
 		setSku(sku);

@@ -70,9 +70,7 @@ public class POSControleur implements IPOSControleur {
 		clientPOS = new ClientPOS();
 	}
 
-	/**
-	 * Load la vue principale du POS à l'aide de l'application
-	 */
+	@Override
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		app.chargerScene(scene, title, fullscreen);
 	}
@@ -85,19 +83,6 @@ public class POSControleur implements IPOSControleur {
 	@Override
 	public void enleverProduit(Produit produit) {
 		tb.enleverProduit(produit);
-
-	}
-
-	@Override
-	public void produitSelectionne(int ligne, int colonne) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void inputEntree(String input) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -115,7 +100,7 @@ public class POSControleur implements IPOSControleur {
 
 			Etablissement e = connexion.getEtablissement();
 			tb.setEtablissement(e);
-			
+
 			// Instancie les transaction de l'établissement s'il n'y en avait pas
 			if (e.getTransactions() == null) {
 				e.setTransactions(new ArrayList<Transaction>());
@@ -132,7 +117,7 @@ public class POSControleur implements IPOSControleur {
 		try {
 			Transaction transRetour = clientPOS.retourTrans();
 			if (transRetour.getEtat() == EtatTransaction.CONFIRMATION) {
-				
+
 				// Ajoute la transaction à l'établissement
 				Etablissement etablissement = tb.getEtablissement();
 				etablissement.ajouterTransaction(transRetour);
@@ -140,7 +125,7 @@ public class POSControleur implements IPOSControleur {
 
 				// Crée une nouvelle transaction
 				vue.createNewTransaction();
-				
+
 			} else {
 				transRetour.setEtat(EtatTransaction.SCAN);
 				tb.setTransaction(transRetour);
@@ -186,34 +171,38 @@ public class POSControleur implements IPOSControleur {
 		return tb.getInventaire();
 	}
 
+	@Override
 	public ArrayList<Produit> search(String text) {
 		return tb.search(text);
 	}
 
+	@Override
 	public void creerVendeur(DataVendeur data) throws ExceptionCreationCompte, ExceptionProduitEtablissement {
 		connexion.ajouterCompteVendeur(data);
 	}
 
-	/**
-	 * @return le nom du vendeur ou null si personne n'est connecté
-	 */
+	@Override
 	public String getNomVendeur() {
 		return tb.getNomVendeur();
 	}
 
+	@Override
 	public long getNumeroEtablissement(String nom) throws ExceptionProduitEtablissement {
 		return connexion.getNumeroEtablissement(nom);
 	}
 
+	@Override
 	public void updateEtablissement() {
 		connexion.updateEtablissement();
 	}
 
+	@Override
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
 		connexion.updateEtablissement();
 	}
 
+	@Override
 	public void transferTerminal() {
 		tb.getTransaction().setNomEtablissement(tb.getEtablissement().getNom());
 		clientPOS.send(tb.getTransaction());

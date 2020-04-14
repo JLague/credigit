@@ -34,7 +34,7 @@ import javafx.concurrent.Task;
 import commun.exception.ExceptionCreationCompte;
 import commun.Etablissement;
 
-public class CreationEtablissementModele {
+public class CreationEtablissementModele implements ICreationEtablissementModele {
 
 	/**
 	 * String représentant le nom de la base de données sur le serveur
@@ -115,13 +115,7 @@ public class CreationEtablissementModele {
 		new Thread(connexion).start();
 	}
 
-	/**
-	 * Méthode permettant d'envoyer un courriel de bienvenue
-	 * 
-	 * @param adresse - L'adresse du correspondant
-	 * @param Prenom  - Le prénom du correspondant
-	 * @return Vrai si le courriel est envoyé avec succès, faux sinon
-	 */
+	@Override
 	public boolean envoyerCourriel(Etablissement etablissement) {
 
 		boolean envoye = true;
@@ -156,12 +150,7 @@ public class CreationEtablissementModele {
 		return envoye;
 	}
 
-	/**
-	 * Ajoute un établissement à la base de données
-	 * 
-	 * @param etablissement - L'établissement à ajouter
-	 * @throws ExceptionCreationCompte
-	 */
+	@Override
 	public boolean ajouterEtablissement(Etablissement etablissement) throws ExceptionCreationCompte {
 
 		boolean compteCree = false;

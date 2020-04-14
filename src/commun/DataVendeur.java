@@ -1,31 +1,44 @@
 package commun;
 
+/**
+ * Classe transitoire contenant le data d'un vendeur
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class DataVendeur {
-	
+
 	/**
 	 * le prénom du vendeur
 	 */
 	private String prenom;
-	
+
 	/**
 	 * Le nom du vendeur
 	 */
 	private String nom;
-	
+
 	/**
 	 * Le nom d'utilisateur du vendeur
 	 */
 	private String username;
-	
+
 	/**
 	 * Le mot de passe du vendeur
 	 */
 	private String password;
-	
+
 	/**
 	 * Le courriel du vendeur
 	 */
 	private String courriel;
+
+	/**
+	 * Constructeur par défaut
+	 */
+	public DataVendeur() {
+
+	}
 
 	/**
 	 * @return le prenom du vendeur

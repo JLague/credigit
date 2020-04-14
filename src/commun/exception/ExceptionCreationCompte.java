@@ -9,10 +9,11 @@ package commun.exception;
  */
 public class ExceptionCreationCompte extends Exception {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3680537470376091983L;
+
+	/**
+	 * Le message à afficher lors de l'erreur
+	 */
 	private String messageAffichage = null;
 
 	/**

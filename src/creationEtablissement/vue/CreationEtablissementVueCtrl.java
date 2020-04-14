@@ -14,8 +14,17 @@ import javafx.scene.layout.AnchorPane;
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
 
-public class CreationEtablissementVueCtrl {
+/**
+ * Classe du contrôleur de la vue de l'application de création d'établissement.
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class CreationEtablissementVueCtrl implements ICreationEtablissementVueCtrl {
 
+	/**
+	 * Contrôleur principal de l'application
+	 */
 	private CreationEtablissementCtrl ctrl;
 
 	@FXML
@@ -38,6 +47,11 @@ public class CreationEtablissementVueCtrl {
 	@FXML
 	private Button creer;
 
+	/**
+	 * Constructeur du contrôleur de la vue.
+	 * 
+	 * @param ctrl - Le contrôleur principal de l'application
+	 */
 	public CreationEtablissementVueCtrl(CreationEtablissementCtrl ctrl) {
 		this.ctrl = ctrl;
 
@@ -56,6 +70,7 @@ public class CreationEtablissementVueCtrl {
 		}
 	}
 
+	@Override
 	public Scene getScene() {
 		return scene;
 	}
@@ -76,13 +91,16 @@ public class CreationEtablissementVueCtrl {
 			VueDialogue.erreurCreationDialogue(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * Vide tous les TextFields.
+	 */
 	private void clearFields() {
 		nom.setText(null);
 		adresse.setText(null);
 		balance.setText(null);
 		courriel.setText(null);
-		
+
 	}
 
 	@FXML

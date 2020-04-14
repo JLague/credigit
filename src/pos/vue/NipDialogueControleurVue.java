@@ -6,6 +6,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+/**
+ * Contrôleur de vue pour le boîte de dialogue du nip d'établissement
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class NipDialogueControleurVue {
 
 	@FXML
@@ -37,6 +43,12 @@ public class NipDialogueControleurVue {
 		registerListener(nip4, nip5);
 	}
 
+	/**
+	 * Ajoute les listeners aux PasswordFields
+	 * 
+	 * @param pf1 - 1er passwordField
+	 * @param pf2 - 2e passwordField
+	 */
 	private void registerListener(PasswordField pf1, PasswordField pf2) {
 		pf1.textProperty().addListener((obs, oldText, newText) -> {
 			if (oldText.length() < 1 && newText.length() >= 1) {
@@ -45,10 +57,20 @@ public class NipDialogueControleurVue {
 		});
 	}
 
+	/**
+	 * Setter de l'attribut nip
+	 * 
+	 * @param nipString - le nip entré
+	 */
 	public void setNipString(String nipString) {
 		this.nip = nipString;
 	}
 
+	/**
+	 * Getter de l'attribut nip
+	 * 
+	 * @return le nip
+	 */
 	public String getNip() {
 		return nip;
 	}
@@ -67,6 +89,11 @@ public class NipDialogueControleurVue {
 		}
 	}
 
+	/**
+	 * Méthode permettant de fermer la boîte de dialogue
+	 * 
+	 * @param event
+	 */
 	private void closeStage(KeyEvent event) {
 		Node source = (Node) event.getSource();
 		Stage stage = (Stage) source.getScene().getWindow();

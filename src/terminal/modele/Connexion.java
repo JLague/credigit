@@ -95,6 +95,13 @@ public class Connexion {
 		return listeEmpreintes;
 	}
 
+	/**
+	 * Méthode permettant d'effectuer la transaction sur la base de données
+	 * 
+	 * @param empreinte   - L'empreinte scannée
+	 * @param transaction - La transaction à ajouter
+	 * @return vrai si la transaction est bel et bien réalisée
+	 */
 	public boolean effectuerTransaction(byte[] empreinte, Transaction transaction) {
 		try {
 			// Recherche le client à modifier

@@ -304,6 +304,11 @@ public class POSControleurVue implements IPOSControleurVue {
 		}
 	}
 
+	/**
+	 * Méthode modifiant la vue lorsque l'on veut modifier un produit
+	 * 
+	 * @param p - Le produit à modifier
+	 */
 	private void modificationProduit(Produit p) {
 		enregistrer = new Button("Enregistrer");
 		enregistrer.getStyleClass().add("buttons-1");

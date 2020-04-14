@@ -88,6 +88,10 @@ public class VueDialogue {
 		alert.showAndWait();
 	}
 
+	/**
+	 * Méthode permettant d'afficher une boîte de dialogue signifiant que le compte
+	 * n'a pas été trouvé dans la base de données
+	 */
 	public static void comptePasTrouve() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("Votre compte n'a pas été trouvé");

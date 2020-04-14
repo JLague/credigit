@@ -17,48 +17,23 @@ import javafx.collections.ObservableList;
 
 /**
  * Cette classe métier s'occupe des transactions
+ * 
+ * @author Bank-era Corp.
  */
 public class Transaction implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
+
 	/**
-	 * État de la transaction
+	 * Constante soustraite au temps présent en millisescondes afin d'éviter que le
+	 * numéro de facture soit trop long
 	 */
-	private EtatTransaction etat;
-	/**
-	 * Heure à laquelle la transaction a été effectué
-	 */
-	private String heure;
-	/**
-	 * Liste des produits sélectionnés par l'utilisateur
-	 */
-	private List<Produit> produits;
-	/**
-	 * Valeur du sous-total de la facture
-	 */
-	private float sousTotal;
+	private static final long CONST = 1585281727947L;
+
 	/**
 	 * Pourcentage de taxe a appliqué
 	 */
 	private transient static float pourcentageTaxes = 0.15f;
-	/**
-	 * Montant de taxe que nous devons rajouter à la facture
-	 */
-	private float montantTaxes;
-	/**
-	 * Montant total de la facture qui sera facturé au client
-	 */
-	private float montantTotal;
-	/**
-	 * Numéro de la transaction
-	 */
-	private long numero;
-	/**
-	 * Établissement qui délivre la facture
-	 */
-	private Etablissement etablissement;
 
 	/**
 	 * La propriété correspondant au sous-total
@@ -74,6 +49,46 @@ public class Transaction implements Serializable {
 	 * La propriété correspondant au total
 	 */
 	private transient StringProperty totalProperty;
+
+	/**
+	 * État de la transaction
+	 */
+	private EtatTransaction etat;
+
+	/**
+	 * Heure à laquelle la transaction a été effectué
+	 */
+	private String heure;
+
+	/**
+	 * Liste des produits sélectionnés par l'utilisateur
+	 */
+	private List<Produit> produits;
+
+	/**
+	 * Valeur du sous-total de la facture
+	 */
+	private float sousTotal;
+
+	/**
+	 * Montant de taxe que nous devons rajouter à la facture
+	 */
+	private float montantTaxes;
+
+	/**
+	 * Montant total de la facture qui sera facturé au client
+	 */
+	private float montantTotal;
+
+	/**
+	 * Numéro de la transaction
+	 */
+	private long numero;
+
+	/**
+	 * Établissement qui délivre la facture
+	 */
+	private Etablissement etablissement;
 
 	/**
 	 * Formatteur pour l'argent
@@ -92,11 +107,8 @@ public class Transaction implements Serializable {
 	private String nomEtablissement;
 
 	/**
-	 * Constante soustraite au temps présent en millisescondes afin d'éviter que le
-	 * numéro de facture soit trop long
+	 * Array contenant toutes les lignes de la facture
 	 */
-	private static final long CONST = 1585281727947L;
-
 	public ArrayList<LigneFacture> ligneFactureArray;
 
 	/**
@@ -114,7 +126,7 @@ public class Transaction implements Serializable {
 	}
 
 	/**
-	 * utilisé lorsqu'on veut reprendre une transaction
+	 * Constructeur utilisé lorsqu'on veut reprendre une transaction
 	 * 
 	 * @param heure            - L'heure à laquelle la transaction est effecuté
 	 * @param pourcentageTaxes - pourcentage de taxe à appliquer selon la région

@@ -5,8 +5,17 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+/**
+ * Classe permettant de lancer l'application de création d'établissement.
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class CreationEtablissementApp extends Application {
 
+	/**
+	 * Contrôleur de l'application
+	 */
 	private CreationEtablissementCtrl ctrl;
 
 	public static void main(String[] args) {

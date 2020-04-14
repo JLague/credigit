@@ -12,7 +12,7 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Etablissement implements Serializable{
+public class Etablissement implements Serializable {
 
 	/**
 	 * Serial version ID
@@ -97,7 +97,7 @@ public class Etablissement implements Serializable{
 	public long getNumero() {
 		return numero;
 	}
-	
+
 	/**
 	 * Permet de setter le numéro de l'établissement
 	 * 
@@ -106,6 +106,7 @@ public class Etablissement implements Serializable{
 	public void setNumero(long numero) {
 		this.numero = numero;
 	}
+
 	/**
 	 * Retourne le nom de l'établissement
 	 * 
@@ -164,7 +165,7 @@ public class Etablissement implements Serializable{
 	public List<Produit> getInventaire() {
 		return inventaire;
 	}
-	
+
 	/**
 	 * Permet de setter l'inventaire de l'établissement
 	 * 
@@ -186,10 +187,10 @@ public class Etablissement implements Serializable{
 			throw new ExceptionProduitEtablissement("Le produit à ajouter n'est pas valide.");
 		else if (!validerSku(produit.getSku()))
 			throw new ExceptionProduitEtablissement("Le SKU est déjà utilisé.");
-		
+
 		inventaire.add(produit);
 	}
-	
+
 	/**
 	 * Méthode permettant de supprimer un produit de l'inventaire
 	 * 
@@ -207,7 +208,7 @@ public class Etablissement implements Serializable{
 	public List<Vendeur> getUtilisateurs() {
 		return vendeurs;
 	}
-	
+
 	/**
 	 * Permet de setter la liste des vendeurs de l'établissement
 	 * 
@@ -257,7 +258,7 @@ public class Etablissement implements Serializable{
 	 * @param ajout - Le montant à ajouter
 	 */
 	public void ajouterBalance(float ajout) {
-		
+
 		balance += ajout;
 	}
 
@@ -269,7 +270,7 @@ public class Etablissement implements Serializable{
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
-	
+
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
@@ -305,31 +306,44 @@ public class Etablissement implements Serializable{
 	 * @throws ExceptionProduitEtablissement
 	 */
 	public void setCourriel(String courriel) throws ExceptionProduitEtablissement {
-			
+
 		if (courriel != null && courriel.length() != 0) {
 			this.courriel = courriel;
 		} else {
 			throw new ExceptionProduitEtablissement("Le courriel de l'établissement n'est pas valide.");
 		}
-		
 
 	}
-	
+
+	/**
+	 * Méthode permettant de modifier un produit
+	 * 
+	 * @param ancien  - L'ancien produit
+	 * @param nouveau - Le nouveau produit
+	 * @throws ExceptionProduitEtablissement
+	 */
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
-		if(validerSku(nouveau.getSku()))
-			inventaire.set(inventaire.indexOf(ancien), nouveau);
-		else
-			throw new ExceptionProduitEtablissement("Le SKU est déjà utilisé");
+		int index = this.getInventaire().indexOf(ancien);
+		this.getInventaire().remove(index);
+		this.getInventaire().add(index, nouveau);
 	}
 
+	/**
+	 * Méthode permettant de vérifier que le sku n'est pas déjà utilisé
+	 * 
+	 * @param sku - le sku à vérifier
+	 * @return vrai si le sku n'est pas déjà utilisé
+	 */
 	private boolean validerSku(long sku) {
 		boolean utilise = false;
-		
-		for(Produit p : inventaire) {
-			if(p.getSku() == sku)
+		System.out.println("SKU à vérifier : " + sku);
+
+		for (Produit p : inventaire) {
+			System.out.println("SKU courant : " + p.getSku());
+			if (p.getSku() == sku)
 				utilise = true;
 		}
-		
+
 		return !utilise;
 	}
 

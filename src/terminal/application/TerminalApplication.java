@@ -4,9 +4,22 @@ import terminal.ctrl.TerminalControleur;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Classe permettant de démarrer le terminal
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class TerminalApplication extends Application {
 
+	/**
+	 * Le contrôleur du terminal
+	 */
 	private TerminalControleur ctrl;
+
+	/**
+	 * La vue
+	 */
 	private Stage stage;
 
 	public static void main(String[] args) {

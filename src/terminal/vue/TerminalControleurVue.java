@@ -23,7 +23,14 @@ import terminal.gpio.buzzer.Buzzer;
 import terminal.gpio.buzzer.BuzzerSounds;
 import terminal.gpio.led.RgbLed;
 
-public class TerminalControleurVue {
+/**
+ * Classe permettant de contrôler la vue du terminal
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class TerminalControleurVue implements ITerminalControleurVue {
+
 	@FXML
 	private AnchorPane root;
 
@@ -53,9 +60,9 @@ public class TerminalControleurVue {
 
 	@FXML
 	private ImageView paiementAccepteIv;
-	
+
 	private Buzzer buzzer;
-	
+
 	private RgbLed led;
 
 	private Scene scene;
@@ -63,6 +70,11 @@ public class TerminalControleurVue {
 	@SuppressWarnings("unused")
 	private TerminalControleur ctrl;
 
+	/**
+	 * Constructeur du contrôleur de vue
+	 * 
+	 * @param ctrl - Le contrôleur principal
+	 */
 	public TerminalControleurVue(TerminalControleur ctrl) {
 		this.ctrl = ctrl;
 
@@ -76,15 +88,15 @@ public class TerminalControleurVue {
 		}
 
 		scene = new Scene(root);
-		
+
 		// Charge la feuille de style (pour le Raspberry Pi)
 		root.getStylesheets().add("styles/terminal/Terminal.css");
-		
-		if(System.getProperty("user.name").equals("pi")) {
+
+		if (System.getProperty("user.name").equals("pi")) {
 			buzzer = new Buzzer();
 			led = new RgbLed();
 		}
-		
+
 		// reinitialiserInterface();
 		chargerTableView();
 		factureTable.setVisible(true);
@@ -99,10 +111,12 @@ public class TerminalControleurVue {
 		System.out.println("clicked");
 	}
 
+	@Override
 	public Scene getScene() {
 		return scene;
 	}
 
+	@Override
 	public void actualiser(Transaction trans) {
 
 		NumberFormat cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
@@ -116,6 +130,11 @@ public class TerminalControleurVue {
 		modInterface(trans);
 	}
 
+	/**
+	 * Méthode modifiant l'interface selon la situation
+	 * 
+	 * @param trans - La transaction actuelle
+	 */
 	public void modInterface(Transaction trans) {
 		switch (trans.getEtat()) {
 
@@ -177,7 +196,7 @@ public class TerminalControleurVue {
 		factureTable.getColumns().addAll(column1, column2, column3);
 		factureTable.setPlaceholder(new Label("La facture est vide."));
 	}
-	
+
 	/**
 	 * Permet de jouer un son de confirmation selon l'état de la transaction
 	 * 
@@ -186,8 +205,8 @@ public class TerminalControleurVue {
 	private void jouerConfirmation(EtatTransaction et) {
 		BuzzerSounds son = null;
 		int couleur = 0;
-		
-		switch(et) {
+
+		switch (et) {
 		case CONFIRMATION:
 			son = BuzzerSounds.CONFIRME;
 			couleur = RgbLed.GREEN;
@@ -199,17 +218,17 @@ public class TerminalControleurVue {
 		default:
 			break;
 		}
-		
-		if(son != null && buzzer != null && led != null) {
+
+		if (son != null && buzzer != null && led != null) {
 			buzzer.playSong(son);
 			led.setHigh(couleur);
-			
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			led.setAllLow();
 		}
 	}

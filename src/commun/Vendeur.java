@@ -4,7 +4,13 @@ import java.io.Serializable;
 
 import commun.exception.ExceptionCreationCompte;
 
-public class Vendeur implements Serializable{
+/**
+ * Classe définissant un vendeur
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class Vendeur implements Serializable {
 
 	/**
 	 * Serial version ID
@@ -153,14 +159,32 @@ public class Vendeur implements Serializable{
 		}
 	}
 
+	/**
+	 * Méthode permettant de valider le nom
+	 * 
+	 * @param nom - Le nom du vendeur
+	 * @return vrai si le nom est valide
+	 */
 	private boolean validerNom(String nom) {
 		return nom != null && nom.length() > 0;
 	}
 
+	/**
+	 * Méthode permettant de valider le mot de passe
+	 * 
+	 * @param password - Le mot de passe du vendeur
+	 * @return vrai si le mot de passe est valide
+	 */
 	private boolean validerPassword(String password) {
 		return (password != null && password.length() >= 8);
 	}
 
+	/**
+	 * Méthode permettant de valider le courriel
+	 * 
+	 * @param courriel - Le courriel du vendeur
+	 * @return vrai si le courriel est valide
+	 */
 	private boolean validerCourriel(String courriel) {
 		return courriel != null && courriel.length() > 0;
 	}

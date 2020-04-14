@@ -6,9 +6,22 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
 
-public class POSApplication extends Application {
+/**
+ * Classe permettant de démarrer le POS
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class POSApplication extends Application implements IPOSApplication {
 
+	/**
+	 * Le contrôleur principal du POS
+	 */
 	private POSControleur ctrl;
+
+	/**
+	 * La fenêtre de l'application
+	 */
 	private Stage stage;
 
 	public static void main(String[] args) {
@@ -23,18 +36,11 @@ public class POSApplication extends Application {
 		stage.setTitle("Connexion");
 		stage.sizeToScene();
 		stage.setResizable(true);
-		stage.getIcons()
-		.add(new Image(getClass().getResource("/images/pos/ic_empreinte.png").toExternalForm()));
+		stage.getIcons().add(new Image(getClass().getResource("/images/pos/ic_empreinte.png").toExternalForm()));
 		stage.show();
 	}
 
-	/**
-	 * Permet de changer la scène liée à l'application. Assume que la scène a été
-	 * changé
-	 * 
-	 * @param scene la nouvelle scène
-	 * @param title le nouveau titre de l'application
-	 */
+	@Override
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);

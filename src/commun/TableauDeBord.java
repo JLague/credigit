@@ -16,10 +16,24 @@ import javafx.collections.ObservableList;
  *
  */
 public class TableauDeBord {
+	/**
+	 * La transaction affichée dans le tableau de bord
+	 */
 	private Transaction transactionCourante;
+
+	/**
+	 * L'établissement du POS
+	 */
 	private Etablissement etablissement;
+
+	/**
+	 * Le vendeur utilisant le POS
+	 */
 	private Vendeur vendeur = null;
 
+	/**
+	 * Constructeur par défaut
+	 */
 	public TableauDeBord() {
 		this.etablissement = new Etablissement();
 		try {
@@ -30,6 +44,12 @@ public class TableauDeBord {
 		this.transactionCourante = new Transaction(etablissement);
 	}
 
+	/**
+	 * Constructeur utilisé lors du démarrage du POS
+	 * 
+	 * @param etablissement - L'établissement utilisant le POS
+	 * @param vendeur       - Le vendeur connecté
+	 */
 	public TableauDeBord(Etablissement etablissement, Vendeur vendeur) {
 		this();
 		this.etablissement = etablissement;
@@ -149,10 +169,16 @@ public class TableauDeBord {
 		return this.etablissement;
 	}
 
+	/**
+	 * @return la transaction courante
+	 */
 	public Transaction getTransaction() {
 		return transactionCourante;
 	}
 
+	/**
+	 * @param t la transaction
+	 */
 	public void setTransaction(Transaction t) {
 		transactionCourante = t;
 	}

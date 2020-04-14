@@ -7,6 +7,13 @@ import sk.mimac.fingerprint.FingerprintException;
 import sk.mimac.fingerprint.FingerprintSensor;
 import sk.mimac.fingerprint.adafruit.AdafruitSensor;
 
+/**
+ * Classe comportant des méthodes utiles à la manipulation d'empreintes
+ * digitales
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class EmpreinteUtil {
 
 	/**
