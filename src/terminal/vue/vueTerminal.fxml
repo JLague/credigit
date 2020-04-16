@@ -71,7 +71,7 @@
             <Image url="@../../../res/images/terminal/ic_empreinte_blanche.png" />
          </image>
       </ImageView>
-      <Label fx:id="paiementAccepteLbl" alignment="CENTER" layoutX="197.0" layoutY="90.0" opacity="0.0" styleClass="title" text="Paiement accepté! Un reçu&#10;vous sera envoyé par courriel&#10;dans les prochaines minutes." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
+      <Label fx:id="paiementAccepteLbl" alignment="CENTER" layoutX="197.0" layoutY="90.0" styleClass="title" text="Paiement accepté! Un reçu&#10;vous sera envoyé par courriel&#10;dans les prochaines minutes." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
