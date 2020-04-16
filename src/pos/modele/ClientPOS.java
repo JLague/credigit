@@ -19,7 +19,7 @@ public class ClientPOS {
 	/**
 	 * L'addresse IP du server
 	 */
-	private static final String REMOTE_IP = "192.168.0.154";
+	private static final String REMOTE_IP = "localhost";
 
 	/**
 	 * Le port du serveur
@@ -40,8 +40,6 @@ public class ClientPOS {
 	 * Réception par le Pos venant du terminal
 	 */
 	private ObjectInputStream ois;
-
-	private Transaction t;
 
 	/**
 	 * Constructeur qui permet de se connecter au serveur et d'ouvrir un output
