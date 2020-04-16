@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import terminal.ctrl.TerminalControleur;
@@ -57,6 +58,9 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 
 	@FXML
 	private Label paiementAccepteLbl;
+
+	@FXML
+	private Label paiementRefuseLbl;
 
 	@FXML
 	private ImageView paiementAccepteIv;
@@ -141,7 +145,6 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 		default:
 		case NULL:
 		case SCAN:
-		case ERREUR:
 			factureTitleLbl.setVisible(true);
 			factureTable.setVisible(true);
 			payerLbl.setVisible(false);
@@ -159,6 +162,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			empreinteIv.setVisible(true);
 			paiementAccepteIv.setVisible(false);
 			paiementAccepteLbl.setVisible(false);
+			paiementRefuseLbl.setVisible(false);
 			break;
 
 		case CONFIRMATION:
@@ -167,8 +171,22 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
+			paiementAccepteIv.setImage(new Image(getClass().getResource("/terminal/ic_accepte.png").toExternalForm()));
 			paiementAccepteLbl.setVisible(true);
+			paiementRefuseLbl.setVisible(false);
 			jouerConfirmation(EtatTransaction.CONFIRMATION);
+			break;
+
+		case ERREUR:
+			factureTitleLbl.setVisible(false);
+			factureTable.setVisible(false);
+			payerLbl.setVisible(false);
+			empreinteIv.setVisible(false);
+			paiementAccepteIv.setVisible(true);
+			paiementAccepteIv.setImage(new Image(getClass().getResource("/terminal/ic_erreur.png").toExternalForm()));
+			paiementAccepteLbl.setVisible(false);
+			paiementRefuseLbl.setVisible(true);
+			jouerConfirmation(EtatTransaction.ERREUR);
 			break;
 		}
 	}
