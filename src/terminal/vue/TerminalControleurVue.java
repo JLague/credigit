@@ -108,6 +108,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 		empreinteIv.setVisible(false);
 		paiementAccepteIv.setVisible(false);
 		paiementAccepteLbl.setVisible(false);
+		paiementRefuseLbl.setVisible(false);
 	}
 
 	@FXML
@@ -151,7 +152,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(false);
 			paiementAccepteLbl.setVisible(false);
-			jouerConfirmation(EtatTransaction.ERREUR);
+			paiementRefuseLbl.setVisible(false);
 			break;
 
 		case EMPREINTE:
@@ -185,7 +186,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			paiementAccepteIv.setVisible(true);
 			paiementAccepteIv.setImage(new Image(getClass().getResource("/terminal/ic_erreur.png").toExternalForm()));
 			paiementAccepteLbl.setVisible(false);
-			paiementRefuseLbl.setVisible(true);
+			paiementRefuseLbl.setVisible(false);
 			jouerConfirmation(EtatTransaction.ERREUR);
 			break;
 		}

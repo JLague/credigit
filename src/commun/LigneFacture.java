@@ -53,6 +53,7 @@ public class LigneFacture implements Serializable {
 	 * Ne pas effacer, constructeur utilisé par POJO
 	 */
 	public LigneFacture() {
+		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class LigneFacture implements Serializable {
 	 * @param quantite la quantité du produit
 	 */
 	public LigneFacture(Produit produit, int quantite) {
-		cf = NumberFormat.getCurrencyInstance(new Locale("en", "CA"));
+		this();
 
 		this.prixUnitaire = produit.getPrix();
 		this.nom = produit.getNom();
