@@ -137,6 +137,10 @@ public class LigneFacture implements Serializable {
 		return cf.format(this.prix);
 	}
 
+	/**
+	 * 
+	 * @param prixString - Le String à set
+	 */
 	public void setPrixString(String prixString) {
 		this.prixString = prixString;
 	}

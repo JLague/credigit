@@ -20,7 +20,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import commun.EtatTransaction;
-import commun.LigneFacture;
 import commun.Transaction;
 import commun.exception.ExceptionTransaction;
 import inscription.modele.Client;
@@ -128,7 +127,7 @@ public class Connexion {
 				BasicDBObject searchQuery = new BasicDBObject();
 				searchQuery.put("empreinte", empreinte);
 				collection.replaceOne(searchQuery, clientAModifier);
-				
+
 				// Envoie la facture au client
 				FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
 						clientAModifier.getEmail(), transaction);

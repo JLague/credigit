@@ -21,11 +21,11 @@ public class ProduitTest {
 
 	@Before
 	public void testProduitDataProduit() {
-		
+
 		DataProduit d1 = new DataProduit();
-		
-		byte[] array1 = {0,1};
-		
+
+		byte[] array1 = { 0, 1 };
+
 		d1.setCoutant(12.34f);
 		d1.setDescription("Une banane d'Asie");
 		d1.setFournisseur("China");
@@ -34,11 +34,11 @@ public class ProduitTest {
 		d1.setPrix(13.45f);
 		d1.setQuantite(45);
 		d1.setSku(1234);
-		
+
 		DataProduit d2 = new DataProduit();
-		
-		byte[] array2 = {1,1};
-		
+
+		byte[] array2 = { 1, 1 };
+
 		d2.setCoutant(2.3f);
 		d2.setDescription("Un chocolat");
 		d2.setFournisseur("Leclerc");
@@ -47,7 +47,7 @@ public class ProduitTest {
 		d2.setPrix(3.5f);
 		d2.setQuantite(234);
 		d2.setSku(564);
-		
+
 		try {
 			p1 = new Produit(d1);
 			p2 = new Produit(d2);
@@ -56,15 +56,15 @@ public class ProduitTest {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Test
 	public void testInvalide() {
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-			
-			byte[] array1 = {0,1};
-			
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(-12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -73,20 +73,20 @@ public class ProduitTest {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-			
+
 			new Produit(d1);
-			
+
 			fail("Coutant négatif");
 		} catch (ExceptionProduitEtablissement e) {
-		
+
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-			
-			byte[] array1 = {0,1};
-			
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("");
 			d1.setFournisseur("China");
@@ -95,20 +95,20 @@ public class ProduitTest {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-			
+
 			new Produit(d1);
-			
+
 			fail("Description vide");
 		} catch (ExceptionProduitEtablissement e) {
-		
+
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-			
-			byte[] array1 = {0,1};
-			
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription(null);
 			d1.setFournisseur("China");
@@ -117,20 +117,20 @@ public class ProduitTest {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-			
+
 			new Produit(d1);
-			
+
 			fail("Description null");
 		} catch (ExceptionProduitEtablissement e) {
-		
+
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-			
-			byte[] array1 = {0,1};
-			
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("");
@@ -139,20 +139,20 @@ public class ProduitTest {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-			
+
 			new Produit(d1);
-			
+
 			fail("Fournisseur vide");
 		} catch (ExceptionProduitEtablissement e) {
-		
+
 		}
-		
-try {
-			
+
+		try {
+
 			DataProduit d1 = new DataProduit();
-			
-			byte[] array1 = {0,1};
-			
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur(null);
@@ -161,62 +161,20 @@ try {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-			
+
 			new Produit(d1);
-			
+
 			fail("Fournisseur null");
 		} catch (ExceptionProduitEtablissement e) {
-		
+
 		}
 
 		try {
-	
-			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {};
-	
-			d1.setCoutant(12.34f);
-			d1.setDescription("Une banane d'Asie");
-			d1.setFournisseur("China");
-			d1.setImage(array1);
-			d1.setNom("Banane");
-			d1.setPrix(13.45f);
-			d1.setQuantite(45);
-			d1.setSku(1234);
-	
-			new Produit(d1);
-	
-			fail("Image vide");
-		} catch (ExceptionProduitEtablissement e) {
 
-		}
-		
-		try {
-			
 			DataProduit d1 = new DataProduit();
-	
-			d1.setCoutant(12.34f);
-			d1.setDescription("Une banane d'Asie");
-			d1.setFournisseur("China");
-			d1.setImage(null);
-			d1.setNom("Banane");
-			d1.setPrix(13.45f);
-			d1.setQuantite(45);
-			d1.setSku(1234);
-	
-			new Produit(d1);
-	
-			fail("Image null");
-		} catch (ExceptionProduitEtablissement e) {
 
-		}
-		
-		try {
-			
-			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {0,1};
-	
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -225,20 +183,20 @@ try {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-	
+
 			new Produit(d1);
-	
+
 			fail("Nom vide");
 		} catch (ExceptionProduitEtablissement e) {
 
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {0,1};
-	
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -247,20 +205,20 @@ try {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-	
+
 			new Produit(d1);
-	
+
 			fail("Nom null");
 		} catch (ExceptionProduitEtablissement e) {
 
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {0,1};
-	
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -269,20 +227,20 @@ try {
 			d1.setPrix(-13.45f);
 			d1.setQuantite(45);
 			d1.setSku(1234);
-	
+
 			new Produit(d1);
-	
+
 			fail("Prix négatif");
 		} catch (ExceptionProduitEtablissement e) {
 
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {0,1};
-	
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -291,20 +249,20 @@ try {
 			d1.setPrix(13.45f);
 			d1.setQuantite(-1);
 			d1.setSku(1234);
-	
+
 			new Produit(d1);
-	
+
 			fail("Quantité négative");
 		} catch (ExceptionProduitEtablissement e) {
 
 		}
-		
+
 		try {
-			
+
 			DataProduit d1 = new DataProduit();
-	
-			byte[] array1 = {0,1};
-	
+
+			byte[] array1 = { 0, 1 };
+
 			d1.setCoutant(12.34f);
 			d1.setDescription("Une banane d'Asie");
 			d1.setFournisseur("China");
@@ -313,16 +271,14 @@ try {
 			d1.setPrix(13.45f);
 			d1.setQuantite(45);
 			d1.setSku(-1234);
-	
+
 			new Produit(d1);
-	
+
 			fail("Sku négatif");
 		} catch (ExceptionProduitEtablissement e) {
 
 		}
 
-		
-		
 	}
 
 	@Test
@@ -371,7 +327,7 @@ try {
 	public void testGetImage() {
 		assertTrue(p1.getImage()[0] == 0);
 		assertTrue(p2.getImage()[0] == 1);
-		
+
 		assertTrue(p1.getImage()[1] == 1);
 		assertTrue(p2.getImage()[1] == 1);
 	}

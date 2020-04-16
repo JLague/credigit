@@ -660,8 +660,8 @@ public class ClientTest {
 
 	@Test
 	public void testGetEmpreinte() {
-		byte[] empreinte1 = Base64.getDecoder().decode(client1.getEmpreinte());
-		byte[] empreinte2 = Base64.getDecoder().decode(client2.getEmpreinte());
+		byte[] empreinte1 = client1.getEmpreinte();
+		byte[] empreinte2 = client2.getEmpreinte();
 		assertTrue(empreinte1[0] == 1);
 		assertTrue(empreinte1[1] == 1);
 		assertTrue(empreinte2[0] == 1);

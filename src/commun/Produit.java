@@ -1,7 +1,6 @@
 package commun;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 import commun.exception.ExceptionProduitEtablissement;
 

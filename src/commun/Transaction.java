@@ -440,9 +440,7 @@ public class Transaction implements Serializable {
 	 * @param oos l'output stream où on envoie l'objet
 	 */
 	public void serialize(ObjectOutputStream oos) {
-//		if (lignesFacture == null) {
-//			lignesFacture = FXCollections.observableArrayList(ligneFactureArray);
-//		}
+
 		if (lignesFacture != null)
 			ligneFactureArray = new ArrayList<LigneFacture>(lignesFacture);
 

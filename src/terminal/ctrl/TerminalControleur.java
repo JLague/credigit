@@ -37,8 +37,16 @@ public class TerminalControleur implements ITerminalControleur {
 	 */
 	private ServeurTerminal serveur;
 
+	/**
+	 * S'occupe de la connexion avec la base de données
+	 */
 	private Connexion connexion;
 
+	/**
+	 * Constructeur du contrôleur
+	 * 
+	 * @param terminalApplication - L'application
+	 */
 	public TerminalControleur(TerminalApplication terminalApplication) {
 		vue = new TerminalControleurVue(this);
 		connexion = new Connexion();
