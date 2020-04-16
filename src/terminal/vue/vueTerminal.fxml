@@ -61,7 +61,7 @@
             <Image url="@../../../res/images/pos/logo_credigit.png" />
          </image>
       </ImageView>
-      <Label fx:id="payerLbl" layoutX="195.0" layoutY="90.0" styleClass="title" text="Paiement refusé! Veuillez&#10;réessayer et assurez-vous de ne pas&#10;dépasser votre limite de crédit." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
+      <Label fx:id="payerLbl" layoutX="195.0" layoutY="90.0" styleClass="title" text="Veuillez déposer votre doigt&#10;sur le scanneur afin d'effectuer&#10;le paiement." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -71,7 +71,7 @@
             <Image url="@../../../res/images/terminal/ic_empreinte_blanche.png" />
          </image>
       </ImageView>
-      <Label fx:id="paiementAccepteLbl" alignment="CENTER" layoutX="197.0" layoutY="90.0" styleClass="title" text="Paiement accepté! Un reçu&#10;vous sera envoyé par courriel&#10;dans les prochaines minutes." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
+      <Label fx:id="paiementAccepteLbl" alignment="CENTER" layoutX="197.0" layoutY="90.0" opacity="0.0" styleClass="title" text="Paiement accepté! Un reçu&#10;vous sera envoyé par courriel&#10;dans les prochaines minutes." textAlignment="CENTER" AnchorPane.leftAnchor="109.0" AnchorPane.topAnchor="57.0">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
