@@ -112,10 +112,6 @@ public class Connexion {
 			object.put("empreinte", empreinte);
 			Client clientAModifier = collection.find(object).first();
 
-			// Envoie la facture au client
-			FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
-					clientAModifier.getEmail(), transaction);
-
 			// Prépare la transaction pour la stocker dans la base de données
 			Transaction transReduite = Transaction.reduireTransactionClient(transaction);
 
@@ -132,6 +128,10 @@ public class Connexion {
 				BasicDBObject searchQuery = new BasicDBObject();
 				searchQuery.put("empreinte", empreinte);
 				collection.replaceOne(searchQuery, clientAModifier);
+				
+				// Envoie la facture au client
+				FactureUtil.envoyerFacture(clientAModifier.getPrenom(), clientAModifier.getNom(),
+						clientAModifier.getEmail(), transaction);
 			} else {
 				return false;
 			}
