@@ -45,6 +45,11 @@ public class LigneFacture implements Serializable {
 	private NumberFormat cf;
 
 	/**
+	 * String du prix
+	 */
+	private String prixString;
+
+	/**
 	 * Ne pas effacer, constructeur utilisé par POJO
 	 */
 	public LigneFacture() {
@@ -127,7 +132,11 @@ public class LigneFacture implements Serializable {
 	/**
 	 * @return le prix en String
 	 */
-	public String returnPrixString() {
+	public String getPrixString() {
 		return cf.format(this.prix);
+	}
+
+	public void setPrixString(String prixString) {
+		this.prixString = prixString;
 	}
 }

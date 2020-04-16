@@ -802,11 +802,11 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(creationProduitPane);
-		
+
 		buttonHBox.getChildren().clear();
 
 		ajouter = new Button("Créer le produit !");
-		
+
 		Platform.runLater(() -> buttonHBox.getChildren().add(ajouter));
 
 		ajouter.getStyleClass().add("buttons-1");

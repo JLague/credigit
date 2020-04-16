@@ -238,7 +238,7 @@ public class FactureUtil {
 							.add(TextCell.builder().text(String.valueOf(cf.format(lignesFacture.getPrixUnitaire())))
 									.borderWidth(1).backgroundColor(Color.WHITE)
 									.horizontalAlignment(HorizontalAlignment.CENTER).build())
-							.add(TextCell.builder().text(lignesFacture.returnPrixString()).borderWidth(1)
+							.add(TextCell.builder().text(lignesFacture.getPrixString()).borderWidth(1)
 									.backgroundColor(Color.WHITE).horizontalAlignment(HorizontalAlignment.CENTER)
 									.build());
 
