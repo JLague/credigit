@@ -216,6 +216,24 @@ public class Transaction implements Serializable {
 	}
 
 	/**
+	 * Getter de l'array de lignes de la facture
+	 * 
+	 * @return l'array de lignes de la facture
+	 */
+	public ArrayList<LigneFacture> getLigneFactureArray() {
+		return ligneFactureArray;
+	}
+
+	/**
+	 * Setter de l'array de lignes de la facture
+	 * 
+	 * @param ligneFactureArray - L'array à set
+	 */
+	public void setLigneFactureArray(ArrayList<LigneFacture> ligneFactureArray) {
+		this.ligneFactureArray = ligneFactureArray;
+	}
+
+	/**
 	 * @return le numéro de la facture
 	 */
 	public long getNumero() {
@@ -451,5 +469,54 @@ public class Transaction implements Serializable {
 	 */
 	public void effacerEtablissement() {
 		this.etablissement = null;
+	}
+
+	/**
+	 * Méthode permettant de réduire la transaction pour la stocker dans la base de
+	 * données des clients
+	 * 
+	 * @param trans - La transaction à réduire
+	 * @return la transaction réduite
+	 */
+	public static Transaction reduireTransactionClient(Transaction trans) {
+		Transaction transReduite = new Transaction();
+		transReduite.setEtat(trans.getEtat());
+		transReduite.setHeure(trans.getHeure());
+		transReduite.setLigneFactureArray(null);
+		transReduite.setSousTotal(trans.getSousTotal());
+		transReduite.setMontantTaxes(trans.getMontantTaxes());
+		transReduite.setMontantTotal(trans.getMontantTotal());
+		transReduite.setNomEtablissement(trans.getNomEtablissement());
+		transReduite.setNumero(trans.getNumero());
+		transReduite.setProduits(null);
+
+		return transReduite;
+	}
+
+	/**
+	 * Méthode permettant de réduire la transaction pour la stocker dans la base de
+	 * données des établissements
+	 * 
+	 * @param trans - La transaction à réduire
+	 * @return la transaction réduite
+	 */
+	public static Transaction reduireTransactionEtablissement(Transaction trans) {
+		Transaction transReduite = new Transaction();
+		transReduite.setEtat(trans.getEtat());
+		transReduite.setHeure(trans.getHeure());
+		transReduite.setLigneFactureArray(trans.getLigneFactureArray());
+
+		for (LigneFacture ligne : transReduite.getLigneFactureArray()) {
+			ligne.setProduit(null);
+		}
+
+		transReduite.setSousTotal(trans.getSousTotal());
+		transReduite.setMontantTaxes(trans.getMontantTaxes());
+		transReduite.setMontantTotal(trans.getMontantTotal());
+		transReduite.setNomEtablissement(trans.getNomEtablissement());
+		transReduite.setNumero(trans.getNumero());
+		transReduite.setProduits(null);
+
+		return transReduite;
 	}
 }

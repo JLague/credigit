@@ -10,8 +10,8 @@ import java.util.Locale;
  * @author Bank-era Corp.
  * 
  */
-public class LigneFacture implements Serializable{
-	
+public class LigneFacture implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -49,7 +49,7 @@ public class LigneFacture implements Serializable{
 	 */
 	public LigneFacture() {
 	}
-	
+
 	/**
 	 * 
 	 * @param produit  le produit associé à la ligne
@@ -71,7 +71,7 @@ public class LigneFacture implements Serializable{
 	public float getPrix() {
 		return prix;
 	}
-	
+
 	/**
 	 * @return le prix
 	 */
@@ -113,6 +113,15 @@ public class LigneFacture implements Serializable{
 	 */
 	public Produit getProduit() {
 		return this.produit;
+	}
+
+	/**
+	 * Setter du produit
+	 * 
+	 * @param produit - Le produit à set
+	 */
+	public void setProduit(Produit produit) {
+		this.produit = produit;
 	}
 
 	/**

@@ -22,7 +22,6 @@ import com.mongodb.client.MongoDatabase;
 import commun.EtatTransaction;
 import commun.LigneFacture;
 import commun.Transaction;
-import commun.TransactionReduite;
 import commun.exception.ExceptionTransaction;
 import inscription.modele.Client;
 import terminal.utils.FactureUtil;
@@ -118,10 +117,10 @@ public class Connexion {
 					clientAModifier.getEmail(), transaction);
 
 			// Prépare la transaction pour la stocker dans la base de données
-			TransactionReduite transReduite = new TransactionReduite(transaction);
+			Transaction transReduite = Transaction.reduireTransactionClient(transaction);
 
 			// Mets à jour le client
-			ArrayList<TransactionReduite> transactions = clientAModifier.getTransaction();
+			ArrayList<Transaction> transactions = clientAModifier.getTransaction();
 			transactions.add(transReduite);
 			clientAModifier.setTransaction(transactions);
 			clientAModifier.setSolde(clientAModifier.getSolde() + transaction.getMontantTotal());
@@ -144,17 +143,6 @@ public class Connexion {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Efface les images des produits pour ne pas encombrer la base de données
-	 * 
-	 * @param transaction la transaction contenant les produits
-	 */
-	private static void effacerImages(Transaction transaction) {
-		for (LigneFacture lf : transaction.ligneFactureArray) {
-			lf.getProduit().effacerImage();
-		}
 	}
 
 }
