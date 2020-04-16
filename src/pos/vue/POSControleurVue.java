@@ -283,9 +283,10 @@ public class POSControleurVue implements IPOSControleurVue {
 			quantiteProduitTextField.setDisable(true);
 			fournisseurProduitTextField.setDisable(true);
 			descriptionProduitTextArea.setDisable(true);
+			imageProduitImageView.setDisable(true);
 
 			DecimalFormat df1 = new DecimalFormat("###.##");
-			DecimalFormat df2 = new DecimalFormat("###.###");
+			DecimalFormat df2 = new DecimalFormat("###.##");
 
 			skuProduitTextField.setText(temp.getSku() + "");
 			nomProduitTextField.setText(temp.getNom() + "");
@@ -296,8 +297,8 @@ public class POSControleurVue implements IPOSControleurVue {
 			descriptionProduitTextArea.setText(temp.getDescription() + "");
 			imageProduitImageView.setImage(ImageUtil.convertFromBytes(temp.getImage()));
 
-			imageProduitImageView.setFitHeight(247);
-			imageProduitImageView.setFitHeight(247);
+			// imageProduitImageView.setFitHeight(247);
+			// imageProduitImageView.setFitHeight(247);
 
 			buttonHBox.getChildren().clear();
 			buttonHBox.getChildren().addAll(modifier, retour);
@@ -326,6 +327,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		quantiteProduitTextField.setDisable(false);
 		fournisseurProduitTextField.setDisable(false);
 		descriptionProduitTextArea.setDisable(false);
+		imageProduitImageView.setDisable(false);
 
 		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().addAll(enregistrer, annuler, supprimer);
@@ -359,12 +361,10 @@ public class POSControleurVue implements IPOSControleurVue {
 		supprimer.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (ctrl.getInventaire().remove(p)) {
-					ctrl.updateEtablissement();
-					VueDialogue.produitEfface();
-					populerGridProduit();
-					ouvrirVuePrincipale();
-				}
+				ctrl.supprimerProduit(p);
+				VueDialogue.produitEfface();
+				populerGridProduit();
+				ouvrirVuePrincipale();
 
 			}
 		});
@@ -799,6 +799,7 @@ public class POSControleurVue implements IPOSControleurVue {
 		middlePane.getChildren().add(creationProduitPane);
 
 		ajouter = new Button("Créer le produit !");
+		buttonHBox.getChildren().clear();
 		buttonHBox.getChildren().add(ajouter);
 
 		ajouter.getStyleClass().add("buttons-1");

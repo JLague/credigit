@@ -3,6 +3,8 @@ package pos.ctrl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bouncycastle.util.Arrays;
+
 import commun.DataProduit;
 import commun.DataVendeur;
 import commun.Etablissement;
@@ -199,7 +201,19 @@ public class POSControleur implements IPOSControleur {
 
 	@Override
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
+		if (!Arrays.areEqual(ancien.getImage(), nouveau.getImage()) || ancien.getSku() != nouveau.getSku()) {
+			connexion.removeImageFromDatabase(ancien);
+			connexion.uploadImageToDatabase(nouveau);
+		}
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
+
+		connexion.updateEtablissement();
+	}
+
+	@Override
+	public void supprimerProduit(Produit produit) {
+		getInventaire().remove(produit);
+		connexion.removeImageFromDatabase(produit);
 		connexion.updateEtablissement();
 	}
 

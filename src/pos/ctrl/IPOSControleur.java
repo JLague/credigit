@@ -96,6 +96,13 @@ public interface IPOSControleur {
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement;
 
 	/**
+	 * Méthode permettant de supprimer un produit dans la base de données
+	 * 
+	 * @param produit - Le produit à supprimer
+	 */
+	public void supprimerProduit(Produit produit);
+
+	/**
 	 * Méthode appelant le modèle afin de créer un nouveau vendeur
 	 * 
 	 * @param data - Le data du vendeur

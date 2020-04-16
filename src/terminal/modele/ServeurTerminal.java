@@ -35,7 +35,7 @@ public class ServeurTerminal implements Runnable, Closeable {
 	 * L'input stream servant à lire les objets Transaction
 	 */
 	private ObjectInputStream ois;
-	
+
 	/**
 	 * L'output stream pour renvoyer transaciton au terminal
 	 */
@@ -81,15 +81,15 @@ public class ServeurTerminal implements Runnable, Closeable {
 	 */
 	public void connect() {
 		try {
-			System.out.println("[SERVEUR] Adresse ip du terminal (à enter dans le POS) : " + InetAddress.getLocalHost().getHostAddress());
+			System.out.println("[SERVEUR] Adresse ip du terminal (à enter dans le POS) : "
+					+ InetAddress.getLocalHost().getHostAddress());
 
 			// Initiate connection
 			System.out.println("[SERVEUR] Attente de la connexion...");
 			socketServer = new ServerSocket(LOCAL_PORT);
 			socketClient = socketServer.accept();
 			clientIp = socketClient.getInetAddress().getHostAddress();
-			System.out.println(
-					"[SERVEUR] Connexion avec " + clientIp + " acceptée");
+			System.out.println("[SERVEUR] Connexion avec " + clientIp + " acceptée");
 
 			// Open input stream
 			ois = new ObjectInputStream(socketClient.getInputStream());
@@ -116,7 +116,7 @@ public class ServeurTerminal implements Runnable, Closeable {
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}
-			
+
 			try {
 				this.close();
 			} catch (IOException e) {
@@ -131,7 +131,7 @@ public class ServeurTerminal implements Runnable, Closeable {
 		socketClient.close();
 		socketServer.close();
 	}
-	
+
 	/**
 	 * Sérialise la transaction et l'envoie
 	 * 

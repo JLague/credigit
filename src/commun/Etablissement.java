@@ -12,7 +12,7 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Etablissement implements Serializable {
+public class Etablissement implements Serializable, Cloneable {
 
 	/**
 	 * Serial version ID
@@ -345,6 +345,50 @@ public class Etablissement implements Serializable {
 		}
 
 		return !utilise;
+	}
+
+	@Override
+	public Object clone() {
+		Etablissement clone = null;
+		try {
+			// On récupère l'instance à renvoyer par l'appel de la
+			// méthode super.clone()
+			clone = (Etablissement) super.clone();
+
+		} catch (CloneNotSupportedException cnse) {
+			// Ne devrait jamais arriver car nous implémentons
+			// l'interface Cloneable
+			cnse.printStackTrace(System.err);
+		}
+
+		clone.inventaire = new ArrayList<Produit>();
+
+		if (this.inventaire.size() != 0) {
+
+			for (int i = 0; i < this.inventaire.size(); i++) {
+				clone.inventaire.add((Produit) this.inventaire.get(i).clone());
+			}
+		}
+
+		clone.vendeurs = new ArrayList<Vendeur>();
+
+		if (this.vendeurs.size() != 0) {
+
+			for (int i = 0; i < this.vendeurs.size(); i++) {
+				clone.vendeurs.add(this.vendeurs.get(i));
+			}
+		}
+
+		clone.transactions = new ArrayList<Transaction>();
+
+		if (this.transactions.size() != 0) {
+
+			for (int i = 0; i < this.inventaire.size(); i++) {
+				clone.transactions.add(this.transactions.get(i));
+			}
+		}
+
+		return clone;
 	}
 
 }

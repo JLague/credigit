@@ -163,18 +163,34 @@ public class DataProduit {
 		this.description = description;
 	}
 
+	/**
+	 * 
+	 * @return la quantité
+	 */
 	public int getQuantite() {
 		return quantite;
 	}
 
+	/**
+	 * 
+	 * @param quantite - La quantité
+	 */
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
 
+	/**
+	 * 
+	 * @return l'image
+	 */
 	public byte[] getImage() {
 		return image;
 	}
 
+	/**
+	 * 
+	 * @param image - L'image
+	 */
 	public void setImage(byte[] image) {
 		this.image = image;
 	}

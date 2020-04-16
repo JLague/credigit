@@ -2,9 +2,11 @@ package pos.modele;
 
 import java.util.List;
 
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.Binary;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
@@ -31,6 +33,11 @@ public class ConnexionPOS {
 	 * String représentant le nom de la base de données sur le serveur
 	 */
 	private final static String DB = "credigit_etablissements";
+
+	/**
+	 * String représentant le nom de la base de données des images sur le serveur
+	 */
+	private final static String DB_IMAGES = "images_database";
 
 	/**
 	 * String représentant le nom de la collection contenant les établissements dans
@@ -83,8 +90,11 @@ public class ConnexionPOS {
 
 		etablissement = collection.find(object).first();
 
-		if (etablissement == null)
+		if (etablissement == null) {
 			throw new ExceptionProduitEtablissement("L'établissement n'a pas été trouvé");
+		}
+
+		loadImages();
 	}
 
 	/**
@@ -118,7 +128,11 @@ public class ConnexionPOS {
 			BasicDBObject searchQuery = new BasicDBObject();
 			searchQuery.put("nom", etablissement.getNom());
 			MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
-			collection.replaceOne(searchQuery, etablissement);
+			Etablissement clone = (Etablissement) etablissement.clone();
+			for (Produit produit : clone.getInventaire()) {
+				produit.setImage(null);
+			}
+			collection.replaceOne(searchQuery, clone);
 
 		} catch (NullPointerException e) {
 			return false;
@@ -195,11 +209,77 @@ public class ConnexionPOS {
 	 */
 	public boolean ajouterProduit(DataProduit data) throws ExceptionProduitEtablissement {
 		Produit produit = new Produit(data);
-
+		produit.setImagePathDB(uploadImageToDatabase(produit));
 		etablissement.ajouterProduitInventaire(produit);
 		updateEtablissement();
 
 		return true;
+	}
+
+	/**
+	 * Ajoute l'image du produit dans la base d'images
+	 * 
+	 * @param produit - Le produit ajouté
+	 * @return la path de l'image dans la base de donnée
+	 */
+	public String uploadImageToDatabase(Produit produit) {
+		System.out.println("uploading image");
+		MongoDatabase imageDb = mongoClient.getDatabase(DB_IMAGES);
+		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
+
+		String path = etablissement.getNom() + "_" + produit.getSku();
+		Document image = new Document();
+		image.put("path", path);
+		image.put("image", produit.getImage());
+
+		collectionImages.insertOne(image);
+
+		System.out.println("Image ajoutée");
+
+		return path;
+
+	}
+
+	/**
+	 * Méthode permettant de supprimer une image dans la base de données
+	 * 
+	 * @param produit - Le produit dont l'image est à supprimer
+	 */
+	public void removeImageFromDatabase(Produit produit) {
+		MongoDatabase imageDb = mongoClient.getDatabase(DB_IMAGES);
+		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
+		Document object = new Document();
+		object.put("path", produit.getImagePathDB());
+
+		System.out.println(collectionImages.deleteOne(object));
+	}
+
+	/**
+	 * Load les arrays de bytes de chaque image
+	 */
+	public void loadImages() {
+		MongoDatabase imageDb = mongoClient.getDatabase(DB_IMAGES);
+		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
+
+		if (etablissement.getInventaire() != null && etablissement.getInventaire().size() >= 1) {
+			for (Produit produit : etablissement.getInventaire()) {
+				BasicDBObject object = new BasicDBObject();
+				object.put("path", produit.getImagePathDB());
+
+				try {
+					Binary binary = (Binary) collectionImages.find(object).first().get("image");
+					produit.setImage(binary.getData());
+				} catch (NullPointerException e) {
+
+				}
+
+			}
+
+			System.out.println("Images chargées");
+		} else {
+			System.out.println("Inventaire vide");
+		}
+
 	}
 
 	/**

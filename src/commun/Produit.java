@@ -1,6 +1,7 @@
 package commun;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import commun.exception.ExceptionProduitEtablissement;
 
@@ -10,7 +11,7 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Produit implements Serializable{
+public class Produit implements Serializable, Cloneable {
 
 	/**
 	 * Serial ID
@@ -57,6 +58,8 @@ public class Produit implements Serializable{
 	 */
 	private byte[] image;
 
+	private String imagePathDB;
+
 	/**
 	 * Constructeur utilisé par POJO
 	 */
@@ -78,6 +81,7 @@ public class Produit implements Serializable{
 		setQuantite(data.getQuantite());
 		setDescription(data.getDescription());
 		setImage(data.getImage());
+		setImagePathDB(null);
 	}
 
 	/**
@@ -264,19 +268,50 @@ public class Produit implements Serializable{
 	 * @param image - L'objet contenant l'image à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	public void setImage(byte[] image) throws ExceptionProduitEtablissement {
-		if (image != null && image.length != 0) {
-			this.image = image;
-		} else {
-			throw new ExceptionProduitEtablissement("L'image n'est pas valide.");
-		}
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
-	
+
+	/**
+	 * Getter du path de l'image dans la base de données
+	 * 
+	 * @return le path de l'image
+	 */
+	public String getImagePathDB() {
+		return imagePathDB;
+	}
+
+	/**
+	 * Setter du path de l'image
+	 * 
+	 * @param imagePathDB - Le path à setter
+	 */
+	public void setImagePathDB(String imagePathDB) {
+		this.imagePathDB = imagePathDB;
+	}
+
 	/**
 	 * Permet d'effacer l'image du produit
 	 */
 	public void effacerImage() {
 		this.image = null;
+	}
+
+	@Override
+	public Object clone() {
+		Produit clone = null;
+		try {
+			// On récupère l'instance à renvoyer par l'appel de la
+			// méthode super.clone()
+			clone = (Produit) super.clone();
+
+		} catch (CloneNotSupportedException cnse) {
+			// Ne devrait jamais arriver car nous implémentons
+			// l'interface Cloneable
+			cnse.printStackTrace(System.err);
+		}
+
+		return clone;
 	}
 
 }
