@@ -1,16 +1,23 @@
 package pos.vue;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import commun.DataProduit;
+import commun.DataVendeur;
+import commun.LigneFacture;
+import commun.Produit;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
+import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -45,9 +52,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
 import pos.utils.ImageUtil;
-import commun.*;
-import commun.exception.ExceptionCreationCompte;
-import commun.exception.ExceptionProduitEtablissement;
 
 /**
  * Classe permettant de contrôler les vues du POS
@@ -285,13 +289,14 @@ public class POSControleurVue implements IPOSControleurVue {
 			descriptionProduitTextArea.setDisable(true);
 			imageProduitImageView.setDisable(true);
 
-			DecimalFormat df1 = new DecimalFormat("###.##");
-			DecimalFormat df2 = new DecimalFormat("###.##");
+			DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.GERMAN);
+			otherSymbols.setDecimalSeparator('.');
+			DecimalFormat df = new DecimalFormat("###.##", otherSymbols);
 
 			skuProduitTextField.setText(temp.getSku() + "");
 			nomProduitTextField.setText(temp.getNom() + "");
-			prixProduitTextField.setText(df1.format(temp.getPrix()));
-			coutantProduitTextField.setText(df2.format(temp.getCoutant()));
+			prixProduitTextField.setText(df.format(temp.getPrix()));
+			coutantProduitTextField.setText(df.format(temp.getCoutant()));
 			quantiteProduitTextField.setText(temp.getQuantite() + "");
 			fournisseurProduitTextField.setText(temp.getFournisseur() + "");
 			descriptionProduitTextArea.setText(temp.getDescription() + "");
@@ -797,10 +802,12 @@ public class POSControleurVue implements IPOSControleurVue {
 	private void ajoutHandle(ActionEvent event) {
 		middlePane.getChildren().clear();
 		middlePane.getChildren().add(creationProduitPane);
+		
+		buttonHBox.getChildren().clear();
 
 		ajouter = new Button("Créer le produit !");
-		buttonHBox.getChildren().clear();
-		buttonHBox.getChildren().add(ajouter);
+		
+		Platform.runLater(() -> buttonHBox.getChildren().add(ajouter));
 
 		ajouter.getStyleClass().add("buttons-1");
 
