@@ -121,9 +121,8 @@ public class POSControleur implements IPOSControleur {
 			if (transRetour.getEtat() == EtatTransaction.CONFIRMATION) {
 
 				// Ajoute la transaction à l'établissement
-				Etablissement etablissement = tb.getEtablissement();
 				Transaction transReduite = Transaction.reduireTransactionEtablissement(transRetour);
-				etablissement.ajouterTransaction(transReduite);
+				connexion.getEtablissement().ajouterTransaction(transReduite);
 				connexion.updateEtablissement();
 
 				// Crée une nouvelle transaction

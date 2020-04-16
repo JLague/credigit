@@ -383,7 +383,7 @@ public class Etablissement implements Serializable, Cloneable {
 
 		if (this.transactions.size() != 0) {
 
-			for (int i = 0; i < this.inventaire.size(); i++) {
+			for (int i = 0; i < this.transactions.size(); i++) {
 				clone.transactions.add(this.transactions.get(i));
 			}
 		}
