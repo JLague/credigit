@@ -203,8 +203,12 @@ public class POSControleur implements IPOSControleur {
 	public void modifierProduit(Produit ancien, Produit nouveau) throws ExceptionProduitEtablissement {
 		if (!Arrays.areEqual(ancien.getImage(), nouveau.getImage()) || ancien.getSku() != nouveau.getSku()) {
 			connexion.removeImageFromDatabase(ancien);
-			connexion.uploadImageToDatabase(nouveau);
+
+			nouveau.setImagePathDB(connexion.uploadImageToDatabase(nouveau));
+		} else {
+			nouveau.setImagePathDB(ancien.getImagePathDB());
 		}
+		
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
 
 		connexion.updateEtablissement();

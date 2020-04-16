@@ -262,6 +262,7 @@ public class ConnexionPOS {
 		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
 
 		if (etablissement.getInventaire() != null && etablissement.getInventaire().size() >= 1) {
+			System.out.println("here");
 			for (Produit produit : etablissement.getInventaire()) {
 				BasicDBObject object = new BasicDBObject();
 				object.put("path", produit.getImagePathDB());

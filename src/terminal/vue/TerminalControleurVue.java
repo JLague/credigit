@@ -96,7 +96,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 		// Charge la feuille de style (pour le Raspberry Pi)
 		root.getStylesheets().add("styles/terminal/Terminal.css");
 
-		if (System.getProperty("user.name").equals("pi")) {
+		if (System.getProperty("os.arch").equals("arm")) {
 			buzzer = new Buzzer();
 			led = new RgbLed();
 		}
@@ -172,10 +172,16 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
-			paiementAccepteIv.setImage(new Image(getClass().getResource("/terminal/ic_accepte.png").toExternalForm()));
+			paiementAccepteIv.setImage(new Image(getClass().getResource("/images/terminal/ic_accepte.png").toExternalForm()));
 			paiementAccepteLbl.setVisible(true);
 			paiementRefuseLbl.setVisible(false);
 			jouerConfirmation(EtatTransaction.CONFIRMATION);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
 		case ERREUR:
@@ -184,10 +190,16 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			payerLbl.setVisible(false);
 			empreinteIv.setVisible(false);
 			paiementAccepteIv.setVisible(true);
-			paiementAccepteIv.setImage(new Image(getClass().getResource("/terminal/ic_erreur.png").toExternalForm()));
+			paiementAccepteIv.setImage(new Image(getClass().getResource("/images/terminal/ic_erreur.png").toExternalForm()));
 			paiementAccepteLbl.setVisible(false);
-			paiementRefuseLbl.setVisible(false);
+			paiementRefuseLbl.setVisible(true);
 			jouerConfirmation(EtatTransaction.ERREUR);
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		}
 	}
@@ -243,7 +255,7 @@ public class TerminalControleurVue implements ITerminalControleurVue {
 			led.setHigh(couleur);
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
