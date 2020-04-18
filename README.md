@@ -23,6 +23,8 @@ Pour que ce programme soit foncitonnelle, vous devez ajouter les librairies se t
 
 * [The Design of Rijndael](https://autonome-antifa.org/IMG/pdf/Rijndael.pdf)
 
+* [Cryptography chapter 4 - AES](http://wiki.crypto.rub.de/Buch/en/download/Understanding-Cryptography-Chapter4.pdf)
+
 ### DB
 
 * [MongoDB](https://www.mongodb.com/)
