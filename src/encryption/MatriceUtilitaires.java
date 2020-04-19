@@ -6,8 +6,7 @@ import java.util.SortedSet;
 /**
  * Classe utilitaires pour la gestion des matrices carrées
  *
- * @author Dylan Renaud
- * @author Justin Lagüe
+ * @author Bank-era Corp.
  */
 public class MatriceUtilitaires {
 	/**

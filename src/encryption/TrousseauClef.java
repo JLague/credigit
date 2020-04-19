@@ -2,6 +2,8 @@ package encryption;
 
 /**
  * Cette classe s'occupe de garder et générer les clés utilisé par l'algorithme.
+ * 
+ * @author Bank-era Corp.
  */
 public class TrousseauClef {
 	int[][] cléActuelle;
