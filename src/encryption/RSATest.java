@@ -2,6 +2,8 @@ package encryption;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -166,45 +168,48 @@ public class RSATest {
 		String message3 = "5555555555";
 
 		// Encryption
-		String[] test1 = new String[3];
-		test1[0] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message1), c1.getClePublique(), c1.getModule()));
-		test1[1] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message2), c1.getClePublique(), c1.getModule()));
-		test1[2] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message3), c1.getClePublique(), c1.getModule()));
+		BigInteger message1Encrypte1 = RSA.encrypter(RSA.stringToInteger(message1), c1.getClePublique(),
+				c1.getModule());
+		BigInteger message1Encrypte2 = RSA.encrypter(RSA.stringToInteger(message1), c2.getClePublique(),
+				c2.getModule());
+		BigInteger message1Encrypte3 = RSA.encrypter(RSA.stringToInteger(message1), c3.getClePublique(),
+				c3.getModule());
 
-		String[] test2 = new String[3];
-		test2[0] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message1), c2.getClePublique(), c2.getModule()));
-		test2[1] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message2), c2.getClePublique(), c2.getModule()));
-		test2[2] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message3), c2.getClePublique(), c2.getModule()));
+		BigInteger message2Encrypte1 = RSA.encrypter(RSA.stringToInteger(message2), c1.getClePublique(),
+				c1.getModule());
+		BigInteger message2Encrypte2 = RSA.encrypter(RSA.stringToInteger(message2), c2.getClePublique(),
+				c2.getModule());
+		BigInteger message2Encrypte3 = RSA.encrypter(RSA.stringToInteger(message2), c3.getClePublique(),
+				c3.getModule());
 
-		String[] test3 = new String[3];
-		test3[0] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message1), c3.getClePublique(), c3.getModule()));
-		test3[1] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message2), c3.getClePublique(), c3.getModule()));
-		test3[2] = RSA
-				.integerToString(RSA.encrypter(RSA.stringToInteger(message3), c3.getClePublique(), c3.getModule()));
+		BigInteger message3Encrypte1 = RSA.encrypter(RSA.stringToInteger(message3), c1.getClePublique(),
+				c1.getModule());
+		BigInteger message3Encrypte2 = RSA.encrypter(RSA.stringToInteger(message3), c2.getClePublique(),
+				c2.getModule());
+		BigInteger message3Encrypte3 = RSA.encrypter(RSA.stringToInteger(message3), c3.getClePublique(),
+				c3.getModule());
 
 		// Decryption
-		for (int i = 0; i < test1.length; i++) {
-			test1[i] = RSA
-					.integerToString(RSA.decrypter(RSA.stringToInteger(test1[i]), c1.getClePrivee(), c1.getModule()));
-		}
+		String message1Decrypte1 = RSA
+				.integerToString(RSA.decrypter(message1Encrypte1, c1.getClePrivee(), c1.getModule()));
+		String message1Decrypte2 = RSA
+				.integerToString(RSA.decrypter(message1Encrypte2, c2.getClePrivee(), c2.getModule()));
+		String message1Decrypte3 = RSA
+				.integerToString(RSA.decrypter(message1Encrypte3, c3.getClePrivee(), c3.getModule()));
 
-		for (int i = 0; i < test2.length; i++) {
-			test2[i] = RSA
-					.integerToString(RSA.decrypter(RSA.stringToInteger(test2[i]), c2.getClePrivee(), c2.getModule()));
-		}
+		String message2Decrypte1 = RSA
+				.integerToString(RSA.decrypter(message2Encrypte1, c1.getClePrivee(), c1.getModule()));
+		String message2Decrypte2 = RSA
+				.integerToString(RSA.decrypter(message2Encrypte2, c2.getClePrivee(), c2.getModule()));
+		String message2Decrypte3 = RSA
+				.integerToString(RSA.decrypter(message2Encrypte3, c3.getClePrivee(), c3.getModule()));
 
-		for (int i = 0; i < test3.length; i++) {
-			test3[i] = RSA
-					.integerToString(RSA.decrypter(RSA.stringToInteger(test3[i]), c3.getClePrivee(), c3.getModule()));
-		}
+		String message3Decrypte1 = RSA
+				.integerToString(RSA.decrypter(message3Encrypte1, c1.getClePrivee(), c1.getModule()));
+		String message3Decrypte2 = RSA
+				.integerToString(RSA.decrypter(message3Encrypte2, c2.getClePrivee(), c2.getModule()));
+		String message3Decrypte3 = RSA
+				.integerToString(RSA.decrypter(message3Encrypte3, c3.getClePrivee(), c3.getModule()));
 
 		// Tests visuels
 		System.out
@@ -212,18 +217,41 @@ public class RSATest {
 		System.out.println();
 		System.out.println("----------- Test1 en cours ----------------");
 		System.out.println();
-		afficherTableau(test1);
+		System.out.println(message1Decrypte1);
+		System.out.println(message1Decrypte2);
+		System.out.println(message1Decrypte3);
 		System.out.println();
 
 		System.out.println("----------- Test2 en cours ----------------");
 		System.out.println();
-		afficherTableau(test2);
+		System.out.println(message2Decrypte1);
+		System.out.println(message2Decrypte2);
+		System.out.println(message2Decrypte3);
 		System.out.println();
 
 		System.out.println("----------- Test3 en cours ----------------");
 		System.out.println();
-		afficherTableau(test2);
+		System.out.println(message3Decrypte1);
+		System.out.println(message3Decrypte2);
+		System.out.println(message3Decrypte3);
 		System.out.println();
+
+		// Validation des résultats
+
+		// 1er message
+		assertTrue(message1Decrypte1.equals(message1));
+		assertTrue(message1Decrypte2.equals(message1));
+		assertTrue(message1Decrypte3.equals(message1));
+
+		// 2e message
+		assertTrue(message2Decrypte1.equals(message2));
+		assertTrue(message2Decrypte2.equals(message2));
+		assertTrue(message2Decrypte3.equals(message2));
+
+		// 3e message
+		assertTrue(message3Decrypte1.equals(message3));
+		assertTrue(message3Decrypte2.equals(message3));
+		assertTrue(message3Decrypte3.equals(message3));
 
 	}
 
