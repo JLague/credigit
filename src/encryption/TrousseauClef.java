@@ -1,5 +1,7 @@
 package encryption;
 
+import java.math.BigInteger;
+
 /**
  * Cette classe s'occupe de garder et générer les clés utilisé par l'algorithme.
  * 
@@ -27,49 +29,69 @@ public class TrousseauClef {
 	/**
 	 * Génère la prochaine clée sous forme de String
 	 */
-	public String getProchaine() {
-		mot0 = clef.substring(0,4);
-		mot1 = clef.substring(4,8);
-		mot2 = clef.substring(8,12);
-		mot3 = clef.substring(12,16);
+	public void genererProchaine() {
+		mot0 = clef.substring(0, 8);
+		mot1 = clef.substring(8, 16);
+		mot2 = clef.substring(16, 24);
+		mot3 = clef.substring(24, 32);
 		
-		nMot0 = "" + (Integer.parseInt("0x" + mot0)^Integer.parseInt("0x" + fonctionGAvant(mot3)));
-		nMot1 = "" + (Integer.parseInt("0x" + mot0)^Integer.parseInt("0x" + mot1));
-		nMot2 = "" + (Integer.parseInt("0x" + mot1)^Integer.parseInt("0x" + mot2));
-		nMot3 = "" + (Integer.parseInt("0x" + mot2)^Integer.parseInt("0x" + mot3));
-		
-		return nMot0+nMot1+nMot2+nMot3;
+		nMot0 = "";
+		nMot1 = "";
+		nMot2 = "";
+		nMot3 = "";
+
+		for (int i = 0; i < mot0.length(); i++) {
+			nMot0 += Integer.toHexString((mot0.charAt(i) ^ fonctionGAvant(mot3).charAt(i)));
+			nMot1 += Integer.toHexString((nMot0.charAt(i) ^ mot1.charAt(i)));
+			nMot2 += Integer.toHexString((nMot1.charAt(i) ^ mot2.charAt(i)));
+			nMot3 += Integer.toHexString((nMot2.charAt(i) ^ mot3.charAt(i)));
+		}
+
+		round++;
+		clef = nMot0 + nMot1 + nMot2 + nMot3;
 	}
 
 	/**
 	 * Génère la clée précédente sous forme de string
 	 */
-	public String getPrecedente() {
-		return null;
+	public void genererPrecedente() {
 	}
 
 	/**
 	 * Accomplit la fonction g sur un mot
+	 * 
 	 * @param mot - Mot qui subira la fonction g
 	 * @return le mot modifié
 	 */
 	private String fonctionGAvant(String mot) {
-		String temp = mot.substring(1, 4) + mot.charAt(0);
-		temp = Encryption.substitutionAvant(temp.charAt(0)) + Encryption.substitutionAvant(temp.charAt(1))
-				+ Encryption.substitutionAvant(temp.charAt(2)) + Encryption.substitutionAvant(temp.charAt(3));
-		
-		
-		temp = (Integer.parseInt("0x" + temp.substring(0,1))^round) + temp.substring(1,4);
-		
+		String temp = mot.substring(2, 8) + mot.substring(0, 2);
+		temp = Encryption.substitutionAvant(temp.substring(0, 2)) + Encryption.substitutionAvant(temp.substring(2, 4))
+				+ Encryption.substitutionAvant(temp.substring(4, 6))
+				+ Encryption.substitutionAvant(temp.substring(6, 8));
+
+		temp = (temp.charAt(0) ^ round) + temp.substring(1, 8);
+
 		return temp;
 	}
 
 	/**
 	 * Accomplit l'inverse de ka fonction g sur un mot
+	 * 
 	 * @param mot - Mot qui subira l'inverse de la fonction g
 	 * @return le mot modifié
 	 */
 	private String fonctionGArriere(String mot) {
 		return null;
+	}
+
+	public static void main(String[] args) {
+		TrousseauClef t1 = new TrousseauClef(0, "000102030405060708090a0b0c0d0e0f");
+
+		for (int i = 0; i < 10; i++) {
+			System.out.println("[" + t1.round + "] k = " + t1.clef);
+			t1.genererProchaine();
+		}
+
+		System.out.println("[" + t1.round + "] k = " + t1.clef);
 	}
 }
