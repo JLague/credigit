@@ -75,7 +75,7 @@ public class TrousseauClef {
 	}
 
 	/**
-	 * Accomplit l'inverse de ka fonction g sur un mot
+	 * Accomplit l'inverse de la fonction g sur un mot
 	 * 
 	 * @param mot - Mot qui subira l'inverse de la fonction g
 	 * @return le mot modifié

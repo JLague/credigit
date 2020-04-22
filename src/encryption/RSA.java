@@ -11,43 +11,19 @@ import java.security.SecureRandom;
  */
 public class RSA {
 
-	/**
-	 * Constante représentant l'unité dans les calculs
-	 */
-	private final static BigInteger un = new BigInteger("1");
+	public static CleRSA genererCle(int n) {
+		BigInteger un = new BigInteger("1");
+		SecureRandom random = new SecureRandom();
 
-	/**
-	 * Nombre aléatoire généré avec un algorithme par défaut de Java
-	 */
-	private final static SecureRandom random = new SecureRandom();
-
-	/**
-	 * La clé privée
-	 */
-	private BigInteger clePrivee;
-	/**
-	 * La clé plublique
-	 */
-	private BigInteger clePublique;
-	/**
-	 * Le module
-	 */
-	private BigInteger module;
-
-	/**
-	 * Constructeur permettant de générer une clé publique et privée de longueur n
-	 * 
-	 * @param n - La longueur de la clé
-	 */
-	public RSA(int n) {
-		// Génère deux nombres premiers
 		BigInteger p = BigInteger.probablePrime(n / 2, random);
 		BigInteger q = BigInteger.probablePrime(n / 2, random);
 		BigInteger phi = (p.subtract(un)).multiply(q.subtract(un));
 
-		module = p.multiply(q);
-		clePublique = new BigInteger("65537"); // Valeur souvent utilisée en pratique
-		clePrivee = clePublique.modInverse(phi);
+		BigInteger module = p.multiply(q);
+		BigInteger clePublique = new BigInteger("65537"); // Valeur souvent utilisée en pratique
+		BigInteger clePrivee = clePublique.modInverse(phi);
+
+		return new CleRSA(clePrivee, clePublique, module);
 	}
 
 	/**
@@ -56,7 +32,7 @@ public class RSA {
 	 * @param message - Le message converti en BigInteger
 	 * @return le message encrypté
 	 */
-	public BigInteger encrypter(BigInteger message) {
+	public static BigInteger encrypter(BigInteger message, BigInteger clePublique, BigInteger module) {
 		return message.modPow(clePublique, module);
 	}
 
@@ -66,13 +42,29 @@ public class RSA {
 	 * @param code - Le message encrypté
 	 * @return Le message décrypté
 	 */
-	public BigInteger decrypter(BigInteger code) {
+	public static BigInteger decrypter(BigInteger code, BigInteger clePrivee, BigInteger module) {
 		return code.modPow(clePrivee, module);
 	}
 
-	@Override
-	public String toString() {
-		return "RSA [clePrivee=" + clePrivee + ", clePublique=" + clePublique + ", module=" + module + "]";
+	/**
+	 * Méthode permettant de convertir une String en BigInteger
+	 * 
+	 * @param message - Le message à convertir
+	 * @return le BigInteger représentant le message
+	 */
+	public static BigInteger stringToInteger(String message) {
+		byte[] bytes = message.getBytes();
+		return new BigInteger(bytes);
+	}
+
+	/**
+	 * Méthode permettant de convertir un BigInteger en String
+	 * 
+	 * @param message - Le message sous forme de BigInteger
+	 * @return Le message sous forme de String
+	 */
+	public static String integerToString(BigInteger message) {
+		return new String(message.toByteArray());
 	}
 
 }
