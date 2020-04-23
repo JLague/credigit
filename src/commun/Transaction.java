@@ -517,4 +517,40 @@ public class Transaction implements Serializable, Cryptable {
 
 		return transReduite;
 	}
+
+	@Override
+	public void encrypter(String cle) {
+		this.heure = AES.encrypter(cle, this.heure);
+		for (Produit produit : this.produits) {
+			produit.encrypter(cle);
+		}
+		this.sousTotal = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.sousTotal)));
+		this.montantTaxes = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.montantTaxes)));
+		this.montantTotal = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.montantTotal)));
+		this.numero = AES.toLong(AES.encrypter(cle, AES.fromLong(this.numero)));
+		this.etablissement.encrypter(cle);
+		this.nomEtablissement = AES.encrypter(cle, this.nomEtablissement);
+		for (LigneFacture ligne : this.ligneFactureArray) {
+			ligne.encrypter(cle);
+		}
+
+	}
+
+	@Override
+	public void decrypter(String cle) {
+		this.heure = AES.decrypter(cle, this.heure);
+		for (Produit produit : this.produits) {
+			produit.decrypter(cle);
+		}
+		this.sousTotal = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.sousTotal)));
+		this.montantTaxes = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.montantTaxes)));
+		this.montantTotal = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.montantTotal)));
+		this.numero = AES.toLong(AES.decrypter(cle, AES.fromLong(this.numero)));
+		this.etablissement.decrypter(cle);
+		this.nomEtablissement = AES.decrypter(cle, this.nomEtablissement);
+		for (LigneFacture ligne : this.ligneFactureArray) {
+			ligne.decrypter(cle);
+		}
+
+	}
 }

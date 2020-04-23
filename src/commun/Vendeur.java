@@ -188,4 +188,24 @@ public class Vendeur implements Serializable, Cryptable {
 	private boolean validerCourriel(String courriel) {
 		return courriel != null && courriel.length() > 0;
 	}
+
+	@Override
+	public void encrypter(String cle) {
+		this.prenom = AES.encrypter(cle, this.prenom);
+		this.nom = AES.encrypter(cle, this.nom);
+		this.username = AES.encrypter(cle, this.username);
+		this.password = AES.encrypter(cle, this.password);
+		this.courriel = AES.encrypter(cle, this.courriel);
+
+	}
+
+	@Override
+	public void decrypter(String cle) {
+		this.prenom = AES.decrypter(cle, this.prenom);
+		this.nom = AES.decrypter(cle, this.nom);
+		this.username = AES.decrypter(cle, this.username);
+		this.password = AES.decrypter(cle, this.password);
+		this.courriel = AES.decrypter(cle, this.courriel);
+
+	}
 }
