@@ -14,7 +14,7 @@ public class Test {
 		return result;
 	}
 
-	public static int bitwiseLongDivision(int a, int d) {
+	public static int[] bitwiseLongDivision(int a, int d) {
 
 		// Get leftmost bit of a and d
 		int lmba = 0, lmbd = 0;
@@ -26,6 +26,7 @@ public class Test {
 		lmbd -= 2;
 		
 		int shift = lmba - lmbd;
+		int quotient = 0;
 
 		int lmb;
 		while (lmba != (lmbd - 1)) {
@@ -33,34 +34,40 @@ public class Test {
 			// Retrieve leftmost bit
 			lmb = (1 << lmba--) & a;
 			
+			quotient <<= 1;
 			// Effectue une étape de la division
 			if (lmb != 0) {
 				a ^= (d << shift);
+				quotient +=1;
 			}
+
 
 			shift--;
 		}
-		return a;
+		
+		int[] temp = {a, quotient};
+		return temp;
 		
 	}
 	
-	public static int getInverseMultiplicatif(int a)
-	{
-		boolean flag = true;
-		int inverse = 0;
-		
-		for(int i = 1; i <= 256 && flag; i++)
-		{
-			System.out.println(i);
-			if(bitwiseLongDivision(bitwiseMultiply(a,i), 355) == 1)
-			{
-				inverse = i;
-				flag = false;
-			}
-		}
-		
-		return inverse;
-	}
+//	public static int getInverseMultiplicatif(int a)
+//	{
+//		boolean flag = true;
+//		int inverse = 0;
+//		
+////		for(int i = 2; i <= 256 && flag; i++)
+////		{
+//			System.out.println(1);
+//			if(bitwiseLongDivision(bitwiseMultiply(a,1), 355) == 0b1)
+//			{
+//				inverse = 1;
+//				flag = false;
+//			}
+//			System.out.println("ok");
+////		}
+//		
+//		return inverse;
+//	}
 	
 	
 	public static int[] xpgcd(int a, int b)
@@ -89,8 +96,10 @@ public class Test {
 		
 		if(tab == null)
 		{
-			int q = Math.floorDiv(a, b);
-			int r = a % b;
+			int[] res = bitwiseLongDivision(a,b);
+			
+			int q = res[1];
+			int r = res[0];
 			
 			int[] temp = xpgcd(b,r);
 			
@@ -115,15 +124,15 @@ public class Test {
 //		bitwiseLongDivision(16254, 283);
 //		bitwiseLongDivision(20226, 283);
 //		bitwiseLongDivision(20226, 283);
-		
+//		
 //		System.out.println(getInverseMultiplicatif(13));
-		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 67), 355));
-		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 68), 355));
-		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 69), 355));
-		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 70), 355));
-		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 71), 355));
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 67), 355));
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 68), 355));
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 69), 355));
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 70), 355));
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 71), 355));
 		
-//		int[] tab = xpgcd(966,429);
+//		int[] tab = xpgcd(16,429);
 //		
 //		System.out.println(tab[0]);
 //		System.out.println(tab[1]);
@@ -134,7 +143,27 @@ public class Test {
 //		System.out.println(tab1[0]);
 //		System.out.println(tab1[1]);
 //		System.out.println(tab1[2]);
-
+		
+		int[] tab2 = xpgcd(355,84);
+		
+		System.out.println(tab2[0]);
+		System.out.println(tab2[1]);
+		System.out.println(tab2[2]);
+		
+		byte b = (byte) tab2[1];
+		
+		int s = b ^ (b >>> 7) ^ (b >>> 6) ^ (b >>> 5) ^ (b >>> 4) ^ 99;
+		
+		System.out.println(s);
+		
+		int j = (bitwiseLongDivision(bitwiseMultiply(b,31 ), 257))[0] ^ 99;
+		
+		System.out.println(j);
+		
+		int k = (b * 31)%257 ^ 99;
+		
+		System.out.println(k);
+//		System.out.println(bitwiseLongDivision(bitwiseMultiply(13, 154), 355)[0]);
 	}
 
 }
