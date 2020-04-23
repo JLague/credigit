@@ -1,6 +1,5 @@
 package encryption;
 
-import java.math.BigInteger;
 
 /**
  * Cette classe s'occupe de garder et générer les clés utilisé par l'algorithme.
@@ -101,49 +100,4 @@ public class TrousseauClef {
 		return null;
 	}
 
-	public static int bitwiseLongDivision(int a, int d) {
-
-		// Get leftmost bit of a and d
-		int lmba = 0, lmbd = 0;
-		while ((a >> lmba++) != 0)
-			;
-		while ((d >> lmbd++) != 0)
-			;
-
-		// Met les variables à leur valeurs réelles
-		lmba -= 2;
-		lmbd -= 2;
-
-		int shift = lmba - lmbd;
-		int quotient = 0;
-
-		int lmb;
-		while (lmba != (lmbd - 1)) {
-
-			// Retrieve leftmost bit
-			lmb = (1 << lmba--) & a;
-
-			quotient <<= 1;
-			// Effectue une étape de la division
-			if (lmb != 0) {
-				a ^= (d << shift);
-				quotient += 1;
-			}
-
-			shift--;
-		}
-		return a;
-
-	}
-
-	public static void main(String[] args) {
-		TrousseauClef t1 = new TrousseauClef(0, "000102030405060708090a0b0c0d0e0f");
-		// 0d 0e 0f 0c // D7 AB 76 FE // D6 AB 76 FE // D6
-
-		for (int i = 0; i < 10; i++) {
-			System.out.println("[" + t1.round + "] k = " + t1.clef);
-			t1.genererProchaine();
-		}
-		System.out.println("[" + t1.round + "] k = " + t1.clef);
-	}
 }

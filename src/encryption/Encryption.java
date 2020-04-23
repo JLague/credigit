@@ -23,7 +23,7 @@ public class Encryption {
 	/**
 	 * Liste contenant les matrices de textes à encoder
 	 */
-	private List<int[][]> texte;
+	private List<String[][]> texte;
 
 	/**
 	 * Le texte encrypté
@@ -48,6 +48,26 @@ public class Encryption {
 	public String getTextEncrypte() {
 		return texteEncrypte;
 	}
+	
+	/**
+	 * Retourne la liste de matrice d'encryption
+	 * 
+	 * @return La liste de matrice d'encryption
+	 */
+	protected List<String[][]> getMatrice()
+	{
+		return texte;
+	}
+	
+	/**
+	 * Retourne le trousseau de clé
+	 * 
+	 * @return Le trousseau de clé
+	 */
+	protected TrousseauClef getTrousseau()
+	{
+		return cles;
+	}
 
 	/**
 	 * Remplis la liste de matrice de textes
@@ -55,18 +75,21 @@ public class Encryption {
 	 * @param texte - Le texte servant à remplir les matrices
 	 */
 	private void remplirTexte(String texte) {
-		this.texte = new ArrayList<int[][]>();
+		this.texte = new ArrayList<String[][]>();
 		int cpt = 0;
 
-		for (int i = 0; i < texte.length(); i = +TAILLE * TAILLE) {
-			this.texte.add(new int[TAILLE][TAILLE]);
+		for (int i = 0; i < texte.length(); i += TAILLE * TAILLE) {
+			this.texte.add(new String[TAILLE][TAILLE]);
 
+			int temp = 0;
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
-					if (i < texte.length())
-						this.texte.get(cpt)[k][j] = (int) texte.charAt(i);
+					if (i + temp < texte.length())
+						this.texte.get(cpt)[k][j] = Integer.toHexString((int) texte.charAt(i+ temp));
 					else
-						this.texte.get(cpt)[k][j] = (int) ' ';
+						this.texte.get(cpt)[k][j] = Integer.toHexString((int) ' ');
+					
+					temp ++;
 				}
 			}
 
@@ -86,15 +109,15 @@ public class Encryption {
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour l'encryption
 	 */
-	private void shiftRows()
+	protected void shiftRows()
 	{
-		for(int[][] matrice: texte)
+		for(String[][] matrice: texte)
 		{
 			int cpt = 1;
 			
 			for(int i = 1; i < TAILLE; i++)
 			{
-				int[] temp  = new int[TAILLE];
+				String[] temp  = new String[TAILLE];
 				
 				for(int j = 0; j < TAILLE; j++)
 				{
@@ -114,15 +137,15 @@ public class Encryption {
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour la décryption
 	 */
-	private void shiftRowsInverse()
+	protected void shiftRowsInverse()
 	{
-		for(int[][] matrice: texte)
+		for(String[][] matrice: texte)
 		{
 			int cpt = 1;
 			
 			for(int i = 1; i < TAILLE; i++)
 			{
-				int[] temp  = new int[TAILLE];
+				String[] temp  = new String[TAILLE];
 				
 				for(int j = 0; j < TAILLE; j++)
 				{
@@ -131,7 +154,14 @@ public class Encryption {
 				
 				for(int k = 0; k < TAILLE; k++)
 				{
-					matrice[i][k] = temp[(k-cpt)%4];
+					int a = k-cpt;
+					
+					if(a < 0)
+					{
+						a += 4;
+					}
+					
+					matrice[i][k] = temp[(a)%4];
 				}
 				
 				cpt++;
@@ -140,8 +170,12 @@ public class Encryption {
 	}
 	
 	
-
-	public static String substitutionAvant(String a) {
+	/**
+	 * Tableau de substitution de Rinjdael
+	 * @param a - La String à substituer
+	 * @return La string substituée
+	 */
+	protected static String substitutionAvant(String a) {
 		String temp = "";
 		String s[] = { "63", "7C", "77", "7B", "F2", "6B", "6F", "C5", "30", "01", "67", "2B", "FE", "D7", "AB", "76",
 				"CA", "82", "C9", "7D", "FA", "59", "47", "F0", "AD", "D4", "A2", "AF", "9C", "A4", "72", "C0", "B7",
@@ -167,8 +201,12 @@ public class Encryption {
 		
 		
 	}
-
-	public static String substitutionArriere(char s) {
+	/**
+	 * Méthode qui servira éventuellement pour faire la substitution inverse
+	 * @param s  - La string à substituer
+	 * @return La string substituée
+	 */
+	protected static String substitutionArriere(char s) {
 		return s + "";
 	}
 }
