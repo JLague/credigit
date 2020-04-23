@@ -10,23 +10,50 @@ import java.util.*;
  */
 public class Encryption {
 
+	/**
+	 * Taille des matrices texte et des clés
+	 */
 	public static final int TAILLE = 4;
 
+	/**
+	 * Le trousseau de Cle
+	 */
 	private TrousseauClef cles;
 
+	/**
+	 * Liste contenant les matrices de textes à encoder
+	 */
 	private List<int[][]> texte;
 
+	/**
+	 * Le texte encrypté
+	 */
 	private String texteEncrypte = null;
 
+	/**
+	 * Remplis la liste de matrice de textes à encoder et crée le trousseau de clé
+	 * @param cle - Le mot de passe servant à créer le trousseau de clé
+	 * @param texte - Le texte à encoder
+	 */
 	public Encryption(String cle, String texte) {
 		remplirTexte(texte);
 		creerTrousseauCle(cle);
 	}
 
+	/**
+	 * Retourne le texte encrypté
+	 * 
+	 * @return Le texte encrypté
+	 */
 	public String getTextEncrypte() {
 		return texteEncrypte;
 	}
 
+	/**
+	 * Remplis la liste de matrice de textes
+	 * 
+	 * @param texte - Le texte servant à remplir les matrices
+	 */
 	private void remplirTexte(String texte) {
 		this.texte = new ArrayList<int[][]>();
 		int cpt = 0;
@@ -47,9 +74,72 @@ public class Encryption {
 		}
 	}
 
+	/**
+	 * Crée le trousseau de clé
+	 * 
+	 * @param cle - Le mot de passe pour créer le trousseau de clé
+	 */
 	private void creerTrousseauCle(String cle) {
 		cles = new TrousseauClef(1, cle);
 	}
+	
+	/**
+	 * Décale les rangées selon l'algorithme de RINJDAEL pour l'encryption
+	 */
+	private void shiftRows()
+	{
+		for(int[][] matrice: texte)
+		{
+			int cpt = 1;
+			
+			for(int i = 1; i < TAILLE; i++)
+			{
+				int[] temp  = new int[TAILLE];
+				
+				for(int j = 0; j < TAILLE; j++)
+				{
+					temp[j] = matrice[i][j];
+				}
+				
+				for(int k = 0; k < TAILLE; k++)
+				{
+					matrice[i][k] = temp[(k+cpt)%4];
+				}
+				
+				cpt++;
+			}
+		}
+	}
+	
+	/**
+	 * Décale les rangées selon l'algorithme de RINJDAEL pour la décryption
+	 */
+	private void shiftRowsInverse()
+	{
+		for(int[][] matrice: texte)
+		{
+			int cpt = 1;
+			
+			for(int i = 1; i < TAILLE; i++)
+			{
+				int[] temp  = new int[TAILLE];
+				
+				for(int j = 0; j < TAILLE; j++)
+				{
+					temp[j] = matrice[i][j];
+				}
+				
+				for(int k = 0; k < TAILLE; k++)
+				{
+					matrice[i][k] = temp[(k-cpt)%4];
+				}
+				
+				cpt++;
+			}
+		}
+	}
+	
+	
 
 	public static String substitutionAvant(String a) {
 		String temp = "";
