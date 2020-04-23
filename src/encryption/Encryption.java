@@ -160,10 +160,8 @@ public class Encryption {
 				"55", "28", "DF", "8C", "A1", "89", "0D", "BF", "E6", "42", "68", "41", "99", "2D", "0F", "B0", "54",
 				"BB", "16" };
 		
-		for (int i = 0; i < a.length(); i += 2) {
-			temp += s[Integer.parseInt(a.substring(0+i, 2+i),16)];
-		}
-		
+			temp = s[Integer.parseInt(a.substring(0, 2),16)];
+			
 		return temp;
 		
 		

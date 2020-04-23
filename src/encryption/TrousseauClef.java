@@ -41,10 +41,10 @@ public class TrousseauClef {
 		nMot3 = "";
 
 		for (int i = 0; i < mot0.length(); i++) {
-			nMot0 += Integer.toHexString((mot0.charAt(i) ^ fonctionGAvant(mot3).charAt(i)));
-			nMot1 += Integer.toHexString((nMot0.charAt(i) ^ mot1.charAt(i)));
-			nMot2 += Integer.toHexString((nMot1.charAt(i) ^ mot2.charAt(i)));
-			nMot3 += Integer.toHexString((nMot2.charAt(i) ^ mot3.charAt(i)));
+			nMot0 += Integer.toHexString(Math.floorMod((mot0.charAt(i) ^ fonctionGAvant(mot3).charAt(i)),128));
+			nMot1 += Integer.toHexString(Math.floorMod((nMot0.charAt(i) ^ mot1.charAt(i)),128));
+			nMot2 += Integer.toHexString(Math.floorMod((nMot1.charAt(i) ^ mot2.charAt(i)),128));
+			nMot3 += Integer.toHexString(Math.floorMod((nMot2.charAt(i) ^ mot3.charAt(i)),128));
 		}
 
 		round++;
@@ -70,7 +70,6 @@ public class TrousseauClef {
 				+ Encryption.substitutionAvant(temp.substring(6, 8));
 
 		temp = (temp.charAt(0) ^ round) + temp.substring(1, 8);
-
 		return temp;
 	}
 
