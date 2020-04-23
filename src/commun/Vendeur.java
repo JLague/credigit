@@ -10,7 +10,7 @@ import commun.exception.ExceptionCreationCompte;
  * @author Bank-era Corp.
  *
  */
-public class Vendeur implements Serializable {
+public class Vendeur implements Serializable, Cryptable {
 
 	/**
 	 * Serial version ID

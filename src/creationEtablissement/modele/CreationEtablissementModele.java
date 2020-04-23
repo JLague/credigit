@@ -48,6 +48,18 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 	private final static String ETABLISSEMENTS = "etablissements";
 
 	/**
+	 * String représentant le nom de la base de données contenant les clés sur le
+	 * serveur
+	 */
+	private final static String DB_KEYS = "keys_database";
+
+	/**
+	 * String représentant le nom de la collection contenant les clés dans la base
+	 * de données
+	 */
+	private final static String KEYS = "keys";
+
+	/**
 	 * String représentant le compte d'envoi
 	 */
 	private static final String USER = "credigit.bankera@gmail.com";
@@ -153,6 +165,7 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 	@Override
 	public boolean ajouterEtablissement(Etablissement etablissement) throws ExceptionCreationCompte {
 
+		//TODO Encrypter
 		boolean compteCree = false;
 
 		// Vérifie si le nom d'établissement n'est pas déjà utilisé
@@ -183,5 +196,14 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 		FindIterable<Document> result = database.getCollection(ETABLISSEMENTS).find(object);
 		Iterator<Document> it = result.iterator();
 		return it.hasNext();
+	}
+
+	@Override
+	public String getCleFromDatabase() {
+		MongoDatabase data = mongoClient.getDatabase(DB_KEYS);
+		MongoCollection<Document> collection = data.getCollection(KEYS);
+		Document doc = collection.find().first();
+
+		return doc.getString("key");
 	}
 }

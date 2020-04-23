@@ -59,7 +59,7 @@ public class POSControleur implements IPOSControleur {
 	private ClientPOS clientPOS;
 
 	/**
-	 * Constructeur servant à instantier un contrôleur du POS
+	 * Constructeur servant à instancier un contrôleur du POS
 	 * 
 	 * @param posApplication l'application du POS
 	 */
@@ -130,7 +130,7 @@ public class POSControleur implements IPOSControleur {
 					etab.updateQuantiteProduit(ligne);
 				}
 
-				connexion.updateEtablissement();
+				updateEtablissement();
 
 				// Crée une nouvelle transaction
 				vue.createNewTransaction();
@@ -217,14 +217,14 @@ public class POSControleur implements IPOSControleur {
 
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
 
-		connexion.updateEtablissement();
+		updateEtablissement();
 	}
 
 	@Override
 	public void supprimerProduit(Produit produit) {
 		getInventaire().remove(produit);
 		connexion.removeImageFromDatabase(produit);
-		connexion.updateEtablissement();
+		updateEtablissement();
 	}
 
 	@Override

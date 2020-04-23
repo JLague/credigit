@@ -1,5 +1,6 @@
 package pos.modele;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.bson.Document;
@@ -18,7 +19,7 @@ import com.mongodb.client.MongoDatabase;
 
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
-
+import encryption.CleRSA;
 import commun.*;
 
 /**
@@ -28,6 +29,12 @@ import commun.*;
  *
  */
 public class ConnexionPOS {
+
+	/**
+	 * Clé du RSA
+	 */
+	public static final CleRSA CLE_RSA = new CleRSA(new BigInteger("32244774284211042705171103939999050641"),
+			new BigInteger("65537"), new BigInteger("166671328359045595559284971252973341809"));
 
 	/**
 	 * String représentant le nom de la base de données sur le serveur
@@ -44,6 +51,18 @@ public class ConnexionPOS {
 	 * la base de données
 	 */
 	private final static String ETABLISSEMENTS = "etablissements";
+
+	/**
+	 * String représentant le nom de la base de données contenant les clés sur le
+	 * serveur
+	 */
+	private final static String DB_KEYS = "keys_database";
+
+	/**
+	 * String représentant le nom de la collection contenant les clés dans la base
+	 * de données
+	 */
+	private final static String KEYS = "keys";
 
 	/**
 	 * Objet base de données
@@ -124,6 +143,7 @@ public class ConnexionPOS {
 	 * @return vrai si l'établissement est bel et bien mis à jour
 	 */
 	public boolean updateEtablissement() {
+		// TODO Encrypter
 		try {
 			BasicDBObject searchQuery = new BasicDBObject();
 			searchQuery.put("nom", etablissement.getNom());
@@ -332,6 +352,20 @@ public class ConnexionPOS {
 	 */
 	private boolean validerPassword(String password) {
 		return password != null && password.length() != 0;
+	}
+
+	/**
+	 * Méthode permettant d'aller chercher la clé d'encryption dans la base de
+	 * données
+	 * 
+	 * @return la clé encryptée selon RSA
+	 */
+	public String getCleFromDatabase() {
+		MongoDatabase data = mongoClient.getDatabase(DB_KEYS);
+		MongoCollection<Document> collection = data.getCollection(KEYS);
+		Document doc = collection.find().first();
+
+		return doc.getString("key");
 	}
 
 }

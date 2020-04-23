@@ -73,4 +73,16 @@ public class RSA {
 		return new String(message.toByteArray());
 	}
 
+	public static void main(String[] args) {
+		CleRSA cle = new CleRSA(new BigInteger("32244774284211042705171103939999050641"), new BigInteger("65537"),
+				new BigInteger("166671328359045595559284971252973341809"));
+		System.out.println("Clé privée: " + cle.getClePrivee());
+		System.out.println("Clé publique: " + cle.getClePublique());
+		System.out.println("Clé module: " + cle.getModule());
+		String message = "Ceci est une cle";
+		BigInteger encrypte = RSA.encrypter(RSA.stringToInteger(message), cle.getClePublique(), cle.getModule());
+		System.out.println(encrypte);
+		System.out.println(RSA.integerToString(RSA.decrypter(encrypte, cle.getClePrivee(), cle.getModule())));
+	}
+
 }

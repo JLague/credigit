@@ -56,7 +56,7 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	public boolean supprimerCompte(byte[] empreinte) {
 		return connexion.supprimerCompteClient(empreinte);
 	}
-	
+
 	@Override
 	public byte[] verifierEmpreinte(byte[] empreinteScanne) {
 		List<byte[]> empreintes = connexion.getEmpreintes();

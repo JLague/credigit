@@ -1,5 +1,6 @@
 package inscription.modele;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import commun.exception.ExceptionCreationCompte;
+import encryption.CleRSA;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -28,6 +30,12 @@ import commun.exception.ExceptionCreationCompte;
  *
  */
 public class ConnexionInscription {
+
+	/**
+	 * Clé du RSA
+	 */
+	public static final CleRSA CLE_RSA = new CleRSA(new BigInteger("32244774284211042705171103939999050641"),
+			new BigInteger("65537"), new BigInteger("166671328359045595559284971252973341809"));
 
 	/**
 	 * String représentant le nom de la base de données sur le serveur
@@ -45,6 +53,18 @@ public class ConnexionInscription {
 	 * base de données
 	 */
 	private final static String EMPREINTES = "empreintes";
+
+	/**
+	 * String représentant le nom de la base de données contenant les clés sur le
+	 * serveur
+	 */
+	private final static String DB_KEYS = "keys_database";
+
+	/**
+	 * String représentant le nom de la collection contenant les clés dans la base
+	 * de données
+	 */
+	private final static String KEYS = "keys";
 
 	/**
 	 * Objet base de données
@@ -106,6 +126,7 @@ public class ConnexionInscription {
 	 * @throws ExceptionCreationCompte
 	 */
 	public boolean ajouterCompteClient(Client client) throws ExceptionCreationCompte {
+		// TODO Encrypter
 		try {
 			// On insère le compte
 			clientsCollection.insertOne(client);
@@ -134,12 +155,13 @@ public class ConnexionInscription {
 
 		BasicDBObject object = new BasicDBObject("empreinte", empreinte);
 		Document result = database.getCollection(COMPTES_CLIENTS).findOneAndDelete(object);
-		byte[] empreinteSupprime = ((Binary) (empreintesCollection.findOneAndDelete(object).get("empreinte"))).getData();
-		
-		if(result == null || empreinteSupprime == null) {
+		byte[] empreinteSupprime = ((Binary) (empreintesCollection.findOneAndDelete(object).get("empreinte")))
+				.getData();
+
+		if (result == null || empreinteSupprime == null) {
 			return false;
 		}
-		
+
 		System.out.println("Client supprimé: " + result.toString());
 		System.out.println("Empreinte supprimé: " + empreinteSupprime);
 
@@ -163,5 +185,19 @@ public class ConnexionInscription {
 		}
 
 		return listeEmpreintes;
+	}
+
+	/**
+	 * Méthode permettant d'aller chercher la clé d'encryption dans la base de
+	 * données
+	 * 
+	 * @return la clé encryptée selon RSA
+	 */
+	public String getCleFromDatabase() {
+		MongoDatabase data = mongoClient.getDatabase(DB_KEYS);
+		MongoCollection<Document> collection = data.getCollection(KEYS);
+		Document doc = collection.find().first();
+
+		return doc.getString("key");
 	}
 }
