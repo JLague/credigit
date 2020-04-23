@@ -22,8 +22,15 @@ public class TrousseauClef {
 	String nMot3;
 
 	public TrousseauClef(int pRound, String pClef) {
-		this.round = pRound;
-		this.clef = pClef;
+		if (pRound < 0 || pRound > 10)
+			this.round = 0;
+		else
+			this.round = pRound;
+
+		if (pClef.length() > 32)
+			this.clef = pClef.substring(0, 32);
+		else
+			this.clef = "00000000000000000000000000000000".substring(0, 32 - pClef.length()) + pClef;
 	}
 
 	/**
@@ -136,14 +143,14 @@ public class TrousseauClef {
 
 	}
 
-	public static void main(String[] args) {
-		TrousseauClef t1 = new TrousseauClef(0, "000102030405060708090a0b0c0d0e0f");
-		// 0d 0e 0f 0c // D7 AB 76 FE // D6 AB 76 FE // D6
-
-		for (int i = 0; i < 10; i++) {
-			System.out.println("[" + t1.round + "] k = " + t1.clef);
-			t1.genererProchaine();
-		}
-		System.out.println("[" + t1.round + "] k = " + t1.clef);
+	public String toString() {
+		String roundStyle;
+		
+		if(round < 10)
+			roundStyle = " "+ round;
+		else
+			roundStyle = round + "";
+		
+		return "[" + roundStyle+ "] k = " + clef;
 	}
 }
