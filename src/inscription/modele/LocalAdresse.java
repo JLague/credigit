@@ -2,6 +2,7 @@ package inscription.modele;
 
 import commun.Cryptable;
 import commun.exception.ExceptionCreationCompte;
+import encryption.AES;
 
 /**
  * Classe permettant de créer un objet représantant une adresse
@@ -304,7 +305,7 @@ public class LocalAdresse implements Cryptable {
 	public void encrypter(String cle) {
 		this.adresse = AES.encrypter(cle, this.adresse);
 		this.appartement = AES.encrypter(cle, this.appartement);
-		this.codePostal = Aes.encrypter(cle, this.codePostal);
+		this.codePostal = AES.encrypter(cle, this.codePostal);
 		this.ville = AES.encrypter(cle, this.ville);
 		this.etat = AES.encrypter(cle, this.etat);
 		this.pays = AES.encrypter(cle, this.pays);
@@ -315,7 +316,7 @@ public class LocalAdresse implements Cryptable {
 	public void decrypter(String cle) {
 		this.adresse = AES.decrypter(cle, this.adresse);
 		this.appartement = AES.decrypter(cle, this.appartement);
-		this.codePostal = Aes.decrypter(cle, this.codePostal);
+		this.codePostal = AES.decrypter(cle, this.codePostal);
 		this.ville = AES.decrypter(cle, this.ville);
 		this.etat = AES.decrypter(cle, this.etat);
 		this.pays = AES.decrypter(cle, this.pays);

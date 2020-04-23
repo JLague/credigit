@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import commun.Cryptable;
 import commun.Transaction;
 import commun.exception.ExceptionCreationCompte;
+import encryption.AES;
 
 /**
  * Cette classe permet de créer des clients.
@@ -512,7 +513,7 @@ public class Client implements Cryptable {
 	@Override
 	public void encrypter(String cle) {
 		this.nom = AES.encrypter(cle, this.nom);
-		this.prenom = AES.encryper(cle, this.prenom);
+		this.prenom = AES.encrypter(cle, this.prenom);
 		this.email = AES.encrypter(cle, this.email);
 		this.adresse.encrypter(cle);
 		this.nas = AES.encrypter(cle, this.nas);
@@ -530,7 +531,7 @@ public class Client implements Cryptable {
 	@Override
 	public void decrypter(String cle) {
 		this.nom = AES.decrypter(cle, this.nom);
-		this.prenom = AES.decryper(cle, this.prenom);
+		this.prenom = AES.decrypter(cle, this.prenom);
 		this.email = AES.decrypter(cle, this.email);
 		this.adresse.decrypter(cle);
 		this.nas = AES.decrypter(cle, this.nas);

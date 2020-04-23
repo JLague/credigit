@@ -3,6 +3,7 @@ package commun;
 import java.io.Serializable;
 
 import commun.exception.ExceptionProduitEtablissement;
+import encryption.AES;
 
 /**
  * Classe créant un produit

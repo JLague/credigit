@@ -79,9 +79,9 @@ public class TrousseauClef {
 	 */
 	private String fonctionGAvant(String mot) {
 		String temp = mot.substring(2, 8) + mot.substring(0, 2);
-		temp = Encryption.substitutionAvant(temp.substring(0, 2)) + Encryption.substitutionAvant(temp.substring(2, 4))
-				+ Encryption.substitutionAvant(temp.substring(4, 6))
-				+ Encryption.substitutionAvant(temp.substring(6, 8));
+		temp = AES.substitutionAvant(temp.substring(0, 2)) + AES.substitutionAvant(temp.substring(2, 4))
+				+ AES.substitutionAvant(temp.substring(4, 6))
+				+ AES.substitutionAvant(temp.substring(6, 8));
 
 		int rc = 1 << round;
 

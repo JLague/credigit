@@ -3,6 +3,7 @@ package commun;
 import java.io.Serializable;
 
 import commun.exception.ExceptionCreationCompte;
+import encryption.AES;
 
 /**
  * Classe définissant un vendeur

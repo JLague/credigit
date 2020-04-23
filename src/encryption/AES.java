@@ -8,7 +8,7 @@ import java.util.*;
  * @author Bank-era Corp.
  *
  */
-public class Encryption {
+public class AES {
 
 	/**
 	 * Taille des matrices texte et des clés
@@ -32,10 +32,11 @@ public class Encryption {
 
 	/**
 	 * Remplis la liste de matrice de textes à encoder et crée le trousseau de clé
-	 * @param cle - Le mot de passe servant à créer le trousseau de clé
+	 * 
+	 * @param cle   - Le mot de passe servant à créer le trousseau de clé
 	 * @param texte - Le texte à encoder
 	 */
-	public Encryption(String cle, String texte) {
+	public AES(String cle, String texte) {
 		remplirTexte(texte);
 		creerTrousseauCle(cle);
 	}
@@ -48,24 +49,22 @@ public class Encryption {
 	public String getTextEncrypte() {
 		return texteEncrypte;
 	}
-	
+
 	/**
 	 * Retourne la liste de matrice d'encryption
 	 * 
 	 * @return La liste de matrice d'encryption
 	 */
-	protected List<String[][]> getMatrice()
-	{
+	protected List<String[][]> getMatrice() {
 		return texte;
 	}
-	
+
 	/**
 	 * Retourne le trousseau de clé
 	 * 
 	 * @return Le trousseau de clé
 	 */
-	protected TrousseauClef getTrousseau()
-	{
+	protected TrousseauClef getTrousseau() {
 		return cles;
 	}
 
@@ -85,11 +84,11 @@ public class Encryption {
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 					if (i + temp < texte.length())
-						this.texte.get(cpt)[k][j] = Integer.toHexString((int) texte.charAt(i+ temp));
+						this.texte.get(cpt)[k][j] = Integer.toHexString((int) texte.charAt(i + temp));
 					else
 						this.texte.get(cpt)[k][j] = Integer.toHexString((int) ' ');
-					
-					temp ++;
+
+					temp++;
 				}
 			}
 
@@ -105,73 +104,62 @@ public class Encryption {
 	private void creerTrousseauCle(String cle) {
 		cles = new TrousseauClef(1, cle);
 	}
-	
+
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour l'encryption
 	 */
-	protected void shiftRows()
-	{
-		for(String[][] matrice: texte)
-		{
+	protected void shiftRows() {
+		for (String[][] matrice : texte) {
 			int cpt = 1;
-			
-			for(int i = 1; i < TAILLE; i++)
-			{
-				String[] temp  = new String[TAILLE];
-				
-				for(int j = 0; j < TAILLE; j++)
-				{
+
+			for (int i = 1; i < TAILLE; i++) {
+				String[] temp = new String[TAILLE];
+
+				for (int j = 0; j < TAILLE; j++) {
 					temp[j] = matrice[i][j];
 				}
-				
-				for(int k = 0; k < TAILLE; k++)
-				{
-					matrice[i][k] = temp[(k+cpt)%4];
+
+				for (int k = 0; k < TAILLE; k++) {
+					matrice[i][k] = temp[(k + cpt) % 4];
 				}
-				
+
 				cpt++;
 			}
 		}
 	}
-	
+
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour la décryption
 	 */
-	protected void shiftRowsInverse()
-	{
-		for(String[][] matrice: texte)
-		{
+	protected void shiftRowsInverse() {
+		for (String[][] matrice : texte) {
 			int cpt = 1;
-			
-			for(int i = 1; i < TAILLE; i++)
-			{
-				String[] temp  = new String[TAILLE];
-				
-				for(int j = 0; j < TAILLE; j++)
-				{
+
+			for (int i = 1; i < TAILLE; i++) {
+				String[] temp = new String[TAILLE];
+
+				for (int j = 0; j < TAILLE; j++) {
 					temp[j] = matrice[i][j];
 				}
-				
-				for(int k = 0; k < TAILLE; k++)
-				{
-					int a = k-cpt;
-					
-					if(a < 0)
-					{
+
+				for (int k = 0; k < TAILLE; k++) {
+					int a = k - cpt;
+
+					if (a < 0) {
 						a += 4;
 					}
-					
-					matrice[i][k] = temp[(a)%4];
+
+					matrice[i][k] = temp[(a) % 4];
 				}
-				
+
 				cpt++;
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Tableau de substitution de Rinjdael
+	 * 
 	 * @param a - La String à substituer
 	 * @return La string substituée
 	 */
@@ -193,20 +181,111 @@ public class Encryption {
 				"86", "C1", "1D", "9E", "E1", "F8", "98", "11", "69", "D9", "8E", "94", "9B", "1E", "87", "E9", "CE",
 				"55", "28", "DF", "8C", "A1", "89", "0D", "BF", "E6", "42", "68", "41", "99", "2D", "0F", "B0", "54",
 				"BB", "16" };
-		
-			temp = s[Integer.parseInt(a.substring(0, 2),16)];
-			
+
+		temp = s[Integer.parseInt(a.substring(0, 2), 16)];
+
 		return temp;
-		
-		
-		
+
 	}
+
 	/**
 	 * Méthode qui servira éventuellement pour faire la substitution inverse
-	 * @param s  - La string à substituer
+	 * 
+	 * @param s - La string à substituer
 	 * @return La string substituée
 	 */
 	protected static String substitutionArriere(char s) {
 		return s + "";
+	}
+
+	/**
+	 * Méthode permettant d'encrypter un message
+	 * 
+	 * @param cle     - La clé d'encryption
+	 * @param message - Le message
+	 * @return le message codé
+	 */
+	public static String encrypter(String cle, String message) {
+		// TODO À implémenter
+		return null;
+	}
+
+	/**
+	 * Méthode permettant de décrypter un message
+	 * 
+	 * @param cle     - La clé d'encryption
+	 * @param message - Le message codé
+	 * @return Le message brut
+	 */
+	public static String decrypter(String cle, String message) {
+		// TODO À implémenter
+		return null;
+	}
+
+	/**
+	 * Méthode transformant un long en String (Créé car réversible avec son opposé)
+	 * 
+	 * @param l - Le long
+	 * @return La String représentant le long
+	 */
+	public static String fromLong(long l) {
+		// TODO À implémenter
+		return null;
+	}
+
+	/**
+	 * Méthode transformant une String en long(Créé car réversible avec son opposé)
+	 * 
+	 * @param s - La String
+	 * @return Le long représentant la String
+	 */
+	public static long toLong(String s) {
+		// TODO À implémenter
+		return 0;
+	}
+
+	/**
+	 * Méthode transformant un float en String (Créé car réversible avec son opposé)
+	 * 
+	 * @param f - Le float
+	 * @return La String représentant le float
+	 */
+	public static String fromFloat(float f) {
+		// TODO À implémenter
+		return null;
+	}
+
+	/**
+	 * Méthode transformant une String en float (Créé car réversible avec son
+	 * opposé)
+	 * 
+	 * @param s - La String
+	 * @return Le float représentant la String
+	 */
+	public static float toFloat(String s) {
+		// TODO À implémenter
+		return 0;
+	}
+
+	/**
+	 * Méthode transformant un int en String (Créé car réversible avec son opposé)
+	 * 
+	 * @param i - Le int
+	 * @return La String représentant le int
+	 */
+	public static String fromInt(int i) {
+		// TODO À implémenter
+		return null;
+	}
+
+	/**
+	 * Méthode transformant une String en int (Créé car réversible avec son opposé)
+	 * 
+	 * @param s - La String
+	 * @return Le int représentant la String
+	 */
+	public static int toInt(String s) {
+		// TODO À implémenter
+		return 0;
 	}
 }

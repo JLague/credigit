@@ -13,16 +13,16 @@ import org.junit.Test;
  * @author Bank-era Corp.
  *
  */
-public class EncryptionTest {
+public class AESTest {
 
-	private Encryption e1, e2;
+	private AES e1, e2;
 	
 	@Before
 	public void creerEncryption()
 	{
-		e1 = new Encryption("000102030405060708090a0b0c0d0e0f","Ceci est un test");
+		e1 = new AES("000102030405060708090a0b0c0d0e0f","Ceci est un test");
 		
-		e2 = new Encryption("000102030405060708090a0b0c0d0e0f","Ceci est un test, que nous devons faire");
+		e2 = new AES("000102030405060708090a0b0c0d0e0f","Ceci est un test, que nous devons faire");
 	}
 	
 	@Test
@@ -370,11 +370,11 @@ public class EncryptionTest {
 
 	@Test
 	public void testSubstitutionAvant() {
-		assertTrue(Encryption.substitutionAvant("1D").equals("A4"));
-		assertTrue(Encryption.substitutionAvant("37").equals("9A"));
-		assertTrue(Encryption.substitutionAvant("81").equals("0C"));
-		assertTrue(Encryption.substitutionAvant("A5").equals("06"));
-		assertTrue(Encryption.substitutionAvant("FE").equals("BB"));
+		assertTrue(AES.substitutionAvant("1D").equals("A4"));
+		assertTrue(AES.substitutionAvant("37").equals("9A"));
+		assertTrue(AES.substitutionAvant("81").equals("0C"));
+		assertTrue(AES.substitutionAvant("A5").equals("06"));
+		assertTrue(AES.substitutionAvant("FE").equals("BB"));
 	}
 
 }
