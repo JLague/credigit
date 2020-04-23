@@ -11,6 +11,12 @@ import java.security.SecureRandom;
  */
 public class RSA {
 
+	/**
+	 * Méthode pour générer une Clé RSA
+	 * 
+	 * @param n - La longueur de la clé (Approximativement)
+	 * @return la clé
+	 */
 	public static CleRSA genererCle(int n) {
 		BigInteger un = new BigInteger("1");
 		SecureRandom random = new SecureRandom();
