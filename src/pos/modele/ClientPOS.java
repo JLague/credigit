@@ -19,7 +19,7 @@ public class ClientPOS {
 	/**
 	 * L'addresse IP du server
 	 */
-	private static final String REMOTE_IP = "localhost";
+	private static final String REMOTE_IP = "24.203.30.174";
 
 	/**
 	 * Le port du serveur
