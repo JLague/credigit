@@ -41,10 +41,14 @@ public class TrousseauClef {
 		nMot3 = "";
 
 		for (int i = 0; i < mot0.length(); i++) {
-			nMot0 += Integer.toHexString(Math.floorMod((mot0.charAt(i) ^ fonctionGAvant(mot3).charAt(i)),128));
-			nMot1 += Integer.toHexString(Math.floorMod((nMot0.charAt(i) ^ mot1.charAt(i)),128));
-			nMot2 += Integer.toHexString(Math.floorMod((nMot1.charAt(i) ^ mot2.charAt(i)),128));
-			nMot3 += Integer.toHexString(Math.floorMod((nMot2.charAt(i) ^ mot3.charAt(i)),128));
+			nMot0 += Integer.toHexString(Math.floorMod((mot0.charAt(i) ^ fonctionGAvant(mot3).charAt(i)),16));
+			//System.out.println("\t> Mot 0 : " + nMot0);
+			nMot1 += Integer.toHexString(Math.floorMod((nMot0.charAt(i) ^ mot1.charAt(i)),16));
+			//System.out.println("\t> Mot 1 : " + nMot1);
+			nMot2 += Integer.toHexString(Math.floorMod((nMot1.charAt(i) ^ mot2.charAt(i)),16));
+			//System.out.println("\t> Mot 2 : " + nMot2);
+			nMot3 += Integer.toHexString(Math.floorMod((nMot2.charAt(i) ^ mot3.charAt(i)),16));
+			//System.out.println("\t> Mot 3 : " + nMot3);
 		}
 
 		round++;
