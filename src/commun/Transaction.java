@@ -20,7 +20,7 @@ import javafx.collections.ObservableList;
  * 
  * @author Bank-era Corp.
  */
-public class Transaction implements Serializable {
+public class Transaction implements Serializable, Cryptable {
 
 	private static final long serialVersionUID = 1L;
 

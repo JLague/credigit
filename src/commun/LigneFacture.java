@@ -10,7 +10,7 @@ import java.util.Locale;
  * @author Bank-era Corp.
  * 
  */
-public class LigneFacture implements Serializable {
+public class LigneFacture implements Serializable, Cryptable {
 
 	private static final long serialVersionUID = 1L;
 
