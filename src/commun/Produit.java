@@ -10,7 +10,7 @@ import commun.exception.ExceptionProduitEtablissement;
  * @author Bank-era Corp.
  *
  */
-public class Produit implements Serializable, Cloneable {
+public class Produit implements Serializable, Cloneable, Cryptable {
 
 	/**
 	 * Serial ID
