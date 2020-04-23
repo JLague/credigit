@@ -347,6 +347,19 @@ public class Etablissement implements Serializable, Cloneable {
 		return !utilise;
 	}
 
+	public void updateQuantiteProduit(LigneFacture ligne) {
+		boolean produitTrouve = false;
+
+		for (int i = 0; i < this.getInventaire().size() && !produitTrouve; i++) {
+			Produit prod = this.getInventaire().get(i);
+			if (prod.getSku() == ligne.getProduit().getSku()) {
+				prod.setQuantite(prod.getQuantite() - ligne.getQuantite());
+				produitTrouve = true;
+			}
+		}
+
+	}
+
 	@Override
 	public Object clone() {
 		Etablissement clone = null;

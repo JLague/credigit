@@ -244,12 +244,10 @@ public class Produit implements Serializable, Cloneable {
 	 * @param quantite - La quantite du produit à modifier
 	 * @throws ExceptionProduitEtablissement
 	 */
-	public void setQuantite(int quantite) throws ExceptionProduitEtablissement {
-		if (quantite >= 0) {
-			this.quantite = quantite;
-		} else {
-			throw new ExceptionProduitEtablissement("La quantite n'est pas valide.");
-		}
+	public void setQuantite(int quantite) {
+
+		this.quantite = quantite;
+
 	}
 
 	/**

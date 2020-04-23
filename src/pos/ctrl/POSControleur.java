@@ -122,7 +122,14 @@ public class POSControleur implements IPOSControleur {
 
 				// Ajoute la transaction à l'établissement
 				Transaction transReduite = Transaction.reduireTransactionEtablissement(transRetour);
-				connexion.getEtablissement().ajouterTransaction(transReduite);
+				Etablissement etab = connexion.getEtablissement();
+				etab.ajouterTransaction(transReduite);
+				etab.ajouterBalance(transReduite.getMontantTotal());
+
+				for (LigneFacture ligne : tb.getTransaction().getLigneFactureArray()) {
+					etab.updateQuantiteProduit(ligne);
+				}
+
 				connexion.updateEtablissement();
 
 				// Crée une nouvelle transaction
@@ -207,7 +214,7 @@ public class POSControleur implements IPOSControleur {
 		} else {
 			nouveau.setImagePathDB(ancien.getImagePathDB());
 		}
-		
+
 		tb.getEtablissement().modifierProduit(ancien, nouveau);
 
 		connexion.updateEtablissement();
