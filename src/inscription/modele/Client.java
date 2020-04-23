@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import commun.Cryptable;
 import commun.Transaction;
 import commun.exception.ExceptionCreationCompte;
 
@@ -13,7 +14,7 @@ import commun.exception.ExceptionCreationCompte;
  * @author Bank-era Corp.
  *
  */
-public class Client {
+public class Client implements Cryptable {
 
 	public static final int MAJORITE = 18;
 
@@ -506,6 +507,43 @@ public class Client {
 		}
 
 		return temp;
+	}
+
+	@Override
+	public void encrypter(String cle) {
+		this.nom = AES.encrypter(cle, this.nom);
+		this.prenom = AES.encryper(cle, this.prenom);
+		this.email = AES.encrypter(cle, this.email);
+		this.adresse.encrypter(cle);
+		this.nas = AES.encrypter(cle, this.nas);
+		this.solde = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.solde)));
+		this.limiteCredit = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.limiteCredit)));
+		for (String reponse : reponses) {
+			reponse = AES.encrypter(cle, reponse);
+		}
+		this.numero = AES.encrypter(cle, this.numero);
+		for (Transaction trans : transaction) {
+			trans.encrypter(cle);
+		}
+	}
+
+	@Override
+	public void decrypter(String cle) {
+		this.nom = AES.decrypter(cle, this.nom);
+		this.prenom = AES.decryper(cle, this.prenom);
+		this.email = AES.decrypter(cle, this.email);
+		this.adresse.decrypter(cle);
+		this.nas = AES.decrypter(cle, this.nas);
+		this.solde = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.solde)));
+		this.limiteCredit = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.limiteCredit)));
+		for (String reponse : reponses) {
+			reponse = AES.decrypter(cle, reponse);
+		}
+		this.numero = AES.decrypter(cle, this.numero);
+		for (Transaction trans : transaction) {
+			trans.encrypter(cle);
+		}
+
 	}
 
 }

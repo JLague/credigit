@@ -1,5 +1,6 @@
 package inscription.modele;
 
+import commun.Cryptable;
 import commun.exception.ExceptionCreationCompte;
 
 /**
@@ -8,7 +9,7 @@ import commun.exception.ExceptionCreationCompte;
  * @author Bank-era Corp.
  *
  */
-public class LocalAdresse {
+public class LocalAdresse implements Cryptable {
 
 	/**
 	 * L'adresse du client
@@ -45,7 +46,7 @@ public class LocalAdresse {
 	 */
 	public LocalAdresse() {
 	}
-	
+
 	/**
 	 * Construit l'adresse du client avec un appartement
 	 * 
@@ -297,6 +298,28 @@ public class LocalAdresse {
 		code = code.replaceAll(" ", "");
 
 		return code;
+	}
+
+	@Override
+	public void encrypter(String cle) {
+		this.adresse = AES.encrypter(cle, this.adresse);
+		this.appartement = AES.encrypter(cle, this.appartement);
+		this.codePostal = Aes.encrypter(cle, this.codePostal);
+		this.ville = AES.encrypter(cle, this.ville);
+		this.etat = AES.encrypter(cle, this.etat);
+		this.pays = AES.encrypter(cle, this.pays);
+
+	}
+
+	@Override
+	public void decrypter(String cle) {
+		this.adresse = AES.decrypter(cle, this.adresse);
+		this.appartement = AES.decrypter(cle, this.appartement);
+		this.codePostal = Aes.decrypter(cle, this.codePostal);
+		this.ville = AES.decrypter(cle, this.ville);
+		this.etat = AES.decrypter(cle, this.etat);
+		this.pays = AES.decrypter(cle, this.pays);
+
 	}
 
 }
