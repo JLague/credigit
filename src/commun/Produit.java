@@ -311,4 +311,26 @@ public class Produit implements Serializable, Cloneable, Cryptable {
 		return clone;
 	}
 
+	@Override
+	public void encrypter(String cle) {
+		this.sku = AES.toLong(AES.encrypter(cle, AES.fromLong(this.sku)));
+		this.nom = AES.encrypter(cle, this.nom);
+		this.prix = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.prix)));
+		this.coutant = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.coutant)));
+		this.fournisseur = AES.encrypter(cle, this.fournisseur);
+		this.description = AES.encrypter(cle, this.description);
+		this.quantite = AES.toInt(AES.encrypter(cle, AES.fromInt(this.quantite)));
+	}
+
+	@Override
+	public void decrypter(String cle) {
+		this.sku = AES.toLong(AES.decrypter(cle, AES.fromLong(this.sku)));
+		this.nom = AES.decrypter(cle, this.nom);
+		this.prix = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.prix)));
+		this.coutant = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.coutant)));
+		this.fournisseur = AES.decrypter(cle, this.fournisseur);
+		this.description = AES.decrypter(cle, this.description);
+		this.quantite = AES.toInt(AES.decrypter(cle, AES.fromInt(this.quantite)));
+	}
+
 }
