@@ -1,6 +1,7 @@
 package terminal.modele;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.mongodb.client.MongoDatabase;
 import commun.EtatTransaction;
 import commun.Transaction;
 import commun.exception.ExceptionTransaction;
+import encryption.CleRSA;
 import inscription.modele.Client;
 import terminal.utils.FactureUtil;
 
@@ -33,6 +35,13 @@ import terminal.utils.FactureUtil;
  *
  */
 public class Connexion {
+
+	/**
+	 * Clé du RSA
+	 */
+	public static final CleRSA CLE_RSA = new CleRSA(new BigInteger("32244774284211042705171103939999050641"),
+			new BigInteger("65537"), new BigInteger("166671328359045595559284971252973341809"));
+
 	/**
 	 * String représentant le nom de la base de données sur le serveur
 	 */
@@ -126,6 +135,7 @@ public class Connexion {
 				transReduite.setEtat(EtatTransaction.CONFIRMATION);
 				BasicDBObject searchQuery = new BasicDBObject();
 				searchQuery.put("empreinte", empreinte);
+				// TODO Encrypter
 				collection.replaceOne(searchQuery, clientAModifier);
 
 				// Envoie la facture au client
