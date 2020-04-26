@@ -139,7 +139,7 @@ public class AES {
 	
 	private void remplirBoitesSubstitution()
 	{
-		//À implémenter avec l'inverse multiplicatif
+		//TODO À implémenter avec l'inverse multiplicatif
 	}
 
 	/**
@@ -240,30 +240,17 @@ public class AES {
 							Integer.parseInt(cle[i][k], 16));
 		
 	}
-
-	/**
-	 * Tableau de substitution de Rinjdael pour l'encryption
-	 * 
-	 * @param a - La String à substituer
-	 * @return La string substituée
-	 */
-	protected static String substitutionAvant(String a) {
-
-		return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
-
-	}
-
-	/**
-	 * Tableau de substitution de Rinjdael pour la décryption
-	 * 
-	 * @param a - La String à substituer
-	 * @return La string substituée
-	 */
-	protected static String substitutionArriere(String s) {
-		
-		return SUBSTITUTION_DE[Integer.parseInt(s.substring(0, 2), 16)];
+	
+	protected void mixColumn()
+	{
+		//TODO à implémenter
 	}
 	
+	
+	protected void mixColumnInverse()
+	{
+		//TODO à implémenter
+	}
 
 	/**
 	 * Méthode permettant d'encrypter un message
@@ -465,9 +452,9 @@ public class AES {
 		 */
 		private String fonctionGAvant(String mot) {
 			String temp = mot.substring(2, 8) + mot.substring(0, 2);
-			temp = AES.substitutionAvant(temp.substring(0, 2)) + AES.substitutionAvant(temp.substring(2, 4))
-					+ AES.substitutionAvant(temp.substring(4, 6))
-					+ AES.substitutionAvant(temp.substring(6, 8));
+			temp = substitutionAvant(temp.substring(0, 2)) + substitutionAvant(temp.substring(2, 4))
+					+ substitutionAvant(temp.substring(4, 6))
+					+ substitutionAvant(temp.substring(6, 8));
 
 			int rc = 1 << round;
 
@@ -481,6 +468,18 @@ public class AES {
 			if (temp.length() == 7)
 				temp = "0" + temp;
 			return temp;
+		}
+		
+		/**
+		 * Tableau de substitution de Rinjdael pour l'encryption
+		 * 
+		 * @param a - La String à substituer
+		 * @return La string substituée
+		 */
+		protected String substitutionAvant(String a) {
+
+			return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
+
 		}
 
 		public String toString() {
