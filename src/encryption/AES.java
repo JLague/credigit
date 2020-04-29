@@ -275,74 +275,6 @@ public class AES {
 		// TODO À implémenter
 		return null;
 	}
-
-	/**
-	 * Méthode transformant un long en String (Créé car réversible avec son opposé)
-	 * 
-	 * @param l - Le long
-	 * @return La String représentant le long
-	 */
-	public static String fromLong(long l) {
-		// TODO À implémenter
-		return null;
-	}
-
-	/**
-	 * Méthode transformant une String en long(Créé car réversible avec son opposé)
-	 * 
-	 * @param s - La String
-	 * @return Le long représentant la String
-	 */
-	public static long toLong(String s) {
-		// TODO À implémenter
-		return 0;
-	}
-
-	/**
-	 * Méthode transformant un float en String (Créé car réversible avec son opposé)
-	 * 
-	 * @param f - Le float
-	 * @return La String représentant le float
-	 */
-	public static String fromFloat(float f) {
-		// TODO À implémenter
-		return null;
-	}
-
-	/**
-	 * Méthode transformant une String en float (Créé car réversible avec son
-	 * opposé)
-	 * 
-	 * @param s - La String
-	 * @return Le float représentant la String
-	 */
-	public static float toFloat(String s) {
-		// TODO À implémenter
-		return 0;
-	}
-
-	/**
-	 * Méthode transformant un int en String (Créé car réversible avec son opposé)
-	 * 
-	 * @param i - Le int
-	 * @return La String représentant le int
-	 */
-	public static String fromInt(int i) {
-		// TODO À implémenter
-		return null;
-	}
-
-	/**
-	 * Méthode transformant une String en int (Créé car réversible avec son opposé)
-	 * 
-	 * @param s - La String
-	 * @return Le int représentant la String
-	 */
-	public static int toInt(String s) {
-		// TODO À implémenter
-		return 0;
-	}
-	
 	
 	/**
 	 * Cette classe s'occupe de garder et générer les clés utilisé par l'algorithme.
@@ -495,4 +427,32 @@ public class AES {
 
 	}
 	
+	/**
+	 * Méthode permettant de padder une String selon un bloc de 128-bit (16 bytes)
+	 * 
+	 * @param s la String à padder
+	 * @return la String paddé
+	 */
+	private static String padString(String s) {
+		byte count = 0;
+		while(s.getBytes().length % 15 != 0) {
+			count++;
+			s += " ";
+		}
+		
+		s += (char) count;
+		
+		return s;
+	}
+	
+	/**
+	 * Méthode permettant de padder une String selon un bloc de 128-bit (16 bytes)
+	 * 
+	 * @param s la String à padder
+	 * @return la String paddé
+	 */
+	private static String unpadString(String s) {
+		byte paddingLength = (byte) s.charAt(s.length()-1);
+		return s.substring(0, s.length()-paddingLength-1);
+	}
 }
