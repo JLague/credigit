@@ -20,8 +20,15 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import commun.CryptableCodec;
+import commun.codecs.DateCodec;
+import commun.codecs.FloatCodec;
+import commun.codecs.IntegerCodec;
+import commun.codecs.LongCodec;
+import commun.codecs.StringCodec;
 import commun.exception.ExceptionCreationCompte;
 import encryption.CleRSA;
+import encryption.RSA;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -90,6 +97,11 @@ public class ConnexionInscription {
 	 * Connexion au serveur d'envoi de courriels
 	 */
 	private CourrielConfirmation courriel;
+	
+	/**
+	 * Liste contenant les codecs custom
+	 */
+	private List<CryptableCodec<?>> customCodecs;
 
 	/**
 	 * Constructeur par défaut utilisé lorsqu'on a pas besoin d'envoyer un courriel
@@ -104,7 +116,7 @@ public class ConnexionInscription {
 				"mongodb+srv://inscription:4NhaE8c8SxH0LgWE@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 		CodecRegistry pojoCodecRegistry = CodecRegistries
 				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(), MongoClientSettings.getDefaultCodecRegistry(),
 				pojoCodecRegistry);
 		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.codecRegistry(codecRegistry).build();
@@ -113,6 +125,8 @@ public class ConnexionInscription {
 
 		database = mongoClient.getDatabase(DB);
 
+		this.loadCleFromDB();
+		
 		// Instantiation des collections
 		clientsCollection = database.getCollection(COMPTES_CLIENTS, Client.class);
 		empreintesCollection = database.getCollection(EMPREINTES);
@@ -126,7 +140,6 @@ public class ConnexionInscription {
 	 * @throws ExceptionCreationCompte
 	 */
 	public boolean ajouterCompteClient(Client client) throws ExceptionCreationCompte {
-		// TODO Encrypter
 		try {
 			// On insère le compte
 			clientsCollection.insertOne(client);
@@ -193,11 +206,36 @@ public class ConnexionInscription {
 	 * 
 	 * @return la clé encryptée selon RSA
 	 */
-	public String getCleFromDatabase() {
+	private void loadCleFromDB() {
+		// Cherche la clé dans la DB
 		MongoDatabase data = mongoClient.getDatabase(DB_KEYS);
 		MongoCollection<Document> collection = data.getCollection(KEYS);
 		Document doc = collection.find().first();
+		String cle = doc.getString("key");
 
-		return doc.getString("key");
+		// Décrypte la clé
+		cle = RSA.integerToString(RSA.decrypter(RSA.stringToInteger(cle), CLE_RSA.getClePrivee(), CLE_RSA.getModule()));
+		
+		for(CryptableCodec<?> codec : this.customCodecs) {
+			codec.setCle(cle);
+		}
+	}
+	
+	/**
+	 * Instantie et retourne un CodecRegistry contenant tous les codecs customs
+	 * 
+	 * @return le CodecRegistry contenant tous les codecs customs
+	 */
+	private CodecRegistry createCustomCodecRegistry() {
+		customCodecs = new ArrayList<>();
+		
+		// Instantiate custom codecs
+		customCodecs.add(new IntegerCodec());
+		customCodecs.add(new FloatCodec());
+		customCodecs.add(new LongCodec());
+		customCodecs.add(new StringCodec());
+		customCodecs.add(new DateCodec());
+		
+		return CodecRegistries.fromCodecs(customCodecs);
 	}
 }

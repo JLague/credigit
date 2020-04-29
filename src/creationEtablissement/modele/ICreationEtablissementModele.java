@@ -37,11 +37,4 @@ public interface ICreationEtablissementModele {
 	 * @return Vrai si le courriel est envoyé avec succès, faux sinon
 	 */
 	public boolean envoyerCourriel(Etablissement etablissement);
-
-	/**
-	 * Méthode permettant d'aller chercher la clé dans la base de données.
-	 * 
-	 * @return la clé de AES encryptée en RSA
-	 */
-	public String getCleFromDatabase();
 }

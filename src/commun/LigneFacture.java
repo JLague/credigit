@@ -4,15 +4,13 @@ import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import encryption.AES;
-
 /**
  * Classe représentant une ligne de la facture dans le TableView du POS
  * 
  * @author Bank-era Corp.
  * 
  */
-public class LigneFacture implements Serializable, Cryptable {
+public class LigneFacture implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -136,7 +134,7 @@ public class LigneFacture implements Serializable, Cryptable {
 	 * @return le prix en String
 	 */
 	public String getPrixString() {
-		return cf.format(this.prix);
+		return (prixString = cf.format(this.prix));
 	}
 
 	/**
@@ -145,29 +143,5 @@ public class LigneFacture implements Serializable, Cryptable {
 	 */
 	public void setPrixString(String prixString) {
 		this.prixString = prixString;
-	}
-
-	@Override
-	public void encrypter(String cle) {
-		this.prixUnitaire = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.prixUnitaire)));
-		this.prix = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.prix)));
-		this.quantite = AES.toInt(AES.encrypter(cle, AES.fromInt(this.quantite)));
-		this.nom = AES.encrypter(cle, this.nom);
-		this.prixString = AES.encrypter(cle, this.prixString);
-
-		this.produit.encrypter(cle);
-
-	}
-
-	@Override
-	public void decrypter(String cle) {
-		this.prixUnitaire = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.prixUnitaire)));
-		this.prix = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.prix)));
-		this.quantite = AES.toInt(AES.decrypter(cle, AES.fromInt(this.quantite)));
-		this.nom = AES.decrypter(cle, this.nom);
-		this.prixString = AES.decrypter(cle, this.prixString);
-
-		this.produit.decrypter(cle);
-
 	}
 }

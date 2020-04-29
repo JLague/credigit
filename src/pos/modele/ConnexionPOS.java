@@ -1,6 +1,7 @@
 package pos.modele;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -20,7 +21,13 @@ import com.mongodb.client.MongoDatabase;
 import commun.exception.ExceptionCreationCompte;
 import commun.exception.ExceptionProduitEtablissement;
 import encryption.CleRSA;
+import encryption.RSA;
 import commun.*;
+import commun.codecs.DateCodec;
+import commun.codecs.FloatCodec;
+import commun.codecs.IntegerCodec;
+import commun.codecs.LongCodec;
+import commun.codecs.StringCodec;
 
 /**
  * Classe permettant d'effectuer la connection avec la base de données
@@ -75,6 +82,8 @@ public class ConnexionPOS {
 	private MongoClient mongoClient;
 
 	private Etablissement etablissement;
+	
+	private List<CryptableCodec<?>> customCodecs;
 
 	/**
 	 * Constructeur permettant de se connecter à la base de données et qui peuple
@@ -86,12 +95,13 @@ public class ConnexionPOS {
 				"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 		CodecRegistry pojoCodecRegistry = CodecRegistries
 				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(), MongoClientSettings.getDefaultCodecRegistry(),
 				pojoCodecRegistry);
 		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.codecRegistry(codecRegistry).build();
 
 		mongoClient = MongoClients.create(clientSettings);
+		this.loadCleFromDB();
 
 		database = mongoClient.getDatabase(DB);
 	}
@@ -360,12 +370,37 @@ public class ConnexionPOS {
 	 * 
 	 * @return la clé encryptée selon RSA
 	 */
-	public String getCleFromDatabase() {
+	private void loadCleFromDB() {
+		// Cherche la clé dans la DB
 		MongoDatabase data = mongoClient.getDatabase(DB_KEYS);
 		MongoCollection<Document> collection = data.getCollection(KEYS);
 		Document doc = collection.find().first();
+		String cle = doc.getString("key");
 
-		return doc.getString("key");
+		// Décrypte la clé
+		cle = RSA.integerToString(RSA.decrypter(RSA.stringToInteger(cle), CLE_RSA.getClePrivee(), CLE_RSA.getModule()));
+		
+		for(CryptableCodec<?> codec : this.customCodecs) {
+			codec.setCle(cle);
+		}
+	}
+	
+	/**
+	 * Instantie et retourne un CodecRegistry contenant tous les codecs customs
+	 * 
+	 * @return le CodecRegistry contenant tous les codecs customs
+	 */
+	private CodecRegistry createCustomCodecRegistry() {
+		customCodecs = new ArrayList<>();
+		
+		// Instantiate custom codecs
+		customCodecs.add(new IntegerCodec());
+		customCodecs.add(new FloatCodec());
+		customCodecs.add(new LongCodec());
+		customCodecs.add(new StringCodec());
+		customCodecs.add(new DateCodec());
+		
+		return CodecRegistries.fromCodecs(customCodecs);
 	}
 
 }

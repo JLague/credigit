@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commun.exception.ExceptionProduitEtablissement;
-import encryption.AES;
 
 /**
  * Classe créant un établissement
@@ -13,7 +12,7 @@ import encryption.AES;
  * @author Bank-era Corp.
  *
  */
-public class Etablissement implements Serializable, Cloneable, Cryptable {
+public class Etablissement implements Serializable, Cloneable {
 
 	/**
 	 * Serial version ID
@@ -404,49 +403,4 @@ public class Etablissement implements Serializable, Cloneable, Cryptable {
 
 		return clone;
 	}
-
-	@Override
-	public void encrypter(String cle) {
-		this.nom = AES.encrypter(cle, this.nom);
-		this.courriel = AES.encrypter(cle, this.courriel);
-		this.adresse = AES.encrypter(cle, this.adresse);
-		this.balance = AES.toFloat(AES.encrypter(cle, AES.fromFloat(this.balance)));
-		this.numero = AES.toLong(AES.encrypter(cle, AES.fromLong(this.numero)));
-		
-		for(Produit p : inventaire) {
-			p.encrypter(cle);
-		}
-		
-		for(Vendeur v : vendeurs) {
-			v.encrypter(cle);
-		}
-		
-		for(Transaction t : transactions) {
-			t.encrypter(cle);
-		}
-		
-	}
-
-	@Override
-	public void decrypter(String cle) {
-		this.nom = AES.decrypter(cle, this.nom);
-		this.courriel = AES.decrypter(cle, this.courriel);
-		this.adresse = AES.decrypter(cle, this.adresse);
-		this.balance = AES.toFloat(AES.decrypter(cle, AES.fromFloat(this.balance)));
-		this.numero = AES.toLong(AES.decrypter(cle, AES.fromLong(this.numero)));
-		
-		for(Produit p : inventaire) {
-			p.decrypter(cle);
-		}
-		
-		for(Vendeur v : vendeurs) {
-			v.decrypter(cle);
-		}
-		
-		for(Transaction t : transactions) {
-			t.decrypter(cle);
-		}
-		
-	}
-
 }
