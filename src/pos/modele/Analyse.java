@@ -1,6 +1,7 @@
 package pos.modele;
 
 import commun.Transaction;
+import commun.Vendeur;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class Analyse {
 	}
 
 	public static int getNbTransactionHier(Etablissement e) {
-		return getTransactionAvant(e,1).size();
+		return getTransactionAvant(e, 1).size();
 	}
 
 	public static float getVentesBrutesToday(Etablissement e) {
@@ -70,9 +71,9 @@ public class Analyse {
 
 		return total;
 	}
-	
+
 	public static float getVentesBrutesHier(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionAvant(e,1);
+		ArrayList<Transaction> listTr = getTransactionAvant(e, 1);
 		float total = 0;
 
 		for (Transaction tr : listTr) {
@@ -94,9 +95,9 @@ public class Analyse {
 		}
 		return profit;
 	}
-	
+
 	public static float getProfitHier(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionAvant(e,1);
+		ArrayList<Transaction> listTr = getTransactionAvant(e, 1);
 		float profit = 0;
 
 		for (Transaction tr : listTr) {
@@ -106,5 +107,9 @@ public class Analyse {
 			}
 		}
 		return profit;
+	}
+
+	public static ArrayList<Vendeur> getUtilisateur(Etablissement e) {
+		return (ArrayList<Vendeur>) e.getUtilisateurs();
 	}
 }
