@@ -274,16 +274,87 @@ public class AES {
 
 	}
 
-	private static List<String[][]> mixColumns(List<String[][]> liste) {
+	public static List<String[][]> mixColumns(List<String[][]> texte) {
+		
+		for (String[][] matrice : texte) {
+			
+			for (int i = 0; i < TAILLE; i++) {
+					
+					Integer[] colonne = new Integer[4];
+					Integer[]  temp = new Integer[4];		
+					
+					colonne[0] = Integer.valueOf(matrice[0][i], 16);
+					colonne[1] = Integer.valueOf(matrice[1][i], 16);
+					colonne[2] = Integer.valueOf(matrice[2][i], 16);
+					colonne[3] = Integer.valueOf(matrice[3][i], 16);
 
-		// TODO à implémenter
-		return null;
+					
+					temp[0] =(bitwiseMultiply(colonne[0], 2) ^ bitwiseMultiply(colonne[1], 3) ^ colonne[2] ^ colonne[3]);
+					temp[1] =(colonne[0] ^ bitwiseMultiply(colonne[1], 2) ^ bitwiseMultiply(colonne[2], 3) ^ colonne[3]);
+					temp[2] =(colonne[0] ^ colonne[1] ^ bitwiseMultiply(colonne[2], 2) ^ bitwiseMultiply(colonne[3], 3));
+					temp[3] =(bitwiseMultiply(colonne[0], 3) ^ colonne[1] ^ colonne[2] ^ bitwiseMultiply(colonne[3], 2));
+								
+					
+					for(int j = 0; j < TAILLE; j++)
+					{
+						if(temp[j] > 255)
+						{
+							temp[j] ^= 0x1B;
+							temp[j] ^= 0b100000000;
+						}
+							
+					}
+					
+					matrice[0][i] = Integer.toHexString(temp[0]);
+					matrice[1][i] = Integer.toHexString(temp[1]);
+					matrice[2][i] = Integer.toHexString(temp[2]);
+					matrice[3][i] = Integer.toHexString(temp[3]);
+
+			}
+		}
+
+		return texte;
 	}
 
-	private static List<String[][]> mixColumnsInverse(List<String[][]> liste) {
-		// TODO à implémenter
+	public static List<String[][]> mixColumnsInverse(List<String[][]> texte) {
+		for (String[][] matrice : texte) {
+			
+			for (int i = 0; i < TAILLE; i++) {
+					
+					Integer[] colonne = new Integer[4];
+					Integer[]  temp = new Integer[4];		
+					
+					colonne[0] = Integer.valueOf(matrice[0][i], 16);
+					colonne[1] = Integer.valueOf(matrice[1][i], 16);
+					colonne[2] = Integer.valueOf(matrice[2][i], 16);
+					colonne[3] = Integer.valueOf(matrice[3][i], 16);
 
-		return null;
+					
+					temp[0] =(bitwiseMultiply(colonne[0], 14) ^ bitwiseMultiply(colonne[1], 11) ^ bitwiseMultiply(colonne[2], 13) ^ bitwiseMultiply(colonne[3], 9));
+					temp[1] =(bitwiseMultiply(colonne[0], 9) ^ bitwiseMultiply(colonne[1], 14) ^ bitwiseMultiply(colonne[2], 11) ^ bitwiseMultiply(colonne[3], 13));
+					temp[2] =(bitwiseMultiply(colonne[0], 13) ^ bitwiseMultiply(colonne[1], 9) ^ bitwiseMultiply(colonne[2], 14) ^ bitwiseMultiply(colonne[3], 11));
+					temp[3] =(bitwiseMultiply(colonne[0], 11) ^ bitwiseMultiply(colonne[1], 13) ^ bitwiseMultiply(colonne[2], 9) ^ bitwiseMultiply(colonne[3], 14));
+								
+					
+					for(int j = 0; j < TAILLE; j++)
+					{
+						if(temp[j] > 255)
+						{
+							//À vérifier!!!! car erreur
+							temp[j] ^= 0x1B;
+							temp[j] ^= 0b100000000;
+						}	
+					}
+					
+					matrice[0][i] = Integer.toHexString(temp[0]);
+					matrice[1][i] = Integer.toHexString(temp[1]);
+					matrice[2][i] = Integer.toHexString(temp[2]);
+					matrice[3][i] = Integer.toHexString(temp[3]);
+
+			}
+		}
+
+		return texte;
 	}
 
 	/**
@@ -390,6 +461,18 @@ public class AES {
 
 		return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
 
+	}
+	
+	private static int bitwiseMultiply(int n1, int n2) {
+		int a = n1, b = n2, result = 0;
+		while (b != 0) {
+			if ((b & 01) != 0) {
+				result = result ^ a;
+			}
+			a <<= 1;
+			b >>= 1;
+		}
+		return result;
 	}
 
 	/**
