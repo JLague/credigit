@@ -11,7 +11,7 @@ import java.util.*;
 public class AES {
 
 	/**
-	 * Tableau temporaire de substitution pour l'encrytion
+	 * Tableau de substitution pour l'encrytion
 	 */
 	private static final String[] SUBSTITUTION_EN = { "63", "7C", "77", "7B", "F2", "6B", "6F", "C5", "30", "01", "67",
 			"2B", "FE", "D7", "AB", "76", "CA", "82", "C9", "7D", "FA", "59", "47", "F0", "AD", "D4", "A2", "AF", "9C",
@@ -30,7 +30,7 @@ public class AES {
 			"E6", "42", "68", "41", "99", "2D", "0F", "B0", "54", "BB", "16" };
 
 	/**
-	 * Tableau temporaire de substitution pour la décryption
+	 * Tableau de substitution pour la décryption
 	 */
 	private static final String[] SUBSTITUTION_DE = { "52", "09", "6A", "D5", "30", "36", "A5", "38", "BF", "40", "A3",
 			"9E", "81", "F3", "D7", "FB", "7C", "E3", "39", "82", "9B", "2F", "FF", "87", "34", "8E", "43", "44", "C4",
@@ -52,80 +52,84 @@ public class AES {
 	 * Taille des matrices texte et des clés
 	 */
 	public static final int TAILLE = 4;
-
+	
+	
 	/**
-	 * Le trousseau de Cle
-	 */
-	private TrousseauClef cles;
-
-	/**
-	 * Liste contenant les matrices de textes à encoder
-	 */
-	private List<String[][]> texte;
-
-	/**
-	 * Le texte encrypté
-	 */
-	private String texteEncrypte = null;
-
-	/**
-	 * Remplis la liste de matrice de textes à encoder et crée le trousseau de clé
+	 * Méthode permettant d'encrypter un message
 	 * 
-	 * @param cle   - Le mot de passe servant à créer le trousseau de clé
-	 * @param texte - Le texte à encoder
+	 * @param cle     - La clé d'encryption
+	 * @param message - Le message
+	 * @return Le message codé
 	 */
-	public AES(String cle, String texte) {
-		remplirTexte(texte);
-		remplirBoitesSubstitution();
-		creerTrousseauCle(cle);
+	public static String encrypter(String cle, String message) {
+		List<String[][]> cles = genererCles(cle);
+		List<String[][]> texteAEncoder = remplirTexte(message);
+
+		texteAEncoder = addRoundKey(texteAEncoder, cles.get(0));
+
+		for (int i = 1; i < 10; i++) {
+			texteAEncoder = subBytes(texteAEncoder);
+			texteAEncoder = shiftRows(texteAEncoder);
+			texteAEncoder = mixColumns(texteAEncoder);
+			texteAEncoder = addRoundKey(texteAEncoder, cles.get(i));
+		}
+
+		texteAEncoder = subBytes(texteAEncoder);
+		texteAEncoder = shiftRows(texteAEncoder);
+		texteAEncoder = addRoundKey(texteAEncoder, cles.get(10));
+
+		return viderTexte(texteAEncoder);
 	}
 
 	/**
-	 * Retourne le texte encrypté
+	 * Méthode permettant de décrypter un message
 	 * 
-	 * @return Le texte encrypté
+	 * @param cle     - La clé d'encryption
+	 * @param message - Le message codé
+	 * @return Le message brut
 	 */
-	public String getTextEncrypte() {
-		return texteEncrypte;
+	public static String decrypter(String cle, String message) {
+		List<String[][]> cles = genererCles(cle);
+		List<String[][]> texteAEncoder = remplirTexte(message);
+
+		// MixColumnsInverse sur clé 1 à 9
+
+		// Est-ce que on commence avec la dernière ou première clé????
+		texteAEncoder = addRoundKey(texteAEncoder, cles.get(10));
+
+		for (int i = 9; i > 0; i--) {
+			texteAEncoder = subBytesInverse(texteAEncoder);
+			texteAEncoder = shiftRowsInverse(texteAEncoder);
+			texteAEncoder = mixColumnsInverse(texteAEncoder);
+			texteAEncoder = addRoundKey(texteAEncoder, cles.get(i));
+		}
+
+		texteAEncoder = subBytesInverse(texteAEncoder);
+		texteAEncoder = shiftRowsInverse(texteAEncoder);
+		texteAEncoder = addRoundKey(texteAEncoder, cles.get(0));
+
+		return viderTexte(texteAEncoder);
 	}
 
 	/**
-	 * Retourne la liste de matrice d'encryption
-	 * 
-	 * @return La liste de matrice d'encryption
-	 */
-	protected List<String[][]> getMatrice() {
-		return texte;
-	}
-
-	/**
-	 * Retourne le trousseau de clé
-	 * 
-	 * @return Le trousseau de clé
-	 */
-	protected TrousseauClef getTrousseau() {
-		return cles;
-	}
-
-	/**
-	 * Remplis la liste de matrice de textes
+	 * Remplis la liste de matrices de textes
 	 * 
 	 * @param texte - Le texte servant à remplir les matrices
 	 */
-	private void remplirTexte(String texte) {
-		this.texte = new ArrayList<String[][]>();
+	private static List<String[][]> remplirTexte(String texte) {
+		List<String[][]> liste = new ArrayList<String[][]>();
 		int cpt = 0;
 
 		for (int i = 0; i < texte.length(); i += TAILLE * TAILLE) {
-			this.texte.add(new String[TAILLE][TAILLE]);
+			liste.add(new String[TAILLE][TAILLE]);
 
 			int temp = 0;
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 					if (i + temp < texte.length())
-						this.texte.get(cpt)[k][j] = Integer.toHexString((int) texte.charAt(i + temp));
+						liste.get(cpt)[k][j] = Integer.toHexString((int) texte.charAt(i + temp));
 					else
-						this.texte.get(cpt)[k][j] = Integer.toHexString((int) ' ');
+						liste.get(cpt)[k][j] = Integer.toHexString((int) ' ');
 
 					temp++;
 				}
@@ -133,25 +137,40 @@ public class AES {
 
 			cpt++;
 		}
-	}
 
-	private void remplirBoitesSubstitution() {
-		// TODO À implémenter avec l'inverse multiplicatif
+		return liste;
 	}
 
 	/**
-	 * Crée le trousseau de clé
-	 * 
-	 * @param cle - Le mot de passe pour créer le trousseau de clé
+	 * Vide la liste de matrices de textes pour mettre les caractère en String
+	 * @param liste - La liste de matrices à vider
+	 * @return Le message contenu dans les matrices
 	 */
-	private void creerTrousseauCle(String cle) {
-		cles = new TrousseauClef(cle);
+	private static String viderTexte(List<String[][]> liste) {
+		String texte = "";
+
+		for (int i = 0; i < liste.size(); i++) {
+			for (int j = 0; j < TAILLE; j++) {
+				for (int k = 0; k < TAILLE; k++) {
+
+					
+					//À Regarder
+					texte += Integer.toString(Integer.valueOf(liste.get(i)[k][j], 16), 10);
+
+				}
+			}
+		}
+
+		return texte;
 	}
 
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour l'encryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
 	 */
-	protected void shiftRows() {
+	private static List<String[][]> shiftRows(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
 			int cpt = 1;
 
@@ -169,12 +188,17 @@ public class AES {
 				cpt++;
 			}
 		}
+
+		return texte;
 	}
 
 	/**
 	 * Décale les rangées selon l'algorithme de RINJDAEL pour la décryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
 	 */
-	protected void shiftRowsInverse() {
+	private static List<String[][]> shiftRowsInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
 			int cpt = 1;
 
@@ -198,26 +222,38 @@ public class AES {
 				cpt++;
 			}
 		}
+
+		return texte;
 	}
 
 	/**
 	 * Substitue chaque caractère de la liste de matrice de texte pour l'encryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
 	 */
-	protected void sBox() {
+	private static List<String[][]> subBytes(List<String[][]> texte) {
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
 				for (int k = 0; k < TAILLE; k++)
 					matrice[i][k] = SUBSTITUTION_EN[Integer.parseInt(matrice[i][k], 16)];
+
+		return texte;
 	}
 
 	/**
-	 * Substitue chaque caractère de la liste de matrice de texte pour la décryption
+	 * Substitue chaque caractère de la liste de matrice de texte pour l'encryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
 	 */
-	protected void sBoxInverse() {
+	private static List<String[][]> subBytesInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
 				for (int k = 0; k < TAILLE; k++)
 					matrice[i][k] = SUBSTITUTION_DE[Integer.parseInt(matrice[i][k], 16)];
+
+		return texte;
 	}
 
 	/**
@@ -226,8 +262,7 @@ public class AES {
 	 * 
 	 * @param round - La round de l'AES
 	 */
-	protected void addRoundKey(int round) {
-		String[][] cle = cles.getCle(round);
+	private static List<String[][]> addRoundKey(List<String[][]> texte, String[][] cle) {
 
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
@@ -235,222 +270,125 @@ public class AES {
 					matrice[i][k] = Integer
 							.toHexString(Integer.parseInt(matrice[i][k], 16) ^ Integer.parseInt(cle[i][k], 16));
 
+		return texte;
+
 	}
 
-	protected String mixColumn(String m) {
-		String s = "";
-		for (int j = 0; j < 4; j++) {
-			for (int i = 0; i < 4; i++) {
-				s += Integer.toHexString(Integer.parseInt(getNByte(m, i * 4 + 0), 16) * 2
-						+ Integer.parseInt(getNByte(m, i * 4 + 5), 16) * 3
-						+ Integer.parseInt(getNByte(m, i * 4 + 10), 16)
-						+ Integer.parseInt(getNByte(m, i * 4 + 15), 16));
-				s += Integer.toHexString(
-						Integer.parseInt(getNByte(m, i * 4 + 0), 16) + Integer.parseInt(getNByte(m, i * 4 + 5), 16) * 2
-								+ Integer.parseInt(getNByte(m, i * 4 + 10), 16) * 3
-								+ Integer.parseInt(getNByte(m, i * 4 + 15), 16));
-				s += Integer.toHexString(
-						Integer.parseInt(getNByte(m, i * 4 + 0), 16) + Integer.parseInt(getNByte(m, i * 4 + 5), 16)
-								+ Integer.parseInt(getNByte(m, i * 4 + 10), 16) * 2
-								+ Integer.parseInt(getNByte(m, i * 4 + 15), 16) * 3);
-				s += Integer.toHexString(Integer.parseInt(getNByte(m, i * 4 + 0), 16) * 3
-						+ Integer.parseInt(getNByte(m, i * 4 + 5), 16) + Integer.parseInt(getNByte(m, i * 4 + 10), 16)
-						+ Integer.parseInt(getNByte(m, i * 4 + 15), 16) * 2);
-			}
-		}
+	private static List<String[][]> mixColumns(List<String[][]> liste) {
 
-		return s;
-	}
-
-	protected void mixColumnInverse() {
 		// TODO à implémenter
+		return null;
 	}
 
-	/**
-	 * Méthode permettant d'encrypter un message
-	 * 
-	 * @param cle     - La clé d'encryption
-	 * @param message - Le message
-	 * @return le message codé
-	 */
-	public static String encrypter(String cle, String message) {
-		String messageCode = "";
-		return messageCode;
-	}
+	private static List<String[][]> mixColumnsInverse(List<String[][]> liste) {
+		// TODO à implémenter
 
-	/**
-	 * Méthode permettant de décrypter un message
-	 * 
-	 * @param cle     - La clé d'encryption
-	 * @param message - Le message codé
-	 * @return Le message brut
-	 */
-	public static String decrypter(String cle, String message) {
-		// TODO À implémenter
 		return null;
 	}
 
 	/**
-	 * Return le nieme byte de la string, considère la chaine comme un gallois field
-	 * 
-	 * @param s la chaine
-	 * @param n la position du byte voulu
-	 * @return le byte voulu
+	 * Génére toute les matrices de clés nécessaires pour l'encryption
 	 */
-	private static String getNByte(String s, int n) {
-		int i = 0;
+	private static List<String[][]> genererCles(String pClef) {
+		String clef;
+		List<String[][]> cles = new ArrayList<>();
 
-		if (n * 2 > s.length())
-			i = n - (s.length() / 2);
+		if (pClef.length() > 32)
+			clef = pClef.substring(0, 32);
 		else
-			i = n;
+			clef = "00000000000000000000000000000000".substring(0, 32 - pClef.length()) + pClef;
 
-		return s.substring(i * 2, i * 2 + 2);
+		int round = 0;
+
+		cles.add(remplirMatrice(clef));
+		while (round < 10) {
+			cles.add(genererProchaine(clef, round));
+			round++;
+		}
+
+		return cles;
 	}
 
 	/**
-	 * Cette classe s'occupe de garder et générer les clés utilisé par l'algorithme.
-	 * 
-	 * @author Bank-era Corp.
+	 * Remplis la matrice pour la clé et l'ajoute à la liste de clé
 	 */
-	private class TrousseauClef {
+	private static String[][] remplirMatrice(String clef) {
+		String[][] cle = new String[TAILLE][TAILLE];
 
-		private List<String[][]> cles;
+		int cpt = 0;
 
-		private String clef;
-		private int round;
-
-		private String mot0;
-		private String mot1;
-		private String mot2;
-		private String mot3;
-
-		private String nMot0;
-		private String nMot1;
-		private String nMot2;
-		private String nMot3;
-
-		public TrousseauClef(String pClef) {
-
-			if (pClef.length() > 32)
-				this.clef = pClef.substring(0, 32);
-			else
-				this.clef = "00000000000000000000000000000000".substring(0, 32 - pClef.length()) + pClef;
-
-			cles = new ArrayList<>();
-			round = 0;
-
-			genererCles();
-		}
-
-		protected String[][] getCle(int index) {
-			return cles.get(index);
-		}
-
-		/**
-		 * Génére toute les matrices de clés nécessaires pour l'encryption
-		 */
-		private void genererCles() {
-			remplirMatrice();
-			while (round < 10) {
-				genererProchaine();
-			}
-		}
-
-		/**
-		 * Remplis la matrice pour la clé et l'ajoute à la liste de clé
-		 */
-		private void remplirMatrice() {
-			String[][] cle = new String[TAILLE][TAILLE];
-
-			int cpt = 0;
-
-			for (int j = 0; j < TAILLE; j++)
-				for (int k = 0; k < TAILLE; k++) {
-					cle[k][j] = clef.substring(cpt, cpt + 2);
-					cpt += 2;
-				}
-
-			cles.add(cle);
-		}
-
-		/**
-		 * Génère la prochaine clée sous forme de String
-		 */
-		private void genererProchaine() {
-			mot0 = clef.substring(0, 8);
-			mot1 = clef.substring(8, 16);
-			mot2 = clef.substring(16, 24);
-			mot3 = clef.substring(24, 32);
-
-			nMot0 = "";
-			nMot1 = "";
-			nMot2 = "";
-			nMot3 = "";
-
-			for (int i = 0; i < mot0.length(); i++) {
-				nMot0 += Integer.toHexString(Integer.parseInt(mot0.charAt(i) + "", 16)
-						^ Integer.parseInt(fonctionGAvant(mot3).charAt(i) + "", 16));
-				nMot1 += Integer.toHexString(
-						Integer.parseInt(nMot0.charAt(i) + "", 16) ^ Integer.parseInt(mot1.charAt(i) + "", 16));
-				nMot2 += Integer.toHexString(
-						Integer.parseInt(nMot1.charAt(i) + "", 16) ^ Integer.parseInt(mot2.charAt(i) + "", 16));
-				nMot3 += Integer.toHexString(
-						Integer.parseInt(nMot2.charAt(i) + "", 16) ^ Integer.parseInt(mot3.charAt(i) + "", 16));
+		for (int j = 0; j < TAILLE; j++)
+			for (int k = 0; k < TAILLE; k++) {
+				cle[k][j] = clef.substring(cpt, cpt + 2);
+				cpt += 2;
 			}
 
-			round++;
-			clef = nMot0 + nMot1 + nMot2 + nMot3;
-			remplirMatrice();
+		return cle;
+	}
+
+	/**
+	 * Génère la prochaine clée sous forme de String
+	 */
+	private static String[][] genererProchaine(String clef, int round) {
+		String mot0 = clef.substring(0, 8);
+		String mot1 = clef.substring(8, 16);
+		String mot2 = clef.substring(16, 24);
+		String mot3 = clef.substring(24, 32);
+
+		String nMot0 = "";
+		String nMot1 = "";
+		String nMot2 = "";
+		String nMot3 = "";
+
+		for (int i = 0; i < mot0.length(); i++) {
+			nMot0 += Integer.toHexString(Integer.parseInt(mot0.charAt(i) + "", 16)
+					^ Integer.parseInt(fonctionGAvant(mot3, round).charAt(i) + "", 16));
+			nMot1 += Integer.toHexString(
+					Integer.parseInt(nMot0.charAt(i) + "", 16) ^ Integer.parseInt(mot1.charAt(i) + "", 16));
+			nMot2 += Integer.toHexString(
+					Integer.parseInt(nMot1.charAt(i) + "", 16) ^ Integer.parseInt(mot2.charAt(i) + "", 16));
+			nMot3 += Integer.toHexString(
+					Integer.parseInt(nMot2.charAt(i) + "", 16) ^ Integer.parseInt(mot3.charAt(i) + "", 16));
 		}
 
-		/**
-		 * Accomplit la fonction g sur un mot
-		 * 
-		 * @param mot - Mot qui subira la fonction g
-		 * @return le mot modifié
-		 */
-		private String fonctionGAvant(String mot) {
-			String temp = mot.substring(2, 8) + mot.substring(0, 2);
-			temp = substitutionAvant(temp.substring(0, 2)) + substitutionAvant(temp.substring(2, 4))
-					+ substitutionAvant(temp.substring(4, 6)) + substitutionAvant(temp.substring(6, 8));
+		clef = nMot0 + nMot1 + nMot2 + nMot3;
+		return remplirMatrice(clef);
+	}
 
-			int rc = 1 << round;
+	/**
+	 * Accomplit la fonction g sur un mot
+	 * 
+	 * @param mot - Mot qui subira la fonction g
+	 * @return le mot modifié
+	 */
+	private static String fonctionGAvant(String mot, int round) {
+		String temp = mot.substring(2, 8) + mot.substring(0, 2);
+		temp = substitutionAvant(temp.substring(0, 2)) + substitutionAvant(temp.substring(2, 4))
+				+ substitutionAvant(temp.substring(4, 6)) + substitutionAvant(temp.substring(6, 8));
 
-			if (round == 8) {
-				rc = 27;
-			} else if (round == 9) {
-				rc = 54;
-			}
+		int rc = 1 << round;
 
-			temp = Integer.toHexString((Integer.parseInt(temp.substring(0, 2), 16) ^ rc)) + temp.substring(2, 8);
-			if (temp.length() == 7)
-				temp = "0" + temp;
-			return temp;
+		if (round == 8) {
+			rc = 27;
+		} else if (round == 9) {
+			rc = 54;
 		}
 
-		/**
-		 * Tableau de substitution de Rinjdael pour l'encryption
-		 * 
-		 * @param a - La String à substituer
-		 * @return La string substituée
-		 */
-		protected String substitutionAvant(String a) {
+		temp = Integer.toHexString((Integer.parseInt(temp.substring(0, 2), 16) ^ rc)) + temp.substring(2, 8);
+		if (temp.length() == 7)
+			temp = "0" + temp;
+		return temp;
+	}
 
-			return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
+	/**
+	 * Tableau de substitution de Rinjdael pour l'encryption
+	 * 
+	 * @param a - La String à substituer
+	 * @return La string substituée
+	 */
+	private static String substitutionAvant(String a) {
 
-		}
-
-		public String toString() {
-			String roundStyle;
-
-			if (round < 10)
-				roundStyle = " " + round;
-			else
-				roundStyle = round + "";
-
-			return "[" + roundStyle + "] k = " + clef;
-		}
+		return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
 
 	}
 
@@ -481,10 +419,5 @@ public class AES {
 	private static String unpadString(String s) {
 		byte paddingLength = (byte) s.charAt(s.length() - 1);
 		return s.substring(0, s.length() - paddingLength - 1);
-	}
-
-	public static void main(String[] args) {
-		AES aes = new AES("000102030405060708090a0b0c0d0e0f", "00112233445566778899aabbccddeeff");
-		System.out.println(aes.mixColumn("6353e08c0960e104cd70b751bacad0e7"));
 	}
 }
