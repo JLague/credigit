@@ -1,0 +1,62 @@
+/* Gradient background */
+.root {
+	-fx-background-color: linear-gradient(to right, #374587, #0D1837);
+}
+
+.boites {
+	-fx-background-color: #5F6894;
+	-fx-background-radius: 30 30 30 30;
+}
+
+/* TableView font size and transparency */
+.table-view {
+	-fx-font-size: 16.0px;
+	-fx-background-color: transparent;
+}
+
+/* TableView selection colors */
+.table-row-cell:selected {
+   -fx-background-color: white; 
+}
+.table-row-cell:selected .text {
+       -fx-fill: #0D1837;
+}
+
+.table-row-cell .text {
+	-fx-fill: white;
+}
+
+/* Header background transparency */
+.table-view .column-header-background {
+	-fx-background-color: #1D2955;
+}
+
+/* Header border */
+.table-view .column-header {
+	
+}
+
+/* TableView font and transparency */
+.cell {
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+	-fx-font-weight: bold;
+	-fx-background-color: transparent;
+}
+
+/* Header cell transparency */
+.table-column {
+	-fx-background-color: transparent;
+}
+
+/* Header text */
+.table-view .column-header .label {
+	
+	-fx-text-fill: white;
+	-fx-font-family: 'Montserrat';
+}
+
+/* TableView inner borders transparency */
+.table-row-cell{
+-fx-table-cell-border-color:transparent;
+}

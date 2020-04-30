@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/pos/BackEndDashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="refreshBtn" onMouseClicked="#refreshHandler" text="REFRESH" textFill="WHITE" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="62.0">
+         <font>
+            <Font name="Montserrat Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="178.0" layoutY="96.0" text="Tableau de bord" textFill="WHITE" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="48.0">
+         <font>
+            <Font name="Montserrat ExtraBold" size="48.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="datePicker" layoutX="565.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="133.0" AnchorPane.leftAnchor="502.0" AnchorPane.topAnchor="63.0" />
+      <AnchorPane prefHeight="201.0" prefWidth="224.0" styleClass="boites" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="154.0">
+         <children>
+            <Label text="Produits" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="produtsLbl" text="240" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="58.0" layoutY="164.0" prefHeight="201.0" prefWidth="224.0" styleClass="boites" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="154.0">
+         <children>
+            <Label text="Transactions" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="transactionsLbl1" text="1000" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Bold" size="36.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="icTransactionsDown" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_down.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="icTransactionsUp" fitHeight="24.0" fitWidth="24.0" layoutX="31.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_up.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="transactionsPourcentageLbl" text="5,2%" textFill="RED" AnchorPane.leftAnchor="61.0" AnchorPane.topAnchor="124.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="162.0" text="depuis hier" textFill="#c5c5c5" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="318.0" layoutY="164.0" prefHeight="201.0" prefWidth="224.0" styleClass="boites" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="391.0">
+         <children>
+            <Label text="Ventes brutes" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="ventesBrutesLbl" text="\$7500.24" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Bold" size="36.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="icVentesBrutesDown" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_down.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="icVentesBrutesUp" fitHeight="24.0" fitWidth="24.0" layoutX="31.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_up.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="ventesBrutesPourcentageLbl" text="5,2%" textFill="RED" AnchorPane.leftAnchor="61.0" AnchorPane.topAnchor="124.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="162.0" text="depuis hier" textFill="#c5c5c5" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="58.0" layoutY="401.0" prefHeight="201.0" prefWidth="224.0" styleClass="boites" AnchorPane.leftAnchor="308.0" AnchorPane.topAnchor="391.0">
+         <children>
+            <Label text="Profits" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="profitsLbl" text="\$3000.24" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Bold" size="36.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="icVentesBrutesDown1" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_down.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="icVentesBrutesUp1" fitHeight="24.0" fitWidth="24.0" layoutX="31.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_up.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="profitsPourcentageLbl" text="5,2%" textFill="RED" AnchorPane.leftAnchor="61.0" AnchorPane.topAnchor="124.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="74.0" layoutY="162.0" text="depuis hier" textFill="#c5c5c5" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="21.0">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="1116.0" layoutY="226.0" prefHeight="438.0" prefWidth="1304.0" styleClass="boites" AnchorPane.leftAnchor="568.0" AnchorPane.topAnchor="154.0">
+         <children>
+            <Label text="Revenus" textFill="#c5c5c5" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="19.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="29.0" text="Semaine courante" textFill="#c5c5c5" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="72.0">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="99.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_cercle_rouge.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="semaineCouranteLbl" text="1000" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="95.0">
+               <font>
+                  <Font name="Montserrat Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="82.0" text="Semaine dernière" textFill="#c5c5c5" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="149.0">
+               <font>
+                  <Font name="Montserrat Regular" size="16.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="38.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="175.0">
+               <image>
+                  <Image url="@../../../res/images/pos/ic_cercle_blanc.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="semaineDerniereLbl" layoutX="70.0" layoutY="105.0" text="1200" textFill="WHITE" AnchorPane.bottomAnchor="238.0" AnchorPane.leftAnchor="60.0">
+               <font>
+                  <Font name="Montserrat Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="172.0" layoutY="796.0" prefHeight="426.0" prefWidth="912.0" styleClass="boites" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0">
+         <children>
+            <Label text="Transactions" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="Montserrat Regular" size="24.0" />
+               </font>
+            </Label>
+            <TableView fx:id="transactionsTb" layoutX="222.0" layoutY="162.0" prefHeight="374.0" prefWidth="912.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
+              <columns>
+                <TableColumn prefWidth="232.0" text="Numéro de transaction" />
+                <TableColumn prefWidth="213.0" text="Date de la transaction" />
+                  <TableColumn minWidth="0.0" prefWidth="208.0" text="Quantité de produits" />
+                  <TableColumn minWidth="8.0" prefWidth="124.0" text="Sous total" />
+                  <TableColumn minWidth="0.0" prefWidth="134.0" text="Total" />
+              </columns>
+            </TableView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
