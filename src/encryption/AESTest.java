@@ -417,20 +417,29 @@ public class AESTest {
 //		System.out.println(s);
 //	}
 	
+//	@Test
+//	public void testMix()
+//	{
+//		List<String[][]> liste = new ArrayList<>();
+//		
+//		String[][] s = {{"63", "09", "cd", "ba"}, {"53", "60", "70", "ca"}, {"e0", "e1", "b7", "d0"}, {"8c", "04", "51", "e7"}};
+//		
+//		liste.add(s);
+//		
+//		AES.mixColumns(liste);
+//		
+//		AES.mixColumnsInverse(liste);
+//		
+//		System.out.println();
+//	}
+	
 	@Test
-	public void testMix()
+	public void testEncrypter()
 	{
-		List<String[][]> liste = new ArrayList<>();
-		
-		String[][] s = {{"63", "09", "cd", "ba"}, {"53", "60", "70", "ca"}, {"e0", "e1", "b7", "d0"}, {"8c", "04", "51", "e7"}};
-		
-		liste.add(s);
-		
-		AES.mixColumns(liste);
-		
-		AES.mixColumnsInverse(liste);
-		
-		System.out.println();
+		//Méthode testant l'encryptage de messages
+		System.out.println("Test1");
+		System.out.println(AES.encrypter("00112233445566778899aabbccddeeff", "000102030405060708090a0b0c0d0e0f" ));
+
 	}
 
 }

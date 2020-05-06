@@ -63,7 +63,7 @@ public class AES {
 	 */
 	public static String encrypter(String cle, String message) {
 		List<String[][]> cles = genererCles(cle);
-		List<String[][]> texteAEncoder = remplirTexte(message);
+		List<String[][]> texteAEncoder = remplirTexteEncryption(message);
 
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(0));
 
@@ -78,7 +78,7 @@ public class AES {
 		texteAEncoder = shiftRows(texteAEncoder);
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(10));
 
-		return viderTexte(texteAEncoder);
+		return viderTexteEncryption(texteAEncoder);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class AES {
 	 */
 	public static String decrypter(String cle, String message) {
 		List<String[][]> cles = genererCles(cle);
-		List<String[][]> texteAEncoder = remplirTexte(message);
+		List<String[][]> texteAEncoder = remplirTexteDecryption(message);
 
 		// MixColumnsInverse sur clé 1 à 9
 
@@ -108,15 +108,15 @@ public class AES {
 		texteAEncoder = shiftRowsInverse(texteAEncoder);
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(0));
 
-		return viderTexte(texteAEncoder);
+		return viderTexteDecryption(texteAEncoder);
 	}
 
 	/**
-	 * Remplis la liste de matrices de textes
+	 * Remplis la liste de matrices de textes lors de l'encryption
 	 * 
 	 * @param texte - Le texte servant à remplir les matrices
 	 */
-	private static List<String[][]> remplirTexte(String texte) {
+	private static List<String[][]> remplirTexteEncryption(String texte) {
 		List<String[][]> liste = new ArrayList<String[][]>();
 		int cpt = 0;
 
@@ -140,23 +140,77 @@ public class AES {
 
 		return liste;
 	}
+	
+	
+	/**
+	 * Remplis la liste de matrices de textes lors de la décryption
+	 * 
+	 * @param texte - Le texte servant à remplir les matrices
+	 */
+	private static List<String[][]> remplirTexteDecryption(String texte) {
+		List<String[][]> liste = new ArrayList<String[][]>();
+		int cpt = 0;
+
+		for (int i = 0; i < texte.length(); i += TAILLE * TAILLE) {
+			liste.add(new String[TAILLE][TAILLE]);
+
+			int temp = 0;
+			for (int j = 0; j < TAILLE; j++) {
+				for (int k = 0; k < TAILLE; k++) {
+					
+					if (i + temp < texte.length())
+						liste.get(cpt)[k][j] = texte.substring(temp, temp +2);
+					else
+						liste.get(cpt)[k][j] = Integer.toHexString((int) ' ');
+
+					temp += 2;
+				}
+			}
+
+			cpt++;
+		}
+
+		return liste;
+	}
 
 	/**
-	 * Vide la liste de matrices de textes pour mettre les caractère en String
+	 * Vide la liste de matrices de textes pour mettre les caractère en String lors de l'encryption
 	 * @param liste - La liste de matrices à vider
 	 * @return Le message contenu dans les matrices
 	 */
-	private static String viderTexte(List<String[][]> liste) {
+	private static String viderTexteEncryption(List<String[][]> liste) {
 		String texte = "";
 
 		for (int i = 0; i < liste.size(); i++) {
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 
+					if(liste.get(i)[k][j].length() == 1)
+					{
+						liste.get(i)[k][j] = "0"  + liste.get(i)[k][j];
+					}
 					
-					//À Regarder
-					texte += Integer.toString(Integer.valueOf(liste.get(i)[k][j], 16), 10);
+					texte += liste.get(i)[k][j];
+				}
+			}
+		}
 
+		return texte;
+	}
+	
+	/**
+	 * Vide la liste de matrices de textes pour mettre les caractère en String lors de la décryption
+	 * @param liste - La liste de matrices à vider
+	 * @return Le message contenu dans les matrices
+	 */
+	private static String viderTexteDecryption(List<String[][]> liste) {
+		String texte = "";
+
+		for (int i = 0; i < liste.size(); i++) {
+			for (int j = 0; j < TAILLE; j++) {
+				for (int k = 0; k < TAILLE; k++) {
+
+					texte += String.valueOf((char)((int)Integer.parseInt(liste.get(i)[k][j],16)));
 				}
 			}
 		}
@@ -340,6 +394,7 @@ public class AES {
 					{
 						if(temp[j] > 255)
 						{
+							if(temp[j] > 511)
 							//À vérifier!!!! car erreur
 							temp[j] ^= 0x1B;
 							temp[j] ^= 0b100000000;
@@ -363,6 +418,8 @@ public class AES {
 	private static List<String[][]> genererCles(String pClef) {
 		String clef;
 		List<String[][]> cles = new ArrayList<>();
+		
+		pClef = convertirHexaString(pClef);
 
 		if (pClef.length() > 32)
 			clef = pClef.substring(0, 32);
@@ -378,6 +435,18 @@ public class AES {
 		}
 
 		return cles;
+	}
+	
+	private static String convertirHexaString(String cle)
+	{
+		String temp = "";
+		
+		for(int i = 0; i < cle.length(); i++)
+		{
+			temp += Integer.toHexString((int) cle.charAt(i));
+		}
+		
+		return temp;
 	}
 
 	/**
@@ -503,4 +572,5 @@ public class AES {
 		byte paddingLength = (byte) s.charAt(s.length() - 1);
 		return s.substring(0, s.length() - paddingLength - 1);
 	}
+
 }
