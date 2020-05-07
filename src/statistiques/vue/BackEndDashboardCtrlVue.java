@@ -111,7 +111,7 @@ public class BackEndDashboardCtrlVue {
 		// TODO Contacter la base de donnée afin de retirer le dernier etablissement
 		// TODO Loader l'établissement dans la variable etablissement
 
-		etablissement = null;o
+		etablissement = null;
 
 		produitsLbl.setText(etablissement.getInventaire().size() + "");
 		transactionsLbl1.setText(ctrl.getTransactionToday(etablissement).size() + "");
