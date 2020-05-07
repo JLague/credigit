@@ -4,10 +4,11 @@ import commun.Etablissement;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import pos.modele.TBControleur;
+import pos.application.TBControleur;
 
 public class BackEndDashboardCtrlVue {
 
@@ -67,6 +68,22 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private TableView<?> transactionsTb;
+	
+	@FXML
+    private TableColumn<String, String> c1;
+
+    @FXML
+    private TableColumn<String, String> c2;
+
+    @FXML
+    private TableColumn<String, String> c3;
+
+    @FXML
+    private TableColumn<String, String> c4;
+
+    @FXML
+    private TableColumn<String, String> c5;
+
 
 	@FXML
 	void refreshHandler(MouseEvent event) {
@@ -129,10 +146,29 @@ public class BackEndDashboardCtrlVue {
 		semaineCouranteLbl.setText(ctrl.getNbTransactionToday(etablissement) + "");
 		semaineDerniereLbl.setText(ctrl.getNbTransactionHier(etablissement) + "");
 
+		actualiserTB(etablissement);
+
 	}
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		this.ctrl = ctrl;
+	}
+
+	private void actualiserTB(Etablissement etablissement) {
+		c1 = new TableColumn<>("First Name");
+	    c1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+	    c2 = new TableColumn<>("Last Name");
+	    c2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+	    
+	    c3 = new TableColumn<>("First Name");
+	    c3.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+
+	    c4 = new TableColumn<>("Last Name");
+	    c4.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+	    
+	    c5 = new TableColumn<>("First Name");
+	    c5.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 	}
 
 }
