@@ -24,6 +24,7 @@ import encryption.CleRSA;
 import encryption.RSA;
 import commun.*;
 import commun.codecs.DateCodec;
+import commun.codecs.EnumCodec;
 import commun.codecs.FloatCodec;
 import commun.codecs.IntegerCodec;
 import commun.codecs.LongCodec;
@@ -82,7 +83,7 @@ public class ConnexionPOS {
 	private MongoClient mongoClient;
 
 	private Etablissement etablissement;
-	
+
 	private List<CryptableCodec<?>> customCodecs;
 
 	/**
@@ -95,8 +96,9 @@ public class ConnexionPOS {
 				"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 		CodecRegistry pojoCodecRegistry = CodecRegistries
 				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(), MongoClientSettings.getDefaultCodecRegistry(),
-				pojoCodecRegistry);
+
+		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(),
+				MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
 		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.codecRegistry(codecRegistry).build();
 
@@ -379,12 +381,12 @@ public class ConnexionPOS {
 
 		// Décrypte la clé
 		cle = RSA.integerToString(RSA.decrypter(RSA.stringToInteger(cle), CLE_RSA.getClePrivee(), CLE_RSA.getModule()));
-		
-		for(CryptableCodec<?> codec : this.customCodecs) {
+
+		for (CryptableCodec<?> codec : this.customCodecs) {
 			codec.setCle(cle);
 		}
 	}
-	
+
 	/**
 	 * Instantie et retourne un CodecRegistry contenant tous les codecs customs
 	 * 
@@ -392,14 +394,15 @@ public class ConnexionPOS {
 	 */
 	private CodecRegistry createCustomCodecRegistry() {
 		customCodecs = new ArrayList<>();
-		
+
 		// Instantiate custom codecs
 		customCodecs.add(new IntegerCodec());
 		customCodecs.add(new FloatCodec());
 		customCodecs.add(new LongCodec());
 		customCodecs.add(new StringCodec());
 		customCodecs.add(new DateCodec());
-		
+		customCodecs.add(new EnumCodec());
+
 		return CodecRegistries.fromCodecs(customCodecs);
 	}
 

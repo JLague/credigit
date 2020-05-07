@@ -22,6 +22,7 @@ import com.mongodb.client.MongoDatabase;
 
 import commun.CryptableCodec;
 import commun.codecs.DateCodec;
+import commun.codecs.EnumCodec;
 import commun.codecs.FloatCodec;
 import commun.codecs.IntegerCodec;
 import commun.codecs.LongCodec;
@@ -175,9 +176,6 @@ public class ConnexionInscription {
 			return false;
 		}
 
-		System.out.println("Client supprimé: " + result.toString());
-		System.out.println("Empreinte supprimé: " + empreinteSupprime);
-
 		return true;
 	}
 
@@ -235,6 +233,7 @@ public class ConnexionInscription {
 		customCodecs.add(new LongCodec());
 		customCodecs.add(new StringCodec());
 		customCodecs.add(new DateCodec());
+		customCodecs.add(new EnumCodec());
 		
 		return CodecRegistries.fromCodecs(customCodecs);
 	}

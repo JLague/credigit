@@ -38,6 +38,7 @@ import encryption.RSA;
 import commun.CryptableCodec;
 import commun.Etablissement;
 import commun.codecs.DateCodec;
+import commun.codecs.EnumCodec;
 import commun.codecs.FloatCodec;
 import commun.codecs.IntegerCodec;
 import commun.codecs.LongCodec;
@@ -248,6 +249,7 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 		customCodecs.add(new LongCodec());
 		customCodecs.add(new StringCodec());
 		customCodecs.add(new DateCodec());
+		customCodecs.add(new EnumCodec());
 		
 		return CodecRegistries.fromCodecs(customCodecs);
 	}

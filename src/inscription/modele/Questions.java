@@ -38,5 +38,18 @@ public enum Questions {
 	public String getTexte() {
 		return texte;
 	}
+	
+	
+	public static Questions getQuestionFromString(String texte) {
+		Questions temp = null;
+		
+		for(Questions q : Questions.values()) {
+			if(q.texte.equals(texte)) {
+				temp = q;
+			}
+		}
+		
+		return temp;
+	}
 
 }
