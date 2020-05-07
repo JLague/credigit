@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
@@ -77,7 +78,7 @@ public class BackEndDashboardCtrlVue {
 	private Label semaineDerniereLbl;
 	
 	@FXML
-	private AnchorPane root;
+	private VBox root;
 	
 	private Scene scene;
 
