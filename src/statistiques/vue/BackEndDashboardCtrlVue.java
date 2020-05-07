@@ -104,7 +104,7 @@ public class BackEndDashboardCtrlVue {
 
 	public BackEndDashboardCtrlVue() {
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("BackEndDashboardCtrlVue.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
 		loader.setController(this);
 
 		try {
