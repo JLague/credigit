@@ -18,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
@@ -77,7 +78,7 @@ public class BackEndDashboardCtrlVue {
 	private Label semaineDerniereLbl;
 	
 	@FXML
-	private AnchorPane root;
+	private VBox root;
 	
 	private Scene scene;
 
@@ -107,8 +108,6 @@ public class BackEndDashboardCtrlVue {
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
 		loader.setController(this);
-		
-		System.out.println(getClass().getResource("Login.fxml"));
 
 		try {
 			root = loader.load();
