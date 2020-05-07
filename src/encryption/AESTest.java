@@ -760,4 +760,49 @@ public class AESTest {
 
 	}
 
+	@Test
+	public void testGenererCles() {
+		// Clé bonne grosseur 16 caractères
+		List<String[][]> liste = AES.genererCles("Voici une clé123");
+
+		// S'assure que le trousseau a bien généré 11 clés
+		assertTrue(liste.size() == 11);
+
+		// S'assure qu'un clé a bien une longueur de 32 caractère en HexaString
+		List<String[][]> listeTemp = new ArrayList<>();
+		listeTemp.add(liste.get(0));
+		assertTrue(AES.viderTexteEncryption(listeTemp).length() == 32);
+		listeTemp.clear();
+		listeTemp.add(liste.get(10));
+		assertTrue(AES.viderTexteEncryption(listeTemp).length() == 32);
+
+		// Clé trop longue - Devrait couper le bout de clé inutilisé
+		List<String[][]> liste1 = AES.genererCles("Voici une clé12356789098765456");
+
+		// S'assure que le trousseau a bien généré 11 clés
+		assertTrue(liste1.size() == 11);
+
+		// S'assure qu'un clé a bien une longueur de 32 caractère en HexaString
+		List<String[][]> listeTemp1 = new ArrayList<>();
+		listeTemp1.add(liste1.get(0));
+		assertTrue(AES.viderTexteEncryption(listeTemp1).length() == 32);
+		listeTemp1.clear();
+		listeTemp1.add(liste1.get(10));
+		assertTrue(AES.viderTexteEncryption(listeTemp1).length() == 32);
+
+		// Clé trop courte - Devrait padder la clé
+		List<String[][]> liste2 = AES.genererCles("Clé12");
+
+		// S'assure que le trousseau a bien généré 11 clés
+		assertTrue(liste2.size() == 11);
+
+		// S'assure qu'un clé a bien une longueur de 32 caractère en HexaString
+		List<String[][]> listeTemp2 = new ArrayList<>();
+		listeTemp2.add(liste2.get(0));
+		assertTrue(AES.viderTexteEncryption(listeTemp2).length() == 32);
+		listeTemp2.clear();
+		listeTemp2.add(liste2.get(10));
+		assertTrue(AES.viderTexteEncryption(listeTemp2).length() == 32);
+	}
+
 }

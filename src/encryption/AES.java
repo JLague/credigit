@@ -8,7 +8,7 @@ import java.util.*;
  * @author Bank-era Corp.
  *
  */
-public class AES {
+public final class AES {
 
 	/**
 	 * Tableau de substitution pour l'encrytion
@@ -91,7 +91,6 @@ public class AES {
 		List<String[][]> cles = genererCles(cle);
 		List<String[][]> texteAEncoder = remplirTexteDecryption(message);
 
-		// Est-ce que on commence avec la dernière ou première clé????
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(10));
 		texteAEncoder = shiftRowsInverse(texteAEncoder);
 		texteAEncoder = subBytesInverse(texteAEncoder);
@@ -156,12 +155,8 @@ public class AES {
 			int temp = 2*i;
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
-
-					if (temp < texte.length())
-						liste.get(cpt)[k][j] = texte.substring(temp, temp + 2);
-					else
-						liste.get(cpt)[k][j] = Integer.toHexString((int) ' ');
-
+						
+					liste.get(cpt)[k][j] = texte.substring(temp, temp + 2);
 					temp += 2;
 				}
 			}
@@ -349,15 +344,6 @@ public class AES {
 				temp[2] = (colonne[0] ^ colonne[1] ^ bitwiseMultiply(colonne[2], 2) ^ bitwiseMultiply(colonne[3], 3));
 				temp[3] = (bitwiseMultiply(colonne[0], 3) ^ colonne[1] ^ colonne[2] ^ bitwiseMultiply(colonne[3], 2));
 
-				for (int j = 0; j < TAILLE; j++) {
-					if (temp[j] > 255) {
-						temp[j] ^= 0x1B;
-						temp[j] ^= 0b100000000;
-					}
-
-				}
-
-				
 				for(int k = 0; k < TAILLE; k ++)
 				{
 					String temporaire =  Integer.toHexString(temp[k]);
@@ -396,20 +382,6 @@ public class AES {
 				temp[3] = (bitwiseMultiply(colonne[0], 11) ^ bitwiseMultiply(colonne[1], 13)
 						^ bitwiseMultiply(colonne[2], 9) ^ bitwiseMultiply(colonne[3], 14));
 
-				for (int j = 0; j < TAILLE; j++) {
-//						if(temp[j] > 255)
-//						{
-//							if(temp[j] > 511)
-//							//À vérifier!!!! car erreur
-//							temp[j] ^= 0x1B;
-//							temp[j] ^= 0b100000000;
-//						}	
-
-					if (temp[j] < 0) {
-						temp[j] += 256;
-					}
-				}
-
 				for(int k = 0; k < TAILLE; k ++)
 				{
 					String temporaire =  Integer.toHexString(temp[k]);
@@ -429,7 +401,7 @@ public class AES {
 	/**
 	 * Génére toute les matrices de clés nécessaires pour l'encryption
 	 */
-	private static List<String[][]> genererCles(String pClef) {
+	public static List<String[][]> genererCles(String pClef) {
 		String clef;
 		List<String[][]> cles = new ArrayList<>();
 
@@ -544,16 +516,13 @@ public class AES {
 
 	}
 
+	/**
+	 * Multiplication bianire nécessaire pour plusieurs opérations de l'AES
+	 * @param a - Le premier nombre
+	 * @param b - Le deuxième nombre
+	 * @return La multiplication binaire
+	 */
 	private static int bitwiseMultiply(int a, int b) {
-//		int a = n1, b = n2, result = 0;
-//		while (b != 0) {
-//			if ((b & 01) != 0) {
-//				result = result ^ a;
-//			}
-//			a <<= 1;
-//			b >>= 1;
-//		}
-//		return result;
 
 		byte aa = (byte) a, bb = (byte) b, r = 0, t;
 		while (aa != 0) {
@@ -578,32 +547,4 @@ public class AES {
 		return r;
 	}
 
-	/**
-	 * Méthode permettant de padder une String selon un bloc de 128-bit (16 bytes)
-	 * 
-	 * @param s la String à padder
-	 * @return la String paddé
-	 */
-	private static String padString(String s) {
-		byte count = 0;
-		while (s.getBytes().length % 15 != 0) {
-			count++;
-			s += " ";
-		}
-
-		s += (char) count;
-
-		return s;
-	}
-
-	/**
-	 * Méthode permettant de padder une String selon un bloc de 128-bit (16 bytes)
-	 * 
-	 * @param s la String à padder
-	 * @return la String paddé
-	 */
-	private static String unpadString(String s) {
-		byte paddingLength = (byte) s.charAt(s.length() - 1);
-		return s.substring(0, s.length() - paddingLength - 1);
-	}
 }
