@@ -52,8 +52,7 @@ public class AES {
 	 * Taille des matrices texte et des clés
 	 */
 	public static final int TAILLE = 4;
-	
-	
+
 	/**
 	 * Méthode permettant d'encrypter un message
 	 * 
@@ -140,8 +139,7 @@ public class AES {
 
 		return liste;
 	}
-	
-	
+
 	/**
 	 * Remplis la liste de matrices de textes lors de la décryption
 	 * 
@@ -157,9 +155,9 @@ public class AES {
 			int temp = 0;
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
-					
+
 					if (i + temp < texte.length())
-						liste.get(cpt)[k][j] = texte.substring(temp, temp +2);
+						liste.get(cpt)[k][j] = texte.substring(temp, temp + 2);
 					else
 						liste.get(cpt)[k][j] = Integer.toHexString((int) ' ');
 
@@ -174,7 +172,9 @@ public class AES {
 	}
 
 	/**
-	 * Vide la liste de matrices de textes pour mettre les caractère en String lors de l'encryption
+	 * Vide la liste de matrices de textes pour mettre les caractère en String lors
+	 * de l'encryption
+	 * 
 	 * @param liste - La liste de matrices à vider
 	 * @return Le message contenu dans les matrices
 	 */
@@ -185,11 +185,10 @@ public class AES {
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 
-					if(liste.get(i)[k][j].length() == 1)
-					{
-						liste.get(i)[k][j] = "0"  + liste.get(i)[k][j];
+					if (liste.get(i)[k][j].length() == 1) {
+						liste.get(i)[k][j] = "0" + liste.get(i)[k][j];
 					}
-					
+
 					texte += liste.get(i)[k][j];
 				}
 			}
@@ -197,9 +196,11 @@ public class AES {
 
 		return texte;
 	}
-	
+
 	/**
-	 * Vide la liste de matrices de textes pour mettre les caractère en String lors de la décryption
+	 * Vide la liste de matrices de textes pour mettre les caractère en String lors
+	 * de la décryption
+	 * 
 	 * @param liste - La liste de matrices à vider
 	 * @return Le message contenu dans les matrices
 	 */
@@ -210,7 +211,7 @@ public class AES {
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 
-					texte += String.valueOf((char)((int)Integer.parseInt(liste.get(i)[k][j],16)));
+					texte += String.valueOf((char) ((int) Integer.parseInt(liste.get(i)[k][j], 16)));
 				}
 			}
 		}
@@ -329,40 +330,36 @@ public class AES {
 	}
 
 	public static List<String[][]> mixColumns(List<String[][]> texte) {
-		
-		for (String[][] matrice : texte) {
-			
-			for (int i = 0; i < TAILLE; i++) {
-					
-					Integer[] colonne = new Integer[4];
-					Integer[]  temp = new Integer[4];		
-					
-					colonne[0] = Integer.valueOf(matrice[0][i], 16);
-					colonne[1] = Integer.valueOf(matrice[1][i], 16);
-					colonne[2] = Integer.valueOf(matrice[2][i], 16);
-					colonne[3] = Integer.valueOf(matrice[3][i], 16);
 
-					
-					temp[0] =(bitwiseMultiply(colonne[0], 2) ^ bitwiseMultiply(colonne[1], 3) ^ colonne[2] ^ colonne[3]);
-					temp[1] =(colonne[0] ^ bitwiseMultiply(colonne[1], 2) ^ bitwiseMultiply(colonne[2], 3) ^ colonne[3]);
-					temp[2] =(colonne[0] ^ colonne[1] ^ bitwiseMultiply(colonne[2], 2) ^ bitwiseMultiply(colonne[3], 3));
-					temp[3] =(bitwiseMultiply(colonne[0], 3) ^ colonne[1] ^ colonne[2] ^ bitwiseMultiply(colonne[3], 2));
-								
-					
-					for(int j = 0; j < TAILLE; j++)
-					{
-						if(temp[j] > 255)
-						{
-							temp[j] ^= 0x1B;
-							temp[j] ^= 0b100000000;
-						}
-							
+		for (String[][] matrice : texte) {
+
+			for (int i = 0; i < TAILLE; i++) {
+
+				Integer[] colonne = new Integer[4];
+				Integer[] temp = new Integer[4];
+
+				colonne[0] = Integer.valueOf(matrice[0][i], 16);
+				colonne[1] = Integer.valueOf(matrice[1][i], 16);
+				colonne[2] = Integer.valueOf(matrice[2][i], 16);
+				colonne[3] = Integer.valueOf(matrice[3][i], 16);
+
+				temp[0] = (bitwiseMultiply(colonne[0], 2) ^ bitwiseMultiply(colonne[1], 3) ^ colonne[2] ^ colonne[3]);
+				temp[1] = (colonne[0] ^ bitwiseMultiply(colonne[1], 2) ^ bitwiseMultiply(colonne[2], 3) ^ colonne[3]);
+				temp[2] = (colonne[0] ^ colonne[1] ^ bitwiseMultiply(colonne[2], 2) ^ bitwiseMultiply(colonne[3], 3));
+				temp[3] = (bitwiseMultiply(colonne[0], 3) ^ colonne[1] ^ colonne[2] ^ bitwiseMultiply(colonne[3], 2));
+
+				for (int j = 0; j < TAILLE; j++) {
+					if (temp[j] > 255) {
+						temp[j] ^= 0x1B;
+						temp[j] ^= 0b100000000;
 					}
-					
-					matrice[0][i] = Integer.toHexString(temp[0]);
-					matrice[1][i] = Integer.toHexString(temp[1]);
-					matrice[2][i] = Integer.toHexString(temp[2]);
-					matrice[3][i] = Integer.toHexString(temp[3]);
+
+				}
+
+				matrice[0][i] = Integer.toHexString(temp[0]);
+				matrice[1][i] = Integer.toHexString(temp[1]);
+				matrice[2][i] = Integer.toHexString(temp[2]);
+				matrice[3][i] = Integer.toHexString(temp[3]);
 
 			}
 		}
@@ -372,39 +369,44 @@ public class AES {
 
 	public static List<String[][]> mixColumnsInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
-			
-			for (int i = 0; i < TAILLE; i++) {
-					
-					Integer[] colonne = new Integer[4];
-					Integer[]  temp = new Integer[4];		
-					
-					colonne[0] = Integer.valueOf(matrice[0][i], 16);
-					colonne[1] = Integer.valueOf(matrice[1][i], 16);
-					colonne[2] = Integer.valueOf(matrice[2][i], 16);
-					colonne[3] = Integer.valueOf(matrice[3][i], 16);
 
-					
-					temp[0] =(bitwiseMultiply(colonne[0], 14) ^ bitwiseMultiply(colonne[1], 11) ^ bitwiseMultiply(colonne[2], 13) ^ bitwiseMultiply(colonne[3], 9));
-					temp[1] =(bitwiseMultiply(colonne[0], 9) ^ bitwiseMultiply(colonne[1], 14) ^ bitwiseMultiply(colonne[2], 11) ^ bitwiseMultiply(colonne[3], 13));
-					temp[2] =(bitwiseMultiply(colonne[0], 13) ^ bitwiseMultiply(colonne[1], 9) ^ bitwiseMultiply(colonne[2], 14) ^ bitwiseMultiply(colonne[3], 11));
-					temp[3] =(bitwiseMultiply(colonne[0], 11) ^ bitwiseMultiply(colonne[1], 13) ^ bitwiseMultiply(colonne[2], 9) ^ bitwiseMultiply(colonne[3], 14));
-								
-					
-					for(int j = 0; j < TAILLE; j++)
-					{
-						if(temp[j] > 255)
-						{
-							if(temp[j] > 511)
-							//À vérifier!!!! car erreur
-							temp[j] ^= 0x1B;
-							temp[j] ^= 0b100000000;
-						}	
+			for (int i = 0; i < TAILLE; i++) {
+
+				Integer[] colonne = new Integer[4];
+				Integer[] temp = new Integer[4];
+
+				colonne[0] = Integer.valueOf(matrice[0][i], 16);
+				colonne[1] = Integer.valueOf(matrice[1][i], 16);
+				colonne[2] = Integer.valueOf(matrice[2][i], 16);
+				colonne[3] = Integer.valueOf(matrice[3][i], 16);
+
+				temp[0] = (bitwiseMultiply(colonne[0], 14) ^ bitwiseMultiply(colonne[1], 11)
+						^ bitwiseMultiply(colonne[2], 13) ^ bitwiseMultiply(colonne[3], 9));
+				temp[1] = (bitwiseMultiply(colonne[0], 9) ^ bitwiseMultiply(colonne[1], 14)
+						^ bitwiseMultiply(colonne[2], 11) ^ bitwiseMultiply(colonne[3], 13));
+				temp[2] = (bitwiseMultiply(colonne[0], 13) ^ bitwiseMultiply(colonne[1], 9)
+						^ bitwiseMultiply(colonne[2], 14) ^ bitwiseMultiply(colonne[3], 11));
+				temp[3] = (bitwiseMultiply(colonne[0], 11) ^ bitwiseMultiply(colonne[1], 13)
+						^ bitwiseMultiply(colonne[2], 9) ^ bitwiseMultiply(colonne[3], 14));
+
+				for (int j = 0; j < TAILLE; j++) {
+//						if(temp[j] > 255)
+//						{
+//							if(temp[j] > 511)
+//							//À vérifier!!!! car erreur
+//							temp[j] ^= 0x1B;
+//							temp[j] ^= 0b100000000;
+//						}	
+
+					if (temp[j] < 0) {
+						temp[j] += 256;
 					}
-					
-					matrice[0][i] = Integer.toHexString(temp[0]);
-					matrice[1][i] = Integer.toHexString(temp[1]);
-					matrice[2][i] = Integer.toHexString(temp[2]);
-					matrice[3][i] = Integer.toHexString(temp[3]);
+				}
+
+				matrice[0][i] = Integer.toHexString(temp[0]);
+				matrice[1][i] = Integer.toHexString(temp[1]);
+				matrice[2][i] = Integer.toHexString(temp[2]);
+				matrice[3][i] = Integer.toHexString(temp[3]);
 
 			}
 		}
@@ -418,7 +420,7 @@ public class AES {
 	private static List<String[][]> genererCles(String pClef) {
 		String clef;
 		List<String[][]> cles = new ArrayList<>();
-		
+
 		pClef = convertirHexaString(pClef);
 
 		if (pClef.length() > 32)
@@ -436,16 +438,14 @@ public class AES {
 
 		return cles;
 	}
-	
-	private static String convertirHexaString(String cle)
-	{
+
+	private static String convertirHexaString(String cle) {
 		String temp = "";
-		
-		for(int i = 0; i < cle.length(); i++)
-		{
+
+		for (int i = 0; i < cle.length(); i++) {
 			temp += Integer.toHexString((int) cle.charAt(i));
 		}
-		
+
 		return temp;
 	}
 
@@ -531,17 +531,39 @@ public class AES {
 		return SUBSTITUTION_EN[Integer.parseInt(a.substring(0, 2), 16)];
 
 	}
-	
-	private static int bitwiseMultiply(int n1, int n2) {
-		int a = n1, b = n2, result = 0;
-		while (b != 0) {
-			if ((b & 01) != 0) {
-				result = result ^ a;
-			}
-			a <<= 1;
-			b >>= 1;
+
+	private static int bitwiseMultiply(int a, int b) {
+//		int a = n1, b = n2, result = 0;
+//		while (b != 0) {
+//			if ((b & 01) != 0) {
+//				result = result ^ a;
+//			}
+//			a <<= 1;
+//			b >>= 1;
+//		}
+//		return result;
+
+		byte aa = (byte) a, bb = (byte) b, r = 0, t;
+		while (aa != 0) {
+			if ((aa & 1) != 0)
+				r = (byte) (r ^ bb);
+			t = (byte) (bb & 0x80);
+			bb = (byte) (bb << 1);
+			if (t != 0)
+				bb = (byte) (bb ^ 0x1b);
+			aa = (byte) ((aa & 0xff) >>> 1);
 		}
-		return result;
+
+		/*
+		 * ATTENTION ne pas remettre le résultat de 256 + r dans r, puisque r est un
+		 * byte est va overflow. À la place, on doit return directement pour renvoyer un
+		 * int
+		 */
+		if (r < 0) {
+			return 256 + r;
+		}
+
+		return r;
 	}
 
 	/**
@@ -572,5 +594,4 @@ public class AES {
 		byte paddingLength = (byte) s.charAt(s.length() - 1);
 		return s.substring(0, s.length() - paddingLength - 1);
 	}
-
 }
