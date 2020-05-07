@@ -4,6 +4,8 @@ import commun.Etablissement;
 import commun.Transaction;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -15,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
@@ -72,6 +75,11 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private Label semaineDerniereLbl;
+	
+	@FXML
+	private AnchorPane root;
+	
+	private Scene scene;
 
 	@FXML
 	private TableView<Transaction> transactionsTb;
@@ -95,6 +103,17 @@ public class BackEndDashboardCtrlVue {
 	private BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>> chart;
 
 	public BackEndDashboardCtrlVue() {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+		loader.setController(this);
+
+		try {
+			root = loader.load();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		scene = new Scene(root);
 
 		CategoryAxis axeX = new CategoryAxis();
 		axeX.setLabel("Journée");
@@ -228,6 +247,15 @@ public class BackEndDashboardCtrlVue {
 			transactionsTb.getItems().add(tr);
 		}
 
+	}
+
+	@FXML
+	private void datePickerHandler() {
+		ctrl.setDate(datePicker.getValue());
+	}
+
+	public Scene getScene() {
+		return this.scene;
 	}
 
 }

@@ -24,7 +24,7 @@
             <Font name="Montserrat ExtraBold" size="48.0" />
          </font>
       </Label>
-      <DatePicker fx:id="datePicker" layoutX="565.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="133.0" AnchorPane.leftAnchor="502.0" AnchorPane.topAnchor="63.0" />
+      <DatePicker fx:id="datePicker" layoutX="565.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#datePickerHandler" prefHeight="29.0" prefWidth="133.0" AnchorPane.leftAnchor="502.0" AnchorPane.topAnchor="63.0" />
       <AnchorPane prefHeight="201.0" prefWidth="224.0" styleClass="boites" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="154.0">
          <children>
             <Label text="Produits" textFill="#c5c5c5" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="16.0">

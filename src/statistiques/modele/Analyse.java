@@ -18,11 +18,14 @@ public class Analyse {
 	 * numéro de facture soit trop long
 	 */
 	private static final long CONST = 1585281727947L;
-
+	private static LocalDate dateReference;
+	
+	
 	public static int getNbProduit(Etablissement e) {
 		return e.getInventaire().size();
 	}
 
+	
 	public static ArrayList<Transaction> getTransactionToday(Etablissement e) {
 
 		LocalDate date = LocalDate.now();
@@ -30,7 +33,7 @@ public class Analyse {
 		ArrayList<Transaction> transHebdo = new ArrayList<Transaction>();
 
 		for (Transaction t : e.getTransactions()) {
-			if (Integer.parseInt(t.getHeure()) > date.toEpochDay() - CONST) {
+			if (Integer.parseInt(t.getHeure()) > dateReference.toEpochDay() - CONST) {
 				transHebdo.add(t);
 			}
 		}
@@ -44,7 +47,7 @@ public class Analyse {
 		ArrayList<Transaction> transHebdo = new ArrayList<Transaction>();
 
 		for (Transaction t : e.getTransactions()) {
-			if (Integer.parseInt(t.getHeure()) > date.toEpochDay() - CONST
+			if (Integer.parseInt(t.getHeure()) > dateReference.toEpochDay() - CONST
 					&& Integer.parseInt(t.getHeure()) < LocalDate.now().toEpochDay() - CONST) {
 				transHebdo.add(t);
 			}
@@ -111,5 +114,9 @@ public class Analyse {
 
 	public static ArrayList<Vendeur> getUtilisateur(Etablissement e) {
 		return (ArrayList<Vendeur>) e.getUtilisateurs();
+	}
+
+	public void setDate(LocalDate date) {
+		this.dateReference = date;
 	}
 }

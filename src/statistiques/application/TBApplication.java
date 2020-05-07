@@ -34,7 +34,7 @@ public class TBApplication extends Application {
 		stage.show();
 	}
 
-	@Override
+	
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);

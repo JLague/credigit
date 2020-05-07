@@ -1,5 +1,6 @@
 package statistiques.ctrl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +78,11 @@ public class TBControleur {
 
 	public int getNbTransactionHier(Etablissement etablissement) {
 		return Analyse.getNbTransactionHier(etablissement);
+	}
+
+	public void setDate(LocalDate value) {
+		Analyse.setDate(value);
+		
 	}
 
 }
