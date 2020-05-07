@@ -93,11 +93,28 @@ public class BackEndDashboardCtrlVue {
 		}
 
 		ventesBrutesLbl.setText(ctrl.getVentesBrutesToday(etablissement) + "");
-		
-		double pourcentageVentesBrutes= (double) ctrl.getVentesBrutesToday(etablissement)
+
+		double pourcentageVentesBrutes = (double) ctrl.getVentesBrutesToday(etablissement)
 				/ (double) ctrl.getVentesBrutesHier(etablissement);
-		
+
 		ventesBrutesPourcentageLbl.setText(pourcentageVentesBrutes + "");
+		if (pourcentageVentesBrutes > 0) {
+			icVentesBrutesDown.setDisable(true);
+			icVentesBrutesUp.setDisable(false);
+		} else if (pourcentageVentesBrutes < 0) {
+			icVentesBrutesUp.setDisable(true);
+			icVentesBrutesDown.setDisable(false);
+		} else {
+			icVentesBrutesDown.setDisable(true);
+			icVentesBrutesUp.setDisable(true);
+		}
+
+		profitsLbl.setText(ctrl.getProfitToday(etablissement) + "");
+
+		double pourcentageProfit = (double) ctrl.getProfitToday(etablissement)
+				/ (double) ctrl.getProfitHier(etablissement);
+
+		profitsPourcentageLbl.setText(pourcentageProfit + "");
 		if (pourcentageVentesBrutes > 0) {
 			icVentesBrutesDown1.setDisable(true);
 			icVentesBrutesUp1.setDisable(false);
@@ -108,8 +125,9 @@ public class BackEndDashboardCtrlVue {
 			icVentesBrutesDown1.setDisable(true);
 			icVentesBrutesUp1.setDisable(true);
 		}
-		
-		
+
+		semaineCouranteLbl.setText(ctrl.getNbTransactionToday(etablissement) + "");
+		semaineDerniereLbl.setText(ctrl.getNbTransactionHier(etablissement) + "");
 
 	}
 

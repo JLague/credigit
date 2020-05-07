@@ -31,4 +31,20 @@ public class TBControleur {
 		return modele.getVentesBrutesHier(etablissement);
 	}
 
+	public float getProfitToday(Etablissement etablissement) {
+		return modele.getProfitToday(etablissement);
+	}
+
+	public double getProfitHier(Etablissement etablissement) {
+		return modele.getProfitHier(etablissement);
+	}
+
+	public int getNbTransactionToday(Etablissement etablissement) {
+		return modele.getNbTransactionToday(etablissement);
+	}
+
+	public int getNbTransactionHier(Etablissement etablissement) {
+		return modele.getNbTransactionHier(etablissement);
+	}
+
 }
