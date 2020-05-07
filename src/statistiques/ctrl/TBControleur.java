@@ -1,4 +1,4 @@
-package pos.application;
+package statistiques.ctrl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import commun.Etablissement;
 import commun.Produit;
 import commun.Transaction;
-import pos.modele.Analyse;
+import statistiques.modele.Analyse;
 
 public class TBControleur {
 	

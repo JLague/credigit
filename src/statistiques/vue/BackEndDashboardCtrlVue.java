@@ -1,4 +1,4 @@
-package pos.vue;
+package statistiques.vue;
 
 import commun.Etablissement;
 import javafx.fxml.FXML;
@@ -6,9 +6,10 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import pos.application.TBControleur;
+import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
 
@@ -156,7 +157,7 @@ public class BackEndDashboardCtrlVue {
 
 	private void actualiserTB(Etablissement etablissement) {
 		c1 = new TableColumn<>("First Name");
-	    c1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+		c1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
 
 	    c2 = new TableColumn<>("Last Name");
 	    c2.setCellValueFactory(new PropertyValueFactory<>("lastName"));

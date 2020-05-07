@@ -1,4 +1,4 @@
-package pos.modele;
+package statistiques.modele;
 
 import commun.Transaction;
 import commun.Vendeur;
