@@ -91,20 +91,20 @@ public class AES {
 		List<String[][]> cles = genererCles(cle);
 		List<String[][]> texteAEncoder = remplirTexteDecryption(message);
 
-		// MixColumnsInverse sur clé 1 à 9
-
 		// Est-ce que on commence avec la dernière ou première clé????
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(10));
+		texteAEncoder = shiftRowsInverse(texteAEncoder);
+		texteAEncoder = subBytesInverse(texteAEncoder);
+		
 
 		for (int i = 9; i > 0; i--) {
-			texteAEncoder = subBytesInverse(texteAEncoder);
-			texteAEncoder = shiftRowsInverse(texteAEncoder);
-			texteAEncoder = mixColumnsInverse(texteAEncoder);
 			texteAEncoder = addRoundKey(texteAEncoder, cles.get(i));
-		}
+			texteAEncoder = mixColumnsInverse(texteAEncoder);
+			texteAEncoder = shiftRowsInverse(texteAEncoder);
+			texteAEncoder = subBytesInverse(texteAEncoder);
 
-		texteAEncoder = subBytesInverse(texteAEncoder);
-		texteAEncoder = shiftRowsInverse(texteAEncoder);
+		}
+		
 		texteAEncoder = addRoundKey(texteAEncoder, cles.get(0));
 
 		return viderTexteDecryption(texteAEncoder);
@@ -145,18 +145,19 @@ public class AES {
 	 * 
 	 * @param texte - Le texte servant à remplir les matrices
 	 */
-	private static List<String[][]> remplirTexteDecryption(String texte) {
+	public static List<String[][]> remplirTexteDecryption(String texte) {
 		List<String[][]> liste = new ArrayList<String[][]>();
 		int cpt = 0;
 
-		for (int i = 0; i < texte.length(); i += TAILLE * TAILLE) {
+		
+		for (int i = 0; i < texte.length()/2; i += TAILLE * TAILLE) {
 			liste.add(new String[TAILLE][TAILLE]);
-
-			int temp = 0;
+			
+			int temp = 2*i;
 			for (int j = 0; j < TAILLE; j++) {
 				for (int k = 0; k < TAILLE; k++) {
 
-					if (i + temp < texte.length())
+					if (temp < texte.length())
 						liste.get(cpt)[k][j] = texte.substring(temp, temp + 2);
 					else
 						liste.get(cpt)[k][j] = Integer.toHexString((int) ' ');
@@ -178,7 +179,7 @@ public class AES {
 	 * @param liste - La liste de matrices à vider
 	 * @return Le message contenu dans les matrices
 	 */
-	private static String viderTexteEncryption(List<String[][]> liste) {
+	public static String viderTexteEncryption(List<String[][]> liste) {
 		String texte = "";
 
 		for (int i = 0; i < liste.size(); i++) {
@@ -204,7 +205,7 @@ public class AES {
 	 * @param liste - La liste de matrices à vider
 	 * @return Le message contenu dans les matrices
 	 */
-	private static String viderTexteDecryption(List<String[][]> liste) {
+	public static String viderTexteDecryption(List<String[][]> liste) {
 		String texte = "";
 
 		for (int i = 0; i < liste.size(); i++) {
@@ -216,7 +217,7 @@ public class AES {
 			}
 		}
 
-		return texte;
+		return texte.trim();
 	}
 
 	/**
@@ -317,7 +318,7 @@ public class AES {
 	 * 
 	 * @param round - La round de l'AES
 	 */
-	private static List<String[][]> addRoundKey(List<String[][]> texte, String[][] cle) {
+	public static List<String[][]> addRoundKey(List<String[][]> texte, String[][] cle) {
 
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
