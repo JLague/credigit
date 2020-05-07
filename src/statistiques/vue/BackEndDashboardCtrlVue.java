@@ -1,6 +1,7 @@
 package statistiques.vue;
 
 import commun.Etablissement;
+import commun.Transaction;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -68,22 +69,22 @@ public class BackEndDashboardCtrlVue {
 	private Label semaineDerniereLbl;
 
 	@FXML
-	private TableView<?> transactionsTb;
+	private TableView<Transaction> transactionsTb;
 	
 	@FXML
-    private TableColumn<String, String> c1;
+    private TableColumn<Transaction, String> c1;
 
     @FXML
-    private TableColumn<String, String> c2;
+    private TableColumn<Transaction, String> c2;
 
     @FXML
-    private TableColumn<String, String> c3;
+    private TableColumn<Transaction, String> c3;
 
     @FXML
-    private TableColumn<String, String> c4;
+    private TableColumn<Transaction, String> c4;
 
     @FXML
-    private TableColumn<String, String> c5;
+    private TableColumn<Transaction, String> c5;
 
 
 	@FXML
@@ -156,20 +157,23 @@ public class BackEndDashboardCtrlVue {
 	}
 
 	private void actualiserTB(Etablissement etablissement) {
-		c1 = new TableColumn<>("First Name");
-		c1.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-	    c2 = new TableColumn<>("Last Name");
-	    c2.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+		c1.setCellValueFactory(new PropertyValueFactory<>("numero"));
+	    c2.setCellValueFactory(new PropertyValueFactory<>("heure"));
+	    c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
+	    c4.setCellValueFactory(new PropertyValueFactory<>("sousTotal"));
+	    c5.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
 	    
-	    c3 = new TableColumn<>("First Name");
-	    c3.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-
-	    c4 = new TableColumn<>("Last Name");
-	    c4.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+	    transactionsTb.getColumns().add(c1);
+	    transactionsTb.getColumns().add(c2);
+	    transactionsTb.getColumns().add(c3);
+	    transactionsTb.getColumns().add(c4);
+	    transactionsTb.getColumns().add(c5);
 	    
-	    c5 = new TableColumn<>("First Name");
-	    c5.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+	    for (Transaction tr : ctrl.getTransactionToday(etablissement)) {
+	    	transactionsTb.getItems().add(tr);
+		}
+	    
+
 	}
 
 }
