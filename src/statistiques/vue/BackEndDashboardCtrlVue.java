@@ -103,10 +103,12 @@ public class BackEndDashboardCtrlVue {
 	@FXML
 	private BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>> chart;
 
-	public BackEndDashboardCtrlVue() {
+	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
 		loader.setController(this);
+		
+		this.ctrl = ctrl;
 
 		try {
 			root = loader.load();
@@ -225,10 +227,6 @@ public class BackEndDashboardCtrlVue {
 
 		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2, jminus1, j0);
 
-	}
-
-	public BackEndDashboardCtrlVue(TBControleur ctrl) {
-		this.ctrl = ctrl;
 	}
 
 	private void actualiserTB(Etablissement etablissement) {
