@@ -16,7 +16,7 @@ import statistiques.vue.BackEndDashboardCtrlVue;
 
 public class TBControleur {
 
-	private Analyse modele;
+	private Analyse Analyse;
 
 	private TBApplication app;
 
@@ -30,7 +30,7 @@ public class TBControleur {
 		app = tBApplication;
 		vue = new BackEndDashboardCtrlVue(this);
 		connexion = new Connexion();
-		modele = new Analyse();
+		Analyse = new Analyse();
 	}
 
 	public Scene getScene() {
@@ -48,35 +48,35 @@ public class TBControleur {
 	}
 
 	public ArrayList<Transaction> getTransactionToday(Etablissement etablissement) {
-		return modele.getTransactionToday(etablissement);
+		return Analyse.getTransactionToday(etablissement);
 	}
 
 	public ArrayList<Transaction> getTransactionAvant(Etablissement etablissement, int i) {
-		return modele.getTransactionAvant(etablissement, i);
+		return Analyse.getTransactionAvant(etablissement, i);
 	}
 
 	public float getVentesBrutesToday(Etablissement etablissement) {
-		return modele.getVentesBrutesToday(etablissement);
+		return Analyse.getVentesBrutesToday(etablissement);
 	}
 
 	public float getVentesBrutesHier(Etablissement etablissement) {
-		return modele.getVentesBrutesHier(etablissement);
+		return Analyse.getVentesBrutesHier(etablissement);
 	}
 
 	public float getProfitToday(Etablissement etablissement) {
-		return modele.getProfitToday(etablissement);
+		return Analyse.getProfitToday(etablissement);
 	}
 
 	public double getProfitHier(Etablissement etablissement) {
-		return modele.getProfitHier(etablissement);
+		return Analyse.getProfitHier(etablissement);
 	}
 
 	public int getNbTransactionToday(Etablissement etablissement) {
-		return modele.getNbTransactionToday(etablissement);
+		return Analyse.getNbTransactionToday(etablissement);
 	}
 
 	public int getNbTransactionHier(Etablissement etablissement) {
-		return modele.getNbTransactionHier(etablissement);
+		return Analyse.getNbTransactionHier(etablissement);
 	}
 
 }
