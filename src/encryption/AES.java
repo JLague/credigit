@@ -13,40 +13,40 @@ public class AES {
 	/**
 	 * Tableau de substitution pour l'encrytion
 	 */
-	private static final String[] SUBSTITUTION_EN = { "63", "7C", "77", "7B", "F2", "6B", "6F", "C5", "30", "01", "67",
-			"2B", "FE", "D7", "AB", "76", "CA", "82", "C9", "7D", "FA", "59", "47", "F0", "AD", "D4", "A2", "AF", "9C",
-			"A4", "72", "C0", "B7", "FD", "93", "26", "36", "3F", "F7", "CC", "34", "A5", "E5", "F1", "71", "D8", "31",
-			"15", "04", "C7", "23", "C3", "18", "96", "05", "9A", "07", "12", "80", "E2", "EB", "27", "B2", "75", "09",
-			"83", "2C", "1A", "1B", "6E", "5A", "A0", "52", "3B", "D6", "B3", "29", "E3", "2F", "84", "53", "D1", "00",
-			"ED", "20", "FC", "B1", "5B", "6A", "CB", "BE", "39", "4A", "4C", "58", "CF", "D0", "EF", "AA", "FB", "43",
-			"4D", "33", "85", "45", "F9", "02", "7F", "50", "3C", "9F", "A8", "51", "A3", "40", "8F", "92", "9D", "38",
-			"F5", "BC", "B6", "DA", "21", "10", "FF", "F3", "D2", "CD", "0C", "13", "EC", "5F", "97", "44", "17", "C4",
-			"A7", "7E", "3D", "64", "5D", "19", "73", "60", "81", "4F", "DC", "22", "2A", "90", "88", "46", "EE", "B8",
-			"14", "DE", "5E", "0B", "DB", "E0", "32", "3A", "0A", "49", "06", "24", "5C", "C2", "D3", "AC", "62", "91",
-			"95", "E4", "79", "E7", "C8", "37", "6D", "8D", "D5", "4E", "A9", "6C", "56", "F4", "EA", "65", "7A", "AE",
-			"08", "BA", "78", "25", "2E", "1C", "A6", "B4", "C6", "E8", "DD", "74", "1F", "4B", "BD", "8B", "8A", "70",
-			"3E", "B5", "66", "48", "03", "F6", "0E", "61", "35", "57", "B9", "86", "C1", "1D", "9E", "E1", "F8", "98",
-			"11", "69", "D9", "8E", "94", "9B", "1E", "87", "E9", "CE", "55", "28", "DF", "8C", "A1", "89", "0D", "BF",
-			"E6", "42", "68", "41", "99", "2D", "0F", "B0", "54", "BB", "16" };
+	private static final String[] SUBSTITUTION_EN = { "63", "7C", "77", "7b", "f2", "6b", "6f", "c5", "30", "01", "67",
+			"2b", "fe", "d7", "ab", "76", "ca", "82", "c9", "7d", "fa", "59", "47", "f0", "ad", "d4", "a2", "af", "9c",
+			"a4", "72", "c0", "b7", "fd", "93", "26", "36", "3f", "f7", "cc", "34", "a5", "e5", "f1", "71", "d8", "31",
+			"15", "04", "c7", "23", "c3", "18", "96", "05", "9a", "07", "12", "80", "e2", "eb", "27", "b2", "75", "09",
+			"83", "2c", "1a", "1b", "6e", "5a", "a0", "52", "3b", "d6", "b3", "29", "e3", "2f", "84", "53", "d1", "00",
+			"ed", "20", "fc", "b1", "5b", "6a", "cb", "be", "39", "4a", "4c", "58", "cf", "d0", "ef", "aa", "fb", "43",
+			"4d", "33", "85", "45", "f9", "02", "7f", "50", "3c", "9f", "a8", "51", "a3", "40", "8f", "92", "9d", "38",
+			"f5", "bc", "b6", "da", "21", "10", "ff", "f3", "d2", "cd", "0c", "13", "ec", "5f", "97", "44", "17", "c4",
+			"a7", "7e", "3d", "64", "5d", "19", "73", "60", "81", "4f", "dc", "22", "2a", "90", "88", "46", "ee", "b8",
+			"14", "de", "5e", "0b", "db", "e0", "32", "3a", "0a", "49", "06", "24", "5c", "c2", "d3", "ac", "62", "91",
+			"95", "e4", "79", "e7", "c8", "37", "6d", "8d", "d5", "4e", "a9", "6c", "56", "f4", "ea", "65", "7a", "ae",
+			"08", "ba", "78", "25", "2e", "1c", "a6", "b4", "c6", "e8", "dd", "74", "1f", "4b", "bd", "8b", "8a", "70",
+			"3e", "b5", "66", "48", "03", "f6", "0e", "61", "35", "57", "b9", "86", "c1", "1d", "9e", "e1", "f8", "98",
+			"11", "69", "d9", "8e", "94", "9b", "1e", "87", "e9", "ce", "55", "28", "df", "8c", "a1", "89", "0d", "bf",
+			"e6", "42", "68", "41", "99", "2d", "0f", "b0", "54", "bb", "16" };
 
 	/**
 	 * Tableau de substitution pour la décryption
 	 */
-	private static final String[] SUBSTITUTION_DE = { "52", "09", "6A", "D5", "30", "36", "A5", "38", "BF", "40", "A3",
-			"9E", "81", "F3", "D7", "FB", "7C", "E3", "39", "82", "9B", "2F", "FF", "87", "34", "8E", "43", "44", "C4",
-			"DE", "E9", "CB", "54", "7B", "94", "32", "A6", "C2", "23", "3D", "EE", "4C", "95", "0B", "42", "FA", "C3",
-			"4E", "08", "2E", "A1", "66", "28", "D9", "24", "B2", "76", "5B", "A2", "49", "6D", "8B", "D1", "25", "72",
-			"F8", "F6", "64", "86", "68", "98", "16", "D4", "A4", "5C", "CC", "5D", "65", "B6", "92", "6C", "70", "48",
-			"50", "FD", "ED", "B9", "DA", "5E", "15", "46", "57", "A7", "8D", "9D", "84", "90", "D8", "AB", "00", "8C",
-			"BC", "D3", "0A", "F7", "E4", "58", "05", "B8", "B3", "45", "06", "D0", "2C", "1E", "8F", "CA", "3F", "0F",
-			"02", "C1", "AF", "BD", "03", "01", "13", "8A", "6B", "3A", "91", "11", "41", "4F", "67", "DC", "EA", "97",
-			"F2", "CF", "CE", "F0", "B4", "E6", "73", "96", "AC", "74", "22", "E7", "AD", "35", "85", "E2", "F9", "37",
-			"E8", "1C", "75", "DF", "6E", "47", "F1", "1A", "71", "1D", "29", "C5", "89", "6F", "B7", "62", "0E", "AA",
-			"18", "BE", "1B", "FC", "56", "3E", "4B", "C6", "D2", "79", "20", "9A", "DB", "C0", "FE", "78", "CD", "5A",
-			"F4", "1F", "DD", "A8", "33", "88", "07", "C7", "31", "B1", "12", "10", "59", "27", "80", "EC", "5F", "60",
-			"51", "7F", "A9", "19", "B5", "4A", "0D", "2D", "E5", "7A", "9F", "93", "C9", "9C", "EF", "A0", "E0", "3B",
-			"4D", "AE", "2A", "F5", "B0", "C8", "EB", "BB", "3C", "83", "53", "99", "61", "17", "2B", "04", "7E", "BA",
-			"77", "D6", "26", "E1", "69", "14", "63", "55", "21", "0C", "7D" };
+	private static final String[] SUBSTITUTION_DE = { "52", "09", "6a", "d5", "30", "36", "a5", "38", "bf", "40", "a3",
+			"9e", "81", "f3", "d7", "fb", "7c", "e3", "39", "82", "9b", "2f", "ff", "87", "34", "8e", "43", "44", "c4",
+			"de", "e9", "cb", "54", "7b", "94", "32", "a6", "c2", "23", "3d", "ee", "4c", "95", "0b", "42", "fa", "c3",
+			"4e", "08", "2e", "a1", "66", "28", "d9", "24", "b2", "76", "5b", "a2", "49", "6d", "8b", "d1", "25", "72",
+			"f8", "f6", "64", "86", "68", "98", "16", "d4", "a4", "5c", "cc", "5d", "65", "b6", "92", "6c", "70", "48",
+			"50", "fd", "ed", "b9", "da", "5e", "15", "46", "57", "a7", "8d", "9d", "84", "90", "d8", "ab", "00", "8c",
+			"bc", "d3", "0a", "f7", "e4", "58", "05", "b8", "b3", "45", "06", "d0", "2c", "1e", "8f", "ca", "3f", "0f",
+			"02", "c1", "af", "bd", "03", "01", "13", "8a", "6b", "3a", "91", "11", "41", "4f", "67", "dc", "ea", "97",
+			"f2", "cf", "ce", "f0", "b4", "e6", "73", "96", "ac", "74", "22", "e7", "ad", "35", "85", "e2", "f9", "37",
+			"e8", "1c", "75", "df", "6e", "47", "f1", "1a", "71", "1d", "29", "c5", "89", "6f", "b7", "62", "0e", "aa",
+			"18", "be", "1b", "fc", "56", "3e", "4b", "c6", "d2", "79", "20", "9a", "db", "c0", "fe", "78", "cd", "5a",
+			"f4", "1f", "dd", "a8", "33", "88", "07", "c7", "31", "b1", "12", "10", "59", "27", "80", "ec", "5f", "60",
+			"51", "7f", "a9", "19", "b5", "4a", "0d", "2d", "e5", "7a", "9f", "93", "c9", "9c", "ef", "a0", "e0", "3b",
+			"4d", "ae", "2a", "f5", "b0", "c8", "eb", "bb", "3c", "83", "53", "99", "61", "17", "2b", "04", "7e", "ba",
+			"77", "d6", "26", "e1", "69", "14", "63", "55", "21", "0c", "7d" };
 
 	/**
 	 * Taille des matrices texte et des clés
@@ -115,7 +115,7 @@ public class AES {
 	 * 
 	 * @param texte - Le texte servant à remplir les matrices
 	 */
-	private static List<String[][]> remplirTexteEncryption(String texte) {
+	public static List<String[][]> remplirTexteEncryption(String texte) {
 		List<String[][]> liste = new ArrayList<String[][]>();
 		int cpt = 0;
 
@@ -225,7 +225,7 @@ public class AES {
 	 * @param texte - La liste de matrices
 	 * @return La liste de matrices modifiée
 	 */
-	private static List<String[][]> shiftRows(List<String[][]> texte) {
+	public static List<String[][]> shiftRows(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
 			int cpt = 1;
 
@@ -253,7 +253,7 @@ public class AES {
 	 * @param texte - La liste de matrices
 	 * @return La liste de matrices modifiée
 	 */
-	private static List<String[][]> shiftRowsInverse(List<String[][]> texte) {
+	public static List<String[][]> shiftRowsInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
 			int cpt = 1;
 
@@ -287,7 +287,7 @@ public class AES {
 	 * @param texte - La liste de matrices
 	 * @return La liste de matrices modifiée
 	 */
-	private static List<String[][]> subBytes(List<String[][]> texte) {
+	public static List<String[][]> subBytes(List<String[][]> texte) {
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
 				for (int k = 0; k < TAILLE; k++)
@@ -302,7 +302,7 @@ public class AES {
 	 * @param texte - La liste de matrices
 	 * @return La liste de matrices modifiée
 	 */
-	private static List<String[][]> subBytesInverse(List<String[][]> texte) {
+	public static List<String[][]> subBytesInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte)
 			for (int i = 0; i < TAILLE; i++)
 				for (int k = 0; k < TAILLE; k++)
@@ -356,11 +356,17 @@ public class AES {
 
 				}
 
-				matrice[0][i] = Integer.toHexString(temp[0]);
-				matrice[1][i] = Integer.toHexString(temp[1]);
-				matrice[2][i] = Integer.toHexString(temp[2]);
-				matrice[3][i] = Integer.toHexString(temp[3]);
-
+				
+				for(int k = 0; k < TAILLE; k ++)
+				{
+					String temporaire =  Integer.toHexString(temp[k]);
+					
+					if(temporaire.length() == 1)
+						temporaire = "0" + Integer.toHexString(temp[k]);
+					
+					matrice[k][i] = temporaire;
+				}
+				
 			}
 		}
 
@@ -403,10 +409,15 @@ public class AES {
 					}
 				}
 
-				matrice[0][i] = Integer.toHexString(temp[0]);
-				matrice[1][i] = Integer.toHexString(temp[1]);
-				matrice[2][i] = Integer.toHexString(temp[2]);
-				matrice[3][i] = Integer.toHexString(temp[3]);
+				for(int k = 0; k < TAILLE; k ++)
+				{
+					String temporaire =  Integer.toHexString(temp[k]);
+					
+					if(temporaire.length() == 1)
+						temporaire = "0" + Integer.toHexString(temp[k]);
+					
+					matrice[k][i] = temporaire;
+				}
 
 			}
 		}
