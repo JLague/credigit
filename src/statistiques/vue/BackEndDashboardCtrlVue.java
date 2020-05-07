@@ -2,7 +2,12 @@ package statistiques.vue;
 
 import commun.Etablissement;
 import commun.Transaction;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -70,22 +75,36 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private TableView<Transaction> transactionsTb;
-	
+
 	@FXML
-    private TableColumn<Transaction, String> c1;
+	private TableColumn<Transaction, String> c1;
 
-    @FXML
-    private TableColumn<Transaction, String> c2;
+	@FXML
+	private TableColumn<Transaction, String> c2;
 
-    @FXML
-    private TableColumn<Transaction, String> c3;
+	@FXML
+	private TableColumn<Transaction, String> c3;
 
-    @FXML
-    private TableColumn<Transaction, String> c4;
+	@FXML
+	private TableColumn<Transaction, String> c4;
 
-    @FXML
-    private TableColumn<Transaction, String> c5;
+	@FXML
+	private TableColumn<Transaction, String> c5;
 
+	@FXML
+	private BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>> chart;
+
+	public BackEndDashboardCtrlVue() {
+
+		CategoryAxis axeX = new CategoryAxis();
+		axeX.setLabel("Journée");
+
+		NumberAxis axeY = new NumberAxis();
+		axeY.setLabel("Transaction");
+
+		chart = new BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>>(axeX, axeY);
+		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
+	}
 
 	@FXML
 	void refreshHandler(MouseEvent event) {
@@ -150,6 +169,42 @@ public class BackEndDashboardCtrlVue {
 
 		actualiserTB(etablissement);
 
+		chart.getData().clear();
+
+		XYChart.Series<String, Number> jminus7 = new XYChart.Series<>();
+		jminus7.setName("7 days ago");
+		jminus7.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 7).size()));
+
+		XYChart.Series<String, Number> jminus6 = new XYChart.Series<>();
+		jminus6.setName("6 days ago");
+		jminus6.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 6).size()));
+
+		XYChart.Series<String, Number> jminus5 = new XYChart.Series<>();
+		jminus5.setName("5 days ago");
+		jminus5.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 5).size()));
+
+		XYChart.Series<String, Number> jminus4 = new XYChart.Series<>();
+		jminus4.setName("4 days ago");
+		jminus4.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 4).size()));
+
+		XYChart.Series<String, Number> jminus3 = new XYChart.Series<>();
+		jminus3.setName("3 days ago");
+		jminus3.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 3).size()));
+
+		XYChart.Series<String, Number> jminus2 = new XYChart.Series<>();
+		jminus2.setName("2 days ago");
+		jminus2.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 2).size()));
+
+		XYChart.Series<String, Number> jminus1 = new XYChart.Series<>();
+		jminus1.setName("1 days ago");
+		jminus1.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 1).size()));
+
+		XYChart.Series<String, Number> j0 = new XYChart.Series<>();
+		j0.setName("Aujourd'hui");
+		j0.getData().add(new XYChart.Data<>("", ctrl.getTransactionToday(etablissement).size()));
+
+		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2, jminus1, j0);
+
 	}
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
@@ -158,21 +213,20 @@ public class BackEndDashboardCtrlVue {
 
 	private void actualiserTB(Etablissement etablissement) {
 		c1.setCellValueFactory(new PropertyValueFactory<>("numero"));
-	    c2.setCellValueFactory(new PropertyValueFactory<>("heure"));
-	    c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
-	    c4.setCellValueFactory(new PropertyValueFactory<>("sousTotal"));
-	    c5.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
-	    
-	    transactionsTb.getColumns().add(c1);
-	    transactionsTb.getColumns().add(c2);
-	    transactionsTb.getColumns().add(c3);
-	    transactionsTb.getColumns().add(c4);
-	    transactionsTb.getColumns().add(c5);
-	    
-	    for (Transaction tr : ctrl.getTransactionToday(etablissement)) {
-	    	transactionsTb.getItems().add(tr);
+		c2.setCellValueFactory(new PropertyValueFactory<>("heure"));
+		c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
+		c4.setCellValueFactory(new PropertyValueFactory<>("sousTotal"));
+		c5.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
+
+		transactionsTb.getColumns().add(c1);
+		transactionsTb.getColumns().add(c2);
+		transactionsTb.getColumns().add(c3);
+		transactionsTb.getColumns().add(c4);
+		transactionsTb.getColumns().add(c5);
+
+		for (Transaction tr : ctrl.getTransactionToday(etablissement)) {
+			transactionsTb.getItems().add(tr);
 		}
-	    
 
 	}
 
