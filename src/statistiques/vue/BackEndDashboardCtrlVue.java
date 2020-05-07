@@ -111,7 +111,7 @@ public class BackEndDashboardCtrlVue {
 		// TODO Contacter la base de donnée afin de retirer le dernier etablissement
 		// TODO Loader l'établissement dans la variable etablissement
 
-		etablissement = null;
+		etablissement = null;o
 
 		produitsLbl.setText(etablissement.getInventaire().size() + "");
 		transactionsLbl1.setText(ctrl.getTransactionToday(etablissement).size() + "");
@@ -228,6 +228,11 @@ public class BackEndDashboardCtrlVue {
 			transactionsTb.getItems().add(tr);
 		}
 
+	}
+
+	@FXML
+	private void datePickerHandler() {
+		ctrl.setDate(datePicker.getValue());
 	}
 
 }
