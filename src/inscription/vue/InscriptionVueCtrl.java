@@ -515,7 +515,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 			try {
 				return ctrl.envoyerDataClient(data);
 			} catch (ExceptionCreationCompte e) {
-				VueDialogue.erreurCreationDialogue(e.getMessageAffichage());
+				Platform.runLater(() -> VueDialogue.erreurCreationDialogue(e.getMessageAffichage()));
 			}
 
 			return false;

@@ -53,8 +53,7 @@ public class VueDialogue {
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(VueDialogue.class.getResource(CSS_URL).toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");
-		alert.showAndWait();
-
+		alert.show();
 	}
 
 	/**
