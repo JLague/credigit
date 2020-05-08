@@ -240,14 +240,17 @@ public class LocalAdresse {
 	/**
 	 * Valide que le numéro d'appartement est plus grand que 0
 	 * 
+	 * ATTENTION - Le numéro d'appartement est valide s'il est null, puisqu'il est
+	 * optionnel
+	 * 
 	 * @param appartement - Le numéro d'appartement à valider
-	 * @return Vrai si valide sinon faux
+	 * @return true s'il est null OU n'est pas null et possède des caractères
 	 */
 	private boolean validerAppartement(String appartement) {
-		boolean valide = false;
+		boolean valide = true;
 
-		if (appartement != null)
-			valide = true;
+		if (appartement != null && appartement.length() == 0)
+			valide = false;
 
 		return valide;
 	}

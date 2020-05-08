@@ -126,7 +126,7 @@
                         </VBox>
                         <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="680.0" spacing="24.0" AnchorPane.leftAnchor="1158.0" AnchorPane.topAnchor="1310.0">
                            <children>
-                              <Label fx:id="sectionTitreLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="58.0" prefWidth="423.0" text="Créer un compte" textAlignment="CENTER" textFill="#707070">
+                              <Label fx:id="sectionTitreLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" text="Créer un compte" textAlignment="CENTER" textFill="#707070">
                                  <font>
                                     <Font name="Montserrat Bold" size="48.0" />
                                  </font>
