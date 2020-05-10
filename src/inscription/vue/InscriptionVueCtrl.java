@@ -163,6 +163,9 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	private List<Pane> etapes;
 
+	/**
+	 * L'empreinte du client
+	 */
 	private byte[] empreinte;
 
 	private WorkIndicatorDialog wd = null;

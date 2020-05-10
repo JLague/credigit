@@ -67,12 +67,6 @@ public class LocalAdresseTest {
 
 		}
 
-		try {
-			new LocalAdresse("1245 Hibou", null, "g1q 1u8", "   Washington", "Washington DC", "United States");
-			fail("Le numéro d'appartment est null");
-		} catch (ExceptionCreationCompte e) {
-
-		}
 
 		try {
 			new LocalAdresse("1 Crocodile", "g1q91u8", "   Washington", "Washington DC", "United States");

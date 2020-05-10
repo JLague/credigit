@@ -39,7 +39,12 @@ public enum Questions {
 		return texte;
 	}
 	
-	
+	/**
+	 * Associe une question en String à la bonne composante de l'énum
+	 * 
+	 * @param texte - La question
+	 * @return La composante de l'énum
+	 */
 	public static Questions getQuestionFromString(String texte) {
 		Questions temp = null;
 		
