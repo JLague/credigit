@@ -2,9 +2,9 @@ package terminal.gpio.buzzer;
 
 /**
  * 
- * @author Bank-era Corp.
- * 
  * Enum permettant d'énumerer les sons possibles pour le buzzer
+ * 
+ * @author Bank-era Corp.
  *
  */
 public enum BuzzerSounds {
