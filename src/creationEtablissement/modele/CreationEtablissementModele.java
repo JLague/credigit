@@ -44,6 +44,12 @@ import commun.codecs.IntegerCodec;
 import commun.codecs.LongCodec;
 import commun.codecs.StringCodec;
 
+/**
+ * Classe représenatnt le modèle d'un établissement
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class CreationEtablissementModele implements ICreationEtablissementModele {
 
 	/**
@@ -99,7 +105,7 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 	private List<CryptableCodec<?>> customCodecs;
 
 	/**
-	 * Constructeur de la connection du serveur d'envoi de courriels
+	 * Constructeur de la connection du serveur d'envoi de courriels et de la base de données
 	 */
 	public CreationEtablissementModele() {
 		Task<Void> connexion = new Task<Void>() {
@@ -155,7 +161,7 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject("Bienvenue dans la famille!");
 
-			// 3) Crée le corps du message
+			// 1) Crée le corps du message
 			BodyPart messageBodyPart1 = new MimeBodyPart();
 			messageBodyPart1.setText("Bonjour " + etablissement.getNom()
 					+ ",\n\nLa grande famille de Credigit est heureuse de vous"
@@ -165,10 +171,10 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 					+ etablissement.getNumero() + "\n\nContinuez à avoir l'argent au bout de votre doigt,\n\n"
 					+ "L'équipe de Crédigit\n" + "Une filiale de Bank-era Corp");
 
-			// 4) Set le contenu du message
+			// 2) Set le contenu du message
 			message.setContent(new MimeMultipart(messageBodyPart1));
 
-			// 5) Envoir le message
+			// 3) Envoie le message
 			Transport.send(message);
 
 		} catch (MessagingException ex) {
@@ -236,7 +242,7 @@ public class CreationEtablissementModele implements ICreationEtablissementModele
 	}
 	
 	/**
-	 * Instantie et retourne un CodecRegistry contenant tous les codecs customs
+	 * Instancie et retourne un CodecRegistry contenant tous les codecs customs
 	 * 
 	 * @return le CodecRegistry contenant tous les codecs customs
 	 */
