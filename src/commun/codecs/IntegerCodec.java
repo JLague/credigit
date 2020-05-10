@@ -8,6 +8,11 @@ import org.bson.codecs.EncoderContext;
 import commun.CryptableCodec;
 import encryption.AES;
 
+/**
+ * Codec pour l'encryption et la décryption d'integer
+ * @author Bank-era Corp.
+ *
+ */
 public class IntegerCodec extends CryptableCodec<Integer> {
 
 	@Override

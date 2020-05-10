@@ -110,10 +110,11 @@ public class EmpreinteUtil {
 	}
 
 	/**
+	 * Méthode permettant de matcher une empreinte parmi une liste de candidat
 	 * 
 	 * @param empreinte l'image de l'empreinte à matcher
 	 * @param candidats les images des candidats possibles
-	 * @return
+	 * @return L'empreinte si elle matche sinon null
 	 */
 	public static byte[] matchEmpreinte(byte[] empreinte, List<byte[]> candidats) {
 		// Créer le template et le matcher
@@ -142,7 +143,7 @@ public class EmpreinteUtil {
 	 * d'empreinte. Le byte 1010 0101 devient alors 1010 0000 et 0101 0000
 	 * 
 	 * @param empreinte l'empreinte à décompresser
-	 * @return l'empreinte à décompresser
+	 * @return l'empreinte décompressée
 	 */
 	public static byte[] decompresserEmpreinte(byte[] empreinte) {
 		byte[] empreinteImg = new byte[empreinte.length * 2];

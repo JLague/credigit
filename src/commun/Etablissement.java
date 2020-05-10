@@ -101,7 +101,7 @@ public class Etablissement implements Serializable, Cloneable {
 	/**
 	 * Permet de setter le numéro de l'établissement
 	 * 
-	 * @param numero
+	 * @param numero - Le numero de l'établissement à modifier
 	 */
 	public void setNumero(long numero) {
 		this.numero = numero;
@@ -203,7 +203,7 @@ public class Etablissement implements Serializable, Cloneable {
 	/**
 	 * Retourne les utilisateurs de l'établissement
 	 * 
-	 * @return Les utilisateurs de de l'établissement
+	 * @return Les utilisateurs de l'établissement
 	 */
 	public List<Vendeur> getUtilisateurs() {
 		return vendeurs;
@@ -271,6 +271,11 @@ public class Etablissement implements Serializable, Cloneable {
 		return transactions;
 	}
 
+	/**
+	 * Modifie les transactions de l'établissement
+	 * 
+	 * @param transactions - La nouvelle liste de transactions
+	 */
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
@@ -347,6 +352,11 @@ public class Etablissement implements Serializable, Cloneable {
 		return !utilise;
 	}
 
+	/**
+	 * Méthode permettant de modifier la quantité d'un produit
+	 * 
+	 * @param ligne - Une ligne de la facture d'une transcation
+	 */
 	public void updateQuantiteProduit(LigneFacture ligne) {
 		boolean produitTrouve = false;
 
@@ -360,6 +370,11 @@ public class Etablissement implements Serializable, Cloneable {
 
 	}
 
+	/**
+	 * Méthode permettant de cloner l'établissement en profondeur
+	 * 
+	 * @return Le clone de l'établissement
+	 */
 	@Override
 	public Object clone() {
 		Etablissement clone = null;

@@ -2,6 +2,13 @@ package commun;
 
 import org.bson.codecs.Codec;
 
+/**
+ * Classe abstraite permetant de setter la clé pour l'encryption et la décryption avec les codec
+ * 
+ * @author Bank-era Corp.
+ *
+ * @param <T>
+ */
 public abstract class CryptableCodec<T> implements Codec<T> {
 
 	/**

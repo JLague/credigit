@@ -9,6 +9,12 @@ import commun.CryptableCodec;
 import encryption.AES;
 import inscription.modele.Questions;
 
+/**
+ * Codec pour l'encryption et la décryption des constantes de l'énumération des questions
+ * d'inscription
+ * @author Bank-era Corp.
+ *
+ */
 public class EnumCodec extends CryptableCodec<Questions> {
 
 		@Override

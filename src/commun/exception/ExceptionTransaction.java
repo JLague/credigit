@@ -27,7 +27,7 @@ public class ExceptionTransaction extends Exception {
 	/**
 	 * Constructeur avec un message à afficher en paramètre.
 	 * 
-	 * @param message
+	 * @param message - Le message d'erreur
 	 */
 	public ExceptionTransaction(String message) {
 		super(message);
@@ -46,7 +46,7 @@ public class ExceptionTransaction extends Exception {
 	/**
 	 * Permet de définir le message à afficher dans les boîtes de dialogue
 	 * 
-	 * @param messageAffichage
+	 * @param messageAffichage - Le message à afficher
 	 */
 	public void setMessageAffichage(String messageAffichage) {
 		this.messageAffichage = messageAffichage;

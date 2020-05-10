@@ -8,6 +8,11 @@ import org.bson.codecs.EncoderContext;
 import commun.CryptableCodec;
 import encryption.AES;
 
+/**
+ * Codec pour l'encryption et la décryption de float
+ * @author Bank-era Corp.
+ *
+ */
 public class FloatCodec extends CryptableCodec<Float> {
 
 	@Override

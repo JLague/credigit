@@ -8,6 +8,11 @@ import org.bson.codecs.EncoderContext;
 import commun.CryptableCodec;
 import encryption.AES;
 
+/**
+ * Codec pour l'encryption et la décryption de long
+ * @author Bank-era Corp.
+ *
+ */
 public class LongCodec extends CryptableCodec<Long> {
 
 	@Override

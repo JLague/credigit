@@ -57,6 +57,9 @@ public class Produit implements Serializable, Cloneable {
 	 */
 	private byte[] image;
 
+	/**
+	 * Le path de l'image dans la base de données
+	 */
 	private String imagePathDB;
 
 	/**
@@ -294,6 +297,11 @@ public class Produit implements Serializable, Cloneable {
 		this.image = null;
 	}
 
+	/**
+	 * Permet de cloner le produit en profondeur
+	 * 
+	 * @return Le clone du produit
+	 */
 	@Override
 	public Object clone() {
 		Produit clone = null;

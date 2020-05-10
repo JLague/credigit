@@ -31,7 +31,7 @@ public class Transaction implements Serializable {
 	private static final long CONST = 1585281727947L;
 
 	/**
-	 * Pourcentage de taxe a appliqué
+	 * Pourcentage de taxe à appliquer
 	 */
 	private transient static float pourcentageTaxes = 0.15f;
 
@@ -119,6 +119,8 @@ public class Transaction implements Serializable {
 
 	/**
 	 * Constructeur utilisé pour les nouvelles transactions
+	 * 
+	 * @param etablissement - L'établissement de la transaction
 	 */
 	public Transaction(Etablissement etablissement) {
 		this(getHeureCourante(), pourcentageTaxes, new ArrayList<Produit>(),
@@ -273,7 +275,7 @@ public class Transaction implements Serializable {
 	}
 
 	/**
-	 * Ajouter des produits au panier de l'utilisatuer
+	 * Ajouter des produits au panier de l'utilisateur
 	 * 
 	 * @param produits à ajouter
 	 */
@@ -453,10 +455,20 @@ public class Transaction implements Serializable {
 		}
 	}
 
+	/**
+	 * Modifie l'état de la transaction 
+	 * 
+	 * @param pEtat La nouvelle état de la transaction
+	 */
 	public void setEtat(EtatTransaction pEtat) {
 		this.etat = pEtat;
 	}
 
+	/**
+	 * Retourne l'état de la transaction
+	 * 
+	 * @return L'État de la transaction
+	 */
 	public EtatTransaction getEtat() {
 		return etat;
 	}

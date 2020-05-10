@@ -107,6 +107,13 @@ public class TableauDeBord {
 		this.transactionCourante.removeProduit(produit);
 	}
 
+	/**
+	 * Méthode pour rechercher un produit dans l'inventaire de l'établissement
+	 * 
+	 * @param text - Texte représentant soit le sku (Débute par «.»), soit le prix d'un produit
+	 *  
+	 * @return La liste de produits correspondante à la recherche
+	 */
 	public ArrayList<Produit> search(String text) {
 		ArrayList<Produit> listProd = new ArrayList<Produit>();
 		for (Produit produit : etablissement.getInventaire()) {
@@ -134,7 +141,7 @@ public class TableauDeBord {
 		return null;
 	}
 
-	/*
+	/**
 	 * @param vendeur le vendeur aillant une session ouverte
 	 */
 	public void setVendeur(Vendeur vendeur) {

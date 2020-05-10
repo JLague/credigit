@@ -57,6 +57,7 @@ public class LigneFacture implements Serializable {
 	}
 
 	/**
+	 * Constructeur d'une ligne de facture 
 	 * 
 	 * @param produit  le produit associé à la ligne
 	 * @param quantite la quantité du produit
