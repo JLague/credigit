@@ -388,7 +388,7 @@ public class ConnexionPOS {
 	}
 
 	/**
-	 * Instantie et retourne un CodecRegistry contenant tous les codecs customs
+	 * Instancie et retourne un CodecRegistry contenant tous les codecs customs
 	 * 
 	 * @return le CodecRegistry contenant tous les codecs customs
 	 */

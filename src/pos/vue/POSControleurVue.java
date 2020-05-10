@@ -868,7 +868,7 @@ public class POSControleurVue implements IPOSControleurVue {
 	}
 
 	/**
-	 * Permet d'enlever la ligne sélectionné dans la facture
+	 * Permet d'enlever la ligne sélectionnée dans la facture
 	 * 
 	 * @param event
 	 */

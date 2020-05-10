@@ -8,6 +8,8 @@ import java.security.NoSuchAlgorithmException;
  * 
  * Méthode servant à hasher les mots de passe pour les stocker dans la base de
  * donnée
+ * 
+ * @author Bank-era Corp.
  *
  */
 public class SHAUtil {

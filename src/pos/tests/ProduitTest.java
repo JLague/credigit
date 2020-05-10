@@ -235,27 +235,6 @@ public class ProduitTest {
 
 		}
 
-		try {
-
-			DataProduit d1 = new DataProduit();
-
-			byte[] array1 = { 0, 1 };
-
-			d1.setCoutant(12.34f);
-			d1.setDescription("Une banane d'Asie");
-			d1.setFournisseur("China");
-			d1.setImage(array1);
-			d1.setNom("Banane");
-			d1.setPrix(13.45f);
-			d1.setQuantite(-1);
-			d1.setSku(1234);
-
-			new Produit(d1);
-
-			fail("Quantité négative");
-		} catch (ExceptionProduitEtablissement e) {
-
-		}
 
 		try {
 

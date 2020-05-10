@@ -16,6 +16,12 @@ import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
 import javafx.collections.ObservableList;
 
+/**
+ * Classe testant la classe Transaction
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class TransactionTest {
 
 	Produit p1, p2, p3;
