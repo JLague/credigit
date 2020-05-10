@@ -3,7 +3,7 @@ package encryption;
 import java.util.*;
 
 /**
- * Classe permettant d'encrypter un message
+ * Classe permettant d'encrypter un message avec l'AES (Méthode de Rinjdael)
  * 
  * @author Bank-era Corp.
  *
@@ -293,7 +293,7 @@ public final class AES {
 	}
 
 	/**
-	 * Substitue chaque caractère de la liste de matrice de texte pour l'encryption
+	 * Substitue chaque caractère de la liste de matrice de texte pour la décryption
 	 * 
 	 * @param texte - La liste de matrices
 	 * @return La liste de matrices modifiée
@@ -325,6 +325,12 @@ public final class AES {
 
 	}
 
+	/**
+	 * Mélange les colonnes de la liste de matrice de texte pour l'encryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
+	 */
 	public static List<String[][]> mixColumns(List<String[][]> texte) {
 
 		for (String[][] matrice : texte) {
@@ -360,6 +366,12 @@ public final class AES {
 		return texte;
 	}
 
+	/**
+	 * Mélange les colonnes de la liste de matrice de texte pour la décryption
+	 * 
+	 * @param texte - La liste de matrices
+	 * @return La liste de matrices modifiée
+	 */
 	public static List<String[][]> mixColumnsInverse(List<String[][]> texte) {
 		for (String[][] matrice : texte) {
 
@@ -423,6 +435,11 @@ public final class AES {
 		return cles;
 	}
 
+	/**
+	 * Convertis la clé en HexaString
+	 * @param cle - La clé à convertir
+	 * @return La clé en HexaString
+	 */
 	private static String convertirHexaString(String cle) {
 		String temp = "";
 

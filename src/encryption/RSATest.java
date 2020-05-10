@@ -7,6 +7,12 @@ import java.math.BigInteger;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Classe testant les méthodes pour la clé RSA
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class RSATest {
 
 	CleRSA c1, c2, c3;
