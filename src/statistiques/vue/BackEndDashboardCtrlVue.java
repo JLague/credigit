@@ -134,7 +134,7 @@ public class BackEndDashboardCtrlVue {
 	private TableColumn<Transaction, String> c5;
 
 	@FXML
-	private BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>> chart;
+	private BarChart<String, Number> chart;
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		this.ctrl = ctrl;
@@ -147,7 +147,7 @@ public class BackEndDashboardCtrlVue {
 		NumberAxis axeY = new NumberAxis();
 		axeY.setLabel("Transaction");
 
-		chart = new BarChart(axeX, axeY);
+		chart = new BarChart<String, Number>(axeX, axeY);
 		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
 	}
 	
