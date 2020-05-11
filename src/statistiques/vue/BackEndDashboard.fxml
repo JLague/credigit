@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" stylesheets="@../../../res/styles/pos/BackEndDashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="refreshBtn" onMouseClicked="#refreshHandler" text="REFRESH" textFill="WHITE" AnchorPane.rightAnchor="108.0" AnchorPane.topAnchor="62.0">
@@ -30,7 +29,7 @@
                   <Font name="Montserrat Regular" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="produtsLbl" text="240" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
+            <Label fx:id="produitsLbl" text="240" textFill="WHITE" AnchorPane.bottomAnchor="96.0" AnchorPane.leftAnchor="21.0">
                <font>
                   <Font name="Montserrat Bold" size="36.0" />
                </font>
@@ -117,12 +116,12 @@
                   <Font name="Montserrat Bold" size="36.0" />
                </font>
             </Label>
-            <ImageView fx:id="icVentesBrutesDown1" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+            <ImageView fx:id="icProfitsDown" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
                <image>
                   <Image url="@../../../res/images/pos/ic_down.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="icVentesBrutesUp1" fitHeight="24.0" fitWidth="24.0" layoutX="31.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
+            <ImageView fx:id="icProfitsUp" fitHeight="24.0" fitWidth="24.0" layoutX="31.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="124.0">
                <image>
                   <Image url="@../../../res/images/pos/ic_up.png" />
                </image>
@@ -187,11 +186,11 @@
             </Label>
             <TableView fx:id="transactionsTb" layoutX="222.0" layoutY="162.0" prefHeight="374.0" prefWidth="912.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
               <columns>
-                <TableColumn prefWidth="232.0" text="Numéro de transaction" />
-                <TableColumn prefWidth="213.0" text="Date de la transaction" />
-                  <TableColumn minWidth="0.0" prefWidth="208.0" text="Quantité de produits" />
-                  <TableColumn minWidth="8.0" prefWidth="124.0" text="Sous total" />
-                  <TableColumn minWidth="0.0" prefWidth="134.0" text="Total" />
+                <TableColumn fx:id="c1" prefWidth="232.0" text="Numéro de transaction" />
+                <TableColumn fx:id="c2" prefWidth="213.0" text="Date de la transaction" />
+                  <TableColumn fx:id="c3" minWidth="0.0" prefWidth="208.0" text="Quantité de produits" />
+                  <TableColumn fx:id="c4" minWidth="8.0" prefWidth="124.0" text="Sous total" />
+                  <TableColumn fx:id="c5" minWidth="0.0" prefWidth="134.0" text="Total" />
               </columns>
             </TableView>
          </children>

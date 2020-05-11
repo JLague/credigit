@@ -27,10 +27,12 @@ public class TBControleur {
 
 	private Etablissement etablissement;
 
+	private LocalDate date;
+
 	public TBControleur(TBApplication tBApplication) {
 		app = tBApplication;
-		vue = new BackEndDashboardCtrlVue(this);
 		connexion = new Connexion();
+		vue = new BackEndDashboardCtrlVue(this);
 		Analyse = new Analyse();
 	}
 
@@ -49,40 +51,44 @@ public class TBControleur {
 	}
 
 	public ArrayList<Transaction> getTransactionToday(Etablissement etablissement) {
-		return Analyse.getTransactionToday(etablissement);
+		return Analyse.getTransactionToday(etablissement, date);
+	}
+
+	public Etablissement getEtablissement() {
+		return etablissement;
 	}
 
 	public ArrayList<Transaction> getTransactionAvant(Etablissement etablissement, int i) {
-		return Analyse.getTransactionAvant(etablissement, i);
+		return Analyse.getTransactionAvant(etablissement, i, date);
 	}
 
 	public float getVentesBrutesToday(Etablissement etablissement) {
-		return Analyse.getVentesBrutesToday(etablissement);
+		return Analyse.getVentesBrutesToday(etablissement, date);
 	}
 
 	public float getVentesBrutesHier(Etablissement etablissement) {
-		return Analyse.getVentesBrutesHier(etablissement);
+		return Analyse.getVentesBrutesHier(etablissement, date);
 	}
 
 	public float getProfitToday(Etablissement etablissement) {
-		return Analyse.getProfitToday(etablissement);
+		return Analyse.getProfitToday(etablissement, date);
 	}
 
 	public double getProfitHier(Etablissement etablissement) {
-		return Analyse.getProfitHier(etablissement);
+		return Analyse.getProfitHier(etablissement, date);
 	}
 
 	public int getNbTransactionToday(Etablissement etablissement) {
-		return Analyse.getNbTransactionToday(etablissement);
+		return Analyse.getNbTransactionToday(etablissement, date);
 	}
 
 	public int getNbTransactionHier(Etablissement etablissement) {
-		return Analyse.getNbTransactionHier(etablissement);
+		return Analyse.getNbTransactionHier(etablissement, date);
 	}
 
 	public void setDate(LocalDate value) {
-		Analyse.setDate(value);
-		
+		this.date = value;
+
 	}
 
 }

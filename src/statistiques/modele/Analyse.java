@@ -19,21 +19,17 @@ public class Analyse {
 	 */
 	private static final long CONST = 1585281727947L;
 	private static LocalDate dateReference;
-	
-	
+
 	public static int getNbProduit(Etablissement e) {
 		return e.getInventaire().size();
 	}
 
-	
-	public static ArrayList<Transaction> getTransactionToday(Etablissement e) {
-
-		LocalDate date = LocalDate.now();
+	public static ArrayList<Transaction> getTransactionToday(Etablissement e, LocalDate date) {
 
 		ArrayList<Transaction> transHebdo = new ArrayList<Transaction>();
 
 		for (Transaction t : e.getTransactions()) {
-			if (Integer.parseInt(t.getHeure()) > dateReference.toEpochDay() - CONST) {
+			if (t.getHeure().substring(0, 10).equals(date.toString().replace('-', '/'))) {
 				transHebdo.add(t);
 			}
 		}
@@ -41,14 +37,13 @@ public class Analyse {
 		return transHebdo;
 	}
 
-	public static ArrayList<Transaction> getTransactionAvant(Etablissement e, int jourAvant) {
-		LocalDate date = LocalDate.now().minusDays(jourAvant);
+	public static ArrayList<Transaction> getTransactionAvant(Etablissement e, int jourAvant, LocalDate date) {
+		LocalDate dateTemp = date.minusDays(jourAvant);
 
 		ArrayList<Transaction> transHebdo = new ArrayList<Transaction>();
 
 		for (Transaction t : e.getTransactions()) {
-			if (Integer.parseInt(t.getHeure()) > dateReference.toEpochDay() - CONST
-					&& Integer.parseInt(t.getHeure()) < LocalDate.now().toEpochDay() - CONST) {
+			if (t.getHeure().substring(0, 10).equals(dateTemp.toString().replace('-', '/'))) {
 				transHebdo.add(t);
 			}
 		}
@@ -56,16 +51,16 @@ public class Analyse {
 		return transHebdo;
 	}
 
-	public static int getNbTransactionToday(Etablissement e) {
-		return getTransactionToday(e).size();
+	public static int getNbTransactionToday(Etablissement e, LocalDate date) {
+		return getTransactionToday(e, date).size();
 	}
 
-	public static int getNbTransactionHier(Etablissement e) {
-		return getTransactionAvant(e, 1).size();
+	public static int getNbTransactionHier(Etablissement e, LocalDate date) {
+		return getTransactionAvant(e, 1, date).size();
 	}
 
-	public static float getVentesBrutesToday(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionToday(e);
+	public static float getVentesBrutesToday(Etablissement e, LocalDate date) {
+		ArrayList<Transaction> listTr = getTransactionToday(e, date);
 		float total = 0;
 
 		for (Transaction tr : listTr) {
@@ -75,8 +70,8 @@ public class Analyse {
 		return total;
 	}
 
-	public static float getVentesBrutesHier(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionAvant(e, 1);
+	public static float getVentesBrutesHier(Etablissement e, LocalDate date) {
+		ArrayList<Transaction> listTr = getTransactionAvant(e, 1, date);
 		float total = 0;
 
 		for (Transaction tr : listTr) {
@@ -86,8 +81,8 @@ public class Analyse {
 		return total;
 	}
 
-	public static float getProfitToday(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionToday(e);
+	public static float getProfitToday(Etablissement e, LocalDate date) {
+		ArrayList<Transaction> listTr = getTransactionToday(e, date);
 		float profit = 0;
 
 		for (Transaction tr : listTr) {
@@ -99,8 +94,8 @@ public class Analyse {
 		return profit;
 	}
 
-	public static float getProfitHier(Etablissement e) {
-		ArrayList<Transaction> listTr = getTransactionAvant(e, 1);
+	public static float getProfitHier(Etablissement e, LocalDate date) {
+		ArrayList<Transaction> listTr = getTransactionAvant(e, 1, date);
 		float profit = 0;
 
 		for (Transaction tr : listTr) {

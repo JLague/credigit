@@ -1,27 +1,45 @@
 package statistiques.vue;
 
+import java.io.IOException;
+import java.time.LocalDate;
+
 import commun.Etablissement;
 import commun.Transaction;
+import commun.exception.ExceptionProduitEtablissement;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import pos.vue.VueDialogue;
 import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
+
+	private static final String LOGIN = "Login.fxml";
+	private static final String MAIN_VIEW = "BackEndDashboard.fxml";
 
 	private Etablissement etablissement;
 	private TBControleur ctrl;
@@ -63,10 +81,10 @@ public class BackEndDashboardCtrlVue {
 	private Label profitsLbl;
 
 	@FXML
-	private ImageView icVentesBrutesDown1;
+	private ImageView icProfitsDown;
 
 	@FXML
-	private ImageView icVentesBrutesUp1;
+	private ImageView icProfitsUp;
 
 	@FXML
 	private Label profitsPourcentageLbl;
@@ -76,10 +94,25 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private Label semaineDerniereLbl;
-	
+
+	@FXML
+	private TextField userField;
+
+	@FXML
+	private PasswordField passField;
+
+	@FXML
+	private TextField nomEtablissementLoginField;
+
+	@FXML
+	private Button createAccountBtn;
+
 	@FXML
 	private VBox root;
-	
+
+	private VBox rootVBox;
+	private AnchorPane rootBP;
+
 	private Scene scene;
 
 	@FXML
@@ -105,17 +138,7 @@ public class BackEndDashboardCtrlVue {
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		this.ctrl = ctrl;
-		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-		loader.setController(this);
-
-		try {
-			root = loader.load();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		scene = new Scene(root);
+		ouvrirLoginVendeur();
 
 		CategoryAxis axeX = new CategoryAxis();
 		axeX.setLabel("Journée");
@@ -123,8 +146,32 @@ public class BackEndDashboardCtrlVue {
 		NumberAxis axeY = new NumberAxis();
 		axeY.setLabel("Transaction");
 
-		chart = new BarChart<XYChart.Series<String, Number>, XYChart.Series<String, Number>>(axeX, axeY);
+		chart = new BarChart(axeX, axeY);
 		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
+	}
+
+	/**
+	 * Méthode qui permet de charger un fichier FXML
+	 */
+	private void creerScene(String url, Pane root) {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(url));
+		loader.setController(this);
+
+		try {
+			root = loader.load();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		scene = new Scene(root);
+	}
+
+	/**
+	 * Méthode servant à ouvrir la vue où les vendeurs peuvent se connecter
+	 */
+	private void ouvrirLoginVendeur() {
+		creerScene(LOGIN, rootVBox);
 	}
 
 	@FXML
@@ -132,7 +179,7 @@ public class BackEndDashboardCtrlVue {
 		// TODO Contacter la base de donnée afin de retirer le dernier etablissement
 		// TODO Loader l'établissement dans la variable etablissement
 
-		etablissement = null;
+		etablissement = ctrl.getEtablissement();
 
 		produitsLbl.setText(etablissement.getInventaire().size() + "");
 		transactionsLbl1.setText(ctrl.getTransactionToday(etablissement).size() + "");
@@ -141,14 +188,17 @@ public class BackEndDashboardCtrlVue {
 				/ (double) ctrl.getTransactionAvant(etablissement, 1).size();
 		transactionsPourcentageLbl.setText(pourcentage + "");
 		if (pourcentage > 0) {
-			icTransactionsDown.setDisable(true);
-			icTransactionsUp.setDisable(false);
+			icTransactionsDown.setVisible(true);
+			icTransactionsUp.setVisible(false);
+			transactionsPourcentageLbl.setTextFill(Color.RED);
 		} else if (pourcentage < 0) {
-			icTransactionsUp.setDisable(true);
-			icTransactionsDown.setDisable(false);
+			icTransactionsDown.setVisible(false);
+			icTransactionsUp.setVisible(true);
+			transactionsPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
-			icTransactionsDown.setDisable(true);
-			icTransactionsUp.setDisable(true);
+			icTransactionsDown.setVisible(false);
+			icTransactionsUp.setVisible(false);
+			transactionsPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
 		ventesBrutesLbl.setText(ctrl.getVentesBrutesToday(etablissement) + "");
@@ -158,14 +208,17 @@ public class BackEndDashboardCtrlVue {
 
 		ventesBrutesPourcentageLbl.setText(pourcentageVentesBrutes + "");
 		if (pourcentageVentesBrutes > 0) {
-			icVentesBrutesDown.setDisable(true);
-			icVentesBrutesUp.setDisable(false);
+			icVentesBrutesDown.setVisible(true);
+			icVentesBrutesUp.setVisible(false);
+			ventesBrutesPourcentageLbl.setTextFill(Color.RED);
 		} else if (pourcentageVentesBrutes < 0) {
-			icVentesBrutesUp.setDisable(true);
-			icVentesBrutesDown.setDisable(false);
+			icVentesBrutesDown.setVisible(false);
+			icVentesBrutesUp.setVisible(true);
+			ventesBrutesPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
-			icVentesBrutesDown.setDisable(true);
-			icVentesBrutesUp.setDisable(true);
+			icVentesBrutesDown.setVisible(false);
+			icVentesBrutesUp.setVisible(false);
+			ventesBrutesPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
 		profitsLbl.setText(ctrl.getProfitToday(etablissement) + "");
@@ -175,14 +228,17 @@ public class BackEndDashboardCtrlVue {
 
 		profitsPourcentageLbl.setText(pourcentageProfit + "");
 		if (pourcentageVentesBrutes > 0) {
-			icVentesBrutesDown1.setDisable(true);
-			icVentesBrutesUp1.setDisable(false);
+			icProfitsDown.setVisible(true);
+			icProfitsUp.setVisible(false);
+			profitsPourcentageLbl.setTextFill(Color.RED);
 		} else if (pourcentageVentesBrutes < 0) {
-			icVentesBrutesUp1.setDisable(true);
-			icVentesBrutesDown1.setDisable(false);
+			icProfitsDown.setVisible(false);
+			icProfitsUp.setVisible(true);
+			profitsPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
-			icVentesBrutesDown1.setDisable(true);
-			icVentesBrutesUp1.setDisable(true);
+			icProfitsDown.setVisible(false);
+			icProfitsUp.setVisible(false);
+			profitsPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
 		semaineCouranteLbl.setText(ctrl.getNbTransactionToday(etablissement) + "");
@@ -224,8 +280,38 @@ public class BackEndDashboardCtrlVue {
 		j0.setName("Aujourd'hui");
 		j0.getData().add(new XYChart.Data<>("", ctrl.getTransactionToday(etablissement).size()));
 
-		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2, jminus1, j0);
+		// chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2,
+		// jminus1, j0);
 
+	}
+
+	@FXML
+	void connect(ActionEvent event) {
+		try {
+			ctrl.connexion(userField.getText(), passField.getText(), nomEtablissementLoginField.getText());
+			ouvrirVuePrincipale();
+		} catch (ExceptionProduitEtablissement e) {
+			VueDialogue.erreurConnexionDialogue(e.getMessage());
+		}
+	}
+
+	/**
+	 * Méthode servant à ouvrir la vue principale
+	 */
+	private void ouvrirVuePrincipale() {
+		// Création et chargement de la scène du Tableau de bord
+		creerScene(MAIN_VIEW, rootBP);
+		ctrl.chargerScene(this.scene, "Tableau de Bord", true);
+		datePicker.setValue(LocalDate.now());
+		datePickerHandler();
+		refreshHandler(null);
+	}
+
+	@FXML
+	void onEnterPressed(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.ENTER)) {
+			connect(null);
+		}
 	}
 
 	private void actualiserTB(Etablissement etablissement) {
@@ -234,12 +320,6 @@ public class BackEndDashboardCtrlVue {
 		c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
 		c4.setCellValueFactory(new PropertyValueFactory<>("sousTotal"));
 		c5.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
-
-		transactionsTb.getColumns().add(c1);
-		transactionsTb.getColumns().add(c2);
-		transactionsTb.getColumns().add(c3);
-		transactionsTb.getColumns().add(c4);
-		transactionsTb.getColumns().add(c5);
 
 		for (Transaction tr : ctrl.getTransactionToday(etablissement)) {
 			transactionsTb.getItems().add(tr);
