@@ -139,6 +139,7 @@ public class BackEndDashboardCtrlVue {
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		this.ctrl = ctrl;
 		ouvrirLoginVendeur();
+		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 
 		CategoryAxis axeX = new CategoryAxis();
 		axeX.setLabel("Journée");
@@ -148,6 +149,11 @@ public class BackEndDashboardCtrlVue {
 
 		chart = new BarChart(axeX, axeY);
 		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
+	}
+	
+	private void ouvrirVueInscriptionVendeur() {
+		creerScene("NouveauVendeur.fxml", rootVBox);
+		ctrl.chargerScene(this.scene, "Inscription vendeur", false);
 	}
 
 	/**
