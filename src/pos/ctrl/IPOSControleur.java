@@ -1,17 +1,17 @@
 package pos.ctrl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import commun.DataProduit;
+import commun.DataVendeur;
+import commun.LigneFacture;
+import commun.Produit;
+import commun.exception.ExceptionCreationCompte;
+import commun.exception.ExceptionProduitEtablissement;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-
-import commun.*;
-import commun.exception.ExceptionCreationCompte;
-import commun.exception.ExceptionProduitEtablissement;
-import encryption.CleRSA;
 
 /**
  * Interface définissant les comportements obligatoires de POSControleur

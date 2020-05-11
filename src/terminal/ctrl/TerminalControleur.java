@@ -4,7 +4,6 @@ import java.util.List;
 
 import commun.EtatTransaction;
 import commun.Transaction;
-import commun.exception.ExceptionTransaction;
 import commun.utils.EmpreinteUtil;
 import javafx.application.Platform;
 import javafx.scene.Scene;

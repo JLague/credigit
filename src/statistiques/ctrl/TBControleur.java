@@ -2,12 +2,9 @@ package statistiques.ctrl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import commun.Etablissement;
-import commun.Produit;
 import commun.Transaction;
-import commun.Vendeur;
 import commun.exception.ExceptionProduitEtablissement;
 import javafx.scene.Scene;
 import statistiques.application.TBApplication;
@@ -16,8 +13,6 @@ import statistiques.modele.Connexion;
 import statistiques.vue.BackEndDashboardCtrlVue;
 
 public class TBControleur {
-
-	private Analyse Analyse;
 
 	private TBApplication app;
 
@@ -33,7 +28,6 @@ public class TBControleur {
 		app = tBApplication;
 		connexion = new Connexion();
 		vue = new BackEndDashboardCtrlVue(this);
-		Analyse = new Analyse();
 	}
 
 	public Scene getScene() {

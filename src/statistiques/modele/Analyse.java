@@ -1,16 +1,21 @@
 package statistiques.modele;
 
-import commun.Transaction;
-import commun.Vendeur;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 import commun.Etablissement;
 import commun.LigneFacture;
+import commun.Transaction;
+import commun.Vendeur;
 
+/**
+ * Classe offrant des méthodes statiques qui permettent d'analyser plusieurs
+ * aspects d'un établissement, comme les ventes de la journée, le nombre de
+ * transactions totales, etc.
+ * 
+ * @author Bank-era
+ *
+ */
 public class Analyse {
 
 	/**
@@ -20,10 +25,24 @@ public class Analyse {
 	private static final long CONST = 1585281727947L;
 	private static LocalDate dateReference;
 
+	/**
+	 * Retourne le nombre de produits de l'établissement
+	 * 
+	 * @param e l'établissement à analyser
+	 * @return le nombre de produits
+	 */
 	public static int getNbProduit(Etablissement e) {
 		return e.getInventaire().size();
 	}
 
+	/**
+	 * Retourne les transactions effectuées lors de la journée spécifiée par la date
+	 * passée en paramètres
+	 * 
+	 * @param e    l'établissement à analyser
+	 * @param date la date à analyser
+	 * @return les transactions effectuées
+	 */
 	public static ArrayList<Transaction> getTransactionToday(Etablissement e, LocalDate date) {
 
 		ArrayList<Transaction> transHebdo = new ArrayList<Transaction>();
@@ -37,6 +56,15 @@ public class Analyse {
 		return transHebdo;
 	}
 
+	/**
+	 * Retourne les transactions de l'établissement durant le nombre de jour
+	 * spécifié avant la date spécifiée
+	 * 
+	 * @param e         l'établissement à analyser
+	 * @param jourAvant le nombre de jours avant
+	 * @param date      la date à analyser
+	 * @return les transactions
+	 */
 	public static ArrayList<Transaction> getTransactionAvant(Etablissement e, int jourAvant, LocalDate date) {
 		LocalDate dateTemp = date.minusDays(jourAvant);
 
@@ -51,6 +79,14 @@ public class Analyse {
 		return transHebdo;
 	}
 
+	/**
+	 * Retourne le nombre de transactions effectuées durant la journée spécifiée en
+	 * paramètre
+	 * 
+	 * @param e    l'établissement à analyser
+	 * @param date la date à analyser
+	 * @return le nombre de transactions
+	 */
 	public static int getNbTransactionToday(Etablissement e, LocalDate date) {
 		return getTransactionToday(e, date).size();
 	}
@@ -107,11 +143,11 @@ public class Analyse {
 		return profit;
 	}
 
-	public static ArrayList<Vendeur> getUtilisateur(Etablissement e) {
+	public static ArrayList<Vendeur> getUtilisateurs(Etablissement e) {
 		return (ArrayList<Vendeur>) e.getUtilisateurs();
 	}
 
-	public void setDate(LocalDate date) {
-		this.dateReference = date;
+	public static void setDate(LocalDate date) {
+		dateReference = date;
 	}
 }

@@ -517,7 +517,7 @@ public class Transaction implements Serializable {
 		transReduite.setLigneFactureArray(trans.getLigneFactureArray());
 
 		for (LigneFacture ligne : transReduite.getLigneFactureArray()) {
-			ligne.setProduit(null);
+			ligne.getProduit().effacerImage();
 		}
 
 		transReduite.setSousTotal(trans.getSousTotal());
