@@ -38,7 +38,7 @@ import statistiques.ctrl.TBControleur;
 
 public class BackEndDashboardCtrlVue {
 
-	private static final String LOGIN = "Login.fxml";
+	private static final String LOGIN = "LoginTB.fxml";
 	private static final String MAIN_VIEW = "BackEndDashboard.fxml";
 
 	private Etablissement etablissement;
@@ -139,7 +139,6 @@ public class BackEndDashboardCtrlVue {
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		this.ctrl = ctrl;
 		ouvrirLoginVendeur();
-		createAccountBtn.setOnMouseClicked((me) -> ouvrirVueInscriptionVendeur());
 
 		CategoryAxis axeX = new CategoryAxis();
 		axeX.setLabel("Journée");
@@ -149,11 +148,6 @@ public class BackEndDashboardCtrlVue {
 
 		chart = new BarChart<String, Number>(axeX, axeY);
 		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
-	}
-	
-	private void ouvrirVueInscriptionVendeur() {
-		creerScene("NouveauVendeur.fxml", rootVBox);
-		ctrl.chargerScene(this.scene, "Inscription vendeur", false);
 	}
 
 	/**

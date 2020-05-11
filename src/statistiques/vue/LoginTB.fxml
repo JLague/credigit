@@ -17,6 +17,5 @@
       <PasswordField fx:id="passField" maxWidth="400.0" minHeight="30.0" promptText="Mot de passe" styleClass="fields-1" />
       <TextField fx:id="nomEtablissementLoginField" maxWidth="400.0" minHeight="30.0" onKeyPressed="#onEnterPressed" promptText="Nom de l'établissement" styleClass="fields-1" />
       <Button minHeight="50.0" minWidth="300.0" mnemonicParsing="false" onAction="#connect" styleClass="buttons-1" text="Se connecter" />
-      <Button fx:id="createAccountBtn" minHeight="50.0" minWidth="300.0" mnemonicParsing="false" styleClass="buttons-1" text="Créer un compte" />
    </children>
 </VBox>
