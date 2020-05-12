@@ -295,8 +295,8 @@ public class BackEndDashboardCtrlVue {
 		j0.setName("Aujourd'hui");
 		j0.getData().add(new XYChart.Data<>("", ctrl.getTransactionToday(etablissement).size()));
 
-		// chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2,
-		// jminus1, j0);
+		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2,
+		 jminus1, j0);
 
 	}
 
