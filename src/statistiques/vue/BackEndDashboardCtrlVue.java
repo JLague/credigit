@@ -181,13 +181,16 @@ public class BackEndDashboardCtrlVue {
 
 		etablissement = ctrl.getEtablissement();
 
+		ctrl.setDate(datePicker.getValue());
+
 		produitsLbl.setText(etablissement.getInventaire().size() + "");
 		transactionsLbl1.setText(ctrl.getTransactionToday(etablissement).size() + "");
 
 		double pourcentage = (double) ctrl.getTransactionToday(etablissement).size()
 				/ (double) ctrl.getTransactionAvant(etablissement, 1).size();
 		transactionsPourcentageLbl.setText(pourcentage + "");
-		if (ctrl.getTransactionToday(etablissement).size() == 0 || ctrl.getTransactionAvant(etablissement,1).size() == 0) {
+		if (ctrl.getTransactionToday(etablissement).size() == 0
+				|| ctrl.getTransactionAvant(etablissement, 1).size() == 0) {
 			icTransactionsUp.setVisible(false);
 			icTransactionsDown.setVisible(false);
 			transactionsPourcentageLbl.setTextFill(Color.WHITE);
@@ -295,8 +298,7 @@ public class BackEndDashboardCtrlVue {
 		j0.setName("Aujourd'hui");
 		j0.getData().add(new XYChart.Data<>("", ctrl.getTransactionToday(etablissement).size()));
 
-		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2,
-		 jminus1, j0);
+		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2, jminus1, j0);
 
 	}
 
@@ -330,6 +332,7 @@ public class BackEndDashboardCtrlVue {
 	}
 
 	private void actualiserTB(Etablissement etablissement) {
+		transactionsTb.getItems().clear();
 		c1.setCellValueFactory(new PropertyValueFactory<>("numero"));
 		c2.setCellValueFactory(new PropertyValueFactory<>("heure"));
 		c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
