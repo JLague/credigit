@@ -193,7 +193,7 @@ public class BackEndDashboardCtrlVue {
 
 		double pourcentage = (double) ctrl.getTransactionToday(etablissement).size()
 				/ (double) ctrl.getTransactionAvant(etablissement, 1).size();
-		transactionsPourcentageLbl.setText(pourcentage + "");
+		transactionsPourcentageLbl.setText(String.format("%.2f", pourcentage) + " %");
 		if (ctrl.getTransactionToday(etablissement).size() == 0
 				|| ctrl.getTransactionAvant(etablissement, 1).size() == 0) {
 			icTransactionsUp.setVisible(false);
@@ -220,7 +220,7 @@ public class BackEndDashboardCtrlVue {
 		double pourcentageVentesBrutes = (double) ctrl.getVentesBrutesToday(etablissement)
 				/ (double) ctrl.getVentesBrutesHier(etablissement);
 
-		ventesBrutesPourcentageLbl.setText(pourcentageVentesBrutes + "");
+		ventesBrutesPourcentageLbl.setText(String.format("%.2f", pourcentageVentesBrutes) + " %");
 		if (ctrl.getVentesBrutesToday(etablissement) == 0 || ctrl.getVentesBrutesHier(etablissement) == 0) {
 			icVentesBrutesDown.setVisible(false);
 			icVentesBrutesUp.setVisible(false);
@@ -245,7 +245,7 @@ public class BackEndDashboardCtrlVue {
 		double pourcentageProfit = (double) ctrl.getProfitToday(etablissement)
 				/ (double) ctrl.getProfitHier(etablissement);
 
-		profitsPourcentageLbl.setText(pourcentageProfit + "");
+		profitsPourcentageLbl.setText(String.format("%.2f", pourcentageProfit) + " %");
 		if (ctrl.getProfitToday(etablissement) == 0 || ctrl.getProfitHier(etablissement) == 0) {
 			icProfitsDown.setVisible(false);
 			icProfitsUp.setVisible(false);
