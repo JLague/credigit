@@ -187,7 +187,12 @@ public class BackEndDashboardCtrlVue {
 		double pourcentage = (double) ctrl.getTransactionToday(etablissement).size()
 				/ (double) ctrl.getTransactionAvant(etablissement, 1).size();
 		transactionsPourcentageLbl.setText(pourcentage + "");
-		if (pourcentage > 0) {
+		if (ctrl.getTransactionToday(etablissement).size() == 0 || ctrl.getTransactionAvant(etablissement,1).size() == 0) {
+			icTransactionsUp.setVisible(false);
+			icTransactionsDown.setVisible(false);
+			transactionsPourcentageLbl.setTextFill(Color.WHITE);
+			transactionsPourcentageLbl.setVisible(false);
+		} else if (pourcentage > 0) {
 			icTransactionsDown.setVisible(true);
 			icTransactionsUp.setVisible(false);
 			transactionsPourcentageLbl.setTextFill(Color.RED);
@@ -207,7 +212,12 @@ public class BackEndDashboardCtrlVue {
 				/ (double) ctrl.getVentesBrutesHier(etablissement);
 
 		ventesBrutesPourcentageLbl.setText(pourcentageVentesBrutes + "");
-		if (pourcentageVentesBrutes > 0) {
+		if (ctrl.getVentesBrutesToday(etablissement) == 0 || ctrl.getVentesBrutesHier(etablissement) == 0) {
+			icVentesBrutesDown.setVisible(false);
+			icVentesBrutesUp.setVisible(false);
+			ventesBrutesPourcentageLbl.setTextFill(Color.WHITE);
+			ventesBrutesPourcentageLbl.setVisible(false);
+		} else if (pourcentageVentesBrutes > 0) {
 			icVentesBrutesDown.setVisible(true);
 			icVentesBrutesUp.setVisible(false);
 			ventesBrutesPourcentageLbl.setTextFill(Color.RED);
@@ -227,7 +237,12 @@ public class BackEndDashboardCtrlVue {
 				/ (double) ctrl.getProfitHier(etablissement);
 
 		profitsPourcentageLbl.setText(pourcentageProfit + "");
-		if (pourcentageVentesBrutes > 0) {
+		if (ctrl.getProfitToday(etablissement) == 0 || ctrl.getProfitHier(etablissement) == 0) {
+			icProfitsDown.setVisible(false);
+			icProfitsUp.setVisible(false);
+			profitsPourcentageLbl.setTextFill(Color.WHITE);
+			profitsPourcentageLbl.setVisible(false);
+		} else if (pourcentageVentesBrutes > 0) {
 			icProfitsDown.setVisible(true);
 			icProfitsUp.setVisible(false);
 			profitsPourcentageLbl.setTextFill(Color.RED);
