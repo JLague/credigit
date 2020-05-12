@@ -22,7 +22,12 @@ public class Analyse {
 	 * Constante soustraite au temps présent en millisescondes afin d'éviter que le
 	 * numéro de facture soit trop long
 	 */
+	@SuppressWarnings("unused")
 	private static final long CONST = 1585281727947L;
+	/**
+	 * Date pour laquelle on veut obtenir les renseignements
+	 */
+	@SuppressWarnings("unused")
 	private static LocalDate dateReference;
 
 	/**
@@ -91,10 +96,25 @@ public class Analyse {
 		return getTransactionToday(e, date).size();
 	}
 
+	/**
+	 * Retourne le nombre de transaction effectué la journée précédente à la journée
+	 * spécifié en param
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return le nombre de transaction effectué la journée précédente
+	 */
 	public static int getNbTransactionHier(Etablissement e, LocalDate date) {
 		return getTransactionAvant(e, 1, date).size();
 	}
 
+	/**
+	 * Retourne le total de ventes brutes accompli lors de la journée passé en param
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return le total de ventes brutes accompli
+	 */
 	public static float getVentesBrutesToday(Etablissement e, LocalDate date) {
 		ArrayList<Transaction> listTr = getTransactionToday(e, date);
 		float total = 0;
@@ -106,6 +126,14 @@ public class Analyse {
 		return total;
 	}
 
+	/**
+	 * Retourne le total de ventes brutes accompli lors de la journée précécente à
+	 * la journée passé en param
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return le total de ventes brutes accompli la journée précédente
+	 */
 	public static float getVentesBrutesHier(Etablissement e, LocalDate date) {
 		ArrayList<Transaction> listTr = getTransactionAvant(e, 1, date);
 		float total = 0;
@@ -117,6 +145,13 @@ public class Analyse {
 		return total;
 	}
 
+	/**
+	 * Retourne les profits engrangé lors de la journée passé en param
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return les profits engrangé
+	 */
 	public static float getProfitToday(Etablissement e, LocalDate date) {
 		ArrayList<Transaction> listTr = getTransactionToday(e, date);
 		float profit = 0;
@@ -130,6 +165,14 @@ public class Analyse {
 		return profit;
 	}
 
+	/**
+	 * Retourne les profits engrangé lors de la journée précédente à la journée
+	 * passé en param
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return les profits engrangé lors de la journée précédente
+	 */
 	public static float getProfitHier(Etablissement e, LocalDate date) {
 		ArrayList<Transaction> listTr = getTransactionAvant(e, 1, date);
 		float profit = 0;
@@ -143,31 +186,56 @@ public class Analyse {
 		return profit;
 	}
 
+	/**
+	 * Retourne un arraylist des utilisateurs de l'établissement
+	 * 
+	 * @param e l'etablissement à analyser
+	 * @return un arraylist des utilisateurs
+	 */
 	public static ArrayList<Vendeur> getUtilisateurs(Etablissement e) {
 		return (ArrayList<Vendeur>) e.getUtilisateurs();
 	}
 
+	/**
+	 * Change la date de référence
+	 * 
+	 * @param date la nouvelle date
+	 */
 	public static void setDate(LocalDate date) {
 		dateReference = date;
 	}
 
+	/**
+	 * Retourne le nombre de transaction effectué lors de la semaine courante
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return le nombre de transaction effectué lors de la semaine courante
+	 */
 	public static int getNbTransactionSemCourante(Etablissement e, LocalDate date) {
 		int somme = 0;
-		
+
 		for (int i = 0; i < 7; i++) {
 			somme += getTransactionAvant(e, i, date).size();
 		}
-		
+
 		return somme;
 	}
-	
+
+	/**
+	 * Retourne le nombre de transaction effectué lors de la semaine précédente
+	 * 
+	 * @param e    l'etablissement à analyser
+	 * @param date la date qui va servir de référence
+	 * @return le nombre de transaction effectué lors de la semaine précédente
+	 */
 	public static int getNbTransactionSemPrecedente(Etablissement e, LocalDate date) {
 		int somme = 0;
-		
+
 		for (int i = 7; i < 14; i++) {
 			somme += getTransactionAvant(e, i, date).size();
 		}
-		
+
 		return somme;
 	}
 }

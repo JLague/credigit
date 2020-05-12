@@ -8,11 +8,9 @@ import java.util.Locale;
 import commun.Etablissement;
 import commun.Transaction;
 import commun.exception.ExceptionProduitEtablissement;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -31,7 +29,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -179,10 +176,9 @@ public class BackEndDashboardCtrlVue {
 		creerScene(LOGIN, rootVBox);
 	}
 
+	@SuppressWarnings("unchecked")
 	@FXML
 	void refreshHandler(MouseEvent event) {
-		// TODO Contacter la base de donnée afin de retirer le dernier etablissement
-		// TODO Loader l'établissement dans la variable etablissement
 
 		etablissement = ctrl.getEtablissement();
 

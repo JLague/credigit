@@ -47,6 +47,7 @@ public class LigneFacture implements Serializable {
 	/**
 	 * String du prix
 	 */
+	@SuppressWarnings("unused")
 	private String prixString;
 
 	/**
