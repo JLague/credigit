@@ -255,7 +255,6 @@ public class ConnexionPOS {
 	 * @return la path de l'image dans la base de donnée
 	 */
 	public String uploadImageToDatabase(Produit produit) {
-		System.out.println("uploading image");
 		MongoDatabase imageDb = mongoClient.getDatabase(DB_IMAGES);
 		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
 
@@ -265,8 +264,6 @@ public class ConnexionPOS {
 		image.put("image", produit.getImage());
 
 		collectionImages.insertOne(image);
-
-		System.out.println("Image ajoutée");
 
 		return path;
 
@@ -283,7 +280,7 @@ public class ConnexionPOS {
 		Document object = new Document();
 		object.put("path", produit.getImagePathDB());
 
-		System.out.println(collectionImages.deleteOne(object));
+		collectionImages.deleteOne(object);
 	}
 
 	/**
@@ -294,7 +291,6 @@ public class ConnexionPOS {
 		MongoCollection<Document> collectionImages = imageDb.getCollection("produits");
 
 		if (etablissement.getInventaire() != null && etablissement.getInventaire().size() >= 1) {
-			System.out.println("here");
 			for (Produit produit : etablissement.getInventaire()) {
 				BasicDBObject object = new BasicDBObject();
 				object.put("path", produit.getImagePathDB());
@@ -307,10 +303,6 @@ public class ConnexionPOS {
 				}
 
 			}
-
-			System.out.println("Images chargées");
-		} else {
-			System.out.println("Inventaire vide");
 		}
 
 	}
