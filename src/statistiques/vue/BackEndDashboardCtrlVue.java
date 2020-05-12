@@ -137,7 +137,7 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private BarChart<String, Number> chart;
-	
+
 	NumberFormat cf1;
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
@@ -214,7 +214,6 @@ public class BackEndDashboardCtrlVue {
 			transactionsPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
-		
 		ventesBrutesLbl.setText(cf1.format(ctrl.getVentesBrutesToday(etablissement)));
 
 		double pourcentageVentesBrutes = (double) ctrl.getVentesBrutesToday(etablissement)
@@ -265,9 +264,12 @@ public class BackEndDashboardCtrlVue {
 			profitsPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
-		semaineCouranteLbl.setText(ctrl.getNbTransactionToday(etablissement) + "");
-		semaineDerniereLbl.setText(ctrl.getNbTransactionHier(etablissement) + "");
-
+		try {
+			semaineCouranteLbl.setText(ctrl.getNbTransactionSemCourante(etablissement) + "");
+			semaineDerniereLbl.setText(ctrl.getNbTransactionSemPrecedente(etablissement) + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		actualiserTB(etablissement);
 
 		chart.getData().clear();

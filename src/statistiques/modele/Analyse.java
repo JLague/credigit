@@ -150,4 +150,24 @@ public class Analyse {
 	public static void setDate(LocalDate date) {
 		dateReference = date;
 	}
+
+	public static int getNbTransactionSemCourante(Etablissement e, LocalDate date) {
+		int somme = 0;
+		
+		for (int i = 0; i < 7; i++) {
+			somme += getTransactionAvant(e, i, date).size();
+		}
+		
+		return somme;
+	}
+	
+	public static int getNbTransactionSemPrecedente(Etablissement e, LocalDate date) {
+		int somme = 0;
+		
+		for (int i = 7; i < 14; i++) {
+			somme += getTransactionAvant(e, i, date).size();
+		}
+		
+		return somme;
+	}
 }

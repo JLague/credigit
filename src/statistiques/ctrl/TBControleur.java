@@ -85,4 +85,12 @@ public class TBControleur {
 
 	}
 
+	public int getNbTransactionSemCourante(Etablissement e) {
+		return Analyse.getNbTransactionSemCourante(e,date);
+	}
+	
+	public int getNbTransactionSemPrecedente(Etablissement e) {
+		return Analyse.getNbTransactionSemPrecedente(e,date);
+	}
+
 }
