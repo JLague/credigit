@@ -1,7 +1,9 @@
 package statistiques.vue;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.Locale;
 
 import commun.Etablissement;
 import commun.Transaction;
@@ -135,8 +137,11 @@ public class BackEndDashboardCtrlVue {
 
 	@FXML
 	private BarChart<String, Number> chart;
+	
+	NumberFormat cf1;
 
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
+		cf1 = NumberFormat.getCurrencyInstance(new Locale("fr", "CA"));
 		this.ctrl = ctrl;
 		ouvrirLoginVendeur();
 
@@ -209,7 +214,8 @@ public class BackEndDashboardCtrlVue {
 			transactionsPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
-		ventesBrutesLbl.setText(ctrl.getVentesBrutesToday(etablissement) + "");
+		
+		ventesBrutesLbl.setText(cf1.format(ctrl.getVentesBrutesToday(etablissement)));
 
 		double pourcentageVentesBrutes = (double) ctrl.getVentesBrutesToday(etablissement)
 				/ (double) ctrl.getVentesBrutesHier(etablissement);
@@ -234,7 +240,7 @@ public class BackEndDashboardCtrlVue {
 			ventesBrutesPourcentageLbl.setTextFill(Color.BLUE);
 		}
 
-		profitsLbl.setText(ctrl.getProfitToday(etablissement) + "");
+		profitsLbl.setText(cf1.format(ctrl.getProfitToday(etablissement)));
 
 		double pourcentageProfit = (double) ctrl.getProfitToday(etablissement)
 				/ (double) ctrl.getProfitHier(etablissement);
