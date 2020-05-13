@@ -60,7 +60,7 @@ public class InscriptionCtrl implements IInscriptionCtrl {
 	@Override
 	public byte[] verifierEmpreinte(byte[] empreinteScanne) {
 		List<byte[]> empreintes = connexion.getEmpreintes();
-		return commun.utils.EmpreinteUtil.matchEmpreinte(empreinteScanne, empreintes);
+		return commun.EmpreinteUtil.matchEmpreinte(empreinteScanne, empreintes);
 	}
 
 }

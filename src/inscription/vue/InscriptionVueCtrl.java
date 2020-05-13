@@ -326,7 +326,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 	 */
 	private void scannerEmpreinteDesac() {
 		new Thread(() -> {
-			byte[] empreinteTemp = commun.utils.EmpreinteUtil.getEmpreinte();
+			byte[] empreinteTemp = commun.EmpreinteUtil.getEmpreinte();
 
 			empreinte = ctrl.verifierEmpreinte(empreinteTemp);
 
@@ -620,7 +620,7 @@ public class InscriptionVueCtrl implements IInscriptionVueCtrl {
 		if (empreinte == null) {
 			new Thread(() -> {
 				continuerBtn.setDisable(true);
-				empreinte = commun.utils.EmpreinteUtil.getEmpreinte();
+				empreinte = commun.EmpreinteUtil.getEmpreinte();
 				continuerBtn.setDisable(false);
 				ivEmpreinte.setImage(new Image(
 						getClass().getResource(IMAGE_URL + "ic_capteur_empreinte_vert.png").toExternalForm()));

@@ -2,9 +2,9 @@ package terminal.ctrl;
 
 import java.util.List;
 
+import commun.EmpreinteUtil;
 import commun.EtatTransaction;
 import commun.Transaction;
-import commun.utils.EmpreinteUtil;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import terminal.application.TerminalApplication;

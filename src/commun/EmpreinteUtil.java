@@ -1,4 +1,4 @@
-package commun.utils;
+package commun;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,7 +64,7 @@ public class EmpreinteUtil {
 		else if (osName.indexOf("nux") >= 0)
 			serialPort = LINUX_SERIAL_PORT;
 		else
-			System.out.println("Your OS is not supported.");
+			System.err.println("Your OS is not supported.");
 
 		return serialPort;
 	}

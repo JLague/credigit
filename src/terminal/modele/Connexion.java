@@ -33,7 +33,6 @@ import commun.exception.ExceptionTransaction;
 import encryption.CleRSA;
 import encryption.RSA;
 import inscription.modele.Client;
-import terminal.utils.FactureUtil;
 
 /**
  * 

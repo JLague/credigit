@@ -71,6 +71,9 @@ public class Connexion {
 	 */
 	private MongoClient mongoClient;
 
+	/**
+	 * Liste contenant tous les codecs qui permettent d'encrypter
+	 */
 	private List<CryptableCodec<?>> customCodecs;
 
 	/**

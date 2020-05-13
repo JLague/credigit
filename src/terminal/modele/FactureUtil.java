@@ -1,4 +1,4 @@
-package terminal.utils;
+package terminal.modele;
 
 import java.awt.Color;
 import java.io.File;
