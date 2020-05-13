@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import pos.utils.ImageUtil;
+import pos.modele.ImageUtil;
 import commun.*;
 
 /**

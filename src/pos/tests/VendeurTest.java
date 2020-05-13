@@ -219,8 +219,8 @@ public class VendeurTest {
 
 	@Test
 	public void testGetPassword() {
-		assertTrue(v1.getPassword().equals(pos.utils.SHAUtil.hashPassword("Test1234")));
-		assertTrue(v2.getPassword().equals(pos.utils.SHAUtil.hashPassword("Soccer12")));
+		assertTrue(v1.getPassword().equals(pos.modele.SHAUtil.hashPassword("Test1234")));
+		assertTrue(v2.getPassword().equals(pos.modele.SHAUtil.hashPassword("Soccer12")));
 	}
 
 	@Test

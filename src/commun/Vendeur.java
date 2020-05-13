@@ -59,7 +59,7 @@ public class Vendeur implements Serializable {
 		setNom(data.getNom());
 		setUsername(data.getUsername());
 		if (validerPassword(data.getPassword())) {
-			setPassword(pos.utils.SHAUtil.hashPassword(data.getPassword()));
+			setPassword(pos.modele.SHAUtil.hashPassword(data.getPassword()));
 		} else {
 			throw new ExceptionCreationCompte("Votre mot de passe doit avoir au moins 8 caractères.");
 		}

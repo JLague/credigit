@@ -1,4 +1,4 @@
-package pos.utils;
+package pos.modele;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;

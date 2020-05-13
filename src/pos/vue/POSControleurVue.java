@@ -51,7 +51,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pos.ctrl.POSControleur;
-import pos.utils.ImageUtil;
+import pos.modele.ImageUtil;
 
 /**
  * Classe permettant de contrôler les vues du POS

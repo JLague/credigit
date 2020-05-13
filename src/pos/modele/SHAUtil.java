@@ -1,4 +1,4 @@
-package pos.utils;
+package pos.modele;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
