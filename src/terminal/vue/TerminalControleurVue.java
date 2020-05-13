@@ -20,9 +20,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import terminal.ctrl.TerminalControleur;
-import terminal.gpio.buzzer.Buzzer;
-import terminal.gpio.buzzer.BuzzerSounds;
-import terminal.gpio.led.RgbLed;
+import terminal.modele.gpio.Buzzer;
+import terminal.modele.gpio.BuzzerSounds;
+import terminal.modele.gpio.RgbLed;
 
 /**
  * Classe permettant de contrôler la vue du terminal

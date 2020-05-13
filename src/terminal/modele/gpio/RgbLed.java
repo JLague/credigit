@@ -1,4 +1,4 @@
-package terminal.gpio.led;
+package terminal.modele.gpio;
 
 import java.util.function.Consumer;
 

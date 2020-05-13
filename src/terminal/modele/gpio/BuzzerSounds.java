@@ -1,4 +1,4 @@
-package terminal.gpio.buzzer;
+package terminal.modele.gpio;
 
 /**
  * 
