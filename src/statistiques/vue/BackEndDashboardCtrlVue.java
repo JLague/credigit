@@ -217,12 +217,12 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 			transactionsPourcentageLbl.setTextFill(Color.WHITE);
 			transactionsPourcentageLbl.setVisible(false);
 		} else if (pourcentage > 0) {
-			icTransactionsDown.setVisible(true);
-			icTransactionsUp.setVisible(false);
-			transactionsPourcentageLbl.setTextFill(Color.RED);
-		} else if (pourcentage < 0) {
 			icTransactionsDown.setVisible(false);
 			icTransactionsUp.setVisible(true);
+			transactionsPourcentageLbl.setTextFill(Color.RED);
+		} else if (pourcentage < 0) {
+			icTransactionsDown.setVisible(true);
+			icTransactionsUp.setVisible(false);
 			transactionsPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
 			icTransactionsDown.setVisible(false);
