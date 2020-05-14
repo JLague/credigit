@@ -242,12 +242,12 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 			ventesBrutesPourcentageLbl.setTextFill(Color.WHITE);
 			ventesBrutesPourcentageLbl.setVisible(false);
 		} else if (pourcentageVentesBrutes > 0) {
-			icVentesBrutesDown.setVisible(true);
-			icVentesBrutesUp.setVisible(false);
-			ventesBrutesPourcentageLbl.setTextFill(Color.RED);
-		} else if (pourcentageVentesBrutes < 0) {
 			icVentesBrutesDown.setVisible(false);
 			icVentesBrutesUp.setVisible(true);
+			ventesBrutesPourcentageLbl.setTextFill(Color.RED);
+		} else if (pourcentageVentesBrutes < 0) {
+			icVentesBrutesDown.setVisible(true);
+			icVentesBrutesUp.setVisible(false);
 			ventesBrutesPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
 			icVentesBrutesDown.setVisible(false);
@@ -267,12 +267,12 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 			profitsPourcentageLbl.setTextFill(Color.WHITE);
 			profitsPourcentageLbl.setVisible(false);
 		} else if (pourcentageVentesBrutes > 0) {
-			icProfitsDown.setVisible(true);
-			icProfitsUp.setVisible(false);
-			profitsPourcentageLbl.setTextFill(Color.RED);
-		} else if (pourcentageVentesBrutes < 0) {
 			icProfitsDown.setVisible(false);
 			icProfitsUp.setVisible(true);
+			profitsPourcentageLbl.setTextFill(Color.RED);
+		} else if (pourcentageVentesBrutes < 0) {
+			icProfitsDown.setVisible(true);
+			icProfitsUp.setVisible(false);
 			profitsPourcentageLbl.setTextFill(Color.GREEN);
 		} else {
 			icProfitsDown.setVisible(false);
