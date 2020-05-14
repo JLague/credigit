@@ -60,3 +60,32 @@
 .table-row-cell{
 -fx-table-cell-border-color:transparent;
 }
+
+.chart {
+	-fx-background-color:  transparent;
+}
+
+.chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.axis-label {
+  -fx-text-fill:white;
+-fx-font-family: 'Montserrat';
+}
+
+.chart-series-line {    
+    -fx-stroke-width: 2px;
+    -fx-effect: null;
+}
+ 
+.default-color0.chart-series-line { -fx-stroke: red; }
+.default-color1.chart-series-line { -fx-stroke: white; }
+.default-color0.chart-line-symbol { 
+    -fx-background-radius: 0.0px;
+    -fx-padding: 0.0px;
+}
+.default-color1.chart-line-symbol { 
+    -fx-background-radius: 0.0px;
+    -fx-padding: 0.0px;
+}

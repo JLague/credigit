@@ -6,6 +6,12 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import statistiques.ctrl.TBControleur;
 
+/**
+ * Classe permettant de lancer l'application du tableau de statistiques
+ * 
+ * @author Bank-era Corp.
+ *
+ */
 public class TBApplication extends Application {
 
 	/**
@@ -34,7 +40,13 @@ public class TBApplication extends Application {
 		stage.show();
 	}
 
-	
+	/**
+	 * Méthode permettant de charger une nouvelle scèene dans le stage
+	 * 
+	 * @param scene      - La nouvelle scène à charger
+	 * @param title      - Le titre de la scène
+	 * @param fullscreen - Si elle est en fullscreen ou on
+	 */
 	public void chargerScene(Scene scene, String title, boolean fullscreen) {
 		stage.setScene(scene);
 		stage.setTitle(title);

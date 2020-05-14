@@ -127,7 +127,7 @@ public class Analyse {
 	}
 
 	/**
-	 * Retourne le total de ventes brutes accompli lors de la journée précécente à
+	 * Retourne le total de ventes brutes accompli lors de la journée précédente à
 	 * la journée passé en param
 	 * 
 	 * @param e    l'etablissement à analyser
@@ -175,6 +175,28 @@ public class Analyse {
 	 */
 	public static float getProfitHier(Etablissement e, LocalDate date) {
 		ArrayList<Transaction> listTr = getTransactionAvant(e, 1, date);
+		float profit = 0;
+
+		for (Transaction tr : listTr) {
+			for (LigneFacture ligneFac : tr.ligneFactureArray) {
+				profit += (ligneFac.getProduit().getPrix() - ligneFac.getProduit().getCoutant())
+						* ligneFac.getQuantite();
+			}
+		}
+		return profit;
+	}
+
+	/**
+	 * Retourne les profits engrangé lors des sept jours précédents à la journée
+	 * passé en param
+	 * 
+	 * @param e         l'etablissement à analyser
+	 * @param date      la date qui va servir de référence
+	 * @param jourAvant le nombre de jours avant la date
+	 * @return les profits engrangé lors de la journée précédente
+	 */
+	public static float getProfitsAvant(Etablissement e, int jourAvant, LocalDate date) {
+		ArrayList<Transaction> listTr = getTransactionAvant(e, jourAvant, date);
 		float profit = 0;
 
 		for (Transaction tr : listTr) {

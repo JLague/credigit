@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -178,14 +178,14 @@
                   <Font name="Montserrat Bold" size="24.0" />
                </font>
             </Label>
-            <BarChart fx:id="chart" layoutX="223.0" layoutY="19.0">
+            <LineChart fx:id="lineChart" animated="false" horizontalGridLinesVisible="false" layoutX="185.0" layoutY="19.0" legendVisible="false" prefHeight="400.0" prefWidth="1071.0" verticalGridLinesVisible="false">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
               <yAxis>
                 <NumberAxis side="LEFT" />
               </yAxis>
-            </BarChart>
+            </LineChart>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="172.0" layoutY="796.0" prefHeight="426.0" prefWidth="912.0" styleClass="boites" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="48.0">

@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -35,12 +36,25 @@ import javafx.scene.paint.Color;
 import pos.vue.VueDialogue;
 import statistiques.ctrl.TBControleur;
 
-public class BackEndDashboardCtrlVue {
+/**
+ * Classe servant de contrôleur de la vue du tableau de statistiques
+ * 
+ * @author Bank-era Corp.
+ *
+ */
+public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 
 	private static final String LOGIN = "LoginTB.fxml";
 	private static final String MAIN_VIEW = "BackEndDashboard.fxml";
 
+	/**
+	 * L'établissement de l'utilisateur connecté
+	 */
 	private Etablissement etablissement;
+
+	/**
+	 * Le contrôleur principal de l'application
+	 */
 	private TBControleur ctrl;
 
 	@FXML
@@ -135,8 +149,16 @@ public class BackEndDashboardCtrlVue {
 	@FXML
 	private BarChart<String, Number> chart;
 
+	@FXML
+	private LineChart<String, Number> lineChart;
+
 	NumberFormat cf1;
 
+	/**
+	 * Constructeur du contrôleur de la vue
+	 * 
+	 * @param ctrl - Le contrôleur principal de l'application
+	 */
 	public BackEndDashboardCtrlVue(TBControleur ctrl) {
 		cf1 = NumberFormat.getCurrencyInstance(new Locale("fr", "CA"));
 		this.ctrl = ctrl;
@@ -146,10 +168,9 @@ public class BackEndDashboardCtrlVue {
 		axeX.setLabel("Journée");
 
 		NumberAxis axeY = new NumberAxis();
-		axeY.setLabel("Transaction");
+		axeY.setLabel("Profits");
 
-		chart = new BarChart<String, Number>(axeX, axeY);
-		chart.setTitle("Nombre de transaction au courant de la semaine dernière");
+		lineChart = new LineChart<String, Number>(axeX, axeY);
 	}
 
 	/**
@@ -268,41 +289,38 @@ public class BackEndDashboardCtrlVue {
 		}
 		actualiserTB(etablissement);
 
-		chart.getData().clear();
+		lineChart.getData().clear();
 
-		XYChart.Series<String, Number> jminus7 = new XYChart.Series<>();
-		jminus7.setName("7 days ago");
-		jminus7.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 7).size()));
+		// Semaine courante
+		XYChart.Series<String, Number> serie1 = new XYChart.Series<>();
+		serie1.getData().add(new XYChart.Data<String, Number>("7 jours avant", ctrl.getProfitsAvant(etablissement, 7)));
+		serie1.getData().add(new XYChart.Data<String, Number>("6 jours avant", ctrl.getProfitsAvant(etablissement, 6)));
+		serie1.getData().add(new XYChart.Data<String, Number>("5 jours avant", ctrl.getProfitsAvant(etablissement, 5)));
+		serie1.getData().add(new XYChart.Data<String, Number>("4 jours avant", ctrl.getProfitsAvant(etablissement, 4)));
+		serie1.getData().add(new XYChart.Data<String, Number>("3 jours avant", ctrl.getProfitsAvant(etablissement, 3)));
+		serie1.getData().add(new XYChart.Data<String, Number>("2 jours avant", ctrl.getProfitsAvant(etablissement, 2)));
+		serie1.getData().add(new XYChart.Data<String, Number>("1 jours avant", ctrl.getProfitsAvant(etablissement, 1)));
+		serie1.getData().add(new XYChart.Data<String, Number>("Aujourd'hui", ctrl.getProfitToday(etablissement)));
 
-		XYChart.Series<String, Number> jminus6 = new XYChart.Series<>();
-		jminus6.setName("6 days ago");
-		jminus6.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 6).size()));
+		// Semaine précédente
+		XYChart.Series<String, Number> serie2 = new XYChart.Series<>();
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("7 jours avant", ctrl.getProfitsAvant(etablissement, 15)));
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("6 jours avant", ctrl.getProfitsAvant(etablissement, 14)));
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("5 jours avant", ctrl.getProfitsAvant(etablissement, 13)));
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("4 jours avant", ctrl.getProfitsAvant(etablissement, 12)));
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("3 jours avant", ctrl.getProfitsAvant(etablissement, 11)));
+		serie2.getData()
+				.add(new XYChart.Data<String, Number>("2 jours avant", ctrl.getProfitsAvant(etablissement, 10)));
+		serie2.getData().add(new XYChart.Data<String, Number>("1 jours avant", ctrl.getProfitsAvant(etablissement, 9)));
+		serie2.getData().add(new XYChart.Data<String, Number>("Aujourd'hui", ctrl.getProfitsAvant(etablissement, 8)));
 
-		XYChart.Series<String, Number> jminus5 = new XYChart.Series<>();
-		jminus5.setName("5 days ago");
-		jminus5.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 5).size()));
-
-		XYChart.Series<String, Number> jminus4 = new XYChart.Series<>();
-		jminus4.setName("4 days ago");
-		jminus4.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 4).size()));
-
-		XYChart.Series<String, Number> jminus3 = new XYChart.Series<>();
-		jminus3.setName("3 days ago");
-		jminus3.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 3).size()));
-
-		XYChart.Series<String, Number> jminus2 = new XYChart.Series<>();
-		jminus2.setName("2 days ago");
-		jminus2.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 2).size()));
-
-		XYChart.Series<String, Number> jminus1 = new XYChart.Series<>();
-		jminus1.setName("1 days ago");
-		jminus1.getData().add(new XYChart.Data<>("", ctrl.getTransactionAvant(etablissement, 1).size()));
-
-		XYChart.Series<String, Number> j0 = new XYChart.Series<>();
-		j0.setName("Aujourd'hui");
-		j0.getData().add(new XYChart.Data<>("", ctrl.getTransactionToday(etablissement).size()));
-
-		chart.getData().addAll(jminus7, jminus6, jminus5, jminus4, jminus3, jminus2, jminus1, j0);
+		lineChart.getData().add(serie1);
+		lineChart.getData().add(serie2);
 
 	}
 
@@ -335,6 +353,11 @@ public class BackEndDashboardCtrlVue {
 		}
 	}
 
+	/**
+	 * Méthode permettant d'actualiser le tableView des transactions
+	 * 
+	 * @param etablissement - L'établissement courant
+	 */
 	private void actualiserTB(Etablissement etablissement) {
 		transactionsTb.getItems().clear();
 		c1.setCellValueFactory(new PropertyValueFactory<>("numero"));
@@ -354,6 +377,7 @@ public class BackEndDashboardCtrlVue {
 		ctrl.setDate(datePicker.getValue());
 	}
 
+	@Override
 	public Scene getScene() {
 		return this.scene;
 	}

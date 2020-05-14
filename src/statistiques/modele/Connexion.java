@@ -30,6 +30,13 @@ import commun.exception.ExceptionProduitEtablissement;
 import encryption.CleRSA;
 import encryption.RSA;
 
+/**
+ * Classe permettant la connexion avec la base de données du tableau de bord des
+ * statistiques
+ * 
+ * @author Bank-era
+ *
+ */
 public class Connexion {
 
 	/**
@@ -37,13 +44,13 @@ public class Connexion {
 	 */
 	public static final CleRSA CLE_RSA = new CleRSA(new BigInteger("32244774284211042705171103939999050641"),
 			new BigInteger("65537"), new BigInteger("166671328359045595559284971252973341809"));
-	
+
 	/**
 	 * String représentant le nom de la collection contenant les établissements dans
 	 * la base de données
 	 */
 	private final static String ETABLISSEMENTS = "etablissements";
-	
+
 	/**
 	 * String représentant le nom de la base de données sur le serveur
 	 */
@@ -60,7 +67,7 @@ public class Connexion {
 	 * de données
 	 */
 	private final static String KEYS = "keys";
-	
+
 	/**
 	 * Objet base de données
 	 */
@@ -86,8 +93,8 @@ public class Connexion {
 				"mongodb+srv://pos:yZYjTYVicPxBdgx6@projetprog-oi2e4.gcp.mongodb.net/test?retryWrites=true&w=majority");
 		CodecRegistry pojoCodecRegistry = CodecRegistries
 				.fromProviders(PojoCodecProvider.builder().automatic(true).build());
-		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(), MongoClientSettings.getDefaultCodecRegistry(),
-				pojoCodecRegistry);
+		CodecRegistry codecRegistry = CodecRegistries.fromRegistries(this.createCustomCodecRegistry(),
+				MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
 		MongoClientSettings clientSettings = MongoClientSettings.builder().applyConnectionString(connectionString)
 				.codecRegistry(codecRegistry).build();
 
@@ -96,7 +103,7 @@ public class Connexion {
 
 		database = mongoClient.getDatabase(DB);
 	}
-	
+
 	/**
 	 * Méthode permettant d'aller rechercher l'établissement dans la base de données
 	 * 
@@ -108,7 +115,7 @@ public class Connexion {
 		MongoCollection<Etablissement> collection = database.getCollection(ETABLISSEMENTS, Etablissement.class);
 		BasicDBObject object = new BasicDBObject();
 		object.put("nom", nom);
-		
+
 		return collection.find(object).first();
 	}
 
@@ -136,7 +143,7 @@ public class Connexion {
 
 		return vendeur != null ? etablissement : null;
 	}
-	
+
 	/**
 	 * Méthode permettant d'aller chercher la clé d'encryption dans la base de
 	 * données
