@@ -61,6 +61,24 @@
 -fx-table-cell-border-color:transparent;
 }
 
+/* TableView left column */
+.align-left, .align-left .label {
+	-fx-border-insets: 0.0 30.0 0.0 0.0;
+	-fx-alignment: CENTER_LEFT;
+}
+
+/* TableView center column */
+.align-center, .align-center .label {
+	-fx-border-insets: 0.0 30.0 0.0 30.0;
+	-fx-alignment: CENTER;
+}
+
+/* TableView right column */
+.align-right, .align-right .label {
+	-fx-border-insets: 0.0 0.0 0.0 30.0;
+	-fx-alignment: CENTER_RIGHT;
+}
+
 .chart {
 	-fx-background-color:  transparent;
 }

@@ -41,7 +41,7 @@ public class TBApplication extends Application {
 	}
 
 	/**
-	 * Méthode permettant de charger une nouvelle scèene dans le stage
+	 * Méthode permettant de charger une nouvelle scène dans le stage
 	 * 
 	 * @param scene      - La nouvelle scène à charger
 	 * @param title      - Le titre de la scène

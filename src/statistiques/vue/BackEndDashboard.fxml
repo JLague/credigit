@@ -199,10 +199,11 @@
               <columns>
                 <TableColumn fx:id="c1" prefWidth="232.0" text="Numéro de transaction" />
                 <TableColumn fx:id="c2" prefWidth="213.0" text="Date de la transaction" />
-                  <TableColumn fx:id="c3" minWidth="0.0" prefWidth="208.0" text="Quantité de produits" />
-                  <TableColumn fx:id="c4" minWidth="8.0" prefWidth="124.0" text="Sous total" />
-                  <TableColumn fx:id="c5" minWidth="0.0" prefWidth="134.0" text="Total" />
+                  <TableColumn fx:id="c3" minWidth="0.0" prefWidth="134.0" text="Total" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </AnchorPane>

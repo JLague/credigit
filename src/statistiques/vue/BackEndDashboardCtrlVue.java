@@ -141,12 +141,6 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 	private TableColumn<Transaction, String> c3;
 
 	@FXML
-	private TableColumn<Transaction, String> c4;
-
-	@FXML
-	private TableColumn<Transaction, String> c5;
-
-	@FXML
 	private BarChart<String, Number> chart;
 
 	@FXML
@@ -216,11 +210,11 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 			icTransactionsDown.setVisible(false);
 			transactionsPourcentageLbl.setTextFill(Color.WHITE);
 			transactionsPourcentageLbl.setVisible(false);
-		} else if (pourcentage > 0) {
+		} else if (pourcentage > 1) {
 			icTransactionsDown.setVisible(false);
 			icTransactionsUp.setVisible(true);
 			transactionsPourcentageLbl.setTextFill(Color.RED);
-		} else if (pourcentage < 0) {
+		} else if (pourcentage < 1) {
 			icTransactionsDown.setVisible(true);
 			icTransactionsUp.setVisible(false);
 			transactionsPourcentageLbl.setTextFill(Color.GREEN);
@@ -341,6 +335,9 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 		creerScene(MAIN_VIEW, rootBP);
 		ctrl.chargerScene(this.scene, "Tableau de Bord", true);
 		datePicker.setValue(LocalDate.now());
+		c1.getStyleClass().add("align-center");
+		c2.getStyleClass().add("align-center");
+		c3.getStyleClass().add("align-center");
 		datePickerHandler();
 		refreshHandler(null);
 	}
@@ -361,9 +358,7 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 		transactionsTb.getItems().clear();
 		c1.setCellValueFactory(new PropertyValueFactory<>("numero"));
 		c2.setCellValueFactory(new PropertyValueFactory<>("heure"));
-		c3.setCellValueFactory(new PropertyValueFactory<>("produits"));
-		c4.setCellValueFactory(new PropertyValueFactory<>("sousTotal"));
-		c5.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
+		c3.setCellValueFactory(new PropertyValueFactory<>("montantTotal"));
 
 		for (Transaction tr : ctrl.getTransactionToday(etablissement)) {
 			transactionsTb.getItems().add(tr);
