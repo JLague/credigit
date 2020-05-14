@@ -197,7 +197,6 @@ public class BackEndDashboardCtrlVue implements IBackEndDashboardCtrlVue {
 		creerScene(LOGIN, rootVBox);
 	}
 
-	@SuppressWarnings("unchecked")
 	@FXML
 	void refreshHandler(MouseEvent event) {
 
